@@ -3,7 +3,7 @@
 //
 
 #include "AServer.hpp"
-#include <boost/asio.hpp>
+
 #ifndef RTYPE_ISERVER_HPP
 #define RTYPE_ISERVER_HPP
 
@@ -11,8 +11,6 @@ class IServer : public AServer {
 public:
 	IServer();
 	~IServer();
-	
-	boost::asio::ip::udp::endpoint toto;
 	
 	enum IPVersion {
 		defaultVersion = 0,
