@@ -1,0 +1,7 @@
+//
+// Created by Clément Péau on 10/01/2018.
+//
+
+#ifndef RTYPE_CLIENTMANAGER_HPP
+#define RTYPE_CLIENTMANAGER_HPP
+#endif //RTYPE_CLIENTMANAGER_HPP
