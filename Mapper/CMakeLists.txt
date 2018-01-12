@@ -12,7 +12,7 @@ file(GLOB SOURCE_FILES
 add_executable(Mapper ${SOURCE_FILES})
 
 set(CMAKE_MODULE_PATH "${CMAKE_HOME_DIRECTORY}/cmake_modules")
-find_package(SFML REQUIRED system window graphics network audio)
+find_package(SFML REQUIRED system window graphics)
 if (SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(Mapper ${SFML_LIBRARIES})

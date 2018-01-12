@@ -11,6 +11,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
+#include <queue>
 
 class Extractor {
 
@@ -59,14 +60,20 @@ public:
 
 private:
 
+	using PixelsTab = std::vector<std::vector<bool>>;
+
 	void        createPixels(unsigned int x, unsigned int y);
 	void        browsePixels();
 	void        tryCreateSprite(unsigned int x, unsigned int y);
 	void        createSprite(Sprite &sprite, unsigned int x, unsigned int y);
+	bool        isEmptyPixel(const sf::Color &pixelColor) const;
+	bool        pixelIsOutOfRange(unsigned int x, unsigned int y) const;
+	void        addTails(unsigned int x, unsigned int y);
 
-	std::vector<Sprite>             sprites;
-	sf::Image                       image;
-	std::vector<std::vector<bool>>  pixels;
+	std::vector<Sprite>                     sprites;
+	sf::Image                               image;
+	PixelsTab                               pixels;
+	std::queue<sf::Vector2<unsigned int>>   tails;
 
 };
 

@@ -70,11 +70,11 @@ Extractor::Sprite &Extractor::Sprite::operator=(const Extractor::Sprite &obj) {
 }
 
 unsigned int Extractor::Sprite::getWidth() const {
-	return (this->maxX - this->minX);
+	return ((this->maxX + 1) - this->minX);
 }
 
 unsigned int Extractor::Sprite::getHeight() const {
-	return (this->maxY - this->minY);
+	return ((this->maxY + 1) - this->minY);
 }
 
 void Extractor::extractSprites(const std::string &file) {
@@ -85,7 +85,7 @@ void Extractor::extractSprites(const std::string &file) {
 }
 
 void Extractor::createPixels(unsigned int x, unsigned int y) {
-	this->pixels = std::vector<std::vector<bool>>(y, std::vector<bool>(x, false));
+	this->pixels = PixelsTab(y, std::vector<bool>(x, false));
 }
 
 void Extractor::browsePixels() {
@@ -99,7 +99,8 @@ void Extractor::browsePixels() {
 }
 
 void Extractor::tryCreateSprite(unsigned int x, unsigned int y) {
-	if (this->image.getPixel(x, y).a != 0 && !this->pixels.at(y).at(x))
+	if (!this->isEmptyPixel(this->image.getPixel(x, y))
+	    && !this->pixels.at(y).at(x))
 	{
 		Sprite  sprite;
 
@@ -108,33 +109,29 @@ void Extractor::tryCreateSprite(unsigned int x, unsigned int y) {
 		sprite.setMaxX(x);
 		sprite.setMaxY(y);
 		sprite.setInitialized(true);
-		this->createSprite(sprite, x, y);
-		if (sprite.getWidth() > 10 && sprite.getHeight() > 10)
-		{
-			this->sprites.push_back(sprite);
+		this->addTails(x, y);
+		while (!this->tails.empty()) {
+			this->createSprite(sprite, this->tails.front().x,
+			                   this->tails.front().y);
+			this->tails.pop();
 		}
+		if (sprite.getWidth() > 1 || sprite.getHeight() > 1)
+			this->sprites.push_back(sprite);
 	}
 }
 
 void Extractor::createSprite(Extractor::Sprite &sprite,
                              unsigned int x, unsigned int y) {
-	if (y >= 0 && y < this->pixels.size()
-	    && x >= 0 && x < this->pixels.at(y).size()
-	    && this->image.getPixel(x, y).a != 0 && !this->pixels.at(y).at(x))
+	if (!this->pixelIsOutOfRange(x, y)
+	    && !this->isEmptyPixel(this->image.getPixel(x, y))
+	    && !this->pixels.at(y).at(x))
 	{
 		sprite.setMinX(x);
 		sprite.setMinY(y);
 		sprite.setMaxX(x);
 		sprite.setMaxY(y);
 		this->pixels.at(y).at(x) = true;
-		this->createSprite(sprite, x - 1, y);
-		this->createSprite(sprite, x + 1, y);
-		this->createSprite(sprite, x, y - 1);
-		this->createSprite(sprite, x, y + 1);
-		this->createSprite(sprite, x - 1, y - 1);
-		this->createSprite(sprite, x + 1, y + 1);
-		this->createSprite(sprite, x - 1, y + 1);
-		this->createSprite(sprite, x + 1, y - 1);
+		this->addTails(x, y);
 	}
 }
 
@@ -146,4 +143,23 @@ const std::vector<Extractor::Sprite> &Extractor::getSprites() const {
 	return (this->sprites);
 }
 
+bool Extractor::isEmptyPixel(const sf::Color &pixelColor) const {
+	return (pixelColor.a == 0);
+}
+
+bool Extractor::pixelIsOutOfRange(unsigned int x, unsigned int y) const {
+	return (!(y >= 0 && y < pixels.size()
+	          && x >= 0 && x < pixels.at(y).size()));
+}
+
+void Extractor::addTails(unsigned int x, unsigned int y) {
+	this->tails.push(sf::Vector2<unsigned int> {x - 1, y} );
+	this->tails.push(sf::Vector2<unsigned int> {x + 1, y} );
+	this->tails.push(sf::Vector2<unsigned int> {x, y - 1} );
+	this->tails.push(sf::Vector2<unsigned int> {x, y + 1} );
+	this->tails.push(sf::Vector2<unsigned int> {x - 1, y - 1} );
+	this->tails.push(sf::Vector2<unsigned int> {x + 1, y + 1} );
+	this->tails.push(sf::Vector2<unsigned int> {x - 1, y + 1} );
+	this->tails.push(sf::Vector2<unsigned int> {x + 1, y - 1} );
+}
 

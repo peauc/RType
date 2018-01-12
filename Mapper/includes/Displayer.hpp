@@ -45,11 +45,9 @@ private:
 	std::string     defaultFormat(const Extractor::Sprite &sprite) const;
 	std::string     jsonFormat(const Extractor::Sprite &sprite) const;
 
-	Extractor                           extractor;
 	sf::RenderWindow                    window;
 	std::vector<Extractor::Sprite>      sprites;
 	sf::Sprite                          sprite;
-	sf::Image                           image;
 	sf::Texture                         texture;
 	sf::Rect<int>                       textureRect;
 	unsigned int                        spriteIndex;
