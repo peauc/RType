@@ -5,7 +5,24 @@
 ** 	No description
 */
 
-int main(int ac, char **av) {
-	std::socket sock;
+#include <boost/exception/diagnostic_information.hpp>
+#include <AsioServer.hpp>
+#include <iostream>
+#include "Logger.hpp"
 
+int main(int ac, char **av)
+{
+	try {
+		AsioServer server;
+		server.start();
+		server.tick();
+	} catch(boost::system::system_error& e)
+	{
+		std::cout<<"Error: " << e.what()<< std::endl;
+		std::cout<<"Info: "  << boost::diagnostic_information(e)
+		         << std::endl;
+		return 1;
+		
+	}
+	return (0);
 }

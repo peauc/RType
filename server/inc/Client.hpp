@@ -4,4 +4,11 @@
 
 #ifndef RTYPE_CLIENT_HPP
 #define RTYPE_CLIENT_HPP
+
+#include "AClient.hpp"
+
+class Client : AClient {
+
+};
+
 #endif //RTYPE_CLIENT_HPP

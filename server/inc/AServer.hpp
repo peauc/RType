@@ -7,15 +7,24 @@
 
 #ifndef ASERVER_HPP
 #define ASERVER_HPP
+#include <vector>
+#include "IClient.hpp"
+#include "IMessage.hpp"
+#include "ClientManager.hpp"
+
 class AServer {
 public:
-	virtual bool start() = 0 {
-		return (false);
-	}
-	virtual bool stop() = 0 {
-		return(false);
-	}
-	virtual~AServer() = 0 {};
+	AServer();
+	
+	virtual~AServer();
+	virtual bool start();
+	virtual bool stop();
+	
+	const ClientManager &getClientManager();
+	virtual std::vector<IMessage> getClientMessage(IClient &client);
+private:
+	ClientManager _clientManager;
+	bool _shouldStop = false;
 };
 
 #endif //ASERVER_HPP

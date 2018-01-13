@@ -9,17 +9,12 @@
 
 class IServer : public AServer {
 public:
-	IServer();
-	~IServer();
 	
-	enum IPVersion {
-		defaultVersion = 0,
-		v4,
-		v6,
-	};
-private:
-
-
+	virtual bool start() = 0;
+	virtual bool stop() = 0;
+	virtual bool sendMessage(const IClient &client, const IMessage
+	&message) = 0;
+	virtual bool tick() = 0;
 };
 
 #endif //RTYPE_ISERVER_HPP
