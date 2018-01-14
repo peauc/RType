@@ -19,12 +19,10 @@ void SpriteManager::setImage(const sf::Image &image) {
 }
 
 void SpriteManager::setSaveInfos(const std::string &source,
-                                 const std::string &format,
-                                 const std::string &dest) {
+								 const std::string &dest) {
 	this->saveSpriteIndex = 0;
 	this->saveAnimationIndex = 0;
 	this->source = source;
-	this->format = format;
 	this->dest = dest;
 }
 
@@ -45,64 +43,72 @@ const sf::Image &SpriteManager::getImage() const {
 }
 
 unsigned int SpriteManager::removeSprite(unsigned int index) {
-	if (index < this->sprites.size())
-	{
+	if (index < this->sprites.size()) {
 		this->sprites.erase(std::next(this->sprites.begin(), index));
 		this->selectedSprites
 				.erase(std::next(this->selectedSprites.begin(), index));
+		this->removeAnimationSpriteIndex(index);
 		if (index == this->sprites.size())
 			return (0);
 	}
 	return (index);
 }
 
+void SpriteManager::removeAnimationSpriteIndex(unsigned int index) {
+	auto	it = std::find(this->animationSpritesIndex.begin(),
+						   this->animationSpritesIndex.end(), index);
+
+	this->animationSpritesIndex.erase(it);
+	for (auto &spriteIndex : this->animationSpritesIndex)
+		if (spriteIndex > index)
+			spriteIndex--;
+}
+
 void SpriteManager::setSpriteSelected(unsigned int index, bool state) {
+	auto	it = std::find(this->animationSpritesIndex.begin(),
+						   this->animationSpritesIndex.end(), index);
+
 	this->selectedSprites.at(index) = state;
+	if (state)
+		this->animationSpritesIndex.push_back(index);
+	else
+		this->animationSpritesIndex.erase(it);
 }
 
 bool SpriteManager::allSelected() const {
-	for (bool state : this->selectedSprites)
-	{
+	for (bool state : this->selectedSprites) {
 		if (!state)
-		{
 			return (false);
-		}
 	}
 	return (true);
 }
 
 bool SpriteManager::hasSomethingToSave() const {
-	for (bool state : this->selectedSprites)
-	{
+	for (bool state : this->selectedSprites) {
 		if (state)
-		{
 			return (true);
-		}
 	}
 	return (false);
 }
 
 void SpriteManager::resetSelected() {
 	for (unsigned int index = 0; index < this->selectedSprites.size(); ++index)
-	{
 		this->selectedSprites.at(index) = false;
-	}
+	this->animationSpritesIndex.clear();
 }
 
 void SpriteManager::saveSprites() {
 	std::string     filePath;
 	unsigned int    spriteIndex = 0;
 
-	for (auto &sprite : this->sprites)
-	{
+	for (auto &sprite : this->sprites) {
 		if (this->selectedSprites.at(spriteIndex)) {
 			filePath = this->dest + "Sprite"
-			           + std::to_string(this->saveSpriteIndex) + ".sprite";
+					   + std::to_string(this->saveSpriteIndex) + ".sprite";
 			std::cout << "filePath : " << filePath << std::endl;
 			std::ofstream file(filePath, std::ios::out);
 			if (file) {
-				file << (this->format == "json" ? this->jsonFormat(sprite)
-				                                : this->defaultFormat(sprite));
+				file << this->jsonFormat(sprite);
 				file.close();
 				this->saveSpriteIndex++;
 			} else
@@ -118,50 +124,32 @@ void SpriteManager::saveAnimation() {
 	if (!this->hasSomethingToSave())
 		return ;
 	filePath = this->dest + "Animation"
-	           + std::to_string(this->saveAnimationIndex) + ".anim";
+			   + std::to_string(this->saveAnimationIndex) + ".anim";
 
 	std::cout << "filePath : " << filePath << std::endl;
 	std::ofstream file(filePath, std::ios::out);
-	if (file)
-	{
+	if (file) {
 		file << this->animationFormat();
 		file.close();
 		this->saveAnimationIndex++;
-	}
-	else
+	} else
 		std::cerr << "Can't open file : " << filePath << std::endl;
 }
 
 std::string SpriteManager::animationFormat() const {
 	std::string     format;
-	unsigned int    spriteIndex = 0;
 
 	format = "{";
 	format += "\n\t Animation : ";
 	format += "\n\t\t[";
-	for (auto &sprite : this->sprites) {
-		if (this->selectedSprites.at(spriteIndex)) {
-			format += "\n\t\t\t";
-			format += (this->format == "json" ? this->jsonFormat(sprite)
-			                                  : this->defaultFormat(sprite));
-			format += ",";
-		}
-		++spriteIndex;
+	for (auto &spriteIndex : this->animationSpritesIndex) {
+		format += "\n\t\t\t";
+		format += this->jsonFormat(this->sprites.at(spriteIndex));
+		format += ",";
 	}
 	if (!format.empty())
 		format.erase(--(format.end()));
 	format += "\n\t\t]\n}";
-	return (format);
-}
-
-std::string SpriteManager::defaultFormat(const Sprite &sprite) const {
-	std::string format;
-
-	format = this->source + " : ";
-	format += std::to_string(sprite.getMinX()) + " : ";
-	format += std::to_string(sprite.getMinY()) + " : ";
-	format += std::to_string(sprite.getWidth()) + " : ";
-	format += std::to_string(sprite.getHeight());
 	return (format);
 }
 

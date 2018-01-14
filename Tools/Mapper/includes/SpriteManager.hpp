@@ -25,7 +25,6 @@ public:
 	void    setImage(const sf::Image &image);
 	void    setSpriteSelected(unsigned int index, bool state);
 	void    setSaveInfos(const std::string &source,
-	                     const std::string &format,
 	                     const std::string &dest);
 
 	std::vector<Sprite> &getSprites();
@@ -42,19 +41,19 @@ public:
 
 private:
 
-	std::string     defaultFormat(const Sprite &sprite) const;
 	std::string     jsonFormat(const Sprite &sprite) const;
 	std::string     animationFormat() const;
 	bool            hasSomethingToSave() const;
+	void			removeAnimationSpriteIndex(unsigned int index);
 
-	std::vector<Sprite>     sprites;
-	std::vector<bool>       selectedSprites;
-	sf::Image               image;
-	std::string             source;
-	std::string             format;
-	std::string             dest;
-	unsigned int            saveSpriteIndex;
-	unsigned int            saveAnimationIndex;
+	std::vector<Sprite>     	sprites;
+	std::vector<bool>       	selectedSprites;
+	std::vector<unsigned int>	animationSpritesIndex;
+	sf::Image               	image;
+	std::string             	source;
+	std::string             	dest;
+	unsigned int            	saveSpriteIndex;
+	unsigned int            	saveAnimationIndex;
 };
 
 
