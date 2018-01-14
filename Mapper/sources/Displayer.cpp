@@ -1,18 +1,31 @@
 /*
 ** EPITECH PROJECT , 2020
-** SFMLDemo
+** Mapper
 ** File description :
 ** No description
 */
 
 #include <iostream>
-#include <fstream>
+#include "Sprite.hpp"
 #include "Displayer.hpp"
 
-void Displayer::displaySprites(const Extractor &extractor) {
-	if (extractor.getSprites().size() == 0)
+Displayer::Displayer(SpriteManager &spriteManager)
+		: spriteManager(spriteManager) {
+	this->fontLoaded = this->font.loadFromFile("fonts/arial.ttf");
+	if (this->fontLoaded)
+		this->mode.setFont(font);
+	this->mode.setString("Mode : Sprite");
+	this->mode.setCharacterSize(24);
+	this->mode.setColor(sf::Color::Green);
+	this->border.setOutlineThickness(2);
+	this->border.setOutlineColor(sf::Color::Green);
+	this->border.setFillColor(sf::Color::Transparent);
+}
+
+void Displayer::displaySprites() {
+	if (!this->spriteManager.availableSprites())
 		return ;
-	this->initDisplayer(extractor);
+	this->initDisplayer();
 	this->createEvents();
 	while(this->window.isOpen())
 	{
@@ -25,13 +38,11 @@ void Displayer::displaySprites(const Extractor &extractor) {
 	}
 }
 
-void Displayer::initDisplayer(const Extractor &extractor) {
+void Displayer::initDisplayer() {
 	this->window.create(sf::VideoMode(640,480,32),"Displayer");
-	this->needToSave = false;
 	this->scale = 1;
-	this->sprites = extractor.getSprites();
 	this->spriteIndex = 0;
-	this->texture.loadFromImage(extractor.getImage());
+	this->texture.loadFromImage(this->spriteManager.getImage());
 	this->sprite.setTexture(this->texture, true);
 	this->resolveTextureRect();
 	this->sprite.setTextureRect(this->textureRect);
@@ -40,33 +51,49 @@ void Displayer::initDisplayer(const Extractor &extractor) {
 void Displayer::checkEvents(const sf::Event &event) {
 	if (event.type == sf::Event::Closed
 	    || (event.type == sf::Event::KeyPressed
-	        && event.key.code == sf::Keyboard::Escape)
-	    || (event.type == sf::Event::KeyPressed
-	        && event.key.code == sf::Keyboard::Return))
+	        && event.key.code == sf::Keyboard::Escape))
 		this->window.close();
 	else if (event.type == sf::Event::KeyPressed)
 		this->doEvent(event.key.code);
-	this->needToSave = (event.type == sf::Event::KeyPressed
-	                    && event.key.code == sf::Keyboard::Return);
 }
 
 void Displayer::drawSprite() {
+	this->resolveSizeRect();
+	this->window.clear(sf::Color::Black);
+	if (this->spriteManager.spriteIsSelected(this->spriteIndex))
+		this->window.draw(this->border);
+	this->window.draw(this->sprite);
+	if (this->fontLoaded)
+		this->window.draw(this->mode);
+	this->window.display();
+}
+
+void Displayer::resolveTextureRect() {
+	std::vector<Sprite> &sprites = this->spriteManager.getSprites();
+	float               margin = 2;
+
+	this->textureRect.left = sprites.at(this->spriteIndex).getMinX();
+	this->textureRect.top = sprites.at(this->spriteIndex).getMinY();
+	this->textureRect.width = sprites.at(this->spriteIndex).getWidth();
+	this->textureRect.height = sprites.at(this->spriteIndex).getHeight();
+
+	this->border.setSize(sf::Vector2f {this->textureRect.width + margin,
+	                                   this->textureRect.height + margin});
+}
+
+void Displayer::resolveSizeRect() {
 	this->sprite.setPosition(this->window.getSize().x / 2
 	                         - this->sprite.getTextureRect().width / 2
 	                           * this->sprite.getScale().x,
 	                         this->window.getSize().y / 2
 	                         - this->sprite.getTextureRect().height / 2
 	                           * this->sprite.getScale().y);
-	this->window.clear(sf::Color::Black);
-	this->window.draw(this->sprite);
-	this->window.display();
-}
-
-void Displayer::resolveTextureRect() {
-	this->textureRect.left = this->sprites.at(this->spriteIndex).getMinX();
-	this->textureRect.top = this->sprites.at(this->spriteIndex).getMinY();
-	this->textureRect.width = this->sprites.at(this->spriteIndex).getWidth();
-	this->textureRect.height = this->sprites.at(this->spriteIndex).getHeight();
+	this->border.setPosition(this->window.getSize().x / 2
+	                         - this->border.getSize().x / 2
+	                           * this->border.getScale().x,
+	                         this->window.getSize().y / 2
+	                         - this->border.getSize().y / 2
+	                           * this->border.getScale().y);
 }
 
 void Displayer::createEvents() {
@@ -82,6 +109,14 @@ void Displayer::createEvents() {
 	this->actions.insert(std::make_pair(sf::Keyboard::Up, func));
 	func = std::bind(&Displayer::onZoomOut, this);
 	this->actions.insert(std::make_pair(sf::Keyboard::Down, func));
+	func = std::bind(&Displayer::onSelect, this);
+	this->actions.insert(std::make_pair(sf::Keyboard::Space, func));
+	func = std::bind(&Displayer::onSelectAll, this);
+	this->actions.insert(std::make_pair(sf::Keyboard::A, func));
+	func = std::bind(&Displayer::onChangeMode, this);
+	this->actions.insert(std::make_pair(sf::Keyboard::M, func));
+	func = std::bind(&Displayer::onSave, this);
+	this->actions.insert(std::make_pair(sf::Keyboard::Return, func));
 }
 
 void Displayer::doEvent(sf::Keyboard::Key key) {
@@ -94,7 +129,7 @@ void Displayer::doEvent(sf::Keyboard::Key key) {
 }
 
 void Displayer::onNextSprite() {
-	if (this->spriteIndex < this->sprites.size() - 1)
+	if (this->spriteIndex < this->spriteManager.getSprites().size() - 1)
 		this->spriteIndex++;
 	this->resolveTextureRect();
 	this->sprite.setTextureRect(this->textureRect);
@@ -108,79 +143,49 @@ void Displayer::onPrevSprite() {
 }
 
 void Displayer::onRemoveSprite() {
-	if (this->spriteIndex < this->sprites.size())
-	{
-		this->sprites.erase(std::next(this->sprites.begin(), this->spriteIndex));
-		if (this->sprites.empty())
-			this->window.close();
-		else {
-			if (this->spriteIndex == this->sprites.size())
-				this->spriteIndex = 0;
-			this->resolveTextureRect();
-			this->sprite.setTextureRect(this->textureRect);
-		}
-	}
+	this->spriteIndex = this->spriteManager.removeSprite(this->spriteIndex);
+	if (this->spriteManager.availableSprites()) {
+		this->resolveTextureRect();
+		this->sprite.setTextureRect(this->textureRect);
+	} else
+		this->window.close();
 }
 
 void Displayer::onZoomIn() {
 	this->scale *= 2;
 	this->sprite.setScale(this->scale, this->scale);
+	this->border.setScale(this->scale, this->scale);
 }
 
 void Displayer::onZoomOut() {
 	this->scale /= 2;
 	this->sprite.setScale(this->scale, this->scale);
+	this->border.setScale(this->scale, this->scale);
 }
 
-void Displayer::saveSprites(const std::string &baseName,
-                            const std::string &format,
-                            const std::string &dest) const {
-	std::string     filePath;
-	unsigned int    index = 0;
+void Displayer::onSelect() {
+	bool    state = !this->spriteManager.spriteIsSelected(this->spriteIndex);
 
-	for (auto &sprite : this->sprites)
-	{
-		filePath = dest + baseName;
-		filePath += std::to_string(index) + ".sprite";
-		std::cout << "filePath : " << filePath << std::endl;
-		std::ofstream    file(filePath, std::ios::out);
-
-		if (file)
-		{
-			file << (format == "json" ? this->jsonFormat(sprite)
-			                          : this->defaultFormat(sprite));
-			file.close();
-		}
-		else
-			std::cerr << "Can't open file : " << filePath << std::endl;
-		++index;
-	}
+	this->spriteManager.setSpriteSelected(this->spriteIndex, state);
 }
 
-std::string Displayer::defaultFormat(const Extractor::Sprite &sprite) const {
-	std::string format;
-
-	format = std::to_string(sprite.getMinX()) + " : ";
-	format += std::to_string(sprite.getMinY()) + " : ";
-	format += std::to_string(sprite.getWidth()) + " : ";
-	format += std::to_string(sprite.getHeight());
-	return (format);
+void Displayer::onChangeMode() {
+	this->mode.setString((this->mode.getString() == "Mode : Sprite" ?
+	                      "Mode : Animation" : "Mode : Sprite"));
 }
 
-std::string Displayer::jsonFormat(const Extractor::Sprite &sprite) const {
-	std::string format;
+void Displayer::onSelectAll() {
+	unsigned long   size = this->spriteManager.getSprites().size();
+	bool            state = !this->spriteManager.allSelected();
 
-	format = "{";
-	format += "\n\t x : " + std::to_string(sprite.getMinX());
-	format += "\n\t y : " + std::to_string(sprite.getMinY());
-	format += "\n\t width : " + std::to_string(sprite.getWidth());
-	format += "\n\t height : " + std::to_string(sprite.getHeight());
-	format += "\n}";
-	return (format);
+	for (unsigned int index = 0; index < size; ++index)
+		this->spriteManager.setSpriteSelected(index, state);
 }
 
-bool Displayer::getNeedToSave() const {
-	return (this->needToSave);
+void Displayer::onSave() {
+	if (this->mode.getString() == "Mode : Sprite")
+		this->spriteManager.saveSprites();
+	else
+		this->spriteManager.saveAnimation();
+	this->spriteManager.resetSelected();
 }
-
-
