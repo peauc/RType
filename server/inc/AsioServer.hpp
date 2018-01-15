@@ -10,6 +10,7 @@
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include "IServer.hpp"
+#include "PacketInterpreterServer.hpp"
 
 class AsioServer : public IServer {
 public:
@@ -20,6 +21,7 @@ public:
 	virtual bool tick();
 	virtual bool stop() final;
 	virtual bool start() final;
+
 private:
 	void startReceive();
 	void handleSend(boost::shared_ptr<std::string> message,
@@ -34,6 +36,7 @@ private:
 	boost::asio::io_service _ioService;
 	boost::asio::ip::udp::socket _socket;
 	boost::array<char, 65000> _array;
+	PacketInterpreterServer	_interpreter;
 };
 
 #endif //ASIOSERVER_HPP

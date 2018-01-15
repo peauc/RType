@@ -10,8 +10,8 @@ int main(int ac, char **av)
 	try {
 		DataPacket packet;
 		client::AsioClient client;
-		client.connect("127.0.0.1");
 		packet.cmd = 0;
+		client.connect("127.0.0.1");
 		client.sendMessage(packet);
 	}
 	catch (std::exception &e) {

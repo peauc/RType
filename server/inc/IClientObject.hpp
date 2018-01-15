@@ -6,6 +6,7 @@
 #define RTYPE_ICLIENT_HPP
 
 #include <string>
+#include <vector>
 #include "IMessage.hpp"
 
 class IClientObject {

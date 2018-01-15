@@ -10,7 +10,7 @@
 #include <string>
 # include "DataPacket.hpp"
 # include "IMessage.hpp"
-# include "PacketInterpreter.hpp"
+# include "PacketInterpreterClient.hpp"
 
 class Message : public IMessage
 {
@@ -19,12 +19,12 @@ public:
 	Message(const Message &) noexcept;
 	Message &operator=(const Message &) noexcept;
 	~Message() = default;
-	DataPacket getPacket() const;
-	const std::string getRawMessage() const noexcept override;
+
+	DataPacket		getPacket() const noexcept;
+	const std::string	getRawMessage() const noexcept override;
 private:
 	std::string		_rawMessage;
 	DataPacket		_packet;
-	PacketInterpreter	_interpreter;
 
 	void	transformStringToPacket(const std::string &str) noexcept;
 };
