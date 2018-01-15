@@ -3,13 +3,17 @@ project(rtype)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
+##COMMON
+file(GLOB_RECURSE COMMON_FILES common/*.cpp common/*.hpp)
+include_directories(common/inc)
+
 ##SERVER
 
 file(GLOB_RECURSE SERVER_SRC server/src/*.cpp)
 file(GLOB_RECURSE SERVER_INC server/inc/*.hpp)
 set(SERVER_FILES ${SERVER_SRC} ${SERVER_INC})
 include_directories(server/inc)
-add_executable(server ${SERVER_FILES})
+add_executable(server ${SERVER_FILES} ${COMMON_FILES})
 
 ##BOOST
 if (WIN32)
@@ -34,7 +38,7 @@ file(GLOB_RECURSE CLIENT_SRC client/src/*.cpp)
 file(GLOB_RECURSE CLIENT_INC client/inc/*.hpp)
 set(CLIENT_FILES ${CLIENT_SRC} ${CLIENT_INC})
 include_directories(client/inc)
-add_executable(client ${CLIENT_FILES})
+add_executable(client ${CLIENT_FILES} ${COMMON_FILES})
 
 ##BOOST
 if (WIN32)
