@@ -8,9 +8,9 @@
 #ifndef ASERVER_HPP
 #define ASERVER_HPP
 #include <vector>
-#include "IClient.hpp"
+#include "IClientObject.hpp"
 #include "IMessage.hpp"
-#include "ClientManager.hpp"
+#include "ClientObjectManager.hpp"
 
 class AServer {
 public:
@@ -20,10 +20,10 @@ public:
 	virtual bool start();
 	virtual bool stop();
 	
-	const ClientManager &getClientManager();
-	virtual std::vector<IMessage> getClientMessage(IClient &client);
+	const ClientObjectManager &getClientManager();
+	virtual std::vector<IMessage> getClientMessage(IClientObject &client);
 private:
-	ClientManager _clientManager;
+	ClientObjectManager _clientManager;
 	bool _shouldStop = false;
 };
 

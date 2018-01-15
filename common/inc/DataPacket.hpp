@@ -23,29 +23,29 @@ enum	EntityState
 
 struct	PlayerScore
 {
-	char	playerId;
+	char		playerId;
 	unsigned int	score;
 };
 
 struct 	Lobby
 {
-	bool	gameStarted;
+	bool		gameStarted;
 	unsigned char	numberOfPlayers;
 };
 
 struct	Score
 {
-	GameState	gameState;
+	GameState		gameState;
 	struct PlayerScore	playerScore[4];
 };
 
 struct	Object
 {
-	float	x;
-	float	y;
+	float		x;
+	float		y;
 	EntityState	entityState;
-	bool	animated;
-	bool	hit;
+	bool		animated;
+	bool		hit;
 	unsigned int	id;
 	unsigned char	objectId;
 	unsigned char	animationId;
@@ -67,10 +67,10 @@ struct	Connection
 union	UData
 {
 	Connection	connection;
-	Input	input;
-	Lobby	lobby;
-	Score	score;
-	Object	object;
+	Input		input;
+	Lobby		lobby;
+	Score		score;
+	Object		object;
 };
 
 struct	DataPacket
@@ -78,5 +78,7 @@ struct	DataPacket
 	unsigned short	cmd;
 	union UData	data;
 };
+
+const size_t PACKETSIZE = sizeof(DataPacket);
 
 #endif //SFMLDEMO_DATAPACKET_HPP
