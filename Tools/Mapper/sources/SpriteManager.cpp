@@ -157,7 +157,7 @@ std::string SpriteManager::jsonFormat(const Sprite &sprite) const {
 	std::string format;
 
 	format = "{";
-	format += " File : " + this->source + ",";
+	format += " File : \"" + this->source + "\",";
 	format += " x : " + std::to_string(sprite.getMinX()) + ",";
 	format += " y : " + std::to_string(sprite.getMinY()) + ",";
 	format += " width : " + std::to_string(sprite.getWidth()) + ",";

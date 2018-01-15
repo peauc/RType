@@ -1,0 +1,7 @@
+Couleur : Violet
+
+Animation0 : déplacement normal
+Animation1 : mouvement vers le bas
+Animation2 : redressement après mouvement vers le bas
+Animation3 : mouvement ver le haut
+Animation4 : redressement après mouvement vers le haut

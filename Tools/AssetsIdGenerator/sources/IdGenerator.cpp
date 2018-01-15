@@ -88,7 +88,7 @@ std::string IdGenerator::jsonFormat(unsigned int id) const {
 	std::string format;
 
 	format = "{";
-	format += " Asset : " + this->assetsPath.at(id) + ",";
+	format += " Asset : \"" + this->assetsPath.at(id) + "\",";
 	format += " Id : " + std::to_string(id);
 	format += " }";
 	return (format);
