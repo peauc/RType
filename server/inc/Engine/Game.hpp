@@ -14,15 +14,16 @@
 namespace Engine {
     class Game
     {
+    public:
+            Game();
+            ~Game();
+            void run();
+    private:
         std::unique_ptr<World> _world;
         std::vector<std::unique_ptr<Event>> _events;
         bool _stop;
 
-    public:
-        Game();
-        ~Game();
-        void run();
-    };
+        };
 }
 
 #endif //RTYPE_GAME_HPP
