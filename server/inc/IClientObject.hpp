@@ -6,11 +6,12 @@
 #define RTYPE_ICLIENT_HPP
 
 #include <string>
+#include <vector>
 #include "IMessage.hpp"
 
-class IClient {
+class IClientObject {
 public:
-	virtual bool hasDataToBeRead(const IClient &client) const = 0;
+	virtual bool hasDataToBeRead(const IClientObject &client) const = 0;
 	virtual bool sendMessage(const IMessage &message) const = 0;
 	virtual std::vector<IMessage> &getMessages() const = 0;
 	

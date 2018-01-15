@@ -6,14 +6,14 @@
 #define RTYPE_CLIENTMANAGER_HPP
 
 #include <vector>
-#include "IClient.hpp"
+#include "IClientObject.hpp"
 
-class ClientManager {
+class ClientObjectManager {
 public:
 	size_t size() const;
 	std::vector<IMessage> getClientsMessages();
 private:
-	std::vector<IClient> _clientList;
+	std::vector<IClientObject> _clientList;
 };
 
 #endif //RTYPE_CLIENTMANAGER_HPP

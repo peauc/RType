@@ -19,12 +19,12 @@ bool AServer::start()
 	_shouldStop = false;
 	return (true);
 }
-const ClientManager &AServer::getClientManager()
+const ClientObjectManager &AServer::getClientManager()
 {
 	return (_clientManager);
 }
 
-std::vector<IMessage> AServer::getClientMessage(IClient &client)
+std::vector<IMessage> AServer::getClientMessage(IClientObject &client)
 {
 	return (_clientManager.getClientsMessages());
 }

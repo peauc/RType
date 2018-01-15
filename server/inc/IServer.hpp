@@ -12,7 +12,7 @@ public:
 	
 	virtual bool start() = 0;
 	virtual bool stop() = 0;
-	virtual bool sendMessage(const IClient &client, const IMessage
+	virtual bool sendMessage(const IClientObject &client, const IMessage
 	&message) = 0;
 	virtual bool tick() = 0;
 };
