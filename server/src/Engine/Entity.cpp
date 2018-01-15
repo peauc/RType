@@ -4,7 +4,7 @@
 
 #include <Engine/Entity.hpp>
 
-Engine::Entity::Entity(unsigned int hp, float speed) : _transformComponent(this), _components(), _mediator()
+Engine::Entity::Entity() : _transformComponent(this), _components(), _mediator()
 {
 }
 

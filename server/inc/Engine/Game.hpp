@@ -22,6 +22,9 @@ namespace Engine {
         Game();
         ~Game();
         void run();
+
+        std::vector<std::unique_ptr<Event>> &getEventsReference();
+        const std::vector<std::unique_ptr<Event>> &getEvents() const;
     };
 }
 

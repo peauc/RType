@@ -9,6 +9,8 @@
 #include <memory>
 #include "AComponent.hpp"
 #include "TransformComponent.hpp"
+#include "Components/DefaultPlayerInputComponent.hpp"
+#include "Components/DefaultPlayerMovementComponent.hpp"
 
 namespace Engine {
     class Entity
@@ -19,7 +21,7 @@ namespace Engine {
         Mediator _mediator;
 
     public:
-        Entity(unsigned int hp, float speed);
+        Entity();
         ~Entity() = default;
 
         void update();

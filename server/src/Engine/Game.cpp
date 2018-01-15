@@ -34,3 +34,13 @@ void Engine::Game::run()
         // SEND INFORMATIONS TO CLIENT
     }
 }
+
+const std::vector<std::unique_ptr<Engine::Event>> &Engine::Game::getEvents() const
+{
+    return _events;
+}
+
+std::vector<std::unique_ptr<Engine::Event>> &Engine::Game::getEventsReference()
+{
+    return _events;
+}
