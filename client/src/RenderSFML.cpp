@@ -42,6 +42,7 @@ bool	RenderSFML::isWindowOpen() noexcept
 	if (this->_window) {
 		return (this->_window->isOpen());
 	}
+	return (false);
 }
 
 void	RenderSFML::display() noexcept
