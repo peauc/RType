@@ -30,7 +30,7 @@ AsioServer::AsioServer() : _endpoint(boost::asio::ip::udp::v4(), 4242) ,
 {
 }
 
-bool AsioServer::sendMessage(const IClient &client, const IMessage &message)
+bool AsioServer::sendMessage(const IClientObject &client, const IMessage &message)
 {
 	boost::shared_ptr<std::string> toot(new std::string("toto"));
 	

@@ -5,9 +5,9 @@
 #ifndef RTYPE_CLIENT_HPP
 #define RTYPE_CLIENT_HPP
 
-#include "AClient.hpp"
+#include "AClientObject.hpp"
 
-class Client : AClient {
+class ClientObject : AClientObject {
 
 };
 

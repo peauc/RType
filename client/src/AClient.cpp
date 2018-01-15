@@ -3,3 +3,8 @@
 //
 
 #include "AClient.hpp"
+
+bool client::AClient::isConnected()
+{
+	return (_connected);
+}
