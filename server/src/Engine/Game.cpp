@@ -8,7 +8,7 @@
 
 Engine::Game::Game()
 {
-    this->_world = std::make_unique<World>(World());
+    this->_world = std::make_unique<World>();
 }
 
 Engine::Game::~Game()

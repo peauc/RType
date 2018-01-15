@@ -17,14 +17,6 @@ namespace Engine {
         Event() = delete;
         explicit Event(unsigned int entityId);
     };
-
-    Event::Event(unsigned int entityId) : _entityId(entityId),
-                                          _xVelocity(0),
-                                          _yVelocity(0),
-                                          _shotReleased(false),
-                                          _chargingShot(false)
-    {
-    }
 }
 
 #endif //RTYPE_EVENT_HPP

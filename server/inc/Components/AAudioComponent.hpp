@@ -11,7 +11,7 @@ namespace Components {
     class AAudioComponents : public Engine::AComponent
     {
     public:
-        explicit AAudioComponents(Engine::Entity &parentEntity);
+        explicit AAudioComponents(Engine::Entity *parentEntity);
         ~AAudioComponents() override = default;
 
 

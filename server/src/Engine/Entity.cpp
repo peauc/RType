@@ -4,20 +4,20 @@
 
 #include <Engine/Entity.hpp>
 
-Engine::Entity::Entity(unsigned int hp, float speed) : _hp(hp), _speed(speed), _coordinates(), _components(), _mediator()
+Engine::Entity::Entity(unsigned int hp, float speed) : _transformComponent(this), _components(), _mediator()
 {
 }
 
 void Engine::Entity::update()
 {
-    for (std::unique_ptr<AComponent> component : this->_components) {
-        component->update();
+    for (int i = 0; i < _components.size(); ++i) {
+        this->_components[i]->update();
     }
 }
 
 void Engine::Entity::addComponent(Engine::AComponent *component)
 {
-    this->_components.push_back(component);
+    this->_components.push_back(std::unique_ptr<AComponent>(component));
     component->registerToMediator(this->_mediator);
 }
 

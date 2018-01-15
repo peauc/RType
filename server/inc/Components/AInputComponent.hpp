@@ -14,7 +14,7 @@ namespace Component {
         std::unique_ptr<Engine::Event> event;
 
     public:
-        explicit AInputComponent(Engine::Entity &parentEntity);
+        explicit AInputComponent(Engine::Entity *parentEntity);
         ~AInputComponent() override = default;
 
         const Engine::Event &getEvent() const;

@@ -19,7 +19,7 @@ namespace Component {
         float _yInput;
 
     public:
-        explicit DefaultPlayerMovementComponent(Engine::Entity &parentEntity);
+        explicit DefaultPlayerMovementComponent(Engine::Entity *parentEntity);
         ~DefaultPlayerMovementComponent() override = default;
 
         void update() override;

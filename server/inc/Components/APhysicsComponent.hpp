@@ -14,7 +14,7 @@ namespace Component {
         Engine::Hitbox hitbox;
 
     public:
-        APhysicsComponent(Engine::Entity &entity);
+        APhysicsComponent(Engine::Entity *entity);
         virtual ~APhysicsComponent();
     };
 }

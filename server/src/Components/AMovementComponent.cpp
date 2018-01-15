@@ -5,7 +5,7 @@
 #include <Components/AInputComponent.hpp>
 #include <Components/AMovementComponent.hpp>
 
-Component::AMovementComponent::AMovementComponent(Engine::Entity &parentEntity) : AComponent(parentEntity)
+Component::AMovementComponent::AMovementComponent(Engine::Entity *parentEntity) : AComponent(parentEntity)
 {
 
 }

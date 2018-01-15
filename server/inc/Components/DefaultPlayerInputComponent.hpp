@@ -8,6 +8,7 @@
 #include <Engine/AComponent.hpp>
 #include <Engine/Event.hpp>
 #include <queue>
+#include <utility>
 #include "AInputComponent.hpp"
 
 namespace Component {
@@ -17,7 +18,7 @@ namespace Component {
         std::unique_ptr<Engine::Event> _event;
 
     public:
-        explicit DefaultPlayerInputComponent(Engine::Entity &parentEntity, std::vector<std::unique_ptr<Engine::Event>> &gameEvents);
+        explicit DefaultPlayerInputComponent(Engine::Entity *parentEntity, std::vector<std::unique_ptr<Engine::Event>> &gameEvents);
         ~DefaultPlayerInputComponent() override = default;
 
         void update() override;

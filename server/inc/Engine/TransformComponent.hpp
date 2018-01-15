@@ -15,13 +15,15 @@ namespace Engine {
         Vector2d _rotation;
 
     public:
-        explicit TransformComponent(Entity &parentEntity);
+        explicit TransformComponent(Entity *parentEntity);
         ~TransformComponent() override = default;
 
-        const Vector2d &getPosition() const;
-        void setPosition(const Vector2d &_position);
-        const Vector2d &getRotation() const;
-        void setRotation(const Vector2d &_rotation);
+        void update() override;
+
+        Vector2d &getPosition();
+        void setPosition(Vector2d &_position);
+        Vector2d &getRotation();
+        void setRotation(Vector2d &_rotation);
     };
 }
 

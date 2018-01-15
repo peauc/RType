@@ -5,7 +5,7 @@
 #include <Components/DefaultPlayerMovementComponent.hpp>
 #include <Components/AInputComponent.hpp>
 
-Component::DefaultPlayerMovementComponent::DefaultPlayerMovementComponent(Engine::Entity &parentEntity)
+Component::DefaultPlayerMovementComponent::DefaultPlayerMovementComponent(Engine::Entity *parentEntity)
         : AMovementComponent(parentEntity),
           _baseSpeed(1.0f),
           _lateralBaseSpeed(0.0f),

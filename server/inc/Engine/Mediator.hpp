@@ -14,15 +14,15 @@ namespace Engine {
     class AComponent;
     class Mediator
     {
-        std::vector<AComponent &> _subjects;
+        std::vector<AComponent *> _subjects;
 
     public:
         Mediator() = default;
         ~Mediator() = default;
 
         void send(Message message, AComponent *sender);
-        void registerComponent(AComponent &component);
-        void unregisterComponent(AComponent &component);
+        void registerComponent(AComponent *component);
+        void unregisterComponent(AComponent *component);
     };
 }
 

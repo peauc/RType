@@ -7,21 +7,20 @@
 
 #include <memory>
 #include <unordered_map>
-#include "Entity.hpp"
 #include "Mediator.hpp"
 #include "Message.hpp"
 
 namespace Engine {
-    class Mediator;
+    class Entity;
     class AComponent
     {
     protected:
-        Entity &_parentEntity;
-        std::vector<Mediator &> _mediators;
+        Entity *_parentEntity;
+        std::vector<Mediator> _mediators;
         std::unordered_map<Message, std::function<void(Message, AComponent *)>> _validMessageTypes;
 
     public:
-        explicit AComponent(Entity &parentEntity);
+        explicit AComponent(Entity *parentEntity);
         virtual ~AComponent() = default;
 
         void registerToMediator(Mediator &mediator);

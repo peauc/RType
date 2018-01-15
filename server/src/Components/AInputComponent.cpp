@@ -4,7 +4,7 @@
 
 #include <Components/AInputComponent.hpp>
 
-Component::AInputComponent::AInputComponent(Engine::Entity &parentEntity) : AComponent(parentEntity)
+Component::AInputComponent::AInputComponent(Engine::Entity *parentEntity) : AComponent(parentEntity)
 {
 
 }

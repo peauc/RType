@@ -5,7 +5,7 @@
 #include <Components/DefaultPlayerInputComponent.hpp>
 #include <Components/AMovementComponent.hpp>
 
-Component::DefaultPlayerInputComponent::DefaultPlayerInputComponent(Engine::Entity &parentEntity,
+Component::DefaultPlayerInputComponent::DefaultPlayerInputComponent(Engine::Entity *parentEntity,
                                                                     std::vector<std::unique_ptr<Engine::Event>> &gameEvents)
         : AInputComponent(parentEntity),
           _gameEvents(gameEvents)
@@ -14,16 +14,15 @@ Component::DefaultPlayerInputComponent::DefaultPlayerInputComponent(Engine::Enti
 
 void Component::DefaultPlayerInputComponent::update()
 {
-    for (std::vector<std::unique_ptr<Engine::Event>>::const_iterator it = this->_gameEvents.begin();
-         it != this->_gameEvents.end(); it++) {
-        if ((*it)->_entityId == this->_parentEntity.getId()) {
-            this->_event = std::unique_ptr(it->release());
-            this->_gameEvents.erase(it);
+    for (unsigned int i = 0; i < this->_gameEvents.size(); i++) {
+        if (this->_gameEvents[i]->_entityId == this->_parentEntity->getId()) {
+            this->_event = std::move(this->_gameEvents[i]);
+            this->_gameEvents.erase(this->_gameEvents.begin() + i);
             break;
         }
     }
     for (Engine::Mediator mediator : this->_mediators) {
-        mediator.send(Engine::Message::NEW_EVENT, *this);
+        mediator.send(Engine::Message::NEW_EVENT, this);
     }
 }
 

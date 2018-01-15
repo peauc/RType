@@ -15,7 +15,7 @@ namespace Component {
         std::unique_ptr<Engine::Event> _event;
 
     public:
-        explicit AMovementComponent(Engine::Entity &parentEntity);
+        explicit AMovementComponent(Engine::Entity *parentEntity);
         ~AMovementComponent() override = default;
     };
 }

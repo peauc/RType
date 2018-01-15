@@ -13,7 +13,7 @@
 
 namespace Engine {
     class World {
-        std::list<Entity> _objects;
+        std::list<std::unique_ptr<Entity>> _objects;
         std::vector<std::shared_ptr<Mediator>> _mediators;
         std::queue<Sound> _sounds;
 
@@ -24,8 +24,8 @@ namespace Engine {
         World(const World &) = delete;
         const World &operator=(const World &) = delete;
 
-        void addObject(const Entity &entity);
-        void removeObject(const Entity &entity);
+        void addObject(std::unique_ptr<Entity> &&entity);
+        void removeObject(unsigned int id);
 
         void update();
     };
