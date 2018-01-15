@@ -1,81 +1,12 @@
 /*
 ** EPITECH PROJECT , 2020
-** SFMLDemo
+** Mapper
 ** File description :
 ** No description
 */
 
+#include "Sprite.hpp"
 #include "Extractor.hpp"
-
-Extractor::Sprite::Sprite() {
-	this->minX = 0;
-	this->minY = 0;
-	this->maxX = 0;
-	this->maxY = 0;
-	this->initialized = false;
-}
-
-void Extractor::Sprite::setMinX(unsigned int minX) {
-	this->minX = (minX < this->minX || !this->initialized ? minX : this->minX);
-}
-
-void Extractor::Sprite::setMinY(unsigned int minY) {
-	this->minY = (minY < this->minY || !this->initialized ? minY : this->minY);
-}
-
-void Extractor::Sprite::setMaxX(unsigned int maxX) {
-	this->maxX = (maxX > this->maxX || !this->initialized ? maxX : this->maxX);
-}
-
-void Extractor::Sprite::setMaxY(unsigned int maxY) {
-	this->maxY = (maxY > this->maxY || !this->initialized ? maxY : this->maxY);
-}
-
-void Extractor::Sprite::setInitialized(bool state) {
-	this->initialized = state;
-}
-
-unsigned int Extractor::Sprite::getMinX() const {
-	return (this->minX);
-}
-
-unsigned int Extractor::Sprite::getMinY() const {
-	return (this->minY);
-}
-
-unsigned int Extractor::Sprite::getMaxX() const {
-	return (this->maxX);
-}
-
-unsigned int Extractor::Sprite::getMaxY() const {
-	return (this->maxY);
-}
-
-Extractor::Sprite::Sprite(const Extractor::Sprite &obj) {
-	this->minX = obj.minX;
-	this->minY = obj.minY;
-	this->maxX = obj.maxX;
-	this->maxY = obj.maxY;
-}
-
-Extractor::Sprite &Extractor::Sprite::operator=(const Extractor::Sprite &obj) {
-	if (this != &obj)
-	{
-		this->minX = obj.minX;
-		this->minY = obj.minY;
-		this->maxX = obj.maxX;
-		this->maxY = obj.maxY;
-	}
-	return (*this);
-}
-
-unsigned int Extractor::Sprite::getWidth() const {
-	return ((this->maxX + 1) - this->minX);
-}
-
-unsigned int Extractor::Sprite::getHeight() const {
-	return ((this->maxY + 1) - this->minY);
-}
 
 void Extractor::extractSprites(const std::string &file) {
 	if (!this->image.loadFromFile(file))
@@ -96,6 +27,7 @@ void Extractor::browsePixels() {
 			this->tryCreateSprite(x, y);
 		}
 	}
+	this->sortSprites();
 }
 
 void Extractor::tryCreateSprite(unsigned int x, unsigned int y) {
@@ -120,7 +52,7 @@ void Extractor::tryCreateSprite(unsigned int x, unsigned int y) {
 	}
 }
 
-void Extractor::createSprite(Extractor::Sprite &sprite,
+void Extractor::createSprite(Sprite &sprite,
                              unsigned int x, unsigned int y) {
 	if (!this->pixelIsOutOfRange(x, y)
 	    && !this->isEmptyPixel(this->image.getPixel(x, y))
@@ -139,7 +71,7 @@ const sf::Image &Extractor::getImage() const {
 	return (this->image);
 }
 
-const std::vector<Extractor::Sprite> &Extractor::getSprites() const {
+const std::vector<Sprite> &Extractor::getSprites() const {
 	return (this->sprites);
 }
 
@@ -161,5 +93,17 @@ void Extractor::addTails(unsigned int x, unsigned int y) {
 	this->tails.push(sf::Vector2<unsigned int> {x + 1, y + 1} );
 	this->tails.push(sf::Vector2<unsigned int> {x - 1, y + 1} );
 	this->tails.push(sf::Vector2<unsigned int> {x + 1, y - 1} );
+}
+
+void Extractor::sortSprites() {
+	std::sort(this->sprites.begin(), this->sprites.end(),
+	          [](const Sprite &one, const Sprite &two)
+	          {
+		          if (one.getMinY() + one.getHeight() < two.getMinY())
+			          return (true);
+		          else if (two.getMinY() + two.getHeight() < one.getMinY())
+			          return (false);
+		          return (one.getMinX() < two.getMinX());
+	          } );
 }
 
