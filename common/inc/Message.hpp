@@ -7,7 +7,7 @@
 
 #ifndef RTYPE_MESSAGE_HPP_
 # define RTYPE_MESSAGE_HPP_
-
+#include <string>
 # include "DataPacket.hpp"
 # include "IMessage.hpp"
 # include "PacketInterpreter.hpp"
@@ -19,12 +19,9 @@ public:
 	Message(const Message &) noexcept;
 	Message &operator=(const Message &) noexcept;
 	~Message() = default;
-
+	DataPacket getPacket() const;
 	const std::string getRawMessage() const noexcept override;
-
 private:
-	const std::size_t 	PACKETSIZE = sizeof(DataPacket);
-
 	std::string		_rawMessage;
 	DataPacket		_packet;
 	PacketInterpreter	_interpreter;

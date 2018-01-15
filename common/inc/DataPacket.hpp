@@ -79,4 +79,6 @@ struct	DataPacket
 	union UData	data;
 };
 
+const size_t PACKETSIZE = sizeof(DataPacket);
+
 #endif //SFMLDEMO_DATAPACKET_HPP

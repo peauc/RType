@@ -7,6 +7,7 @@
 #include <boost/asio.hpp>
 #include <Logger.hpp>
 #include <iostream>
+#include <Message.hpp>
 #include "AsioServer.hpp"
 
 bool AsioServer::start()
@@ -59,6 +60,8 @@ void AsioServer::startReceive()
 void AsioServer::handleReceive(const boost::system::error_code &error,
                                std::size_t nbWritten)
 {
+	
+	Message message(std::string(_array.begin(), _array.end()));
 	Logger::Log(Logger::DEBUG, "Received " + std::to_string(nbWritten));
 	boost::shared_ptr<std::string> toot(new std::string("toto"));
 	
@@ -69,12 +72,12 @@ void AsioServer::handleReceive(const boost::system::error_code &error,
 		_endpointList.emplace_back(boost::asio::ip::udp::endpoint
 			                        (_dummy_endpoint));
 	}
-	_socket.async_send_to(boost::asio::buffer(*toot),
-	                      _dummy_endpoint,
-	                      boost::bind(&AsioServer::handleSend,
-	                                  this, toot,
-	                                  boost::asio::placeholders::error,
-	                                  boost::asio::placeholders::bytes_transferred));
+//	_socket.async_send_to(boost::asio::buffer(*toot),
+//	                      _dummy_endpoint,
+//	                      boost::bind(&AsioServer::handleSend,
+//	                                  this, toot,
+//	                                  boost::asio::placeholders::error,
+//	                                  boost::asio::placeholders::bytes_transferred));
 	startReceive();
 }
 bool AsioServer::tick()

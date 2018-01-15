@@ -6,6 +6,8 @@
 #include <boost/array.hpp>
 #include <iostream>
 #include <boost/bind.hpp>
+#include <Logger.hpp>
+#include <Message.hpp>
 #include "AsioClient.hpp"
 
 client::AsioClient::AsioClient(const std::string &host) : _ioService(),
@@ -29,7 +31,7 @@ client::AsioClient::~AsioClient()
 
 bool client::AsioClient::sendMessage(const std::string &message) noexcept
 {
-	std::cout << "Preparing to send" << std::endl;
+	std::cout << "Preparing to send" << '\n';
 	boost::shared_ptr<std::string> ptr(new std::string(message));
 	
 	_socket.async_send_to(boost::asio::buffer(*ptr),
@@ -41,6 +43,18 @@ bool client::AsioClient::sendMessage(const std::string &message) noexcept
 	return (true);
 }
 
+bool client::AsioClient::sendMessage(const DataPacket &packet) noexcept
+{
+	//Logger::Log(Logger::DEBUG, "Preparing to send");
+	_socket.async_send_to(boost::asio::buffer(&packet,
+	                                          PACKETSIZE)
+	, _receiverEndpoint, boost::bind(&AsioClient::handleSendPacket, this,
+	                                 packet,
+	                                 boost::asio::placeholders::error,
+	                                 boost::asio::placeholders::bytes_transferred));
+	return (true);
+}
+
 bool client::AsioClient::connect(const std::string &host) noexcept
 {
 	boost::asio::ip::udp::resolver resolver(_ioService);
@@ -48,6 +62,7 @@ bool client::AsioClient::connect(const std::string &host) noexcept
 	_receiverEndpoint = *resolver.resolve(query);
 	return (true);
 }
+
 bool client::AsioClient::readMessage() noexcept
 {
 	_socket.async_receive_from(boost::asio::buffer(_data_array),
@@ -57,6 +72,7 @@ bool client::AsioClient::readMessage() noexcept
 		                            boost::asio::placeholders::bytes_transferred));
 	return (true);
 }
+
 void client::AsioClient::handleSend(boost::shared_ptr<std::string> message,
                                     const boost::system::error_code &error,
                                     std::size_t bytesTransfered)
@@ -65,8 +81,16 @@ void client::AsioClient::handleSend(boost::shared_ptr<std::string> message,
 		"size " << std::to_string(bytesTransfered) << std::endl;
 	
 }
+
 void client::AsioClient::handleReceive(const boost::system::error_code &error,
                                        std::size_t bytesTransfered)
 {
 	std::cout << "Sent " << std::to_string(bytesTransfered) << std::endl;
+}
+void client::AsioClient::handleSendPacket(const DataPacket &packet,
+                                    const boost::system::error_code &error,
+                                    std::size_t bytesTransfered)
+{
+	std::cout << "Received a packet of "
+		"size " << std::to_string(bytesTransfered) << std::endl;
 }

@@ -39,10 +39,15 @@ void	Message::transformStringToPacket(const std::string &str) noexcept
 {
 	std::memcpy(&this->_packet,
 		    this->_rawMessage.c_str(),
-		    Message::PACKETSIZE);
+		   PACKETSIZE);
 }
 
 const std::string Message::getRawMessage() const noexcept
 {
 	return (this->_rawMessage);
+}
+
+DataPacket Message::getPacket() const
+{
+	return DataPacket();
 }

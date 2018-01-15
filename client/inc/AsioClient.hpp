@@ -6,6 +6,7 @@
 #define RTYPE_ASIOCLIENT_HPP
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
+#include "DataPacket.hpp"
 #include "AClient.hpp"
 
 namespace client {
@@ -15,10 +16,14 @@ public:
 	AsioClient();
 	explicit AsioClient(const std::string &host);
 	bool sendMessage(const std::string &message) noexcept final;
+	bool sendMessage(const DataPacket &packet) noexcept;
 	bool connect(const std::string &message) noexcept final;
 	
 private:
 	void handleSend(boost::shared_ptr<std::string> message,
+	                const boost::system::error_code& error,
+	                std::size_t bytesTransfered);
+	void handleSendPacket(const DataPacket &packet,
 	                const boost::system::error_code& error,
 	                std::size_t bytesTransfered);
 	void handleReceive(const boost::system::error_code& error,
