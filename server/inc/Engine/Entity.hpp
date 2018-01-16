@@ -13,23 +13,24 @@
 #include "Components/DefaultPlayerMovementComponent.hpp"
 
 namespace Engine {
-    class Entity
-    {
-        unsigned int _id;
-        TransformComponent _transformComponent;
-        std::vector<std::unique_ptr<AComponent>> _components;
-        Mediator _mediator;
+	class Entity
+	{
+	public:
+		Entity();
+		~Entity() = default;
 
-    public:
-        Entity();
-        ~Entity() = default;
+		void update();
+		void addComponent(AComponent *component);
+		const Mediator &getMediator() const;
+		const TransformComponent &getTransformComponent() const;
+		const unsigned int getId() const;
 
-        void update();
-        void addComponent(AComponent *component);
-        const Mediator &getMediator() const;
-        const TransformComponent &getTransformComponent() const;
-        const unsigned int getId() const;
-    };
+	private:
+		unsigned int _id;
+		TransformComponent _transformComponent;
+		std::vector<std::unique_ptr<AComponent>> _components;
+		Mediator _mediator;
+	};
 }
 
 #endif //RTYPE_ENTITY_HPP

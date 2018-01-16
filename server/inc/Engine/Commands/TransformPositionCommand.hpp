@@ -9,20 +9,21 @@
 #include "ICommand.hpp"
 
 namespace Engine {
-    namespace Commands {
-        class TransformPositionCommand : public ICommand
-        {
-            Engine::TransformComponent &_transformComponent;
-            float _x;
-            float _y;
+	namespace Commands {
+		class TransformPositionCommand : public ICommand
+		{
+		public:
+			explicit TransformPositionCommand(Engine::TransformComponent &transformComponent, float x, float y);
+			~TransformPositionCommand() = default;
 
-        public:
-            explicit TransformPositionCommand(Engine::TransformComponent &transformComponent, float x, float y);
-            ~TransformPositionCommand() = default;
+			void execute() override;
 
-            void execute() override;
-        };
-    }
+		private:
+			Engine::TransformComponent &_transformComponent;
+			float _x;
+			float _y;
+		};
+	}
 }
 
 #endif //RTYPE_TRANSFORMPOSITIONCOMMAND_HPP

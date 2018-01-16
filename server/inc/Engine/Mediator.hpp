@@ -11,19 +11,21 @@
 #include "Message.hpp"
 
 namespace Engine {
-    class AComponent;
-    class Mediator
-    {
-        std::vector<AComponent *> _subjects;
+	class AComponent;
 
-    public:
-        Mediator() = default;
-        ~Mediator() = default;
+	class Mediator
+	{
+	public:
+		Mediator() = default;
+		~Mediator() = default;
 
-        void send(Message message, AComponent *sender);
-        void registerComponent(AComponent *component);
-        void unregisterComponent(AComponent *component);
-    };
+		void send(Message message, AComponent *sender);
+		void registerComponent(AComponent *component);
+		void unregisterComponent(AComponent *component);
+
+	private:
+		std::vector<AComponent *> _subjects;
+	};
 }
 
 #endif //RTYPE_MEDIATOR_HPP

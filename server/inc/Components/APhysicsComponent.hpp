@@ -9,14 +9,14 @@
 #include <Engine/Hitbox.hpp>
 
 namespace Component {
-    class APhysicsComponent : public Engine::AComponent
-    {
-        Engine::Hitbox hitbox;
-
-    public:
-        APhysicsComponent(Engine::Entity *entity);
-        virtual ~APhysicsComponent();
-    };
+	class APhysicsComponent : public Engine::AComponent
+	{
+	public:
+		APhysicsComponent(Engine::Entity *entity);
+		virtual ~APhysicsComponent();
+	private:
+		Engine::Hitbox hitbox;
+	};
 }
 
 #endif //RTYPE_APHYSICSCOMPONENT_HPP

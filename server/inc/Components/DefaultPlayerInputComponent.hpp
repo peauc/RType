@@ -12,19 +12,22 @@
 #include "AInputComponent.hpp"
 
 namespace Component {
-    class DefaultPlayerInputComponent : public AInputComponent
-    {
-        std::vector<std::unique_ptr<Engine::Event>> &_gameEvents;
-        std::unique_ptr<Engine::Event> _event;
+	class DefaultPlayerInputComponent : public AInputComponent
+	{
 
-    public:
-        explicit DefaultPlayerInputComponent(Engine::Entity *parentEntity, std::vector<std::unique_ptr<Engine::Event>> &gameEvents);
-        ~DefaultPlayerInputComponent() override = default;
+	public:
+		explicit DefaultPlayerInputComponent(Engine::Entity *parentEntity,
+											 std::vector<std::unique_ptr<Engine::Event>> &gameEvents);
+		~DefaultPlayerInputComponent() override = default;
 
-        void update() override;
+		void update() override;
 
-        const Engine::Event &getEvent() const;
-    };
+		const Engine::Event &getEvent() const;
+
+	private:
+		std::vector<std::unique_ptr<Engine::Event>> &_gameEvents;
+		std::unique_ptr<Engine::Event> _event;
+	};
 }
 
 #endif //RTYPE_DEFAULTPLAYERINPUTCOMPONENT_HPP

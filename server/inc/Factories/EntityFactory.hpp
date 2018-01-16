@@ -12,9 +12,8 @@
 
 namespace Factory {
     class EntityFactory {
+	public:
         static Engine::Entity *createPlayerShip(Engine::Game &game);
-
-
     };
 }
 

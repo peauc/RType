@@ -9,24 +9,24 @@
 #include "AMovementComponent.hpp"
 
 namespace Component {
-    class DefaultPlayerMovementComponent : public AMovementComponent
-    {
-        float _baseSpeed;
-        float _lateralBaseSpeed;
-        float _maxSpeed;
-        float _lateralMaxSpeed;
-        float _xInput;
-        float _yInput;
+	class DefaultPlayerMovementComponent : public AMovementComponent
+	{
+	public:
+		explicit DefaultPlayerMovementComponent(Engine::Entity *parentEntity);
+		~DefaultPlayerMovementComponent() override = default;
 
-    public:
-        explicit DefaultPlayerMovementComponent(Engine::Entity *parentEntity);
-        ~DefaultPlayerMovementComponent() override = default;
+		void update() override;
 
-        void update() override;
-
-        // handle methods
-        void handleEvent(Engine::Message messageType, AComponent *sender);
-    };
+		// handle methods
+		void handleEvent(Engine::Message messageType, AComponent *sender);
+	private:
+		float _baseSpeed;
+		float _lateralBaseSpeed;
+		float _maxSpeed;
+		float _lateralMaxSpeed;
+		float _xInput;
+		float _yInput;
+	};
 }
 
 #endif //RTYPE_DEFAULTPLAYERMOVEMENTCOMPONENT_HPP

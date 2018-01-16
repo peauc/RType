@@ -6,23 +6,24 @@
 #define RTYPE_SOUND_HPP
 
 namespace Engine {
-    class Sound
-    {
-        unsigned int _id;
-        bool _loop;
-        bool _music;
+	class Sound
+	{
+	public:
+		Sound(unsigned int id, bool loop, bool music);
+		~Sound() = default;
 
-    public:
-        Sound(unsigned int id, bool loop, bool music);
-        ~Sound() = default;
+		unsigned int getId() const;
+		void setId(unsigned int _id);
+		bool isLoop() const;
+		void setLoop(bool _loop);
+		bool isMusic() const;
+		void setMusic(bool _music);
 
-        unsigned int getId() const;
-        void setId(unsigned int _id);
-        bool isLoop() const;
-        void setLoop(bool _loop);
-        bool isMusic() const;
-        void setMusic(bool _music);
-    };
+	private:
+		unsigned int _id;
+		bool _loop;
+		bool _music;
+	};
 }
 
 #endif //RTYPE_SOUND_HPP

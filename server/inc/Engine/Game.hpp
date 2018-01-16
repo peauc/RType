@@ -12,20 +12,21 @@
 #define MS_PER_UPDATE 16
 
 namespace Engine {
-    class Game
-    {
-        std::unique_ptr<World> _world;
-        std::vector<std::unique_ptr<Event>> _events;
-        bool _stop;
+	class Game
+	{
+	public:
+		Game();
+		~Game();
+		void run();
 
-    public:
-        Game();
-        ~Game();
-        void run();
+		std::vector<std::unique_ptr<Event>> &getEventsReference();
+		const std::vector<std::unique_ptr<Event>> &getEvents() const;
 
-        std::vector<std::unique_ptr<Event>> &getEventsReference();
-        const std::vector<std::unique_ptr<Event>> &getEvents() const;
-    };
+	private:
+		std::unique_ptr<World> _world;
+		std::vector<std::unique_ptr<Event>> _events;
+		bool _stop;
+	};
 }
 
 #endif //RTYPE_GAME_HPP
