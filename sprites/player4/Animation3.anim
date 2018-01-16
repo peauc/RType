@@ -1,0 +1,8 @@
+{
+	 Animation : 
+		[
+			{ File : images_to_map/r-typesheet42.png, x : 67, y : 54, width : 32, height : 12 },
+			{ File : images_to_map/r-typesheet42.png, x : 100, y : 54, width : 32, height : 13 },
+			{ File : images_to_map/r-typesheet42.png, x : 133, y : 53, width : 32, height : 14 }
+		]
+}

@@ -20,7 +20,7 @@ void Engine::AComponent::unregisterToMediator(Engine::Mediator &mediator)
     mediator.unregisterComponent(this);
 }
 
-void Engine::AComponent::receive(Engine::Message messageType, Engine::AComponent *sender)
+void Engine::AComponent::receive(Engine::Mediator::Message messageType, Engine::AComponent *sender)
 {
     this->_validMessageTypes[messageType](messageType, sender);
 }

@@ -11,23 +11,27 @@
 #include "TransformComponent.hpp"
 
 namespace Engine {
-    class Entity
-    {
-        unsigned int _id;
-        TransformComponent _transformComponent;
-        std::vector<std::unique_ptr<AComponent>> _components;
-        Mediator _mediator;
+	class Entity
+	{
+	public:
+		Entity(unsigned int id);
+		~Entity() = default;
 
-    public:
-        Entity(unsigned int hp, float speed);
-        ~Entity() = default;
+		void update();
+		void addComponent(AComponent *component);
+		const Mediator &getMediator() const;
+		const TransformComponent &getTransformComponent() const;
+		const unsigned int getId() const;
 
-        void update();
-        void addComponent(AComponent *component);
-        const Mediator &getMediator() const;
-        const TransformComponent &getTransformComponent() const;
-        const unsigned int getId() const;
-    };
+		bool operator==(unsigned int id);
+		bool operator==(const Entity &other);
+
+	private:
+		unsigned int _id;
+		TransformComponent _transformComponent;
+		std::vector<std::unique_ptr<AComponent>> _components;
+		Mediator _mediator;
+	};
 }
 
 #endif //RTYPE_ENTITY_HPP

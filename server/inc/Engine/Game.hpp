@@ -12,18 +12,28 @@
 #define MS_PER_UPDATE 16
 
 namespace Engine {
-    class Game
-    {
-    public:
-            Game();
-            ~Game();
-            void run();
-    private:
-        std::unique_ptr<World> _world;
-        std::vector<std::unique_ptr<Event>> _events;
-        bool _stop;
+	class World;
+	class Game
+	{
+	public:
+		Game();
+		~Game();
+		void run();
+		unsigned int addPlayerEntity();
+		void removePlayerEntity();
+		void removePlayerEntity(unsigned int id);
 
-        };
+		std::vector<std::unique_ptr<Event>> &getEventsReference();
+		const std::vector<std::unique_ptr<Event>> &getEvents() const;
+		World &getWorld();
+		const World &getWorld() const;
+		void setWorld(std::unique_ptr<World>);
+
+	private:
+		std::unique_ptr<World> _world;
+		std::vector<std::unique_ptr<Event>> _events;
+		bool _stop;
+	};
 }
 
 #endif //RTYPE_GAME_HPP

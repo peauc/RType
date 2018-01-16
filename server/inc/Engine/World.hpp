@@ -7,28 +7,37 @@
 
 #include <list>
 #include <queue>
-#include "Entity.hpp"
-#include "Mediator.hpp"
+#include <Factories/EntityFactory.hpp>
+#include "Game.hpp"
 #include "Sound.hpp"
 
 namespace Engine {
-    class World {
-        std::list<std::unique_ptr<Entity>> _objects;
-        std::vector<std::shared_ptr<Mediator>> _mediators;
-        std::queue<Sound> _sounds;
+	class Game;
+	class World
+	{
+	public:
+		World();
+		~World() = default;
 
-    public:
-        World() = default;
-        ~World() = default;
+		World(const World &) = delete;
+		const World &operator=(const World &) = delete;
 
-        World(const World &) = delete;
-        const World &operator=(const World &) = delete;
+		void addObject(Engine::Entity *(*)(unsigned int, Engine::Game &));
+		void addObject(std::unique_ptr<Entity> entity);
+		void removeObject(unsigned int id);
+		Game *getParentGame() const;
+		void setParentGame(Game *_parentGame);
 
-        void addObject(std::unique_ptr<Entity> &&entity);
-        void removeObject(unsigned int id);
+		void update();
 
-        void update();
-    };
+	private:
+		unsigned int _nextEntityId;
+		std::list<std::unique_ptr<Entity>> _objects;
+		std::unique_ptr<Entity> _camera;
+		std::vector<std::shared_ptr<Mediator>> _mediators;
+		std::queue<Sound> _sounds;
+		Game *_parentGame;
+	};
 }
 
 #endif //RTYPE_WORLD_HPP

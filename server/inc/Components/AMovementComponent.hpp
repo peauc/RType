@@ -9,15 +9,14 @@
 #include <Engine/Event.hpp>
 
 namespace Component {
-    class AMovementComponent : public Engine::AComponent
-    {
-    protected:
-        std::unique_ptr<Engine::Event> _event;
-
-    public:
-        explicit AMovementComponent(Engine::Entity *parentEntity);
-        ~AMovementComponent() override = default;
-    };
+	class AMovementComponent : public Engine::AComponent
+	{
+	public:
+		explicit AMovementComponent(Engine::Entity *parentEntity);
+		~AMovementComponent() override = default;
+	protected:
+		std::unique_ptr<Engine::Event> _event;
+	};
 }
 
 #endif //RTYPE_AMOVEMENTCOMPONENT_HPP

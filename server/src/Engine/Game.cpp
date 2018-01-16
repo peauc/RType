@@ -5,6 +5,7 @@
 #include <Engine/Game.hpp>
 #include <chrono>
 #include <iostream>
+#include <Factories/EntityFactory.hpp>
 
 Engine::Game::Game()
 {
@@ -34,3 +35,34 @@ void Engine::Game::run()
         // SEND INFORMATIONS TO CLIENT
     }
 }
+
+const std::vector<std::unique_ptr<Engine::Event>> &Engine::Game::getEvents() const
+{
+    return _events;
+}
+
+std::vector<std::unique_ptr<Engine::Event>> &Engine::Game::getEventsReference()
+{
+    return _events;
+}
+
+
+Engine::World &Engine::Game::getWorld()
+{
+	return *_world;
+}
+
+const Engine::World &Engine::Game::getWorld() const
+{
+	return *_world;
+}
+
+void Engine::Game::setWorld(std::unique_ptr<World> world)
+{
+	if (this->_world != nullptr) {
+		this->_world->setParentGame(nullptr);
+	}
+	this->_world = std::move(world);
+	this->_world->setParentGame(this);
+}
+
