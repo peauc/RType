@@ -31,7 +31,8 @@ AsioServer::AsioServer() : _endpoint(boost::asio::ip::udp::v4(), 4242) ,
 {
 }
 
-bool AsioServer::sendMessage(const IClientObject &client, const IMessage &message)
+bool AsioServer::sendMessage(const ClientObject &client, const IMessage
+&message)
 {
 	boost::shared_ptr<std::string> toot(new std::string("toto"));
 	
@@ -60,19 +61,20 @@ void AsioServer::startReceive()
 void AsioServer::handleReceive(const boost::system::error_code &error,
                                std::size_t nbWritten)
 {
-	Logger::Log(Logger::DEBUG, "Received " + std::to_string(nbWritten));
 	Message message(std::string(_array.begin(), _array.end()));
-
-	if (std::find(_endpointList.begin(), _endpointList.end(),
-	              _dummy_endpoint) == _endpointList.end())
-	{
-		std::cout << "New connection" << std::endl;
-		_endpointList.emplace_back(boost::asio::ip::udp::endpoint
-						   (_dummy_endpoint));
-	}
+	Logger::Log(Logger::DEBUG, "Received " + message.getRawMessage()
+	                           + " " + std::to_string(nbWritten));
+	ClientObject tmp(_dummy_endpoint);
+	Lobby l;
+	
+	if (_lobbyList.isClientContained(tmp))
+		l = _lobbyList.getClientLobby(tmp);
+	
+	
 	this->_interpreter.interpretPacket(message.getPacket());
 	startReceive();
 }
+
 bool AsioServer::tick()
 {
 	_ioService.run();

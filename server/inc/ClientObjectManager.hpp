@@ -6,14 +6,18 @@
 #define RTYPE_CLIENTMANAGER_HPP
 
 #include <vector>
-#include "IClientObject.hpp"
+#include "IMessage.hpp"
+#include "ClientObject.hpp"
+
 
 class ClientObjectManager {
 public:
 	size_t size() const;
 	std::vector<IMessage> getClientsMessages();
+	bool addClient(ClientObject &client) noexcept;
+	bool isClientContained(ClientObject &client) noexcept;
 private:
-	std::vector<IClientObject> _clientList;
+	std::vector<ClientObject> _clientList;
 };
 
 #endif //RTYPE_CLIENTMANAGER_HPP

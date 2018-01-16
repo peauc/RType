@@ -8,7 +8,6 @@
 #ifndef ASERVER_HPP
 #define ASERVER_HPP
 #include <vector>
-#include "IClientObject.hpp"
 #include "IMessage.hpp"
 #include "ClientObjectManager.hpp"
 
@@ -20,8 +19,7 @@ public:
 	virtual bool start();
 	virtual bool stop();
 	
-	const ClientObjectManager &getClientManager();
-	virtual std::vector<IMessage> getClientMessage(IClientObject &client);
+	ClientObjectManager &getClientManager();
 private:
 	ClientObjectManager _clientManager;
 	bool _shouldStop = false;

@@ -11,11 +11,12 @@
 #include <boost/asio.hpp>
 #include "IServer.hpp"
 #include "PacketInterpreterServer.hpp"
+#include "LobbyContainer.hpp"
 
 class AsioServer : public IServer {
 public:
 	virtual bool
-	sendMessage(const IClientObject &client, const IMessage &message);
+	sendMessage(const ClientObject &client, const IMessage &message);
 	AsioServer();
 	~AsioServer() final;
 	virtual bool tick();
@@ -30,6 +31,7 @@ private:
 	void handleReceive(const boost::system::error_code& error,
 	                    std::size_t nbWritten);
 	
+	LobbyContainer _lobbyList;
 	std::vector<boost::asio::ip::udp::endpoint> _endpointList;
 	boost::asio::ip::udp::endpoint _endpoint;
 	boost::asio::ip::udp::endpoint _dummy_endpoint;

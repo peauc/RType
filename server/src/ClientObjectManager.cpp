@@ -16,3 +16,15 @@ std::vector<IMessage> ClientObjectManager::getClientsMessages()
 	{}
 	return (messageList);
 }
+bool ClientObjectManager::addClient(ClientObject &obj) noexcept
+{
+	if (size() >= 4)
+		return (false);
+	_clientList.push_back(obj);
+	return (true);
+}
+bool ClientObjectManager::isClientContained(ClientObject &client) noexcept
+{
+	return !(std::find(_clientList.begin(), _clientList.end(), client) ==
+	         _clientList.end());
+}
