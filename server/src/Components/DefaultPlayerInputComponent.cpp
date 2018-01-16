@@ -22,13 +22,8 @@ void Component::DefaultPlayerInputComponent::update()
         }
     }
     for (Engine::Mediator mediator : this->_mediators) {
-        mediator.send(Engine::Message::NEW_EVENT, this);
+        mediator.send(Engine::Mediator::Message::NEW_EVENT, this);
     }
-}
-
-const Engine::Event &Component::DefaultPlayerInputComponent::getEvent() const
-{
-    return *_event;
 }
 
 

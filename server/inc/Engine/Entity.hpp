@@ -9,8 +9,6 @@
 #include <memory>
 #include "AComponent.hpp"
 #include "TransformComponent.hpp"
-#include "Components/DefaultPlayerInputComponent.hpp"
-#include "Components/DefaultPlayerMovementComponent.hpp"
 
 namespace Engine {
 	class Entity

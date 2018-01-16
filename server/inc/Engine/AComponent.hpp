@@ -8,7 +8,6 @@
 #include <memory>
 #include <unordered_map>
 #include "Mediator.hpp"
-#include "Message.hpp"
 
 namespace Engine {
 	class Entity;
@@ -21,14 +20,14 @@ namespace Engine {
 
 		void registerToMediator(Mediator &mediator);
 		void unregisterToMediator(Mediator &mediator);
-		void receive(Message messageType, AComponent *sender);
+		void receive(Mediator::Message messageType, AComponent *sender);
 
 		virtual void update() = 0;
 
 	protected:
 		Entity *_parentEntity;
 		std::vector<Mediator> _mediators;
-		std::unordered_map<Message, std::function<void(Message, AComponent *)>> _validMessageTypes;
+		std::unordered_map<Mediator::Message, std::function<void(Mediator::Message, AComponent *)>> _validMessageTypes;
 	};
 }
 

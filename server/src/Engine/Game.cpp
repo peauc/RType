@@ -46,6 +46,12 @@ std::vector<std::unique_ptr<Engine::Event>> &Engine::Game::getEventsReference()
     return _events;
 }
 
+
+Engine::World &Engine::Game::getWorld()
+{
+	return *_world;
+}
+
 const Engine::World &Engine::Game::getWorld() const
 {
 	return *_world;
@@ -53,10 +59,10 @@ const Engine::World &Engine::Game::getWorld() const
 
 void Engine::Game::setWorld(std::unique_ptr<World> world)
 {
+	if (this->_world != nullptr) {
+		this->_world->setParentGame(nullptr);
+	}
 	this->_world = std::move(world);
+	this->_world->setParentGame(this);
 }
 
-unsigned int Engine::Game::addPlayerEntity()
-{
-	this->_world->addObject(std::unique_ptr(Factory::EntityFactory::))
-}

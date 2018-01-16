@@ -12,6 +12,7 @@
 #define MS_PER_UPDATE 16
 
 namespace Engine {
+	class World;
 	class Game
 	{
 	public:
@@ -24,6 +25,7 @@ namespace Engine {
 
 		std::vector<std::unique_ptr<Event>> &getEventsReference();
 		const std::vector<std::unique_ptr<Event>> &getEvents() const;
+		World &getWorld();
 		const World &getWorld() const;
 		void setWorld(std::unique_ptr<World>);
 

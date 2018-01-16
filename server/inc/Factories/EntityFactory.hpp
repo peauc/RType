@@ -6,11 +6,13 @@
 #define RTYPE_FACTORY_HPP
 
 #include <Engine/Entity.hpp>
-#include <Components/DefaultPlayerMovementComponent.hpp>
-#include <Components/DefaultPlayerInputComponent.hpp>
 #include <Engine/Game.hpp>
 
-typedef Engine::Entity* (*createCall)(unsigned int, Engine::Game &);
+namespace Engine {
+	class Game;
+}
+
+typedef Engine::Entity *(*createCall)(unsigned int, Engine::Game &);
 
 namespace Factory {
 	class EntityFactory

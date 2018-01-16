@@ -17,9 +17,9 @@ namespace Component {
 	public:
 		explicit DefaultPlayerInputComponent(Engine::Entity *parentEntity,
 											 std::vector<std::unique_ptr<Engine::Event>> &gameEvents);
-		~DefaultPlayerInputComponent() override = default;
+		~DefaultPlayerInputComponent() = default;
 
-		void update() override;
+		void update();
 	private:
 		std::vector<std::unique_ptr<Engine::Event>> &_gameEvents;
 	};

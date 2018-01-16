@@ -27,7 +27,7 @@ void Component::DefaultPlayerMovementComponent::update()
         yMovement = this->_lateralMaxSpeed;
 }
 
-void Component::DefaultPlayerMovementComponent::handleEvent(Engine::Message messageType, Engine::AComponent *sender)
+void Component::DefaultPlayerMovementComponent::handleEvent(Engine::Mediator::Message messageType, Engine::AComponent *sender)
 {
     if (AInputComponent *inputComponent = dynamic_cast<AInputComponent *>(sender)) {
         this->_xInput = inputComponent->getEvent()._xVelocity;

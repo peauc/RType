@@ -7,5 +7,4 @@
 
 Component::AMovementComponent::AMovementComponent(Engine::Entity *parentEntity) : AComponent(parentEntity)
 {
-
 }

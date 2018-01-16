@@ -10,7 +10,7 @@ Engine::World::World() : _nextEntityId(0), _parentGame(nullptr)
 }
 
 
-void Engine::World::addObject(createCall call)
+void Engine::World::addObject(Engine::Entity *(*call)(unsigned int, Engine::Game &))
 {
 	this->_objects.push_back(std::unique_ptr<Entity>(call(this->_nextEntityId, *this->_parentGame)));
 	this->_nextEntityId++;

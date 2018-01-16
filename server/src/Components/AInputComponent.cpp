@@ -6,10 +6,9 @@
 
 Component::AInputComponent::AInputComponent(Engine::Entity *parentEntity) : AComponent(parentEntity)
 {
-
 }
 
 const Engine::Event &Component::AInputComponent::getEvent() const
 {
-    return *this->event;
+	return *this->_event;
 }

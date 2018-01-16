@@ -18,7 +18,7 @@ namespace Component {
 		void update() override;
 
 		// handle methods
-		void handleEvent(Engine::Message messageType, AComponent *sender);
+		void handleEvent(Engine::Mediator::Message messageType, AComponent *sender);
 	private:
 		float _baseSpeed;
 		float _lateralBaseSpeed;

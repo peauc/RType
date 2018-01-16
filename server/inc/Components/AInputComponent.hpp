@@ -17,7 +17,7 @@ namespace Component {
 
 		const Engine::Event &getEvent() const;
 	protected:
-		std::unique_ptr<Engine::Event> event;
+		std::unique_ptr<Engine::Event> _event;
 	};
 }
 

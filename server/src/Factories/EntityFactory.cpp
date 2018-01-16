@@ -2,6 +2,8 @@
 // Created by romain on 15/01/18.
 //
 
+#include <Components/DefaultPlayerMovementComponent.hpp>
+#include <Components/DefaultPlayerInputComponent.hpp>
 #include "Factories/EntityFactory.hpp"
 
 Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine::Game &game)
@@ -13,4 +15,6 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 
 	playerShip->addComponent(playerMoveComponent);
 	playerShip->addComponent(playerInputComponent);
+
+	return playerShip;
 }

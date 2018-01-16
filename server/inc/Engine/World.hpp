@@ -8,11 +8,11 @@
 #include <list>
 #include <queue>
 #include <Factories/EntityFactory.hpp>
-#include "Entity.hpp"
-#include "Mediator.hpp"
+#include "Game.hpp"
 #include "Sound.hpp"
 
 namespace Engine {
+	class Game;
 	class World
 	{
 	public:
@@ -22,7 +22,7 @@ namespace Engine {
 		World(const World &) = delete;
 		const World &operator=(const World &) = delete;
 
-		void addObject(createCall);
+		void addObject(Engine::Entity *(*)(unsigned int, Engine::Game &));
 		void addObject(std::unique_ptr<Entity> entity);
 		void removeObject(unsigned int id);
 		Game *getParentGame() const;
@@ -33,6 +33,7 @@ namespace Engine {
 	private:
 		unsigned int _nextEntityId;
 		std::list<std::unique_ptr<Entity>> _objects;
+		std::unique_ptr<Entity> _camera;
 		std::vector<std::shared_ptr<Mediator>> _mediators;
 		std::queue<Sound> _sounds;
 		Game *_parentGame;

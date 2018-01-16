@@ -8,14 +8,16 @@
 #include <vector>
 #include <algorithm>
 #include "AComponent.hpp"
-#include "Message.hpp"
 
 namespace Engine {
 	class AComponent;
-
 	class Mediator
 	{
 	public:
+		enum Message {
+			NEW_EVENT
+		};
+
 		Mediator() = default;
 		~Mediator() = default;
 
