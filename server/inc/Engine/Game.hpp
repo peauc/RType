@@ -18,9 +18,14 @@ namespace Engine {
 		Game();
 		~Game();
 		void run();
+		unsigned int addPlayerEntity();
+		void removePlayerEntity();
+		void removePlayerEntity(unsigned int id);
 
 		std::vector<std::unique_ptr<Event>> &getEventsReference();
 		const std::vector<std::unique_ptr<Event>> &getEvents() const;
+		const World &getWorld() const;
+		void setWorld(std::unique_ptr<World>);
 
 	private:
 		std::unique_ptr<World> _world;

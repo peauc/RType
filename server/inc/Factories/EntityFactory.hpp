@@ -10,11 +10,14 @@
 #include <Components/DefaultPlayerInputComponent.hpp>
 #include <Engine/Game.hpp>
 
+typedef Engine::Entity* (*createCall)(unsigned int, Engine::Game &);
+
 namespace Factory {
-    class EntityFactory {
+	class EntityFactory
+	{
 	public:
-        static Engine::Entity *createPlayerShip(Engine::Game &game);
-    };
+		static Engine::Entity *createPlayerShip(unsigned int id, Engine::Game &game);
+	};
 }
 
 #endif //RTYPE_FACTORY_HPP

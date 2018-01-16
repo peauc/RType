@@ -5,6 +5,7 @@
 #include <Engine/Game.hpp>
 #include <chrono>
 #include <iostream>
+#include <Factories/EntityFactory.hpp>
 
 Engine::Game::Game()
 {
@@ -43,4 +44,19 @@ const std::vector<std::unique_ptr<Engine::Event>> &Engine::Game::getEvents() con
 std::vector<std::unique_ptr<Engine::Event>> &Engine::Game::getEventsReference()
 {
     return _events;
+}
+
+const Engine::World &Engine::Game::getWorld() const
+{
+	return *_world;
+}
+
+void Engine::Game::setWorld(std::unique_ptr<World> world)
+{
+	this->_world = std::move(world);
+}
+
+unsigned int Engine::Game::addPlayerEntity()
+{
+	this->_world->addObject(std::unique_ptr(Factory::EntityFactory::))
 }

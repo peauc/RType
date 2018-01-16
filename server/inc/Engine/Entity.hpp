@@ -16,7 +16,7 @@ namespace Engine {
 	class Entity
 	{
 	public:
-		Entity();
+		Entity(unsigned int id);
 		~Entity() = default;
 
 		void update();
@@ -24,6 +24,9 @@ namespace Engine {
 		const Mediator &getMediator() const;
 		const TransformComponent &getTransformComponent() const;
 		const unsigned int getId() const;
+
+		bool operator==(unsigned int id);
+		bool operator==(const Entity &other);
 
 	private:
 		unsigned int _id;

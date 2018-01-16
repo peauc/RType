@@ -4,12 +4,13 @@
 
 #include "Factories/EntityFactory.hpp"
 
-Engine::Entity *Factory::EntityFactory::createPlayerShip(Engine::Game &game)
+Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine::Game &game)
 {
-    Engine::Entity *playerShip = new Engine::Entity();
-    Engine::AComponent *playerMoveComponent = new Component::DefaultPlayerMovementComponent(playerShip);
-    Engine::AComponent *playerInputComponent = new Component::DefaultPlayerInputComponent(playerShip, game.getEventsReference());
+	Engine::Entity *playerShip = new Engine::Entity(id);
+	Engine::AComponent *playerMoveComponent = new Component::DefaultPlayerMovementComponent(playerShip);
+	Engine::AComponent *playerInputComponent = new Component::DefaultPlayerInputComponent(playerShip,
+																						  game.getEventsReference());
 
-    playerShip->addComponent(playerMoveComponent);
-    playerShip->addComponent(playerInputComponent);
+	playerShip->addComponent(playerMoveComponent);
+	playerShip->addComponent(playerInputComponent);
 }
