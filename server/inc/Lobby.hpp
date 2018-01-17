@@ -15,6 +15,7 @@ public:
 	~Lobby();
 	
 	bool addClient(ClientObject &client) noexcept;
+	size_t size() const noexcept ;
 	bool isFull() const noexcept ;
 	bool isClientContained(const ClientObject &client) const noexcept ;
 private:

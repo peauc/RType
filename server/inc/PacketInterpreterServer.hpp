@@ -31,7 +31,8 @@ public:
 	void	event(const Packet::DataPacket &packet) noexcept override;
 
 private:
-	void (PacketInterpreterServer::*fptr[UNKNOWN])(const Packet::DataPacket &packet);
+	void (PacketInterpreterServer::*fptr[Packet::UNKNOWN])(const
+	                                                Packet::DataPacket &packet);
 };
 
 #endif // !RTYPE_PACKETINTERPRETERSERVER_HPP_

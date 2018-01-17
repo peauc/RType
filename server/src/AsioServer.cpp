@@ -59,18 +59,29 @@ void AsioServer::startReceive()
 		            boost::asio::placeholders::bytes_transferred));
 }
 void AsioServer::handleReceive(const boost::system::error_code &error,
-                               std::size_t nbWritten)
+                               std::size_t received)
 {
-	Message message(std::string(_array.begin(), _array.end()));
-	Logger::Log(Logger::DEBUG, "Received " + message.getRawMessage()
-	                           + " " + std::to_string(nbWritten));
-	ClientObject tmp(_dummy_endpoint);
-	
-	if (_lobbyList.isClientContained(tmp))
-		//Lobby &t = _lobbyList.getClientLobby(tmp);
-	
-	this->_interpreter.interpretPacket(message.getPacket());
 	startReceive();
+	if (received != Packet::PACKETSIZE)
+		return ;
+	Message message(std::string(_array.begin(), _array.end()));
+	//Logger::Log(Logger::DEBUG, "Received " + message.getRawMessage()
+	 //                          + " " + std::to_string(nbWritten));
+	ClientObject tmp(_dummy_endpoint);
+	Lobby *t;
+	
+	if (_lobbyList.isClientContained(tmp)) {
+		t = _lobbyList.getClientLobby(tmp);
+		_interpreter.interpretPacket(message.getPacket());
+	}
+	else {
+		std::cout << "Created a new client" << '\n';
+		if (message.getPacket().cmd == Packet::CONNECT) {
+			_lobbyList.addClientToLobby(tmp);
+		}
+	}
+	_lobbyList.dump();
+	
 }
 
 bool AsioServer::tick()

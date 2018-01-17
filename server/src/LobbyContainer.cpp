@@ -2,6 +2,7 @@
 // Created by Clément Péau on 16/01/2018.
 //
 
+#include <iostream>
 #include "LobbyContainer.hpp"
 
 bool LobbyContainer::isClientContained(ClientObject &client)
@@ -12,11 +13,12 @@ bool LobbyContainer::isClientContained(ClientObject &client)
 	}
 	return (false);
 }
-std::unique_ptr<Lobby> &LobbyContainer::getClientLobby(ClientObject &client)
+std::unique_ptr<Lobby>::pointer LobbyContainer::getClientLobby(ClientObject
+                                                           &client)
 {
 	for (auto &t : _lobbyList) {
-		if (t.get()->isClientContained(client))
-			return (t);
+		if (t->isClientContained(client))
+			return (t.get());
 	}
 	throw std::out_of_range("No game containing client passed as "
 		                        "parameter");
@@ -41,4 +43,13 @@ LobbyContainer::LobbyContainer()
 
 LobbyContainer::~LobbyContainer()
 {
+}
+void LobbyContainer::dump()
+{
+	int i = 0;
+	
+	for (auto &t : _lobbyList) {
+		std::cout << "There is " << t->size() << " in lobby " << i++ <<
+		                                                        '\n';
+	}
 }

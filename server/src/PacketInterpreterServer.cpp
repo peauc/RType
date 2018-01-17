@@ -10,21 +10,21 @@
 
 PacketInterpreterServer::PacketInterpreterServer()
 {
-	fptr[CONNECT] = &PacketInterpreterServer::connect;
-	fptr[DISCONNECT] = &PacketInterpreterServer::disconnect;
-	fptr[CONNECTED] = &PacketInterpreterServer::connected;
-	fptr[DISCONNECTED] = &PacketInterpreterServer::disconnected;
-	fptr[STARTGAME] = &PacketInterpreterServer::startGame;
-	fptr[READY] = &PacketInterpreterServer::ready;
-	fptr[POSITION] = &PacketInterpreterServer::position;
-	fptr[HIT] = &PacketInterpreterServer::hit;
-	fptr[EVENT] = &PacketInterpreterServer::event;
+	fptr[Packet::CONNECT] = &PacketInterpreterServer::connect;
+	fptr[Packet::DISCONNECT] = &PacketInterpreterServer::disconnect;
+	fptr[Packet::CONNECTED] = &PacketInterpreterServer::connected;
+	fptr[Packet::DISCONNECTED] = &PacketInterpreterServer::disconnected;
+	fptr[Packet::STARTGAME] = &PacketInterpreterServer::startGame;
+	fptr[Packet::READY] = &PacketInterpreterServer::ready;
+	fptr[Packet::POSITION] = &PacketInterpreterServer::position;
+	fptr[Packet::HIT] = &PacketInterpreterServer::hit;
+	fptr[Packet::EVENT] = &PacketInterpreterServer::event;
 }
 
 void	PacketInterpreterServer::interpretPacket(const Packet::DataPacket &packet) noexcept
 {
 	std::cout << "CLIENT CMD = " << packet.cmd << std::endl;
-	if (packet.cmd < UNKNOWN) {
+	if (packet.cmd < Packet::UNKNOWN) {
 		(this->*fptr[packet.cmd])(packet);
 	}
 }

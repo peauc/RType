@@ -8,6 +8,7 @@
 #include <queue>
 #include "World.hpp"
 #include "Event.hpp"
+#include "EventList.hpp"
 
 #define MS_PER_UPDATE 16
 
@@ -28,7 +29,7 @@ namespace Engine {
 
 	private:
 		std::unique_ptr<World> _world;
-		std::vector<std::unique_ptr<Event>> _events;
+		EventList       _events;
 		bool _stop;
 	};
 }

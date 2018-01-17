@@ -10,7 +10,8 @@ int main(int ac, char **av)
 	try {
 		Packet::DataPacket packet;
 		client::AsioClient client;
-		packet.cmd = 0;
+		packet.cmd = Packet::CONNECT;
+		packet.data.connection.seed = 1337;
 		client.connect("127.0.0.1");
 		client.sendMessage(packet);
 	}

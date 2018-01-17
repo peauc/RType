@@ -24,20 +24,6 @@ public:
 	virtual void	position(const Packet::DataPacket &packet) = 0;
 	virtual void	hit(const Packet::DataPacket &packet) = 0;
 	virtual void	event(const Packet::DataPacket &packet) = 0;
-
-	enum Commands
-	{
-		CONNECT		= 0,
-		DISCONNECT	= 1,
-		CONNECTED	= 2,
-		DISCONNECTED	= 3,
-		STARTGAME	= 4,
-		READY		= 5,
-		POSITION	= 6,
-		HIT		= 7,
-		EVENT		= 8,
-		UNKNOWN		= 9
-	};
 };
 
 #endif //RTYPE_IPACKETINTERPRETER_HPP

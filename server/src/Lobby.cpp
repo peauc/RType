@@ -31,5 +31,9 @@ Lobby::Lobby()
 Lobby::~Lobby()
 {
 }
+size_t Lobby::size() const noexcept
+{
+	return (_clientList.size());
+}
 
 

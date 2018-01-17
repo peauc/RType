@@ -38,12 +38,12 @@ void Engine::Game::run()
 
 const std::vector<std::unique_ptr<Engine::Event>> &Engine::Game::getEvents() const
 {
-    return _events;
+    return _events.getEvents();
 }
 
 std::vector<std::unique_ptr<Engine::Event>> &Engine::Game::getEventsReference()
 {
-    return _events;
+    return _events.getEvents();
 }
 
 
