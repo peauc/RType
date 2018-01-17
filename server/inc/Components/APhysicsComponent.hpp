@@ -12,10 +12,12 @@ namespace Component {
 	class APhysicsComponent : public Engine::AComponent
 	{
 	public:
-		APhysicsComponent(Engine::Entity *entity);
-		virtual ~APhysicsComponent();
+		explicit APhysicsComponent(Engine::Entity *entity);
+		~APhysicsComponent() override = default;
+
+		virtual void triggerCollision(APhysicsComponent &other) = 0;
 	private:
-		Engine::Hitbox hitbox;
+
 	};
 }
 

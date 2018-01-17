@@ -9,11 +9,11 @@
 #include "AMovementComponent.hpp"
 
 namespace Component {
-	class DefaultCameraMovementComponent : public AMovementComponent
+	class CameraMovementComponent : public AMovementComponent
 	{
 	public:
-		explicit DefaultCameraMovementComponent(Engine::Entity *parentEntity, Engine::Game *parentGame);
-		~DefaultCameraMovementComponent() override = default;
+		explicit CameraMovementComponent(Engine::Entity *parentEntity, Engine::Game *parentGame);
+		~CameraMovementComponent() override = default;
 
 		void update() override;
 	private:

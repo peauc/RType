@@ -16,6 +16,7 @@ namespace Component {
 		~AInputComponent() override = default;
 
 		const Engine::Event &getEvent() const;
+		bool hasEvent() const;
 	protected:
 		std::unique_ptr<Engine::Event> _event;
 	};

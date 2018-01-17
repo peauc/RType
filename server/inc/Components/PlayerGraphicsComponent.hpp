@@ -8,11 +8,11 @@
 #include "AGraphicsComponent.hpp"
 
 namespace Component {
-	class DefaultPlayerGraphicsComponent : public AGraphicsComponent
+	class PlayerGraphicsComponent : public AGraphicsComponent
 	{
 	public:
-		explicit DefaultPlayerGraphicsComponent(Engine::Entity *parentEntity);
-		~DefaultPlayerGraphicsComponent() override = default;
+		explicit PlayerGraphicsComponent(Engine::Entity *parentEntity);
+		~PlayerGraphicsComponent() override = default;
 
 		void update() override;
 	};

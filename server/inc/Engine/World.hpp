@@ -30,6 +30,9 @@ namespace Engine {
 
 		std::unique_ptr<Entity> &getCamera();
 		void setCamera(std::unique_ptr<Entity> camera);
+		std::unique_ptr<Mediator> &getMediator();
+		const std::unique_ptr<Mediator> &getMediator() const;
+		void setMediator(std::unique_ptr<Mediator> _mediator);
 
 		void update();
 
@@ -37,7 +40,7 @@ namespace Engine {
 		unsigned int _nextEntityId;
 		std::list<std::unique_ptr<Entity>> _objects;
 		std::unique_ptr<Entity> _camera;
-		std::vector<std::shared_ptr<Mediator>> _mediators;
+		std::unique_ptr<Mediator> _mediator;
 		std::queue<Sound> _sounds;
 		Game *_parentGame;
 	};

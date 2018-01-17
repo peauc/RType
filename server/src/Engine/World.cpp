@@ -55,3 +55,18 @@ void Engine::World::update()
 		(*it)->update();
 	}
 }
+
+std::unique_ptr<Engine::Mediator> &Engine::World::getMediator()
+{
+	return _mediator;
+}
+
+const std::unique_ptr<Engine::Mediator> &Engine::World::getMediator() const
+{
+	return _mediator;
+}
+
+void Engine::World::setMediator(std::unique_ptr<Engine::Mediator> mediator)
+{
+	this->_mediator = std::move(mediator);
+}

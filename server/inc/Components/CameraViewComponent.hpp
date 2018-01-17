@@ -9,13 +9,16 @@
 #include "AGraphicsComponent.hpp"
 
 namespace Component {
-	class DefaultCameraViewComponent : public Engine::AComponent
+	class CameraViewComponent : public Engine::AComponent
 	{
 	public:
-		explicit DefaultCameraViewComponent(Engine::Entity *parentEntity, Engine::World *parentWorld);
-		~DefaultCameraViewComponent() override = default;
+		explicit CameraViewComponent(Engine::Entity *parentEntity, Engine::World *parentWorld);
+		~CameraViewComponent() override = default;
 
 		void update() override;
+
+		// handle methods
+		void handleGraphicsRegistration(Engine::Mediator::Message messageType, AComponent *sender);
 	private:
 		Engine::World *_parentWorld;
 		std::vector<Component::AGraphicsComponent *> _graphicComponents;
