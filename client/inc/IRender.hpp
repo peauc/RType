@@ -10,6 +10,7 @@
 
 # include <string>
 # include <queue>
+# include "Texture.hpp""
 # include "ISprite.hpp"
 
 class IRender
@@ -28,6 +29,11 @@ public:
 						      &fileName,
 						      uint32_t sizeTileX,
 						      uint32_t sizeTileY) = 0;
+	virtual void	setAnimationToSprite(ISprite *sprite,
+						 uint32_t idAnimation,
+						 bool repeat) = 0;
+	virtual void	loadAnimations(std::unordered_map<uint32_t,
+		std::vector<Texture>> textureMap) = 0;
 	
 	enum	EventAction
 	{
@@ -35,7 +41,7 @@ public:
 		DOWN	= 1,
 		LEFT	= 2,
 		RIGHT	= 3,
-		ACTION	= 4,
+		SPACE	= 4,
 		UNKNOWN
 	};
 	
