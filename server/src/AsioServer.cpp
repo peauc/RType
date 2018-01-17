@@ -70,7 +70,6 @@ void AsioServer::handleReceive(const boost::system::error_code &error,
 	if (_lobbyList.isClientContained(tmp))
 		l = _lobbyList.getClientLobby(tmp);
 	
-	
 	this->_interpreter.interpretPacket(message.getPacket());
 	startReceive();
 }
