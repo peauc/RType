@@ -14,7 +14,7 @@ Component::CameraViewComponent::CameraViewComponent(Engine::Entity *parentEntity
 	this->_relativeBottomRight.x = 1900;
 	this->_relativeBottomRight.y = 1080;
 
-	this->_validMessageTypes[Engine::Mediator::Message::GRAPHICS_REGISTERING] = &CameraViewComponent::handleGraphicsRegistration;
+	//this->_validMessageTypes[Engine::Mediator::Message::GRAPHICS_REGISTERING] = &CameraViewComponent::handleGraphicsRegistration;
 }
 
 void Component::CameraViewComponent::update()

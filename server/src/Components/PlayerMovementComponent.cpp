@@ -15,7 +15,7 @@ Component::PlayerMovementComponent::PlayerMovementComponent(Engine::Entity *pare
 		  _xInput(0.0f),
 		  _yInput(0.0f)
 {
-	this->_validMessageTypes[Engine::Mediator::Message::NEW_EVENT] = &PlayerMovementComponent::handleEvent;
+	//this->_validMessageTypes[Engine::Mediator::Message::NEW_EVENT] = &PlayerMovementComponent::handleEvent;
 }
 
 void Component::PlayerMovementComponent::update()
