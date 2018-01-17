@@ -23,8 +23,7 @@ int main(int ac, char **av, char **env) {
 		dest = (dest.back() == '/' ? dest : dest + "/");
 		mapper.setInfos(std::string(av[1]), dest);
 		mapper.start();
-	}
-	else
+	} else
 		std::cerr << "[Source File] [Output Directory]" << std::endl;
 	return (0);
 }
