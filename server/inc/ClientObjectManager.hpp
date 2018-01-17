@@ -9,7 +9,6 @@
 #include "IMessage.hpp"
 #include "ClientObject.hpp"
 
-
 class ClientObjectManager {
 public:
 	size_t size() const;
