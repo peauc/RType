@@ -58,10 +58,12 @@ void SpriteManager::removeAnimationSpriteIndex(unsigned int index) {
 	auto	it = std::find(this->animationSpritesIndex.begin(),
 						   this->animationSpritesIndex.end(), index);
 
-	this->animationSpritesIndex.erase(it);
-	for (auto &spriteIndex : this->animationSpritesIndex)
-		if (spriteIndex > index)
-			spriteIndex--;
+	if (it != this->animationSpritesIndex.end()) {
+		this->animationSpritesIndex.erase(it);
+		for (auto &spriteIndex : this->animationSpritesIndex)
+			if (spriteIndex > index)
+				spriteIndex--;
+	}
 }
 
 void SpriteManager::setSpriteSelected(unsigned int index, bool state) {
