@@ -22,8 +22,8 @@ namespace Engine {
 
 		std::vector<std::unique_ptr<Event>> &getEventsReference();
 		const std::vector<std::unique_ptr<Event>> &getEvents() const;
-		World &getWorld();
-		const World &getWorld() const;
+		std::unique_ptr<World> &getWorld();
+		const std::unique_ptr<World> &getWorld() const;
 		void setWorld(std::unique_ptr<World>);
 
 	private:

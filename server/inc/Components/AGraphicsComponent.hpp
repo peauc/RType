@@ -12,10 +12,10 @@ namespace Component {
 	class AGraphicsComponent : public Engine::AComponent
 	{
 	public:
-		explicit AGraphicsComponent(Engine::Entity *parentEntity, Engine::Game *parentGame);
-		~AGraphicsComponent() override;
-	private:
-		Engine::Game *_parentGame;
+		explicit AGraphicsComponent(Engine::Entity *parentEntity);
+		~AGraphicsComponent() override = default;
+
+		bool isInArea(float xPos, float yPos, float xRange, float yRange);
 	};
 }
 

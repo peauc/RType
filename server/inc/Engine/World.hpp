@@ -28,6 +28,9 @@ namespace Engine {
 		Game *getParentGame() const;
 		void setParentGame(Game *_parentGame);
 
+		std::unique_ptr<Entity> &getCamera();
+		void setCamera(std::unique_ptr<Entity> camera);
+
 		void update();
 
 	private:
