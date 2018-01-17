@@ -5,7 +5,6 @@
 ** No description
 */
 
-#include <iostream>
 #include "Sprite.hpp"
 #include "Displayer.hpp"
 
@@ -27,11 +26,9 @@ void Displayer::displaySprites() {
 		return ;
 	this->initDisplayer();
 	this->createEvents();
-	while(this->window.isOpen())
-	{
+	while(this->window.isOpen()) {
 		sf::Event event;
-		while (this->window.pollEvent(event))
-		{
+		while (this->window.pollEvent(event)) {
 			this->checkEvents(event);
 			this->drawSprite();
 		}
@@ -39,7 +36,7 @@ void Displayer::displaySprites() {
 }
 
 void Displayer::initDisplayer() {
-	this->window.create(sf::VideoMode(640,480,32),"Displayer");
+	this->window.create(sf::VideoMode(640,480,32),"Mapper");
 	this->scale = 1;
 	this->spriteIndex = 0;
 	this->texture.loadFromImage(this->spriteManager.getImage());

@@ -5,25 +5,24 @@
 ** No description
 */
 
+#include <cstdlib>
 #include <iostream>
-#include "Extractor.hpp"
-#include "Displayer.hpp"
+#include "Mapper.hpp"
 
 
-int main(int ac, char **av) {
-	Extractor       extractor;
-	SpriteManager   spriteManager;
-	Displayer       displayer(spriteManager);
+int main(int ac, char **av, char **env) {
+	Mapper			mapper;
 	std::string     dest = (ac > 2 ? av[2] : "./");
 
-	if (ac > 1)
-	{
+#ifdef __unix__
+	if (env == nullptr || std::getenv("DISPLAY") == nullptr)
+		return (84);
+#endif
+
+	if (ac > 1) {
 		dest = (dest.back() == '/' ? dest : dest + "/");
-		extractor.extractSprites(std::string(av[1]));
-		spriteManager.setSprites(extractor.getSprites());
-		spriteManager.setImage(extractor.getImage());
-		spriteManager.setSaveInfos(std::string(av[1]), dest);
-		displayer.displaySprites();
+		mapper.setInfos(std::string(av[1]), dest);
+		mapper.start();
 	}
 	else
 		std::cerr << "[Source File] [Output Directory]" << std::endl;

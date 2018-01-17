@@ -23,3 +23,13 @@ bool Lobby::addClient(ClientObject &client) noexcept
 	_clientList.push_back(client);
 	return (true);
 }
+
+Lobby::Lobby()
+{
+}
+
+Lobby::~Lobby()
+{
+}
+
+

@@ -21,7 +21,7 @@ PacketInterpreterServer::PacketInterpreterServer()
 	fptr[EVENT] = &PacketInterpreterServer::event;
 }
 
-void	PacketInterpreterServer::interpretPacket(const DataPacket &packet) noexcept
+void	PacketInterpreterServer::interpretPacket(const Packet::DataPacket &packet) noexcept
 {
 	std::cout << "CLIENT CMD = " << packet.cmd << std::endl;
 	if (packet.cmd < UNKNOWN) {
@@ -29,42 +29,42 @@ void	PacketInterpreterServer::interpretPacket(const DataPacket &packet) noexcept
 	}
 }
 
-void PacketInterpreterServer::connect(const DataPacket &packet) noexcept
+void PacketInterpreterServer::connect(const Packet::DataPacket &packet) noexcept
 {
 	std::cout << "CONNECT" << std::endl;
 }
 
-void PacketInterpreterServer::disconnect(const DataPacket &packet) noexcept
+void PacketInterpreterServer::disconnect(const Packet::DataPacket &packet) noexcept
 {
 	std::cout << "DISCONNECT" << std::endl;
 }
 
-void PacketInterpreterServer::connected(const DataPacket &packet) noexcept
+void PacketInterpreterServer::connected(const Packet::DataPacket &packet) noexcept
 {
 	std::cout << "CONNECTED" << std::endl;
 }
 
-void PacketInterpreterServer::disconnected(const DataPacket &packet) noexcept
+void PacketInterpreterServer::disconnected(const Packet::DataPacket &packet) noexcept
 {
 	std::cout << "DISCONNECTED" << std::endl;
 }
 
-void PacketInterpreterServer::startGame(const DataPacket &packet) noexcept
+void PacketInterpreterServer::startGame(const Packet::DataPacket &packet) noexcept
 {
 }
 
-void PacketInterpreterServer::ready(const DataPacket &packet) noexcept
+void PacketInterpreterServer::ready(const Packet::DataPacket &packet) noexcept
 {
 }
 
-void PacketInterpreterServer::position(const DataPacket &packet) noexcept
+void PacketInterpreterServer::position(const Packet::DataPacket &packet) noexcept
 {
 }
 
-void PacketInterpreterServer::hit(const DataPacket &packet) noexcept
+void PacketInterpreterServer::hit(const Packet::DataPacket &packet) noexcept
 {
 }
 
-void PacketInterpreterServer::event(const DataPacket &packet) noexcept
+void PacketInterpreterServer::event(const Packet::DataPacket &packet) noexcept
 {
 }

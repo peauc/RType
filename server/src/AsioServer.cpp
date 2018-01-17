@@ -5,9 +5,9 @@
 #include <boost/functional.hpp>
 #include <boost/bind.hpp>
 #include <boost/asio.hpp>
-#include <Logger.hpp>
 #include <iostream>
-#include <Message.hpp>
+#include "Logger.hpp"
+#include "Message.hpp"
 #include "AsioServer.hpp"
 
 bool AsioServer::start()
@@ -65,11 +65,9 @@ void AsioServer::handleReceive(const boost::system::error_code &error,
 	Logger::Log(Logger::DEBUG, "Received " + message.getRawMessage()
 	                           + " " + std::to_string(nbWritten));
 	ClientObject tmp(_dummy_endpoint);
-	Lobby l;
 	
 	if (_lobbyList.isClientContained(tmp))
-		l = _lobbyList.getClientLobby(tmp);
-	
+		//Lobby &t = _lobbyList.getClientLobby(tmp);
 	
 	this->_interpreter.interpretPacket(message.getPacket());
 	startReceive();

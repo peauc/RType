@@ -7,15 +7,15 @@
 bool LobbyContainer::isClientContained(ClientObject &client)
 {
 	for (auto &t : _lobbyList) {
-		if (t.isClientContained(client))
+		if (t.get()->isClientContained(client))
 			return (true);
 	}
 	return (false);
 }
-Lobby &LobbyContainer::getClientLobby(ClientObject &client)
+std::unique_ptr<Lobby> &LobbyContainer::getClientLobby(ClientObject &client)
 {
 	for (auto &t : _lobbyList) {
-		if (t.isClientContained(client))
+		if (t.get()->isClientContained(client))
 			return (t);
 	}
 	throw std::out_of_range("No game containing client passed as "
@@ -24,13 +24,21 @@ Lobby &LobbyContainer::getClientLobby(ClientObject &client)
 bool LobbyContainer::addClientToLobby(ClientObject &client)
 {
 	for (auto &t : _lobbyList) {
-		if (!t.isFull()) {
-			t.addClient(client);
+		if (!t.get()->isFull()) {
+			t.get()->addClient(client);
 			return (true);
 		}
 	}
-	Lobby lob;
-	lob.addClient(client);
-	_lobbyList.push_back(lob);
+	std::unique_ptr<Lobby> lob(new Lobby());
+	lob.get()->addClient(client);
+	_lobbyList.emplace_back(std::move(lob));
 	return (true);
+}
+
+LobbyContainer::LobbyContainer()
+{
+}
+
+LobbyContainer::~LobbyContainer()
+{
 }

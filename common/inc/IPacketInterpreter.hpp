@@ -14,16 +14,16 @@ class	IPacketInterpreter
 {
 public:
 	virtual ~IPacketInterpreter() = default;
-	virtual void	interpretPacket(const DataPacket &packet) = 0;
-	virtual void	connect(const DataPacket &packet) = 0;
-	virtual void	disconnect(const DataPacket &packet) = 0;
-	virtual void	connected(const DataPacket &packet) = 0;
-	virtual void	disconnected(const DataPacket &packet) = 0;
-	virtual void	startGame(const DataPacket &packet) = 0;
-	virtual void	ready(const DataPacket &packet) = 0;
-	virtual void	position(const DataPacket &packet) = 0;
-	virtual void	hit(const DataPacket &packet) = 0;
-	virtual void	event(const DataPacket &packet) = 0;
+	virtual void	interpretPacket(const Packet::DataPacket &packet) = 0;
+	virtual void	connect(const Packet::DataPacket &packet) = 0;
+	virtual void	disconnect(const Packet::DataPacket &packet) = 0;
+	virtual void	connected(const Packet::DataPacket &packet) = 0;
+	virtual void	disconnected(const Packet::DataPacket &packet) = 0;
+	virtual void	startGame(const Packet::DataPacket &packet) = 0;
+	virtual void	ready(const Packet::DataPacket &packet) = 0;
+	virtual void	position(const Packet::DataPacket &packet) = 0;
+	virtual void	hit(const Packet::DataPacket &packet) = 0;
+	virtual void	event(const Packet::DataPacket &packet) = 0;
 
 	enum Commands
 	{
