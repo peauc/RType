@@ -84,7 +84,8 @@ void	SpriteSFML::setAnimationVector(const std::vector<sf::Texture>
 {
 	bool	equal = true;
 
-	if (vector.size() == this->_animationVector.size()) {
+	if (vector.size() == this->_animationVector.size() &&
+		vector.size() > 1) {
 		for (int i = 0;
 		     i < vector.size() && i < this->_animationVector.size();
 		     ++i) {
