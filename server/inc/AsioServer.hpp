@@ -15,8 +15,8 @@
 
 class AsioServer : public IServer {
 public:
-	virtual bool
-	sendMessage(const ClientObject &client, const IMessage &message);
+	bool
+	sendMessage(const ClientObject &client, const IMessage &message) final;
 	AsioServer();
 	~AsioServer() final;
 	virtual bool tick();

@@ -20,11 +20,11 @@ public:
 	Message &operator=(const Message &) noexcept;
 	~Message() = default;
 
-	DataPacket		getPacket() const noexcept;
+	Packet::DataPacket		getPacket() const noexcept;
 	const std::string	getRawMessage() const noexcept override;
 private:
 	std::string		_rawMessage;
-	DataPacket		_packet;
+	Packet::DataPacket		_packet;
 
 	void	transformStringToPacket(const std::string &str) noexcept;
 };

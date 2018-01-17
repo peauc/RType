@@ -13,10 +13,10 @@ public:
 	LobbyContainer();
 	~LobbyContainer();
 	bool isClientContained(ClientObject &client);
-	Lobby &getClientLobby(ClientObject &client);
+	std::unique_ptr<Lobby> &getClientLobby(ClientObject &client);
 	bool addClientToLobby(ClientObject &client);
 private:
-	std::vector<Lobby> _lobbyList;
+	std::vector<std::unique_ptr<Lobby> > _lobbyList;
 };
 
 #endif //RTYPE_LOBBYCONTAINER_HPP
