@@ -9,6 +9,7 @@
 # define RTYPE_PACKETINTERPRETERSERVER_HPP_
 
 # include "IPacketInterpreter.hpp"
+# include "Engine/Event.hpp"
 
 class	PacketInterpreterServer : public IPacketInterpreter
 {
@@ -29,6 +30,9 @@ public:
 	void	position(const Packet::DataPacket &packet) noexcept override;
 	void	hit(const Packet::DataPacket &packet) noexcept override;
 	void	event(const Packet::DataPacket &packet) noexcept override;
+	
+	Engine::Event	createEventFromPacket(const Packet::DataPacket &packet,
+						   uint32_t id) noexcept;
 
 private:
 	void (PacketInterpreterServer::*fptr[UNKNOWN])(const Packet::DataPacket &packet);

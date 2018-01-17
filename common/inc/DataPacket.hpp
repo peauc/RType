@@ -43,8 +43,8 @@ namespace Packet
 	
 	struct Object
 	{
-		unsigned short	x;
-		unsigned short	y;
+		short		x;
+		short		y;
 		EntityState 	entityState;
 		bool 		animated;
 		bool 		hit;
@@ -55,10 +55,10 @@ namespace Packet
 	
 	struct Input
 	{
-		unsigned short	Xvelocity;
-		unsigned short	Yvelocity;
-		bool		shot;
-		bool		charged;
+		short		yVelocity;
+		short		xVelocity;
+		bool		shotReleased;
+		bool		chargingShot;
 	};
 	
 	struct Connection
