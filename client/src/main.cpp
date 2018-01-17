@@ -8,7 +8,7 @@
 int main(int ac, char **av)
 {
 	try {
-		DataPacket packet;
+		Packet::DataPacket packet;
 		client::AsioClient client;
 		packet.cmd = 0;
 		client.connect("127.0.0.1");
