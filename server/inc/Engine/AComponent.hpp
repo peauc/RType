@@ -18,15 +18,20 @@ namespace Engine {
 		explicit AComponent(Entity *parentEntity);
 		virtual ~AComponent() = default;
 
-		void registerToMediator(Mediator &mediator);
-		void unregisterToMediator(Mediator &mediator);
+		void registerToMediator(Mediator *mediator);
+		void unregisterToMediator(Mediator *mediator);
 		void receive(Mediator::Message messageType, AComponent *sender);
+		void sendToAll(Mediator::Message messageType);
+		void addObserver(Entity *);
+		void removeObserver(Entity *);
 
 		virtual void update() = 0;
 
 	protected:
 		Entity *_parentEntity;
-		std::vector<Mediator> _mediators;
+		std::vector<Mediator *> _mediators;
+		std::vector<Entity *> _observers;
+
 		std::unordered_map<Mediator::Message, std::function<void(Mediator::Message, AComponent *)>> _validMessageTypes;
 	};
 }

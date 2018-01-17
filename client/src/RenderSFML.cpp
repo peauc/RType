@@ -22,7 +22,7 @@ RenderSFML::RenderSFML(unsigned int width, unsigned int height,
 	this->_eventMap.insert(std::make_pair(sf::Keyboard::Right,
 					      EventAction::RIGHT));
 	this->_eventMap.insert(std::make_pair(sf::Keyboard::Space,
-					      EventAction::ACTION));
+					      EventAction::SPACE));
 	this->openWindow(width, height, windowName);
 }
 
@@ -102,10 +102,58 @@ std::queue<IRender::EventAction>	RenderSFML::pollEvents() noexcept
 }
 
 void	RenderSFML::addEventToQueue(std::queue<IRender::EventAction>
-				      &eventQueue, sf::Keyboard::Key key)
+				      &eventQueue, sf::Keyboard::Key key) noexcept
 {
 	auto it = this->_eventMap.find(key);
 	if (it != this->_eventMap.end()) {
 		eventQueue.push(it->second);
+	}
+}
+
+void	RenderSFML::loadAnimations(std::unordered_map<uint32_t,
+	std::vector<Texture>> textureMap) noexcept
+{
+	for (auto &it : textureMap) {
+		auto &vectorTexture = it.second;
+		std::vector<sf::Texture> sfmlVectorTexture;
+		for (auto &texture : vectorTexture) {
+			try {
+				sfmlVectorTexture.push_back(
+					this->loadTexture(texture));
+			} catch (const std::runtime_error &e) {
+				std::cout << e.what() << std::endl;
+			}
+		}
+		this->_textureMap.insert(std::make_pair(it.first,
+							sfmlVectorTexture));
+	}
+}
+
+sf::Texture		RenderSFML::loadTexture(const Texture &structTexture)
+{
+	sf::Texture	texture;
+	
+	if (!texture.loadFromFile(structTexture.filePath,
+				  sf::IntRect(structTexture.left,
+					      structTexture.top,
+					      structTexture.width,
+					      structTexture.height))) {
+		std::cerr << "[Error] Cannot open file : "
+			     + structTexture.filePath
+			  << std::endl;
+		throw std::runtime_error("Cannot open file : "
+					 + structTexture.filePath);
+	}
+	return (texture);
+}
+
+void	RenderSFML::setAnimationToSprite(ISprite *sprite,
+					     uint32_t idAnimation,
+					     bool repeat) noexcept
+{
+	auto *spriteSFML = dynamic_cast<SpriteSFML*>(sprite);
+	auto it = this->_textureMap.find(idAnimation);
+	if (it != this->_textureMap.end()) {
+		spriteSFML->setAnimationVector(it->second, repeat);
 	}
 }

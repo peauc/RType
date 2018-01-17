@@ -10,17 +10,18 @@
 
 # include <SFML/Graphics/Sprite.hpp>
 # include <SFML/Graphics/Texture.hpp>
-# include "ISprite.hpp"
+# include "ASprite.hpp"
 
-class SpriteSFML : public ISprite
+class SpriteSFML : public ASprite
 {
 public:
-	explicit SpriteSFML(const std::string &fileName,
+	SpriteSFML() noexcept;
+	SpriteSFML(const std::string &fileName,
 			    unsigned int sizeTileX, unsigned int sizeTileY);
 	SpriteSFML(const SpriteSFML &)  noexcept;
 	SpriteSFML &operator=(const SpriteSFML &) noexcept;
 	~SpriteSFML() override = default;
-	
+
 	void			applyTexture() noexcept;
 	const sf::Sprite	&getSprite() const noexcept;
 	void	selectSprite(unsigned int posX,
@@ -29,12 +30,20 @@ public:
 				 unsigned int sizeY) noexcept override;
 	void	selectSprite(uint32_t tileNumber,
 				 uint32_t line) noexcept override;
+	void	setAnimationVector(const std::vector<sf::Texture>
+				       &vector, bool repeat) noexcept;
+	void	updateAnimation() noexcept override;
+	void	setPosX(int x) noexcept override;
+	void	setPosY(int y) noexcept override;
 
 private:
 	sf::Sprite	_sprite;
 	sf::Texture	_texture;
 	unsigned int	_sizeTileX;
 	unsigned int	_sizeTileY;
+	std::vector<sf::Texture> _animationVector;
+	unsigned short	_animationIndex;
+	bool		_repeatAnimation;
 };
 
 #endif // !RTYPE_SPRITESFML_HPP_

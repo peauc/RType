@@ -35,14 +35,22 @@ public:
 					      uint32_t szX,
 					      uint32_t szY) noexcept override;
 
+	void	loadAnimations(std::unordered_map<uint32_t,
+		std::vector<Texture>> textureMap) noexcept override;
+	void	setAnimationToSprite(ISprite *sprite,
+					 uint32_t idAnimation,
+					 bool repeat) noexcept override;
+
 private:
 	const unsigned int					BPP = 32;
 
 	std::unique_ptr<sf::RenderWindow>			_window;
 	std::unordered_map<sf::Keyboard::Key, EventAction>	_eventMap;
+	std::unordered_map<uint32_t, std::vector<sf::Texture>>	_textureMap;
 
 	void	addEventToQueue(std::queue<IRender::EventAction> &eventQueue,
-				    sf::Keyboard::Key key);
+				    sf::Keyboard::Key key) noexcept;
+	sf::Texture	loadTexture(const Texture &structTexture);
 };
 
 #endif // !RTYPE_RENDERSFML_HPP_

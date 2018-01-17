@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include "Texture.hpp"
 #include "JsonDataLoader.hpp"
 #include "Object.hpp"
 
@@ -24,15 +25,6 @@ private:
 	};
 
 public:
-
-	struct Texture {
-		std::string		filePath;
-		int				left;
-		int 			top;
-		int 			width;
-		int 			height;
-	};
-
 	using Animation = std::vector<Texture>;
 	using Animations = std::unordered_map<unsigned int, Animation>;
 	using Sounds = std::unordered_map<unsigned int, std::string>;

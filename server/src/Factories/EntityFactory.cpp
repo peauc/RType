@@ -4,6 +4,7 @@
 
 #include <Components/DefaultPlayerMovementComponent.hpp>
 #include <Components/DefaultPlayerInputComponent.hpp>
+#include <Components/DefaultCameraMovementComponent.hpp>
 #include "Factories/EntityFactory.hpp"
 
 Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine::Game &game)
@@ -17,4 +18,13 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 	playerShip->addComponent(playerInputComponent);
 
 	return playerShip;
+}
+
+Engine::Entity *Factory::EntityFactory::createCamera(unsigned int id, Engine::Game &game)
+{
+	Engine::Entity *camera = new Engine::Entity(id);
+
+	camera->addComponent(new Component::DefaultCameraMovementComponent(camera, &game));
+
+	return camera;
 }

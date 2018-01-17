@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <memory>
+#include <Engine/Commands/ICommand.hpp>
 #include "AComponent.hpp"
 #include "TransformComponent.hpp"
 
@@ -14,12 +15,19 @@ namespace Engine {
 	class Entity
 	{
 	public:
-		Entity(unsigned int id);
+		explicit Entity(unsigned int id);
 		~Entity() = default;
 
 		void update();
+		void executeCommands();
+		void receive(Mediator::Message messageType, AComponent *sender);
+
 		void addComponent(AComponent *component);
+		void addCommand(Commands::ICommand *command);
+
+		Mediator &getMediator();
 		const Mediator &getMediator() const;
+		TransformComponent &getTransformComponent();
 		const TransformComponent &getTransformComponent() const;
 		const unsigned int getId() const;
 
@@ -30,7 +38,8 @@ namespace Engine {
 		unsigned int _id;
 		TransformComponent _transformComponent;
 		std::vector<std::unique_ptr<AComponent>> _components;
-		Mediator _mediator;
+		std::vector<std::unique_ptr<Commands::ICommand>> _commands;
+		std::unique_ptr<Mediator> _mediator;
 	};
 }
 

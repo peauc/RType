@@ -19,6 +19,7 @@ namespace Factory {
 	{
 	public:
 		static Engine::Entity *createPlayerShip(unsigned int id, Engine::Game &game);
+		static Engine::Entity *createCamera(unsigned int id, Engine::Game &game);
 	};
 }
 

@@ -22,8 +22,8 @@ namespace Engine {
 		World(const World &) = delete;
 		const World &operator=(const World &) = delete;
 
-		void addObject(Engine::Entity *(*)(unsigned int, Engine::Game &));
-		void addObject(std::unique_ptr<Entity> entity);
+		unsigned int addObject(Engine::Entity *(*)(unsigned int, Engine::Game &));
+		unsigned int addObject(std::unique_ptr<Entity> entity);
 		void removeObject(unsigned int id);
 		Game *getParentGame() const;
 		void setParentGame(Game *_parentGame);
