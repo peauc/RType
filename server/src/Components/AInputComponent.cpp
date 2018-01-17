@@ -12,3 +12,8 @@ const Engine::Event &Component::AInputComponent::getEvent() const
 {
 	return *this->_event;
 }
+
+bool Component::AInputComponent::hasEvent() const
+{
+	return this->_event != nullptr;
+}

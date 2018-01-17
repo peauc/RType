@@ -10,9 +10,10 @@
 #include <Engine/Commands/ICommand.hpp>
 #include "AComponent.hpp"
 #include "TransformComponent.hpp"
+#include "Observer.hpp"
 
 namespace Engine {
-	class Entity
+	class Entity : public Observer
 	{
 	public:
 		explicit Entity(unsigned int id);
@@ -20,7 +21,7 @@ namespace Engine {
 
 		void update();
 		void executeCommands();
-		void receive(Mediator::Message messageType, AComponent *sender);
+		void receive(Mediator::Message messageType, AComponent *sender) override;
 
 		void addComponent(AComponent *component);
 		void addCommand(Commands::ICommand *command);

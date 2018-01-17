@@ -18,14 +18,14 @@ public:
 	AsioClient();
 	explicit AsioClient(const std::string &host);
 	bool sendMessage(const std::string &message) noexcept final;
-	bool sendMessage(const DataPacket &packet) noexcept;
+	bool sendMessage(const Packet::DataPacket &packet) noexcept;
 	bool connect(const std::string &message) noexcept final;
 	
 private:
 	void handleSend(boost::shared_ptr<std::string> message,
 	                const boost::system::error_code& error,
 	                std::size_t bytesTransfered);
-	void handleSendPacket(const DataPacket &packet,
+	void handleSendPacket(const Packet::DataPacket &packet,
 	                const boost::system::error_code& error,
 	                std::size_t bytesTransfered);
 	void handleReceive(const boost::system::error_code& error,

@@ -4,11 +4,18 @@
 
 #include <Components/AGraphicsComponent.hpp>
 
-Component::AGraphicsComponent::AGraphicsComponent(Engine::Entity *parentEntity, Engine::Game *parentGame) :
-		AComponent(parentEntity), _parentGame(parentGame)
+Component::AGraphicsComponent::AGraphicsComponent(Engine::Entity *parentEntity) :
+		AComponent(parentEntity)
 {
 }
 
-Component::AGraphicsComponent::~AGraphicsComponent()
+bool Component::AGraphicsComponent::isInArea(float xPos, float yPos, float xRange, float yRange)
 {
+	if (this->_parentEntity->getTransformComponent().getPosition().x > xPos &&
+		this->_parentEntity->getTransformComponent().getPosition().x < xPos + xRange &&
+		this->_parentEntity->getTransformComponent().getPosition().y > yPos &&
+		this->_parentEntity->getTransformComponent().getPosition().y < yPos + yRange) {
+		return true;
+	}
+	return false;
 }

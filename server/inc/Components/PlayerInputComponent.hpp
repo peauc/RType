@@ -12,12 +12,12 @@
 #include "AInputComponent.hpp"
 
 namespace Component {
-	class DefaultPlayerInputComponent : public AInputComponent
+	class PlayerInputComponent : public AInputComponent
 	{
 	public:
-		explicit DefaultPlayerInputComponent(Engine::Entity *parentEntity,
+		explicit PlayerInputComponent(Engine::Entity *parentEntity,
 											 std::vector<std::unique_ptr<Engine::Event>> &gameEvents);
-		~DefaultPlayerInputComponent() = default;
+		~PlayerInputComponent() = default;
 
 		void update();
 	private:

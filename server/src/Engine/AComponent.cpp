@@ -34,19 +34,19 @@ void Engine::AComponent::sendToAll(Engine::Mediator::Message messageType)
 			mediator->send(messageType, this);
 		}
 	}
-	for (Entity *observer : this->_observers) {
+	for (Observer *observer : this->_observers) {
 		if (observer != nullptr) {
 			observer->receive(messageType, this);
 		}
 	}
 }
 
-void Engine::AComponent::addObserver(Engine::Entity *observer)
+void Engine::AComponent::addObserver(Engine::Observer *observer)
 {
 	this->_observers.push_back(observer);
 }
 
-void Engine::AComponent::removeObserver(Engine::Entity *observer)
+void Engine::AComponent::removeObserver(Engine::Observer *observer)
 {
 	this->_observers.erase(std::find(this->_observers.begin(), this->_observers.end(), observer));
 }

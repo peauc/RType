@@ -9,11 +9,11 @@
 #include "AMovementComponent.hpp"
 
 namespace Component {
-	class DefaultPlayerMovementComponent : public AMovementComponent
+	class PlayerMovementComponent : public AMovementComponent
 	{
 	public:
-		explicit DefaultPlayerMovementComponent(Engine::Entity *parentEntity);
-		~DefaultPlayerMovementComponent() override = default;
+		explicit PlayerMovementComponent(Engine::Entity *parentEntity);
+		~PlayerMovementComponent() override = default;
 
 		void update() override;
 

@@ -1,0 +1,9 @@
+//
+// Created by romain on 17/01/18.
+//
+
+#include <Components/APhysicsComponent.hpp>
+
+Component::APhysicsComponent::APhysicsComponent(Engine::Entity *entity) : AComponent(entity)
+{
+}

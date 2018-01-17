@@ -43,9 +43,9 @@ bool client::AsioClient::sendMessage(const std::string &message) noexcept
 	return (true);
 }
 
-bool client::AsioClient::sendMessage(const DataPacket &packet) noexcept
+bool client::AsioClient::sendMessage(const Packet::DataPacket &packet) noexcept
 {
-	_socket.async_send_to(boost::asio::buffer(&packet, PACKETSIZE),
+	_socket.async_send_to(boost::asio::buffer(&packet, Packet::PACKETSIZE),
 			      _receiverEndpoint,
 			      boost::bind(&AsioClient::handleSendPacket,
 					  this,
@@ -86,7 +86,7 @@ void client::AsioClient::handleReceive(const boost::system::error_code &error,
 {
 	std::cout << "Sent " << std::to_string(bytesTransfered) << std::endl;
 }
-void client::AsioClient::handleSendPacket(const DataPacket &packet,
+void client::AsioClient::handleSendPacket(const Packet::DataPacket &packet,
                                     const boost::system::error_code &error,
                                     std::size_t bytesTransfered)
 {

@@ -2,17 +2,17 @@
 // Created by romain on 15/01/18.
 //
 
-#include <Components/DefaultPlayerInputComponent.hpp>
+#include <Components/PlayerInputComponent.hpp>
 #include <Components/AMovementComponent.hpp>
 
-Component::DefaultPlayerInputComponent::DefaultPlayerInputComponent(Engine::Entity *parentEntity,
+Component::PlayerInputComponent::PlayerInputComponent(Engine::Entity *parentEntity,
 																	std::vector<std::unique_ptr<Engine::Event>> &gameEvents)
 		: AInputComponent(parentEntity),
 		  _gameEvents(gameEvents)
 {
 }
 
-void Component::DefaultPlayerInputComponent::update()
+void Component::PlayerInputComponent::update()
 {
 	for (unsigned int i = 0; i < this->_gameEvents.size(); i++) {
 		if (this->_gameEvents[i]->_entityId == this->_parentEntity->getId()) {
@@ -21,9 +21,8 @@ void Component::DefaultPlayerInputComponent::update()
 			break;
 		}
 	}
-	for (Engine::Mediator *mediator : this->_mediators) {
-		mediator->send(Engine::Mediator::Message::NEW_EVENT, this);
-	}
+	this->sendToAll(Engine::Mediator::Message::NEW_EVENT);
+	this->_event = nullptr;
 }
 
 
