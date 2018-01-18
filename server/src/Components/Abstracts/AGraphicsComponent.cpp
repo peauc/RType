@@ -21,6 +21,16 @@ bool Component::AGraphicsComponent::isInArea(float xPos, float yPos, float xRang
 			this->_parentEntity->getTransformComponent().getPosition().y <= yPos + yRange);
 }
 
+float Component::AGraphicsComponent::getRelativeXPos(float xPos, float xRange)
+{
+	return (this->_parentEntity->getTransformComponent().getPosition().x - xPos) / xRange * 100;
+}
+
+float Component::AGraphicsComponent::getRelativeYPos(float yPos, float yRange)
+{
+	return (this->_parentEntity->getTransformComponent().getPosition().y - yPos) / yRange * 100;
+}
+
 RessourcesLoader *Component::AGraphicsComponent::getResourceLoader() const
 {
 	return _resourceLoader;
@@ -31,7 +41,7 @@ void Component::AGraphicsComponent::setResourceLoader(RessourcesLoader *_resourc
 	AGraphicsComponent::_resourceLoader = _resourceLoader;
 }
 
-unsigned int Component::AGraphicsComponent::getCurrentAnimationId() const
+unsigned char Component::AGraphicsComponent::getCurrentAnimationId() const
 {
 	return _currentAnimationId;
 }

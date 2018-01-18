@@ -33,6 +33,22 @@ void Engine::Game::run()
 	}
 }
 
+void Engine::Game::setup(int nbOfPlayers, const std::shared_ptr<RessourcesLoader> &resourceLoader)
+{
+	std::unique_ptr<Engine::World> world = std::make_unique<Engine::World>();
+
+	this->setWorld(std::move(world));
+	this->setResourceLoader(resourceLoader);
+	std::unique_ptr<Engine::Entity> camera = std::unique_ptr<Engine::Entity>
+			(Factory::EntityFactory::createCamera(0, *this));
+
+	this->_world->setCamera(std::move(camera));
+
+	for (int i = 0; i < nbOfPlayers; ++i) {
+		this->_world->addObject(Factory::EntityFactory::createPlayerShip);
+	}
+}
+
 const std::vector<std::unique_ptr<Engine::Event>> &Engine::Game::getEvents() const
 {
 	return _events;
@@ -71,4 +87,5 @@ void Engine::Game::setResourceLoader(const std::shared_ptr<RessourcesLoader> &_r
 {
 	this->_resourceLoader = _resourceLoader;
 }
+
 

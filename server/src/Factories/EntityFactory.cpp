@@ -13,6 +13,7 @@
 
 Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine::Game &game)
 {
+
 	Engine::Entity *playerShip = new Engine::Entity(id);
 
 	Engine::AComponent *playerMoveComponent = new Component::PlayerMovementComponent(playerShip);
@@ -20,9 +21,12 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 																				   game.getEventsReference());
 	Engine::AComponent *playerGraphicsComponent = new Component::PlayerGraphicsComponent(playerShip,
 																						 game.getResourceLoader().get());
+	std::cout << "yay" << std::endl;
+
 	if (game.getWorld()->getCamera() != nullptr) {
 		playerGraphicsComponent->addObserver(game.getWorld()->getCamera().get());
 	}
+
 	Engine::AComponent *playerPhysicsComponent = new Component::PlayerPhysicsComponent(playerShip);
 	if (game.getWorld()->getMediator() != nullptr) {
 		playerPhysicsComponent->registerToMediator(game.getWorld()->getMediator().get());
@@ -32,6 +36,9 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 	playerShip->addComponent(playerMoveComponent);
 	playerShip->addComponent(playerPhysicsComponent);
 	playerShip->addComponent(playerGraphicsComponent);
+
+	playerShip->getTransformComponent().getPosition().x = 0;
+	playerShip->getTransformComponent().getPosition().y = 2000 + id * 2000;
 
 	return playerShip;
 }

@@ -14,18 +14,21 @@
 
 namespace Engine {
 	class World;
+
 	class Game
 	{
 	public:
 		Game();
 		~Game() = default;
+
 		void run();
+		void setup(int nbOfPlayers, const std::shared_ptr<RessourcesLoader> &_resourceLoader);
 
 		std::vector<std::unique_ptr<Event>> &getEventsReference();
 		const std::vector<std::unique_ptr<Event>> &getEvents() const;
+		void setWorld(std::unique_ptr<World> world);
 		std::unique_ptr<World> &getWorld();
 		const std::unique_ptr<World> &getWorld() const;
-		void setWorld(std::unique_ptr<World>);
 		const std::shared_ptr<RessourcesLoader> &getResourceLoader() const;
 		void setResourceLoader(const std::shared_ptr<RessourcesLoader> &_resourceLoader);
 
