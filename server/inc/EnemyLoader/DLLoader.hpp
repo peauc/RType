@@ -11,17 +11,12 @@
 
 template <class T>
 class	DLLoader {
-private:
-	void	*handler;
 public:
-	DLLoader();
-	explicit DLLoader(const std::string &libPath);
-	DLLoader(const DLLoader<T> &other);
-	DLLoader<T>	&operator=(const DLLoader<T> &other);
+	DLLoader() = default;
 	~DLLoader() = default;
 
 	void	diagnoseError();
-	T		*getInstance(const std::string &);
+	T		*getInstance(const std::string &libPath);
 };
 
 #endif //RTYPE_DLLOADER_HPP
@@ -35,37 +30,16 @@ void	DLLoader<T>::diagnoseError() {
 
 template<class T>
 T		*DLLoader<T>::getInstance(const std::string &libPath) {
-
+	void	*handler;
 	T	*(*entr)();
 
-	if ((this->handler = dlopen(libPath.c_str(), RTLD_LAZY)) == NULL) {
+	if ((handler = dlopen(libPath.c_str(), RTLD_LAZY)) == nullptr) {
 		this->diagnoseError();
 		return (NULL);
 	}
-	if ((entr = (T *(*)()) dlsym(this->handler, "entryPoint")) == NULL) {
+	if ((entr = (T *(*)()) dlsym(handler, "entryPoint")) == NULL) {
 		this->diagnoseError();
 		return (NULL);
 	}
 	return ((*entr)());
-}
-
-template<class T>
-DLLoader<T>::DLLoader() {
-	this->handler = NULL;
-}
-
-template<class T>
-DLLoader<T>::DLLoader(const std::string &libPath) {
-	this->handler = NULL;
-}
-
-template<class T>
-DLLoader<T>::DLLoader(const DLLoader<T> &other) {
-	this->handler = other.handler;
-}
-
-template<class T>
-DLLoader<T> &DLLoader<T>::operator=(const DLLoader<T> &other) {
-	this->handler = other.handler;
-	return (*this);
 }
