@@ -6,6 +6,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -pthread")
 ##COMMON
 file(GLOB_RECURSE COMMON_FILES common/*.cpp common/*.hpp)
 include_directories(common/inc)
+include_directories(RessourcesLoader/includes)
 
 ##SERVER
 
@@ -29,7 +30,7 @@ target_link_libraries(server
         ${Boost_FILESYSTEM_LIBRARY}
         ${Boost_THREAD_LIBRARY}
         ${Boost_SYSTEM_LIBRARY}
-        ${Boost_SERIALIZATION_LIBRARY}
+        -ldl
         )
 
 ##CLIENT
