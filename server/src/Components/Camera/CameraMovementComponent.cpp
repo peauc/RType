@@ -2,7 +2,7 @@
 // Created by romain on 16/01/18.
 //
 
-#include <Components/CameraMovementComponent.hpp>
+#include <Components/Camera/CameraMovementComponent.hpp>
 #include <Engine/Commands/TransformPositionCommand.hpp>
 
 Component::CameraMovementComponent::CameraMovementComponent(Engine::Entity *parentEntity,

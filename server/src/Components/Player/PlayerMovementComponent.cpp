@@ -2,8 +2,8 @@
 // Created by romain on 12/01/18.
 //
 
-#include <Components/PlayerMovementComponent.hpp>
-#include <Components/AInputComponent.hpp>
+#include <Components/Player/PlayerMovementComponent.hpp>
+#include <Components/Abstracts/AInputComponent.hpp>
 #include <Engine/Commands/TransformPositionCommand.hpp>
 #include <iostream>
 

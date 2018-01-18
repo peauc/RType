@@ -2,7 +2,7 @@
 // Created by romain on 17/01/18.
 //
 
-#include <Components/CameraViewComponent.hpp>
+#include <Components/Camera/CameraViewComponent.hpp>
 #include <iostream>
 
 Component::CameraViewComponent::CameraViewComponent(Engine::Entity *parentEntity,

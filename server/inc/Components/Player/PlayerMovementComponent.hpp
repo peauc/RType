@@ -6,7 +6,7 @@
 #define RTYPE_DEFAULTPLAYERMOVEMENTCOMPONENT_HPP
 
 #include <Engine/Event.hpp>
-#include "AMovementComponent.hpp"
+#include "Components/Abstracts/AMovementComponent.hpp"
 
 namespace Component {
 	class PlayerMovementComponent : public AMovementComponent

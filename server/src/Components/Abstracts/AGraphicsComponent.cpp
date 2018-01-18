@@ -2,7 +2,7 @@
 // Created by romain on 16/01/18.
 //
 
-#include <Components/AGraphicsComponent.hpp>
+#include <Components/Abstracts/AGraphicsComponent.hpp>
 
 Component::AGraphicsComponent::AGraphicsComponent(Engine::Entity *parentEntity) : AComponent(parentEntity)
 {
@@ -29,4 +29,29 @@ RessourcesLoader *Component::AGraphicsComponent::getResourceLoader() const
 void Component::AGraphicsComponent::setResourceLoader(RessourcesLoader *_resourceLoader)
 {
 	AGraphicsComponent::_resourceLoader = _resourceLoader;
+}
+
+unsigned int Component::AGraphicsComponent::getCurrentAnimationId() const
+{
+	return _currentAnimationId;
+}
+
+bool Component::AGraphicsComponent::isHit() const
+{
+	return _isHit;
+}
+
+void Component::AGraphicsComponent::setIsHit(bool _isHit)
+{
+	AGraphicsComponent::_isHit = _isHit;
+}
+
+bool Component::AGraphicsComponent::isAlive() const
+{
+	return _isAlive;
+}
+
+void Component::AGraphicsComponent::setIsAlive(bool _isAlive)
+{
+	AGraphicsComponent::_isAlive = _isAlive;
 }

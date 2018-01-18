@@ -2,12 +2,12 @@
 // Created by romain on 15/01/18.
 //
 
-#include <Components/PlayerMovementComponent.hpp>
-#include <Components/PlayerInputComponent.hpp>
-#include <Components/CameraMovementComponent.hpp>
-#include <Components/PlayerGraphicsComponent.hpp>
-#include <Components/CameraViewComponent.hpp>
-#include <Components/PlayerPhysicsComponent.hpp>
+#include <Components/Player/PlayerMovementComponent.hpp>
+#include <Components/Player/PlayerInputComponent.hpp>
+#include <Components/Camera/CameraMovementComponent.hpp>
+#include <Components/Player/PlayerGraphicsComponent.hpp>
+#include <Components/Camera/CameraViewComponent.hpp>
+#include <Components/Player/PlayerPhysicsComponent.hpp>
 #include <iostream>
 #include "Factories/EntityFactory.hpp"
 
@@ -44,11 +44,4 @@ Engine::Entity *Factory::EntityFactory::createCamera(unsigned int id, Engine::Ga
 	camera->addComponent(new Component::CameraViewComponent(camera, game.getWorld().get()));
 
 	return camera;
-}
-
-Engine::Entity *Factory::EntityFactory::createEnemy()
-{
-	Engine::Entity *enemy = new Engine::Entity();
-
-	Engine::AComponent *enemyMoveComponent = new Component::PlayerMovementComponent(enemy);
 }

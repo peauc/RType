@@ -5,7 +5,7 @@
 #ifndef RTYPE_DEFAULTPLAYERGRAPHICSCOMPONENT_HPP
 #define RTYPE_DEFAULTPLAYERGRAPHICSCOMPONENT_HPP
 
-#include "AGraphicsComponent.hpp"
+#include "Components/Abstracts/AGraphicsComponent.hpp"
 
 namespace Component {
 	class PlayerGraphicsComponent : public AGraphicsComponent
@@ -15,6 +15,10 @@ namespace Component {
 		~PlayerGraphicsComponent() override = default;
 
 		void update() override;
+
+		// handle methods
+		void handleDeath(Engine::Mediator::Message messageType, AComponent *sender);
+		void handleHit(Engine::Mediator::Message messageType, AComponent *sender);
 	};
 }
 

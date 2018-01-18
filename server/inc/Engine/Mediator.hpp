@@ -16,7 +16,9 @@ namespace Engine {
 	public:
 		enum Message {
 			NEW_EVENT,
-			GRAPHICS_REGISTERING
+			GRAPHICS_REGISTERING,
+			DEATH,
+			HIT,
 		};
 
 		Mediator() = default;
