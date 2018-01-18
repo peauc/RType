@@ -110,7 +110,8 @@ void	SpriteSFML::updateAnimation() noexcept
 {
 	if (this->_animationVector.size() > 1 &&
 	    this->_animationIndex < this->_animationVector.size()) {
-		this->_sprite.setTexture(_animationVector[_animationIndex]);
+		this->_sprite.setTexture(_animationVector[_animationIndex],
+					 true);
 		++this->_animationIndex;
 		if (this->_animationIndex >= this->_animationVector.size()
 		    && this->_repeatAnimation) {

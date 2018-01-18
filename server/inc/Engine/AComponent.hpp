@@ -27,6 +27,8 @@ namespace Engine {
 		void addObserver(Observer *);
 		void removeObserver(Observer *);
 
+		unsigned int getParentEntityId() const;
+
 		virtual void update() = 0;
 
 	protected:

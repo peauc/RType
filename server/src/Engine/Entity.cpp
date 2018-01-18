@@ -4,6 +4,11 @@
 
 #include <Engine/Entity.hpp>
 
+Engine::Entity::Entity() : _id(0), _transformComponent(this), _components(),
+						   _mediator(std::make_unique<Mediator>())
+{
+}
+
 Engine::Entity::Entity(unsigned int id) : _id(id), _transformComponent(this), _components(),
 										  _mediator(std::make_unique<Mediator>())
 {
@@ -60,6 +65,11 @@ Engine::TransformComponent &Engine::Entity::getTransformComponent()
 const Engine::TransformComponent &Engine::Entity::getTransformComponent() const
 {
 	return _transformComponent;
+}
+
+void Engine::Entity::setId(unsigned int _id)
+{
+	this->_id = _id;
 }
 
 const unsigned int Engine::Entity::getId() const

@@ -8,6 +8,8 @@
 #ifndef DATAPACKET_HPP
 # define DATAPACKET_HPP
 
+#include <cstddef>
+
 namespace Packet
 {
 	enum GameState
@@ -43,8 +45,8 @@ namespace Packet
 	
 	struct Object
 	{
-		unsigned short	x;
-		unsigned short	y;
+		short		x;
+		short		y;
 		EntityState 	entityState;
 		bool 		animated;
 		bool 		hit;
@@ -55,10 +57,10 @@ namespace Packet
 	
 	struct Input
 	{
-		unsigned short	Xvelocity;
-		unsigned short	Yvelocity;
-		bool		shot;
-		bool		charged;
+		short		yVelocity;
+		short		xVelocity;
+		bool		shotReleased;
+		bool		chargingShot;
 	};
 	
 	struct Connection
@@ -80,6 +82,6 @@ namespace Packet
 		unsigned short	cmd;
 		union UData	data;
 	};
-	const size_t PACKETSIZE = sizeof(DataPacket);
+	const std::size_t PACKETSIZE = sizeof(DataPacket);
 }
 #endif //SFMLDEMO_DATAPACKET_HPP

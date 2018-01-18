@@ -23,12 +23,13 @@ void Engine::AComponent::unregisterToMediator(Engine::Mediator *mediator)
 
 void Engine::AComponent::receive(Engine::Mediator::Message messageType, Engine::AComponent *sender)
 {
-    this->_validMessageTypes[messageType](messageType, sender);
+	if (this->_validMessageTypes.count(messageType)) {
+		this->_validMessageTypes[messageType](messageType, sender);
+	}
 }
 
 void Engine::AComponent::sendToAll(Engine::Mediator::Message messageType)
 {
-	this->_parentEntity->getMediator().send(messageType, this);
 	for (Mediator *mediator : this->_mediators) {
 		if (mediator != nullptr) {
 			mediator->send(messageType, this);
@@ -49,4 +50,9 @@ void Engine::AComponent::addObserver(Engine::Observer *observer)
 void Engine::AComponent::removeObserver(Engine::Observer *observer)
 {
 	this->_observers.erase(std::find(this->_observers.begin(), this->_observers.end(), observer));
+}
+
+unsigned int Engine::AComponent::getParentEntityId() const
+{
+	return this->_parentEntity->getId();
 }

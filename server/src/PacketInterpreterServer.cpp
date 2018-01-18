@@ -68,3 +68,16 @@ void PacketInterpreterServer::hit(const Packet::DataPacket &packet) noexcept
 void PacketInterpreterServer::event(const Packet::DataPacket &packet) noexcept
 {
 }
+
+Engine::Event PacketInterpreterServer::createEventFromPacket(const Packet::DataPacket
+							     &packet,
+							     uint32_t id) noexcept
+{
+	Engine::Event event(id);
+	
+	event._yVelocity = packet.data.input.yVelocity;
+	event._xVelocity = packet.data.input.xVelocity;
+	event._chargingShot = packet.data.input.chargingShot;
+	event._shotReleased = packet.data.input.shotReleased;
+	return (event);
+}

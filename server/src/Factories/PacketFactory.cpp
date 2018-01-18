@@ -1,0 +1,37 @@
+//
+// Created by romain on 18/01/18.
+//
+
+#include <Factories/PacketFactory.hpp>
+
+Packet::DataPacket *PacketFactory::createObjectPacket(short x, short y, Packet::EntityState entityState, bool hit,
+													  unsigned int id,
+													  unsigned char animationId)
+{
+	Packet::DataPacket *dataPacket = new Packet::DataPacket;
+
+	dataPacket->cmd = 0;
+	dataPacket->data.object.entityState = entityState;
+	dataPacket->data.object.x = x;
+	dataPacket->data.object.y = y;
+	dataPacket->data.object.animated = true;
+	dataPacket->data.object.hit = hit;
+	dataPacket->data.object.animationId = animationId;
+
+	return dataPacket;
+}
+
+Packet::DataPacket *PacketFactory::createScorePacket(Packet::GameState gameState,
+													 const std::vector<Packet::PlayerScore> &playerScores)
+{
+	Packet::DataPacket *dataPacket = new Packet::DataPacket;
+
+	dataPacket->cmd = 0;
+	dataPacket->data.score.gameState = gameState;
+
+	for (int i = 0; i < playerScores.size(); ++i) {
+		dataPacket->data.score.playerScore[i] = playerScores[i];
+	}
+
+	return dataPacket;
+}

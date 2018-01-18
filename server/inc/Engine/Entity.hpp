@@ -16,6 +16,7 @@ namespace Engine {
 	class Entity : public Observer
 	{
 	public:
+		Entity();
 		explicit Entity(unsigned int id);
 		~Entity() = default;
 
@@ -30,6 +31,7 @@ namespace Engine {
 		const Mediator &getMediator() const;
 		TransformComponent &getTransformComponent();
 		const TransformComponent &getTransformComponent() const;
+		void setId(unsigned int _id);
 		const unsigned int getId() const;
 
 		bool operator==(unsigned int id);

@@ -2,8 +2,8 @@
 // Created by romain on 15/01/18.
 //
 
-#include <Components/PlayerInputComponent.hpp>
-#include <Components/AMovementComponent.hpp>
+#include <Components/Player/PlayerInputComponent.hpp>
+#include <iostream>
 
 Component::PlayerInputComponent::PlayerInputComponent(Engine::Entity *parentEntity,
 																	std::vector<std::unique_ptr<Engine::Event>> &gameEvents)
@@ -14,6 +14,7 @@ Component::PlayerInputComponent::PlayerInputComponent(Engine::Entity *parentEnti
 
 void Component::PlayerInputComponent::update()
 {
+	std::cout << "Updating input" << std::endl;
 	for (unsigned int i = 0; i < this->_gameEvents.size(); i++) {
 		if (this->_gameEvents[i]->_entityId == this->_parentEntity->getId()) {
 			this->_event = std::move(this->_gameEvents[i]);
