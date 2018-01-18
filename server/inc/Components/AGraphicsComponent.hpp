@@ -12,10 +12,17 @@ namespace Component {
 	class AGraphicsComponent : public Engine::AComponent
 	{
 	public:
-		explicit AGraphicsComponent(Engine::Entity *parentEntity);
+		AGraphicsComponent(Engine::Entity *parentEntity);
+		explicit AGraphicsComponent(Engine::Entity *parentEntity, RessourcesLoader *resourceLoader);
 		~AGraphicsComponent() override = default;
 
 		bool isInArea(float xPos, float yPos, float xRange, float yRange);
+		RessourcesLoader *getResourceLoader() const;
+		void setResourceLoader(RessourcesLoader *_resourceLoader);
+	protected:
+		RessourcesLoader *_resourceLoader;
+		std::vector<unsigned int> _animationIds;
+		unsigned int _currentAnimationId;
 	};
 }
 

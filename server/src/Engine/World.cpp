@@ -54,6 +54,9 @@ void Engine::World::update()
 		 it != this->_objects.end(); it++) {
 		(*it)->update();
 	}
+	if (this->_camera != nullptr) {
+		this->_camera->update();
+	}
 }
 
 std::unique_ptr<Engine::Mediator> &Engine::World::getMediator()

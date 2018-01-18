@@ -11,7 +11,7 @@ namespace Component {
 	class PlayerGraphicsComponent : public AGraphicsComponent
 	{
 	public:
-		explicit PlayerGraphicsComponent(Engine::Entity *parentEntity);
+		explicit PlayerGraphicsComponent(Engine::Entity *parentEntity, RessourcesLoader *resourceLoader);
 		~PlayerGraphicsComponent() override = default;
 
 		void update() override;

@@ -8,6 +8,7 @@
 #include <Components/PlayerGraphicsComponent.hpp>
 #include <Components/CameraViewComponent.hpp>
 #include <Components/PlayerPhysicsComponent.hpp>
+#include <iostream>
 #include "Factories/EntityFactory.hpp"
 
 Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine::Game &game)
@@ -16,8 +17,9 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 
 	Engine::AComponent *playerMoveComponent = new Component::PlayerMovementComponent(playerShip);
 	Engine::AComponent *playerInputComponent = new Component::PlayerInputComponent(playerShip,
-																						  game.getEventsReference());
-	Engine::AComponent *playerGraphicsComponent = new Component::PlayerGraphicsComponent(playerShip);
+																				   game.getEventsReference());
+	Engine::AComponent *playerGraphicsComponent = new Component::PlayerGraphicsComponent(playerShip,
+																						 game.getResourceLoader().get());
 	if (game.getWorld()->getCamera() != nullptr) {
 		playerGraphicsComponent->addObserver(game.getWorld()->getCamera().get());
 	}
@@ -26,10 +28,10 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 		playerPhysicsComponent->registerToMediator(game.getWorld()->getMediator().get());
 	}
 
-	playerShip->addComponent(playerMoveComponent);
 	playerShip->addComponent(playerInputComponent);
-	playerShip->addComponent(playerGraphicsComponent);
+	playerShip->addComponent(playerMoveComponent);
 	playerShip->addComponent(playerPhysicsComponent);
+	playerShip->addComponent(playerGraphicsComponent);
 
 	return playerShip;
 }
@@ -42,4 +44,11 @@ Engine::Entity *Factory::EntityFactory::createCamera(unsigned int id, Engine::Ga
 	camera->addComponent(new Component::CameraViewComponent(camera, game.getWorld().get()));
 
 	return camera;
+}
+
+Engine::Entity *Factory::EntityFactory::createEnemy()
+{
+	Engine::Entity *enemy = new Engine::Entity();
+
+	Engine::AComponent *enemyMoveComponent = new Component::PlayerMovementComponent(enemy);
 }

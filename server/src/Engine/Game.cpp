@@ -12,9 +12,6 @@ Engine::Game::Game()
 	this->_world = std::make_unique<World>();
 }
 
-Engine::Game::~Game()
-= default;
-
 void Engine::Game::run()
 {
 	std::chrono::time_point<std::chrono::system_clock> previous = std::chrono::system_clock::now();
@@ -63,5 +60,15 @@ void Engine::Game::setWorld(std::unique_ptr<World> world)
 	}
 	this->_world = std::move(world);
 	this->_world->setParentGame(this);
+}
+
+const std::shared_ptr<RessourcesLoader> &Engine::Game::getResourceLoader() const
+{
+	return _resourceLoader;
+}
+
+void Engine::Game::setResourceLoader(const std::shared_ptr<RessourcesLoader> &_resourceLoader)
+{
+	this->_resourceLoader = _resourceLoader;
 }
 
