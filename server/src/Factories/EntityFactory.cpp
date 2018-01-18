@@ -9,6 +9,7 @@
 #include <Components/Camera/CameraViewComponent.hpp>
 #include <Components/Player/PlayerPhysicsComponent.hpp>
 #include <iostream>
+#include <Components/Player/PlayerWeaponComponent.hpp>
 #include "Factories/EntityFactory.hpp"
 
 Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine::Game &game)
@@ -21,7 +22,7 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 																				   game.getEventsReference());
 	Engine::AComponent *playerGraphicsComponent = new Component::PlayerGraphicsComponent(playerShip,
 																						 game.getResourceLoader().get());
-	std::cout << "yay" << std::endl;
+	Engine::AComponent *playerWeaponComponent = new Component::PlayerWeaponComponent(playerShip, game.getWorld().get());
 
 	if (game.getWorld()->getCamera() != nullptr) {
 		playerGraphicsComponent->addObserver(game.getWorld()->getCamera().get());
@@ -34,6 +35,7 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 
 	playerShip->addComponent(playerInputComponent);
 	playerShip->addComponent(playerMoveComponent);
+	playerShip->addComponent(playerWeaponComponent);
 	playerShip->addComponent(playerPhysicsComponent);
 	playerShip->addComponent(playerGraphicsComponent);
 

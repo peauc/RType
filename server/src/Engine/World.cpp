@@ -18,6 +18,10 @@ unsigned int Engine::World::addObject(Engine::Entity *(*call)(unsigned int, Engi
 
 unsigned int Engine::World::addObject(std::unique_ptr<Entity> entity)
 {
+	if (entity->getId() == 0) {
+		entity->setId(this->_nextEntityId);
+		this->_nextEntityId++;
+	}
 	this->_objects.push_back(std::move(entity));
 	return this->_objects.end()->get()->getId();
 }

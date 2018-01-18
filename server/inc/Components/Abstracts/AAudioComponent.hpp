@@ -13,6 +13,9 @@ namespace Components {
     public:
         explicit AAudioComponents(Engine::Entity *parentEntity);
         ~AAudioComponents() override = default;
+
+    protected:
+        std::vector<unsigned char> _soundIds;
     };
 }
 

@@ -9,8 +9,6 @@ Component::PlayerGraphicsComponent::PlayerGraphicsComponent(Engine::Entity *pare
 															RessourcesLoader *resourceLoader) :
 		AGraphicsComponent(parentEntity, resourceLoader)
 {
-	std::cout << "lul" << std::endl;
-
 	switch (parentEntity->getId()) {
 		case 0:
 			this->_animationIds.push_back(8);

@@ -18,12 +18,12 @@ void Engine::TransformComponent::setPosition(Vector2d &_position)
     TransformComponent::_position = _position;
 }
 
-Vector2d &Engine::TransformComponent::getRotation()
+double Engine::TransformComponent::getRotation()
 {
     return _rotation;
 }
 
-void Engine::TransformComponent::setRotation(Vector2d &_rotation)
+void Engine::TransformComponent::setRotation(double _rotation)
 {
     TransformComponent::_rotation = _rotation;
 }
