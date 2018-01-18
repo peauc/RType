@@ -13,7 +13,7 @@ Displayer::Displayer(SpriteManager &spriteManager)
 	this->fontLoaded = this->font.loadFromFile("fonts/arial.ttf");
 	if (this->fontLoaded)
 		this->mode.setFont(font);
-	this->mode.setString("Mode : Sprite");
+	this->mode.setString(this->getMode());
 	this->mode.setCharacterSize(24);
 	this->mode.setColor(sf::Color::Green);
 	this->border.setOutlineThickness(2);
@@ -26,12 +26,12 @@ void Displayer::displaySprites() {
 		return ;
 	this->initDisplayer();
 	this->createEvents();
-	while(this->window.isOpen()) {
+	while (this->window.isOpen()) {
 		sf::Event event;
 		while (this->window.pollEvent(event)) {
 			this->checkEvents(event);
-			this->drawSprite();
 		}
+		this->drawSprite();
 	}
 }
 
@@ -50,7 +50,8 @@ void Displayer::checkEvents(const sf::Event &event) {
 	    || (event.type == sf::Event::KeyPressed
 	        && event.key.code == sf::Keyboard::Escape))
 		this->window.close();
-	else if (event.type == sf::Event::KeyPressed)
+	else if (event.type == sf::Event::KeyPressed
+			 && this->actions[event.key.code] != nullptr)
 		(this->*(this->actions[event.key.code]))();
 }
 
@@ -68,8 +69,8 @@ void Displayer::drawSprite() {
 }
 
 void Displayer::resolveTextureRect() {
-	std::vector<Sprite> &sprites = this->spriteManager.getSprites();
-	float               margin = 2;
+	auto	&sprites = this->spriteManager.getSprites();
+	float	margin = 2;
 
 	this->textureRect.left = sprites.at(this->spriteIndex).getMinX();
 	this->textureRect.top = sprites.at(this->spriteIndex).getMinY();
@@ -97,6 +98,8 @@ void Displayer::resolveSizeRect() {
 
 void Displayer::createEvents() {
 
+	for (auto &action : this->actions)
+		action = nullptr;
 	this->actions[sf::Keyboard::Right] = &Displayer::onNextSprite;
 	this->actions[sf::Keyboard::Left] = &Displayer::onPrevSprite;
 	this->actions[sf::Keyboard::Delete] = &Displayer::onRemoveSprite;
@@ -106,6 +109,7 @@ void Displayer::createEvents() {
 	this->actions[sf::Keyboard::A] = &Displayer::onSelectAll;
 	this->actions[sf::Keyboard::M] = &Displayer::onChangeMode;
 	this->actions[sf::Keyboard::Return] = &Displayer::onSave;
+	this->actions[sf::Keyboard::E] = &Displayer::onChangeEqualize;
 }
 
 void Displayer::onNextSprite() {
@@ -150,8 +154,9 @@ void Displayer::onSelect() {
 }
 
 void Displayer::onChangeMode() {
-	this->mode.setString((this->mode.getString() == "Mode : Sprite" ?
-	                      "Mode : Animation" : "Mode : Sprite"));
+	this->spriteManager
+			.setAnimationMode(!this->spriteManager.getAnimationMode());
+	this->mode.setString(this->getMode());
 }
 
 void Displayer::onSelectAll() {
@@ -163,9 +168,23 @@ void Displayer::onSelectAll() {
 }
 
 void Displayer::onSave() {
-	if (this->mode.getString() == "Mode : Sprite")
-		this->spriteManager.saveSprites();
-	else
-		this->spriteManager.saveAnimation();
+	this->spriteManager.save();
 	this->spriteManager.resetSelected();
+}
+
+void Displayer::onChangeEqualize() {
+	this->spriteManager.
+			setEqualizeSprites(!this->spriteManager.getEqualizeSprites());
+	this->resolveTextureRect();
+	this->sprite.setTextureRect(this->textureRect);
+	this->mode.setString(this->getMode());
+}
+
+std::string Displayer::getMode() const {
+	std::string		a = (this->spriteManager.getAnimationMode() ?
+							"Animation" : "Sprite");
+	std::string		b = (this->spriteManager.getEqualizeSprites() ?
+							"Equalize" : "Not Equalize");
+
+	return ("Mode : " + a + " : " + b);
 }

@@ -29,6 +29,7 @@ public:
 
 	void	setRootDirectory(const std::string &rootDirectory);
 	void	setDest(const std::string &dest);
+	void 	setOrigin(const std::string &origin);
 	void	setExtensions(const Extensions &extensions);
 
 	void	generateAssetsId();
@@ -43,6 +44,7 @@ private:
 
 	std::string		rootDirectory;
 	std::string		dest;
+	std::string		origin;
 
 	Directories		directories;
 	Extensions		extensions;

@@ -22,10 +22,14 @@ public:
 	void    setMinY(unsigned int minY);
 	void    setMaxX(unsigned int maxX);
 	void    setMaxY(unsigned int maxY);
+	void	setWidth(unsigned int width);
+	void	setHeight(unsigned int height);
 	void    setInitialized(bool state);
 
 	unsigned int    getMinX() const;
 	unsigned int    getMinY() const;
+	unsigned int	getMaxX() const;
+	unsigned int	getMaxY() const;
 	unsigned int    getWidth() const;
 	unsigned int    getHeight() const;
 

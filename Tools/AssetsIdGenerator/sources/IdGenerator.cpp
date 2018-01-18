@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <boost/filesystem.hpp>
+#include "PathResolver.hpp"
 #include "IdGenerator.hpp"
 
 void IdGenerator::setRootDirectory(const std::string &rootDirectory) {
@@ -16,6 +17,10 @@ void IdGenerator::setRootDirectory(const std::string &rootDirectory) {
 
 void IdGenerator::setDest(const std::string &dest) {
 	this->dest = dest;
+}
+
+void IdGenerator::setOrigin(const std::string &origin) {
+	this->origin = PathResolver::changeOriginPath(origin);
 }
 
 void IdGenerator::setExtensions(const Extensions &extensions) {
@@ -78,7 +83,7 @@ std::string IdGenerator::assetsIdFormat() const {
 		format += this->jsonFormat(id);
 		format += ",";
 	}
-	if (!format.empty())
+	if (!format.empty() && !this->assetsPath.empty())
 		format.erase(--(format.end()));
 	format += "\n\t\t]\n}";
 	return (format);
@@ -88,7 +93,7 @@ std::string IdGenerator::jsonFormat(unsigned int id) const {
 	std::string format;
 
 	format = "{";
-	format += " Asset : \"" + this->assetsPath.at(id) + "\",";
+	format += " Asset : \"" + this->origin + this->assetsPath.at(id) + "\",";
 	format += " Id : " + std::to_string(id);
 	format += " }";
 	return (format);
