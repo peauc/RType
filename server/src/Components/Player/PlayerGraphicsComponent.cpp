@@ -2,7 +2,7 @@
 // Created by romain on 17/01/18.
 //
 
-#include <Components/PlayerGraphicsComponent.hpp>
+#include <Components/Player/PlayerGraphicsComponent.hpp>
 #include <iostream>
 
 Component::PlayerGraphicsComponent::PlayerGraphicsComponent(Engine::Entity *parentEntity,
@@ -42,10 +42,28 @@ Component::PlayerGraphicsComponent::PlayerGraphicsComponent(Engine::Entity *pare
 			break;
 	}
 	this->_currentAnimationId = this->_animationIds[0];
+
+	// set handle methods
+	this->_validMessageTypes[Engine::Mediator::Message::DEATH] = std::bind(&PlayerGraphicsComponent::handleDeath,
+																		   this, std::placeholders::_1,
+																		   std::placeholders::_2);
+	this->_validMessageTypes[Engine::Mediator::Message::HIT] = std::bind(&PlayerGraphicsComponent::handleHit,
+																		 this, std::placeholders::_1,
+																		 std::placeholders::_2);
 }
 
 void Component::PlayerGraphicsComponent::update()
 {
 	std::cout << "Updating graphics" << std::endl;
 	this->sendToAll(Engine::Mediator::Message::GRAPHICS_REGISTERING);
+}
+
+void Component::PlayerGraphicsComponent::handleDeath(Engine::Mediator::Message messageType, Engine::AComponent *sender)
+{
+	this->_isHit = true;
+}
+
+void Component::PlayerGraphicsComponent::handleHit(Engine::Mediator::Message messageType, Engine::AComponent *sender)
+{
+	this->_isAlive = false;
 }

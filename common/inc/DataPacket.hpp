@@ -8,6 +8,8 @@
 #ifndef DATAPACKET_HPP
 # define DATAPACKET_HPP
 
+#include <cstddef>
+
 namespace Packet
 {
 	enum GameState
@@ -80,6 +82,6 @@ namespace Packet
 		unsigned short	cmd;
 		union UData	data;
 	};
-	const size_t PACKETSIZE = sizeof(DataPacket);
+	const std::size_t PACKETSIZE = sizeof(DataPacket);
 }
 #endif //SFMLDEMO_DATAPACKET_HPP

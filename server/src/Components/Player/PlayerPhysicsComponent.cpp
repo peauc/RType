@@ -2,7 +2,7 @@
 // Created by romain on 17/01/18.
 //
 
-#include <Components/PlayerPhysicsComponent.hpp>
+#include <Components/Player/PlayerPhysicsComponent.hpp>
 #include <iostream>
 
 Component::PlayerPhysicsComponent::PlayerPhysicsComponent(Engine::Entity *entity) : APhysicsComponent(entity)

@@ -9,7 +9,7 @@
 #include <Engine/Event.hpp>
 #include <queue>
 #include <utility>
-#include "AInputComponent.hpp"
+#include "Components/Abstracts/AInputComponent.hpp"
 
 namespace Component {
 	class PlayerInputComponent : public AInputComponent

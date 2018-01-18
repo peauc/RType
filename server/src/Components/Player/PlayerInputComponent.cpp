@@ -2,7 +2,7 @@
 // Created by romain on 15/01/18.
 //
 
-#include <Components/PlayerInputComponent.hpp>
+#include <Components/Player/PlayerInputComponent.hpp>
 #include <iostream>
 
 Component::PlayerInputComponent::PlayerInputComponent(Engine::Entity *parentEntity,
