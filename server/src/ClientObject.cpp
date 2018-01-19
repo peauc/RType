@@ -3,7 +3,7 @@
 
 ClientObject::ClientObject(boost::asio::ip::udp::endpoint &endpoint) :
 	_endpoint(endpoint), _timeoutStart
-	(std::chrono::high_resolution_clock::now())
+	(std::chrono::steady_clock::now())
 {
 }
 
