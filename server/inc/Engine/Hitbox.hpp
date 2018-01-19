@@ -15,6 +15,8 @@ namespace Engine {
 		{
 			ENEMY,
 			PLAYER,
+			ENEMY_SHOT,
+			PLAYER_SHOT,
 			NEUTRAL,
 			ZONE,
 		};

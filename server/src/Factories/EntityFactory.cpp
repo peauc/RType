@@ -18,7 +18,7 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 
 	Engine::AComponent *playerMoveComponent = new Component::PlayerMovementComponent(playerShip);
 	Engine::AComponent *playerInputComponent = new Component::PlayerInputComponent(playerShip,
-																				   game.getEventsReference());
+																				   game.getEventList());
 	Engine::AComponent *playerGraphicsComponent = new Component::PlayerGraphicsComponent(playerShip,
 																						 game.getResourceLoader().get());
 	Engine::AComponent *playerWeaponComponent = new Component::PlayerWeaponComponent(playerShip, game.getWorld().get());

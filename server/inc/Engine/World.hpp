@@ -8,8 +8,9 @@
 #include <list>
 #include <queue>
 #include <Factories/EntityFactory.hpp>
-#include <DataPacket.hpp>
 #include "Game.hpp"
+#include <DataPacket.hpp>
+
 
 namespace Engine {
 	class Game;

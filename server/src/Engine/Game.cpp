@@ -49,16 +49,6 @@ void Engine::Game::setup(int nbOfPlayers, const std::shared_ptr<RessourcesLoader
 	}
 }
 
-const std::vector<std::unique_ptr<Engine::Event>> &Engine::Game::getEvents() const
-{
-    return _events.getEvents();
-}
-
-std::vector<std::unique_ptr<Engine::Event>> &Engine::Game::getEventsReference()
-{
-    return _events.getEvents();
-}
-
 std::unique_ptr<Engine::World> &Engine::Game::getWorld()
 {
 	return _world;
@@ -88,4 +78,7 @@ void Engine::Game::setResourceLoader(const std::shared_ptr<RessourcesLoader> &_r
 	this->_resourceLoader = _resourceLoader;
 }
 
-
+Engine::EventList &Engine::Game::getEventList()
+{
+	return _eventList;
+}

@@ -5,23 +5,20 @@
 #include <Components/Player/PlayerInputComponent.hpp>
 #include <iostream>
 
-Component::PlayerInputComponent::PlayerInputComponent(Engine::Entity *parentEntity,
-																	std::vector<std::unique_ptr<Engine::Event>> &gameEvents)
-		: AInputComponent(parentEntity),
-		  _gameEvents(gameEvents)
+Component::PlayerInputComponent::PlayerInputComponent(Engine::Entity *parentEntity, Engine::EventList &eventList)
+		: AInputComponent(parentEntity), _eventList(eventList)
 {
 }
 
 void Component::PlayerInputComponent::update()
 {
 	std::cout << "Updating input" << std::endl;
-	for (unsigned int i = 0; i < this->_gameEvents.size(); i++) {
-		if (this->_gameEvents[i]->_entityId == this->_parentEntity->getId()) {
-			this->_event = std::move(this->_gameEvents[i]);
-			this->_gameEvents.erase(this->_gameEvents.begin() + i);
-			break;
-		}
+
+	this->_event = this->_eventList.getEventById(this->_parentEntity->getId());
+	if (this->_event == nullptr) {
+		return;
 	}
+
 	this->sendToAll(Engine::Mediator::Message::NEW_EVENT);
 	this->_event = nullptr;
 }
