@@ -11,11 +11,21 @@
 
 class ClientObjectManager {
 public:
+	ClientObjectManager();
+	~ClientObjectManager() = default;
+	void setMaxSize(size_t) noexcept;
 	size_t size() const;
 	std::vector<IMessage> getClientsMessages();
 	bool addClient(ClientObject &client) noexcept;
-	bool isClientContained(ClientObject &client) noexcept;
+	bool isClientContained(const ClientObject &client) const noexcept;
+	ClientObject &getClientContained(const ClientObject &copy);
+	void checkClientsTimeout() noexcept;
+	bool isFull() const noexcept;
+	void setMaxTimeoutTime(const std::chrono::high_resolution_clock::time_point &time) noexcept;
+//	long long int getTimeout() noexcept;
 private:
+	size_t _maxSize;
+	std::chrono::steady_clock::time_point _maxTimeoutTimerStart;
 	std::vector<ClientObject> _clientList;
 };
 

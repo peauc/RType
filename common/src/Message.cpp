@@ -48,3 +48,6 @@ Packet::DataPacket Message::getPacket() const noexcept
 {
 	return (this->_packet);
 }
+
+Message::Message(Packet::Commands commands) noexcept : _packet(commands) {}
+

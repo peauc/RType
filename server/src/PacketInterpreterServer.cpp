@@ -6,6 +6,7 @@
 */
 
 #include <iostream>
+#include <Logger.hpp>
 #include "PacketInterpreterServer.hpp"
 
 PacketInterpreterServer::PacketInterpreterServer()
@@ -19,11 +20,11 @@ PacketInterpreterServer::PacketInterpreterServer()
 	fptr[Packet::POSITION] = &PacketInterpreterServer::position;
 	fptr[Packet::HIT] = &PacketInterpreterServer::hit;
 	fptr[Packet::EVENT] = &PacketInterpreterServer::event;
+	fptr[Packet::PONG] = &PacketInterpreterServer::pong;
 }
 
 void	PacketInterpreterServer::interpretPacket(const Packet::DataPacket &packet) noexcept
 {
-	std::cout << "CLIENT CMD = " << packet.cmd << std::endl;
 	if (packet.cmd < Packet::UNKNOWN) {
 		(this->*fptr[packet.cmd])(packet);
 	}
@@ -67,4 +68,8 @@ void PacketInterpreterServer::hit(const Packet::DataPacket &packet) noexcept
 
 void PacketInterpreterServer::event(const Packet::DataPacket &packet) noexcept
 {
+}
+void PacketInterpreterServer::pong(const Packet::DataPacket &packet)
+{
+	Logger::Log(Logger::DEBUG, "Client Ponged the server");
 }

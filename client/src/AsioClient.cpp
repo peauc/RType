@@ -17,7 +17,6 @@ client::AsioClient::AsioClient(const std::string &host) : _ioService(),
 	_socket.open(boost::asio::ip::udp::v4());
 }
 
-
 client::AsioClient::AsioClient() : _ioService(), _socket(_ioService)
 {
 	std::cout << "Regular constructor" << std::endl;
@@ -77,19 +76,26 @@ void client::AsioClient::handleSend(boost::shared_ptr<std::string> message,
                                     const boost::system::error_code &error,
                                     std::size_t bytesTransfered)
 {
-	std::cout << "Received " << message << " of "
+	std::cout << "Sent " << message << " of "
 		"size " << std::to_string(bytesTransfered) << std::endl;
 }
 
 void client::AsioClient::handleReceive(const boost::system::error_code &error,
                                        std::size_t bytesTransfered)
 {
-	std::cout << "Sent " << std::to_string(bytesTransfered) << std::endl;
+	std::cout << "Received " << std::to_string(bytesTransfered) <<
+	                                                           std::endl;
 }
 void client::AsioClient::handleSendPacket(const Packet::DataPacket &packet,
                                     const boost::system::error_code &error,
                                     std::size_t bytesTransfered)
 {
-	std::cout << "Received a packet of "
+	std::cout << "Sent a packet of "
 		"size " << std::to_string(bytesTransfered) << std::endl;
+}
+
+void client::AsioClient::tick() noexcept
+{
+	_ioService.poll();
+	_ioService.reset();
 }

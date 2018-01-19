@@ -57,6 +57,8 @@ union UData {
 	Object object;
 };
 struct DataPacket {
+	DataPacket() {};
+	explicit DataPacket(unsigned short cmd) : cmd(cmd) {};
 	unsigned short cmd;
 	union UData data;
 };
@@ -73,7 +75,8 @@ enum Commands
 	POSITION	= 6,
 	HIT		= 7,
 	EVENT		= 8,
-	UNKNOWN		= 9
+	PONG            = 9,
+	UNKNOWN		= 10
 };
 }
 #endif //SFMLDEMO_DATAPACKET_HPP

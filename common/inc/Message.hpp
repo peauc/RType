@@ -17,6 +17,7 @@ class Message : public IMessage
 public:
 	explicit Message(const std::string &rawMessage) noexcept;
 	Message(const Message &) noexcept;
+	Message(Packet::Commands commands) noexcept;
 	Message &operator=(const Message &) noexcept;
 	~Message() = default;
 

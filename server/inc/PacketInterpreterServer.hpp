@@ -33,6 +33,7 @@ public:
 private:
 	void (PacketInterpreterServer::*fptr[Packet::UNKNOWN])(const
 	                                                Packet::DataPacket &packet);
+	void pong(const Packet::DataPacket &packet);
 };
 
 #endif // !RTYPE_PACKETINTERPRETERSERVER_HPP_
