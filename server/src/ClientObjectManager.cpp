@@ -45,7 +45,7 @@ void ClientObjectManager::checkClientsTimeout() noexcept
 }
 
 void ClientObjectManager::setMaxTimeoutTime(
-	const std::chrono::high_resolution_clock::time_point &time) noexcept
+	std::chrono::high_resolution_clock::time_point &time) noexcept
 {
 	_maxTimeoutTimerStart = time;
 }
