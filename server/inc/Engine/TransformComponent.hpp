@@ -19,12 +19,12 @@ namespace Engine {
 
 		Vector2d &getPosition();
 		void setPosition(Vector2d &_position);
-		Vector2d &getRotation();
-		void setRotation(Vector2d &_rotation);
+		double getRotation();
+		void setRotation(double _rotation);
 
 	private:
 		Vector2d _position;
-		Vector2d _rotation;
+		double _rotation;
 	};
 }
 

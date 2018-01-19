@@ -10,7 +10,7 @@
 
 # include <string>
 # include <queue>
-# include "Texture.hpp""
+# include "Texture.hpp"
 # include "ISprite.hpp"
 
 class IRender

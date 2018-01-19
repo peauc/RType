@@ -84,7 +84,8 @@ void	SpriteSFML::setAnimationVector(const std::vector<sf::Texture>
 {
 	bool	equal = true;
 
-	if (vector.size() == this->_animationVector.size()) {
+	if (vector.size() == this->_animationVector.size() &&
+		vector.size() > 1) {
 		for (int i = 0;
 		     i < vector.size() && i < this->_animationVector.size();
 		     ++i) {
@@ -109,7 +110,8 @@ void	SpriteSFML::updateAnimation() noexcept
 {
 	if (this->_animationVector.size() > 1 &&
 	    this->_animationIndex < this->_animationVector.size()) {
-		this->_sprite.setTexture(_animationVector[_animationIndex]);
+		this->_sprite.setTexture(_animationVector[_animationIndex],
+					 true);
 		++this->_animationIndex;
 		if (this->_animationIndex >= this->_animationVector.size()
 		    && this->_repeatAnimation) {

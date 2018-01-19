@@ -9,32 +9,44 @@
 
 Engine::Game::Game()
 {
-    this->_world = std::make_unique<World>();
+	this->_world = std::make_unique<World>();
 }
-
-Engine::Game::~Game()
-= default;
 
 void Engine::Game::run()
 {
-    std::chrono::time_point<std::chrono::system_clock> previous = std::chrono::system_clock::now();
-    double lag = 0;
+	std::chrono::time_point<std::chrono::system_clock> previous = std::chrono::system_clock::now();
+	double lag = 0;
 
-    while (!this->_stop) {
-        std::chrono::time_point<std::chrono::system_clock> current = std::chrono::system_clock::now();
-        double elapsed = static_cast<double>(std::chrono::duration_cast<std::chrono::milliseconds>
-                (current - previous).count());
-        previous = current;
-        lag += elapsed;
-	    
-	    
-        // PROCESS INPUT
-        while (lag > MS_PER_UPDATE) {
-            this->_world->update();
-            lag -= MS_PER_UPDATE;
-        }
-        // SEND INFORMATIONS TO CLIENT
-    }
+	while (!this->_stop) {
+		std::chrono::time_point<std::chrono::system_clock> current = std::chrono::system_clock::now();
+		double elapsed = static_cast<double>(std::chrono::duration_cast<std::chrono::milliseconds>
+				(current - previous).count());
+		previous = current;
+		lag += elapsed;
+
+		// PROCESS INPUT
+		while (lag > MS_PER_UPDATE) {
+			this->_world->update();
+			lag -= MS_PER_UPDATE;
+		}
+		// SEND INFORMATIONS TO CLIENT
+	}
+}
+
+void Engine::Game::setup(int nbOfPlayers, const std::shared_ptr<RessourcesLoader> &resourceLoader)
+{
+	std::unique_ptr<Engine::World> world = std::make_unique<Engine::World>();
+
+	this->setWorld(std::move(world));
+	this->setResourceLoader(resourceLoader);
+	std::unique_ptr<Engine::Entity> camera = std::unique_ptr<Engine::Entity>
+			(Factory::EntityFactory::createCamera(0, *this));
+
+	this->_world->setCamera(std::move(camera));
+
+	for (int i = 0; i < nbOfPlayers; ++i) {
+		this->_world->addObject(Factory::EntityFactory::createPlayerShip);
+	}
 }
 
 const std::vector<std::unique_ptr<Engine::Event>> &Engine::Game::getEvents() const
@@ -47,15 +59,14 @@ std::vector<std::unique_ptr<Engine::Event>> &Engine::Game::getEventsReference()
     return _events.getEvents();
 }
 
-
-Engine::World &Engine::Game::getWorld()
+std::unique_ptr<Engine::World> &Engine::Game::getWorld()
 {
-	return *_world;
+	return _world;
 }
 
-const Engine::World &Engine::Game::getWorld() const
+const std::unique_ptr<Engine::World> &Engine::Game::getWorld() const
 {
-	return *_world;
+	return _world;
 }
 
 void Engine::Game::setWorld(std::unique_ptr<World> world)
@@ -66,4 +77,15 @@ void Engine::Game::setWorld(std::unique_ptr<World> world)
 	this->_world = std::move(world);
 	this->_world->setParentGame(this);
 }
+
+const std::shared_ptr<RessourcesLoader> &Engine::Game::getResourceLoader() const
+{
+	return _resourceLoader;
+}
+
+void Engine::Game::setResourceLoader(const std::shared_ptr<RessourcesLoader> &_resourceLoader)
+{
+	this->_resourceLoader = _resourceLoader;
+}
+
 

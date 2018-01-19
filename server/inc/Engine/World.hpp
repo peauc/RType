@@ -8,11 +8,12 @@
 #include <list>
 #include <queue>
 #include <Factories/EntityFactory.hpp>
+#include <DataPacket.hpp>
 #include "Game.hpp"
-#include "Sound.hpp"
 
 namespace Engine {
 	class Game;
+
 	class World
 	{
 	public:
@@ -28,14 +29,23 @@ namespace Engine {
 		Game *getParentGame() const;
 		void setParentGame(Game *_parentGame);
 
+		std::unique_ptr<Entity> &getCamera();
+		void setCamera(std::unique_ptr<Entity> camera);
+		std::unique_ptr<Mediator> &getMediator();
+		const std::unique_ptr<Mediator> &getMediator() const;
+		void setMediator(std::unique_ptr<Mediator> _mediator);
+		void addPacketToSend(Packet::DataPacket *packet);
+		const std::vector<std::unique_ptr<Packet::DataPacket>> &getPacketsToSend() const;
+		void emptyPacketsToSend();
+
 		void update();
 
 	private:
 		unsigned int _nextEntityId;
 		std::list<std::unique_ptr<Entity>> _objects;
 		std::unique_ptr<Entity> _camera;
-		std::vector<std::shared_ptr<Mediator>> _mediators;
-		std::queue<Sound> _sounds;
+		std::unique_ptr<Mediator> _mediator;
+		std::vector<std::unique_ptr<Packet::DataPacket>> _packetsToSend;
 		Game *_parentGame;
 	};
 }

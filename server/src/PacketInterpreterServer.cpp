@@ -73,3 +73,16 @@ void PacketInterpreterServer::pong(const Packet::DataPacket &packet)
 {
 	Logger::Log(Logger::DEBUG, "Client Ponged the server");
 }
+
+Engine::Event PacketInterpreterServer::createEventFromPacket(const Packet::DataPacket
+							     &packet,
+							     uint32_t id) noexcept
+{
+	Engine::Event event(id);
+	
+	event._yVelocity = packet.data.input.yVelocity;
+	event._xVelocity = packet.data.input.xVelocity;
+	event._chargingShot = packet.data.input.chargingShot;
+	event._shotReleased = packet.data.input.shotReleased;
+	return (event);
+}

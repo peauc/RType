@@ -5,8 +5,11 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/..)
 
 include_directories(includes)
+include_directories(../common/includes)
 
 file(GLOB SOURCE_FILES
+        "../common/sources/*.cpp"
+        "../common/includes/*.hpp"
         "sources/*.cpp"
         "includes/*.hpp")
 

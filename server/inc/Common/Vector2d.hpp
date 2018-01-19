@@ -7,8 +7,8 @@
 
 struct Vector2d
 {
-    float x;
-    float y;
+    double x;
+    double y;
 };
 
 #endif //RTYPE_VECTOR2D_HPP

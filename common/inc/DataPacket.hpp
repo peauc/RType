@@ -8,6 +8,8 @@
 #ifndef DATAPACKET_HPP
 # define DATAPACKET_HPP
 
+#include <cstddef>
+
 namespace Packet {
 enum GameState {
 	INGAME = 0,
@@ -40,6 +42,11 @@ struct Object {
 	unsigned char objectId;
 	unsigned char animationId;
 };
+struct Sound {
+	unsigned char soundId;
+	bool music;
+	bool repeat;
+};
 struct Input {
 	float Xvelocity;
 	float Yvelocity;
@@ -55,6 +62,7 @@ union UData {
 	Lobby lobby;
 	Score score;
 	Object object;
+	Sound sound;
 };
 struct DataPacket {
 	DataPacket() {};

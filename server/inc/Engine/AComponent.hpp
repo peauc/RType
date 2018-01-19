@@ -8,11 +8,12 @@
 #include <memory>
 #include <unordered_map>
 #include "Mediator.hpp"
+#include "Observer.hpp"
 
 namespace Engine {
 	class Entity;
 
-	class AComponent
+	class AComponent : Observer
 	{
 	public:
 		explicit AComponent(Entity *parentEntity);
@@ -20,17 +21,20 @@ namespace Engine {
 
 		void registerToMediator(Mediator *mediator);
 		void unregisterToMediator(Mediator *mediator);
-		void receive(Mediator::Message messageType, AComponent *sender);
+		void receive(Mediator::Message messageType, AComponent *sender) override;
 		void sendToAll(Mediator::Message messageType);
-		void addObserver(Entity *);
-		void removeObserver(Entity *);
+
+		void addObserver(Observer *);
+		void removeObserver(Observer *);
+
+		unsigned int getParentEntityId() const;
 
 		virtual void update() = 0;
 
 	protected:
 		Entity *_parentEntity;
 		std::vector<Mediator *> _mediators;
-		std::vector<Entity *> _observers;
+		std::vector<Observer *> _observers;
 
 		std::unordered_map<Mediator::Message, std::function<void(Mediator::Message, AComponent *)>> _validMessageTypes;
 	};

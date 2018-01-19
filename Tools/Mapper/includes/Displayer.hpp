@@ -9,9 +9,8 @@
 #define SFMLDEMO_DISPLAYER_HPP
 
 #include <SFML/Graphics.hpp>
-#include <functional>
 #include <vector>
-#include <map>
+#include <array>
 #include "SpriteManager.hpp"
 #include "Extractor.hpp"
 #include "Sprite.hpp"
@@ -35,7 +34,6 @@ private:
 	void    resolveTextureRect();
 	void    resolveSizeRect();
 	void    createEvents();
-	void    doEvent(sf::Keyboard::Key key);
 	void    onNextSprite();
 	void    onPrevSprite();
 	void    onRemoveSprite();
@@ -45,6 +43,9 @@ private:
 	void    onSelectAll();
 	void    onChangeMode();
 	void    onSave();
+	void	onChangeEqualize();
+
+	std::string		getMode() const;
 
 	SpriteManager           &spriteManager;
 
@@ -61,9 +62,9 @@ private:
 
 	bool                    fontLoaded;
 
-	using Callback = std::function<void(void)>;
+	using Callback = void (Displayer::*) (void);
 
-	std::map<sf::Keyboard::Key, Displayer::Callback>    actions;
+	std::array<Displayer::Callback, sf::Keyboard::KeyCount>	actions;
 
 };
 
