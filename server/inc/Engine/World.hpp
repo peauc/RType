@@ -10,7 +10,6 @@
 #include <Factories/EntityFactory.hpp>
 #include <DataPacket.hpp>
 #include "Game.hpp"
-#include "Sound.hpp"
 
 namespace Engine {
 	class Game;
@@ -46,7 +45,6 @@ namespace Engine {
 		std::list<std::unique_ptr<Entity>> _objects;
 		std::unique_ptr<Entity> _camera;
 		std::unique_ptr<Mediator> _mediator;
-		std::queue<Sound> _sounds;
 		std::vector<std::unique_ptr<Packet::DataPacket>> _packetsToSend;
 		Game *_parentGame;
 	};

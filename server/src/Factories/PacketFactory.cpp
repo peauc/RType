@@ -35,3 +35,15 @@ Packet::DataPacket *PacketFactory::createScorePacket(Packet::GameState gameState
 
 	return dataPacket;
 }
+
+Packet::DataPacket *PacketFactory::createSoundPacket(unsigned char soundId, bool music, bool repeat)
+{
+	Packet::DataPacket *dataPacket = new Packet::DataPacket;
+
+	dataPacket->cmd = 0;
+	dataPacket->data.sound.soundId = soundId;
+	dataPacket->data.sound.music = music;
+	dataPacket->data.sound.repeat = repeat;
+
+	return dataPacket;
+}

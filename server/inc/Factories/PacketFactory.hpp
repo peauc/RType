@@ -17,6 +17,7 @@ public:
 												  unsigned char animationId);
 	static Packet::DataPacket *createScorePacket(Packet::GameState gameState,
 												 const std::vector<Packet::PlayerScore> &playerScores);
+	static Packet::DataPacket *createSoundPacket(unsigned char soundId, bool music, bool repeat);
 };
 
 #endif //RTYPE_PACKETFACTORY_HPP

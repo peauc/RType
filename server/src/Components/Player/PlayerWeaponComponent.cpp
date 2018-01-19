@@ -3,6 +3,7 @@
 //
 
 #include <Components/Player/PlayerWeaponComponent.hpp>
+#include <Components/Projectiles/ShotAudioComponent.hpp>
 
 Component::PlayerWeaponComponent::PlayerWeaponComponent(Engine::Entity *parentEntity, Engine::World *parentWorld)
 		: AWeaponComponent(parentEntity, parentWorld), _event(false), _firing(false), _charging(0)
@@ -24,11 +25,14 @@ void Component::PlayerWeaponComponent::update()
 
 		Engine::AComponent *shotMovementComponent = new Component::ShotMovementComponent(this->_parentEntity, 300);
 		Engine::AComponent *shotGraphicsComponent;
+		Engine::AComponent *shotSoundComponent;
 		// TODO Change animation values
 		if (this->_charging < 30) { // Regular shot
 			shotGraphicsComponent = new Component::ShotGraphicsComponent(this->_parentEntity, 0, 0);
+			shotSoundComponent = new Component::ShotAudioComponent(this->_parentEntity, this->_parentWorld, 0);
 		} else { // Charged shot
 			shotGraphicsComponent = new Component::ShotGraphicsComponent(this->_parentEntity, 1, 1);
+			shotSoundComponent = new Component::ShotAudioComponent(this->_parentEntity, this->_parentWorld, 1);
 		}
 
 		if (this->_parentWorld->getCamera() != nullptr) {
@@ -37,6 +41,7 @@ void Component::PlayerWeaponComponent::update()
 
 		shot->addComponent(shotMovementComponent);
 		shot->addComponent(shotGraphicsComponent);
+		shot->addComponent(shotSoundComponent);
 
 		shot->getTransformComponent().getPosition().x =
 				this->_parentEntity->getTransformComponent().getPosition().x + this->_shotRelativeOrigin.x;

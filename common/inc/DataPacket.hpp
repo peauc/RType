@@ -10,8 +10,7 @@
 
 #include <cstddef>
 
-namespace Packet
-{
+namespace Packet {
 	enum GameState
 	{
 		INGAME = 0,
@@ -24,63 +23,71 @@ namespace Packet
 		ALIVE = 0,
 		DEAD = 1
 	};
-	
+
 	struct PlayerScore
 	{
-		char		playerId;
-		unsigned int	score;
+		char playerId;
+		unsigned int score;
 	};
-	
+
 	struct Lobby
 	{
-		bool		gameStarted;
-		unsigned char	numberOfPlayers;
+		bool gameStarted;
+		unsigned char numberOfPlayers;
 	};
-	
+
 	struct Score
 	{
-		GameState		gameState;
-		struct PlayerScore	playerScore[4];
+		GameState gameState;
+		struct PlayerScore playerScore[4];
 	};
-	
+
 	struct Object
 	{
-		short		x;
-		short		y;
-		EntityState 	entityState;
-		bool 		animated;
-		bool 		hit;
-		unsigned int 	id;
-		unsigned char 	objectId;
-		unsigned char 	animationId;
+		short x;
+		short y;
+		EntityState entityState;
+		bool animated;
+		bool hit;
+		unsigned int id;
+		unsigned char objectId;
+		unsigned char animationId;
 	};
-	
+
+	struct Sound
+	{
+		unsigned char soundId;
+		bool music;
+		bool repeat;
+	};
+
 	struct Input
 	{
-		short		yVelocity;
-		short		xVelocity;
-		bool		shotReleased;
-		bool		chargingShot;
+		short yVelocity;
+		short xVelocity;
+		bool shotReleased;
+		bool chargingShot;
 	};
-	
+
 	struct Connection
 	{
-		unsigned short	seed;
+		unsigned short seed;
 	};
-	
+
 	union UData
 	{
-		Connection 	connection;
-		Input		input;
-		Lobby		lobby;
-		Score		score;
-		Object		object;
+		Connection connection;
+		Input input;
+		Lobby lobby;
+		Score score;
+		Object object;
+		Sound sound;
 	};
-	
+
 	struct DataPacket
 	{
-		unsigned short	cmd;
-		union UData	data;
+		unsigned short cmd;
+		union UData data;
 	};
 	const std::size_t PACKETSIZE = sizeof(DataPacket);
 }
