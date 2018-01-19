@@ -14,6 +14,8 @@ class EventList {
 public:
 	EventList();
 	~EventList();
+	
+	std::unique_ptr<Engine::Event> getEventById(size_t id) noexcept;
 	std::vector<std::unique_ptr<Engine::Event>> &getEvents();
 	const std::vector<std::unique_ptr<Engine::Event>> &getEvents() const;
 	void pushBack(std::unique_ptr<Engine::Event> &e);

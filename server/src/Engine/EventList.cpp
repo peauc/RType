@@ -26,12 +26,26 @@ Engine::Event Engine::EventList::popBack()
 	_mutex.unlock();
 	return (*e.get());
 }
+
 std::vector<std::unique_ptr<Engine::Event>> &Engine::EventList::getEvents()
 {
 	return _events;
 }
+
 const std::vector<std::unique_ptr<Engine::Event>> &Engine::EventList::getEvents() const
 {
 	return _events;
+}
+std::unique_ptr<Engine::Event> Engine::EventList::getEventById(size_t id)
+noexcept
+{
+	_mutex.lock();
+	auto t = std::find_if(_events.begin(), _events.end(), []
+		(std::unique_ptr<Engine::Event> &e){
+		return (e->_entityId == id);
+	});
+	_events.erase(t);
+	_mutex.unlock();
+	return (std::move(*t));
 }
 
