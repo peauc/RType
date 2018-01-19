@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <chrono>
 #include "ClientObjectManager.hpp"
 
 size_t ClientObjectManager::size() const
@@ -45,7 +46,7 @@ void ClientObjectManager::checkClientsTimeout() noexcept
 }
 
 void ClientObjectManager::setMaxTimeoutTime(
-	std::chrono::high_resolution_clock::time_point &time) noexcept
+		std::chrono::steady_clock::time_point &time) noexcept
 {
 	_maxTimeoutTimerStart = time;
 }

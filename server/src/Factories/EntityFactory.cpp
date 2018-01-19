@@ -7,7 +7,6 @@
 #include <Components/Camera/CameraMovementComponent.hpp>
 #include <Components/Player/PlayerGraphicsComponent.hpp>
 #include <Components/Camera/CameraViewComponent.hpp>
-#include <Components/Player/PlayerPhysicsComponent.hpp>
 #include <iostream>
 #include <Components/Player/PlayerWeaponComponent.hpp>
 #include "Factories/EntityFactory.hpp"
@@ -28,15 +27,15 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 		playerGraphicsComponent->addObserver(game.getWorld()->getCamera().get());
 	}
 
-	Engine::AComponent *playerPhysicsComponent = new Component::PlayerPhysicsComponent(playerShip);
-	if (game.getWorld()->getMediator() != nullptr) {
-		playerPhysicsComponent->registerToMediator(game.getWorld()->getMediator().get());
-	}
+//	Engine::AComponent *playerPhysicsComponent = new Component::PlayerPhysicsComponent(playerShip);
+//	if (game.getWorld()->getMediator() != nullptr) {
+//		playerPhysicsComponent->registerToMediator(game.getWorld()->getMediator().get());
+//	}
 
 	playerShip->addComponent(playerInputComponent);
 	playerShip->addComponent(playerMoveComponent);
 	playerShip->addComponent(playerWeaponComponent);
-	playerShip->addComponent(playerPhysicsComponent);
+//	playerShip->addComponent(playerPhysicsComponent);
 	playerShip->addComponent(playerGraphicsComponent);
 
 	playerShip->getTransformComponent().getPosition().x = 0;
