@@ -21,7 +21,7 @@ public:
 	ClientObject &getClientContained(const ClientObject &copy);
 	void checkClientsTimeout() noexcept;
 	bool isFull() const noexcept;
-	void setMaxTimeoutTime(std::chrono::high_resolution_clock::time_point &time) noexcept;
+	void setMaxTimeoutTime(std::chrono::steady_clock::time_point &time) noexcept;
 //	long long int getTimeout() noexcept;
 private:
 	size_t _maxSize;

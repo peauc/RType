@@ -12,6 +12,6 @@ Component::ShotMovementComponent::ShotMovementComponent(Engine::Entity *parentEn
 
 void Component::ShotMovementComponent::update()
 {
-	this->_parentEntity->getTransformComponent().getPosition().x += this->_speed * cos(this->_parentEntity->getTransformComponent().getRotation());
-	this->_parentEntity->getTransformComponent().getPosition().y += this->_speed * sin(this->_parentEntity->getTransformComponent().getRotation());
+	this->_parentEntity->getTransformComponent().getPosition().x += this->_speed * cos(this->_parentEntity->getTransformComponent().getRotationRadians());
+	this->_parentEntity->getTransformComponent().getPosition().y += this->_speed * sin(this->_parentEntity->getTransformComponent().getRotationRadians());
 }
