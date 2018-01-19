@@ -33,8 +33,8 @@ struct Score {
 	struct PlayerScore playerScore[4];
 };
 struct Object {
-	float x;
-	float y;
+	short x;
+	short y;
 	EntityState entityState;
 	bool animated;
 	bool hit;
@@ -48,8 +48,8 @@ struct Sound {
 	bool repeat;
 };
 struct Input {
-	float Xvelocity;
-	float Yvelocity;
+	short xVelocity;
+	short yVelocity;
 	bool shot;
 	bool charged;
 };

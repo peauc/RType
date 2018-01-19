@@ -6,6 +6,7 @@
 #define RTYPE_CLIENTOBJECT_HPP
 #include <boost/array.hpp>
 #include <boost/asio/ip/udp.hpp>
+#include <chrono>
 
 class ClientObject {
 public:

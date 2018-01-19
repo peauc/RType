@@ -82,7 +82,7 @@ Engine::Event PacketInterpreterServer::createEventFromPacket(const Packet::DataP
 	
 	event._yVelocity = packet.data.input.yVelocity;
 	event._xVelocity = packet.data.input.xVelocity;
-	event._chargingShot = packet.data.input.chargingShot;
-	event._shotReleased = packet.data.input.shotReleased;
+	event._chargingShot = packet.data.input.charged;
+	event._shotReleased = packet.data.input.shot;
 	return (event);
 }
