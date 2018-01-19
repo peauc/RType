@@ -5,52 +5,33 @@
 #include <algorithm>
 #include "Engine/EventList.hpp"
 
-Engine::EventList::~EventList()
-{
-}
-
-Engine::EventList::EventList()
-{
-}
-
 void Engine::EventList::pushBack(std::unique_ptr<Engine::Event> &e)
 {
 	_mutex.lock();
-	_events.push_back(std::move(e));
+	_list.push_back(std::move(e));
 	_mutex.unlock();
-}
-
-Engine::Event Engine::EventList::popBack()
-{
-	_mutex.lock();
-	std::unique_ptr<Engine::Event> &e = _events.back();
-	_mutex.unlock();
-	return (*e.get());
 }
 
 std::vector<std::unique_ptr<Engine::Event>> &Engine::EventList::getEvents()
 {
-	return _events;
+	return _list;
 }
 
 const std::vector<std::unique_ptr<Engine::Event>> &Engine::EventList::getEvents() const
 {
-	return _events;
+	return _list;
 }
 std::unique_ptr<Engine::Event> Engine::EventList::getEventById(size_t id)
 noexcept
 {
-	_mutex.lock();
-	auto t = std::find_if(_events.begin(), _events.end(), [id]
+	std::lock_guard<std::mutex> l(_mutex);
+	auto t = std::find_if(_list.begin(), _list.end(), [id]
 		(std::unique_ptr<Engine::Event> &e){
 		return (e->_entityId == id);
 	});
-	if (t == _events.end()) {
-		_mutex.unlock();
+	if (t == _list.end())
 		return (nullptr);
-	}
-	_events.erase(t);
-	_mutex.unlock();
+	_list.erase(t);
 	return (std::move(*t));
 }
 

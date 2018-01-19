@@ -66,6 +66,7 @@ union UData {
 };
 struct DataPacket {
 	DataPacket() {};
+	DataPacket(DataPacket &pket) : cmd(pket.cmd), data(pket.data) {}
 	explicit DataPacket(unsigned short cmd) : cmd(cmd) {};
 	unsigned short cmd;
 	union UData data;

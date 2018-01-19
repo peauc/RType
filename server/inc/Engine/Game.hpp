@@ -10,6 +10,7 @@
 #include "Event.hpp"
 #include "EventList.hpp"
 #include "../../../RessourcesLoader/includes/RessourcesLoader.hpp"
+#include "PacketList.hpp"
 
 #define MS_PER_UPDATE 16
 
@@ -35,6 +36,7 @@ namespace Engine {
 	private:
 		std::unique_ptr<World> _world;
 		EventList _eventList;
+		PacketList _packetList;
 		std::shared_ptr<RessourcesLoader> _resourceLoader;
 		bool _stop;
 	};

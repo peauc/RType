@@ -13,16 +13,15 @@
 namespace Engine {
 class EventList {
 public:
-	EventList();
-	~EventList();
+	EventList() = default;
+	~EventList() = default;
 	
 	std::unique_ptr<Engine::Event> getEventById(size_t id) noexcept;
 	std::vector<std::unique_ptr<Engine::Event>> &getEvents();
 	const std::vector<std::unique_ptr<Engine::Event>> &getEvents() const;
 	void pushBack(std::unique_ptr<Engine::Event> &e);
-	Engine::Event popBack();
 private:
-	std::vector<std::unique_ptr<Engine::Event>> _events;
+	std::vector<std::unique_ptr<Engine::Event>> _list;
 	std::mutex _mutex;
 };
 }
