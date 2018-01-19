@@ -16,9 +16,11 @@ public:
 	long long int currentTimout() const noexcept;
 	bool isTimedOut(long long int timeoutValue) const noexcept;
 	void resetTimeout() noexcept;
+	void toggleReady() noexcept;
+	bool isReady() noexcept;
 private:
 	ClientObject();
-	boost::array<char, 65245> _buffer;
+	bool _isReady;
 	boost::asio::ip::udp::endpoint _endpoint;
 	std::chrono::steady_clock::time_point _timeoutStart;
 	std::chrono::steady_clock::duration _maxTimout;

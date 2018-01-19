@@ -30,6 +30,17 @@ AsioServer::AsioServer() : _endpoint(boost::asio::ip::udp::v4(), 4242) ,
                            _socket
 	(_ioService, _endpoint)
 {
+	fptr[Packet::CONNECT] = &AsioServer::connect;
+	fptr[Packet::DISCONNECT] = &AsioServer::disconnect;
+	fptr[Packet::CONNECTED] = &AsioServer::connected;
+	fptr[Packet::DISCONNECTED] = &AsioServer::disconnected;
+	fptr[Packet::STARTGAME] = &AsioServer::startGame;
+	fptr[Packet::READY] = &AsioServer::ready;
+	fptr[Packet::POSITION] = &AsioServer::position;
+	fptr[Packet::HIT] = &AsioServer::hit;
+	fptr[Packet::EVENT] = &AsioServer::event;
+	fptr[Packet::PONG] = &AsioServer::pong;
+	
 }
 
 bool AsioServer::sendMessage(const ClientObject &client, const IMessage
@@ -78,7 +89,8 @@ void AsioServer::handleReceive(const boost::system::error_code &error,
 		} catch (std::out_of_range &e) {
 			Logger::Log(Logger::CRITICAL, e.what());
 		}
-		_interpreter.interpretPacket(message.getPacket());
+		interpretPacket(message.getPacket(), t->getClientContained
+							      (tmp));
 	}
 	else {
 		Logger::Log(Logger::DEBUG, "New client");
@@ -91,7 +103,6 @@ void AsioServer::handleReceive(const boost::system::error_code &error,
 		}
 	}
 	_lobbyList.dump();
-	
 }
 
 bool AsioServer::tick()
@@ -101,4 +112,67 @@ bool AsioServer::tick()
 	_lobbyList.checkTimeout();
 	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	return (true);
+}
+
+void	AsioServer::interpretPacket(const Packet::DataPacket &packet,
+					ClientObject &obj) noexcept
+{
+	if (packet.cmd < Packet::UNKNOWN) {
+		(this->*fptr[packet.cmd])(packet, obj);
+	}
+}
+
+void AsioServer::connect(const Packet::DataPacket &packet, ClientObject
+&obj) noexcept
+{
+	std::cout << "CONNECT" << std::endl;
+}
+
+void AsioServer::disconnect(const Packet::DataPacket &packet, ClientObject
+&obj) noexcept
+{
+	std::cout << "DISCONNECT" << std::endl;
+}
+
+void AsioServer::connected(const Packet::DataPacket &packet, ClientObject
+&obj) noexcept
+{
+	std::cout << "CONNECTED" << std::endl;
+}
+
+void AsioServer::disconnected(const Packet::DataPacket &packet, ClientObject
+&obj) noexcept
+{
+	std::cout << "DISCONNECTED" << std::endl;
+}
+
+void AsioServer::startGame(const Packet::DataPacket &packet, ClientObject
+&obj) noexcept
+{
+}
+
+void AsioServer::ready(const Packet::DataPacket &packet, ClientObject &obj)
+noexcept
+{
+	obj.toggleReady();
+}
+
+void AsioServer::position(const Packet::DataPacket &packet, ClientObject
+&obj) noexcept
+{
+}
+
+void AsioServer::hit(const Packet::DataPacket &packet, ClientObject &obj)
+noexcept
+{
+}
+
+void AsioServer::event(const Packet::DataPacket &packet, ClientObject &obj)
+noexcept
+{
+}
+void AsioServer::pong(const Packet::DataPacket &packet, ClientObject &obj)
+noexcept
+{
+	Logger::Log(Logger::DEBUG, "Client Ponged the server");
 }

@@ -35,3 +35,13 @@ void ClientObject::resetTimeout() noexcept
 {
 	_timeoutStart = std::chrono::steady_clock::now();
 }
+
+void ClientObject::toggleReady() noexcept
+{
+	_isReady = !_isReady;
+}
+
+bool ClientObject::isReady() noexcept
+{
+	return (_isReady);
+}

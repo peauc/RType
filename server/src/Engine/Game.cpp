@@ -2,10 +2,12 @@
 // Created by romain on 12/01/18.
 //
 
-#include <Engine/Game.hpp>
+#include <thread>
 #include <chrono>
 #include <iostream>
-#include <Factories/EntityFactory.hpp>
+#include "Engine/Game.hpp"
+#include "Factories/EntityFactory.hpp"
+
 
 Engine::Game::Game()
 {
@@ -81,4 +83,8 @@ void Engine::Game::setResourceLoader(const std::shared_ptr<RessourcesLoader> &_r
 Engine::EventList &Engine::Game::getEventList()
 {
 	return _eventList;
+}
+void Engine::Game::start()
+{
+	_thread = std::thread(&Game::run, this);
 }

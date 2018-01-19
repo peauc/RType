@@ -60,8 +60,8 @@ ClientObject &Lobby::getClientContained(const ClientObject &copy)
 }
 bool Lobby::startGame()
 {
-	//std::thread thread(_game.run());
-	
+	_game.run();
+	return (true);
 }
 
 
