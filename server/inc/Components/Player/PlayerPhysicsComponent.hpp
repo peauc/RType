@@ -1,21 +1,21 @@
 //
-// Created by romain on 17/01/18.
+// Created by romain on 19/01/18.
 //
 
 #ifndef RTYPE_PLAYERPHYSICSCOMPONENT_HPP
 #define RTYPE_PLAYERPHYSICSCOMPONENT_HPP
 
-#include "Components/Abstracts/APhysicsComponent.hpp"
+#include <Components/Abstracts/APhysicsComponent.hpp>
 
 namespace Component {
 	class PlayerPhysicsComponent : public APhysicsComponent
 	{
 	public:
-		explicit PlayerPhysicsComponent(Engine::Entity *entity);
+		PlayerPhysicsComponent(Engine::Entity *parentEntity, Engine::Hitbox *hitbox);
 		~PlayerPhysicsComponent() override = default;
 
-		void triggerCollision(APhysicsComponent &other) override;
 		void update() override;
+		void triggerCollision(APhysicsComponent &other);
 	};
 }
 

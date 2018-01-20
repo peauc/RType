@@ -2,10 +2,12 @@
 // Created by romain on 12/01/18.
 //
 
-#include <Engine/Game.hpp>
+#include <thread>
 #include <chrono>
 #include <iostream>
-#include <Factories/EntityFactory.hpp>
+#include "Engine/Game.hpp"
+#include "Factories/EntityFactory.hpp"
+
 
 Engine::Game::Game()
 {
@@ -33,14 +35,20 @@ void Engine::Game::run()
 	}
 }
 
-const std::vector<std::unique_ptr<Engine::Event>> &Engine::Game::getEvents() const
+void Engine::Game::setup(int nbOfPlayers, const std::shared_ptr<RessourcesLoader> &resourceLoader)
 {
-	return _events;
-}
+	std::unique_ptr<Engine::World> world = std::make_unique<Engine::World>();
 
-std::vector<std::unique_ptr<Engine::Event>> &Engine::Game::getEventsReference()
-{
-	return _events;
+	this->setWorld(std::move(world));
+	this->setResourceLoader(resourceLoader);
+	std::unique_ptr<Engine::Entity> camera = std::unique_ptr<Engine::Entity>
+			(Factory::EntityFactory::createCamera(0, *this));
+
+	this->_world->setCamera(std::move(camera));
+
+	for (int i = 0; i < nbOfPlayers; ++i) {
+		this->_world->addObject(Factory::EntityFactory::createPlayerShip);
+	}
 }
 
 std::unique_ptr<Engine::World> &Engine::Game::getWorld()
@@ -72,3 +80,11 @@ void Engine::Game::setResourceLoader(const std::shared_ptr<RessourcesLoader> &_r
 	this->_resourceLoader = _resourceLoader;
 }
 
+Engine::EventList &Engine::Game::getEventList()
+{
+	return _eventList;
+}
+void Engine::Game::start()
+{
+	_thread = std::thread(&Game::run, this);
+}

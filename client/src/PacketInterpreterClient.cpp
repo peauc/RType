@@ -10,21 +10,21 @@
 
 PacketInterpreterClient::PacketInterpreterClient()
 {
-	fptr[CONNECT] = &PacketInterpreterClient::connect;
-	fptr[DISCONNECT] = &PacketInterpreterClient::disconnect;
-	fptr[CONNECTED] = &PacketInterpreterClient::connected;
-	fptr[DISCONNECTED] = &PacketInterpreterClient::disconnected;
-	fptr[STARTGAME] = &PacketInterpreterClient::startGame;
-	fptr[READY] = &PacketInterpreterClient::ready;
-	fptr[POSITION] = &PacketInterpreterClient::position;
-	fptr[HIT] = &PacketInterpreterClient::hit;
-	fptr[EVENT] = &PacketInterpreterClient::event;
+	fptr[Packet::CONNECT] = &PacketInterpreterClient::connect;
+	fptr[Packet::DISCONNECT] = &PacketInterpreterClient::disconnect;
+	fptr[Packet::CONNECTED] = &PacketInterpreterClient::connected;
+	fptr[Packet::DISCONNECTED] = &PacketInterpreterClient::disconnected;
+	fptr[Packet::STARTGAME] = &PacketInterpreterClient::startGame;
+	fptr[Packet::READY] = &PacketInterpreterClient::ready;
+	fptr[Packet::POSITION] = &PacketInterpreterClient::position;
+	fptr[Packet::HIT] = &PacketInterpreterClient::hit;
+	fptr[Packet::EVENT] = &PacketInterpreterClient::event;
 }
 
 void	PacketInterpreterClient::interpretPacket(const Packet::DataPacket &packet) noexcept
 {
 	std::cout << "SERVER CMD = " << packet.cmd << std::endl;
-	if (packet.cmd < UNKNOWN) {
+	if (packet.cmd < Packet::UNKNOWN) {
 		(this->*fptr[packet.cmd])(packet);
 	}
 }

@@ -7,31 +7,39 @@
 #include <Components/Camera/CameraMovementComponent.hpp>
 #include <Components/Player/PlayerGraphicsComponent.hpp>
 #include <Components/Camera/CameraViewComponent.hpp>
-#include <Components/Player/PlayerPhysicsComponent.hpp>
 #include <iostream>
+#include <Components/Player/PlayerWeaponComponent.hpp>
 #include "Factories/EntityFactory.hpp"
 
 Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine::Game &game)
 {
+
 	Engine::Entity *playerShip = new Engine::Entity(id);
 
 	Engine::AComponent *playerMoveComponent = new Component::PlayerMovementComponent(playerShip);
 	Engine::AComponent *playerInputComponent = new Component::PlayerInputComponent(playerShip,
-																				   game.getEventsReference());
+																				   game.getEventList());
 	Engine::AComponent *playerGraphicsComponent = new Component::PlayerGraphicsComponent(playerShip,
 																						 game.getResourceLoader().get());
+	Engine::AComponent *playerWeaponComponent = new Component::PlayerWeaponComponent(playerShip, game.getWorld().get());
+
 	if (game.getWorld()->getCamera() != nullptr) {
 		playerGraphicsComponent->addObserver(game.getWorld()->getCamera().get());
 	}
-	Engine::AComponent *playerPhysicsComponent = new Component::PlayerPhysicsComponent(playerShip);
-	if (game.getWorld()->getMediator() != nullptr) {
-		playerPhysicsComponent->registerToMediator(game.getWorld()->getMediator().get());
-	}
+
+//	Engine::AComponent *playerPhysicsComponent = new Component::PlayerPhysicsComponent(playerShip);
+//	if (game.getWorld()->getMediator() != nullptr) {
+//		playerPhysicsComponent->registerToMediator(game.getWorld()->getMediator().get());
+//	}
 
 	playerShip->addComponent(playerInputComponent);
 	playerShip->addComponent(playerMoveComponent);
-	playerShip->addComponent(playerPhysicsComponent);
+	playerShip->addComponent(playerWeaponComponent);
+//	playerShip->addComponent(playerPhysicsComponent);
 	playerShip->addComponent(playerGraphicsComponent);
+
+	playerShip->getTransformComponent().getPosition().x = 0;
+	playerShip->getTransformComponent().getPosition().y = 2000 + id * 2000;
 
 	return playerShip;
 }

@@ -12,7 +12,7 @@
 #include "PacketInterpreterClient.hpp"
 
 namespace client {
-class AsioClient : AClient {
+class AsioClient : public AClient {
 public:
 	virtual ~AsioClient() final;
 	AsioClient();
@@ -20,6 +20,7 @@ public:
 	bool sendMessage(const std::string &message) noexcept final;
 	bool sendMessage(const Packet::DataPacket &packet) noexcept;
 	bool connect(const std::string &message) noexcept final;
+	void tick() noexcept;
 	
 private:
 	void handleSend(boost::shared_ptr<std::string> message,

@@ -5,33 +5,41 @@
 #ifndef RTYPE_GAME_HPP
 #define RTYPE_GAME_HPP
 
+#include <thread>
 #include <queue>
 #include "World.hpp"
 #include "Event.hpp"
+#include "EventList.hpp"
 #include "../../../RessourcesLoader/includes/RessourcesLoader.hpp"
+#include "PacketList.hpp"
 
 #define MS_PER_UPDATE 16
 
 namespace Engine {
 	class World;
+
 	class Game
 	{
 	public:
 		Game();
 		~Game() = default;
-		void run();
 
-		std::vector<std::unique_ptr<Event>> &getEventsReference();
-		const std::vector<std::unique_ptr<Event>> &getEvents() const;
+		void start();
+		void run();
+		void setup(int nbOfPlayers, const std::shared_ptr<RessourcesLoader> &resourceLoader);
+
+		EventList &getEventList();
+		void setWorld(std::unique_ptr<World> world);
 		std::unique_ptr<World> &getWorld();
 		const std::unique_ptr<World> &getWorld() const;
-		void setWorld(std::unique_ptr<World>);
 		const std::shared_ptr<RessourcesLoader> &getResourceLoader() const;
 		void setResourceLoader(const std::shared_ptr<RessourcesLoader> &_resourceLoader);
 
 	private:
+		std::thread _thread;
 		std::unique_ptr<World> _world;
-		std::vector<std::unique_ptr<Event>> _events;
+		EventList _eventList;
+		PacketList _packetList;
 		std::shared_ptr<RessourcesLoader> _resourceLoader;
 		bool _stop;
 	};

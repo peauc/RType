@@ -7,8 +7,12 @@
 
 struct Vector2d
 {
-    float x;
-    float y;
+	double x;
+	double y;
+
+	Vector2d() = default;
+	Vector2d(double x, double y) : x(x), y(y)
+	{};
 };
 
 #endif //RTYPE_VECTOR2D_HPP

@@ -5,6 +5,7 @@
 #ifndef RTYPE_AMOVEMENTCOMPONENT_HPP
 #define RTYPE_AMOVEMENTCOMPONENT_HPP
 
+#include <Engine/Entity.hpp>
 #include <Engine/AComponent.hpp>
 #include <Engine/Event.hpp>
 

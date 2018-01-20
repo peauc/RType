@@ -13,26 +13,28 @@ void Extractor::extractSprites(const std::string &file) {
 		return ;
 	this->createPixels(this->image.getSize().x, this->image.getSize().y);
 	this->browsePixels();
+	this->sortSprites();
+	this->spritesEqualize = this->sprites;
+	this->equalizeTileSprites();
 }
 
 void Extractor::createPixels(unsigned int x, unsigned int y) {
-	this->pixels = PixelsTab(y, std::vector<bool>(x, false));
+	this->pixels.reset(new PixelsArray(x, y, false));
 }
 
 void Extractor::browsePixels() {
-	for (unsigned int y = 0; y < this->pixels.size(); ++y)
+	for (unsigned int y = 0; y < this->pixels->getHeight(); ++y)
 	{
-		for (unsigned int x = 0; x < this->pixels.at(y).size(); ++x)
+		for (unsigned int x = 0; x < this->pixels->getWidth(); ++x)
 		{
 			this->tryCreateSprite(x, y);
 		}
 	}
-	this->sortSprites();
 }
 
 void Extractor::tryCreateSprite(unsigned int x, unsigned int y) {
 	if (!this->isEmptyPixel(this->image.getPixel(x, y))
-	    && !this->pixels.at(y).at(x))
+	    && !this->pixels->at(x, y))
 	{
 		Sprite  sprite;
 
@@ -54,15 +56,15 @@ void Extractor::tryCreateSprite(unsigned int x, unsigned int y) {
 
 void Extractor::createSprite(Sprite &sprite,
                              unsigned int x, unsigned int y) {
-	if (!this->pixelIsOutOfRange(x, y)
+	if (!this->pixels->outOfRange(x, y)
 	    && !this->isEmptyPixel(this->image.getPixel(x, y))
-	    && !this->pixels.at(y).at(x))
+	    && !this->pixels->at(x, y))
 	{
 		sprite.setMinX(x);
 		sprite.setMinY(y);
 		sprite.setMaxX(x);
 		sprite.setMaxY(y);
-		this->pixels.at(y).at(x) = true;
+		this->pixels->at(x, y) = true;
 		this->addTails(x, y);
 	}
 }
@@ -75,13 +77,12 @@ const std::vector<Sprite> &Extractor::getSprites() const {
 	return (this->sprites);
 }
 
-bool Extractor::isEmptyPixel(const sf::Color &pixelColor) const {
-	return (pixelColor.a == 0);
+const std::vector<Sprite> &Extractor::getSpritesEqualize() const {
+	return (this->spritesEqualize);
 }
 
-bool Extractor::pixelIsOutOfRange(unsigned int x, unsigned int y) const {
-	return (!(y >= 0 && y < pixels.size()
-	          && x >= 0 && x < pixels.at(y).size()));
+bool Extractor::isEmptyPixel(const sf::Color &pixelColor) const {
+	return (pixelColor.a == 0);
 }
 
 void Extractor::addTails(unsigned int x, unsigned int y) {
@@ -107,3 +108,8 @@ void Extractor::sortSprites() {
 	          } );
 }
 
+void Extractor::equalizeTileSprites() {
+	TileEqualizer	tileEqualizer(this->spritesEqualize);
+
+	tileEqualizer.equalize();
+}

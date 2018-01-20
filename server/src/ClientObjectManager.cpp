@@ -2,12 +2,15 @@
 // Created by Clément Péau on 10/01/2018.
 //
 
+#include <iostream>
+#include <chrono>
 #include "ClientObjectManager.hpp"
 
 size_t ClientObjectManager::size() const
 {
 	return (_clientList.size());
 }
+
 std::vector<IMessage> ClientObjectManager::getClientsMessages()
 {
 	std::vector<IMessage> messageList;
@@ -16,6 +19,7 @@ std::vector<IMessage> ClientObjectManager::getClientsMessages()
 	{}
 	return (messageList);
 }
+
 bool ClientObjectManager::addClient(ClientObject &obj) noexcept
 {
 	if (size() >= 4)
@@ -23,8 +27,51 @@ bool ClientObjectManager::addClient(ClientObject &obj) noexcept
 	_clientList.push_back(obj);
 	return (true);
 }
-bool ClientObjectManager::isClientContained(ClientObject &client) noexcept
+
+bool ClientObjectManager::isClientContained(const ClientObject &client) const
+noexcept
 {
-	return !(std::find(_clientList.begin(), _clientList.end(), client) ==
-	         _clientList.end());
+	return (!(std::find(_clientList.begin(), _clientList.end(), client) ==
+	         _clientList.end()));
+}
+
+void ClientObjectManager::checkClientsTimeout() noexcept
+{
+	_clientList.erase(std::remove_if(_clientList.begin(), _clientList
+		                                 .end(),
+	                       [](ClientObject &obj) {
+		                       return (obj.isTimedOut(5));
+	                       }
+	), _clientList.end());
+}
+
+void ClientObjectManager::setMaxTimeoutTime(
+		std::chrono::steady_clock::time_point &time) noexcept
+{
+	_maxTimeoutTimerStart = time;
+}
+
+bool ClientObjectManager::isFull() const noexcept
+{
+	return (size() >= _maxSize);
+}
+
+void ClientObjectManager::setMaxSize(size_t size) noexcept
+{
+	_maxSize = size;
+}
+
+ClientObjectManager::ClientObjectManager()
+{
+	_maxSize = 4;
+}
+ClientObject &
+ClientObjectManager::getClientContained(const ClientObject &copy)
+{
+	for (auto &t : _clientList) {
+		if (t == copy)
+			return (t);
+	}
+	throw std::out_of_range("Specific client is not contained in this "
+		                        "Manager");
 }

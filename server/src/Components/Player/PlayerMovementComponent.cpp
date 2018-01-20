@@ -9,10 +9,10 @@
 
 Component::PlayerMovementComponent::PlayerMovementComponent(Engine::Entity *parentEntity)
 		: AMovementComponent(parentEntity),
-		  _baseSpeed(1.0f),
+		  _baseSpeed(50.0f),
 		  _lateralBaseSpeed(0.0f),
-		  _maxSpeed(2.0f),
-		  _lateralMaxSpeed(1.0f),
+		  _maxSpeed(100.0f),
+		  _lateralMaxSpeed(50.0f),
 		  _xInput(0.0f),
 		  _yInput(0.0f)
 {
@@ -24,8 +24,8 @@ Component::PlayerMovementComponent::PlayerMovementComponent(Engine::Entity *pare
 void Component::PlayerMovementComponent::update()
 {
 	std::cout << "Updating movement" << std::endl;
-	float xMovement = this->_baseSpeed + this->_xInput;
-	float yMovement = this->_lateralBaseSpeed + this->_yInput;
+	float xMovement = this->_baseSpeed + this->_xInput * this->_baseSpeed;
+	float yMovement = this->_lateralBaseSpeed + this->_yInput * this->_lateralMaxSpeed;
 
 	if (xMovement > this->_maxSpeed)
 		xMovement = this->_maxSpeed;

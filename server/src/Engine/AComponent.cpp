@@ -51,3 +51,8 @@ void Engine::AComponent::removeObserver(Engine::Observer *observer)
 {
 	this->_observers.erase(std::find(this->_observers.begin(), this->_observers.end(), observer));
 }
+
+unsigned int Engine::AComponent::getParentEntityId() const
+{
+	return this->_parentEntity->getId();
+}

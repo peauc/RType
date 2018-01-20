@@ -22,7 +22,8 @@ public:
 	Mapper(const Mapper&) = delete;
 	Mapper	&operator=(const Mapper&) = delete;
 
-	void	setInfos(const std::string &filePath, const std::string &dest);
+	void	setInfos(const std::string &filePath, const std::string &dest,
+					 const std::string &execDir);
 	void	start();
 
 private:

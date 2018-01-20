@@ -6,13 +6,19 @@
 #define RTYPE_AAUDIOCOMPONENT_HPP
 
 #include <Engine/AComponent.hpp>
+#include <Engine/World.hpp>
 
-namespace Components {
-    class AAudioComponents : public Engine::AComponent
+namespace Component {
+    class AAudioComponent : public Engine::AComponent
     {
     public:
-        explicit AAudioComponents(Engine::Entity *parentEntity);
-        ~AAudioComponents() override = default;
+        explicit AAudioComponent(Engine::Entity *parentEntity, Engine::World *parentWorld);
+        ~AAudioComponent() override = default;
+
+		void addSoundPacket(unsigned char soundId, bool repeat);
+    protected:
+        Engine::World *_parentWorld;
+        std::vector<unsigned char> _soundIds;
     };
 }
 

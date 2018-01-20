@@ -43,6 +43,9 @@ private:
 	void    onSelectAll();
 	void    onChangeMode();
 	void    onSave();
+	void	onChangeEqualize();
+
+	std::string		getMode() const;
 
 	SpriteManager           &spriteManager;
 

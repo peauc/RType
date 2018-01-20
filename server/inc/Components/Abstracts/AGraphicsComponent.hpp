@@ -17,17 +17,20 @@ namespace Component {
 		~AGraphicsComponent() override = default;
 
 		bool isInArea(float xPos, float yPos, float xRange, float yRange);
+		float getRelativeXPos(float xPos, float xRange);
+		float getRelativeYPos(float yPos, float yRange);
+
 		RessourcesLoader *getResourceLoader() const;
 		void setResourceLoader(RessourcesLoader *_resourceLoader);
-		unsigned int getCurrentAnimationId() const;
+		unsigned char getCurrentAnimationId() const;
 		bool isHit() const;
 		void setIsHit(bool isHit);
 		bool isAlive() const;
 		void setIsAlive(bool isAlive);
 	protected:
 		RessourcesLoader *_resourceLoader;
-		std::vector<unsigned int> _animationIds;
-		unsigned int _currentAnimationId;
+		std::vector<unsigned char> _animationIds;
+		unsigned char _currentAnimationId;
 		bool _isHit;
 		bool _isAlive;
 	};
