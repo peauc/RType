@@ -6,7 +6,7 @@
 #include <Components/Abstracts/APhysicsComponent.hpp>
 
 Component::HealthComponent::HealthComponent(Engine::Entity *parentEntity, int health, bool godMode, bool instantDeath) :
-		AComponent(parentEntity), _godMode(godMode), _health(health), _instantDeath(instantDeath), _maxHealth(health)
+		AComponent(parentEntity), _godMode(godMode), _health(health), _maxHealth(health), _instantDeath(instantDeath)
 {
 }
 
@@ -29,14 +29,14 @@ int Component::HealthComponent::getHealth() const
 	return this->_health;
 }
 
-void Component::HealthComponent::handleGetImpactDamages(Engine::Mediator::Message messageType, Engine::AComponent *sender)
+void Component::HealthComponent::handleGetImpactDamages(Engine::Mediator::Message, Engine::AComponent *sender)
 {
 	if (APhysicsComponent *physics = dynamic_cast<APhysicsComponent *>(sender)) {
 		physics->setCollisionDamages(this->_maxHealth);
 	}
 }
 
-void Component::HealthComponent::handleHit(Engine::Mediator::Message messageType, Engine::AComponent *sender)
+void Component::HealthComponent::handleHit(Engine::Mediator::Message, Engine::AComponent *sender)
 {
 	if (APhysicsComponent *physics = dynamic_cast<APhysicsComponent *>(sender)) {
 		this->takeDamage(physics->getCollisionDamages());

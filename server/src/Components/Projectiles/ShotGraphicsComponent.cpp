@@ -38,7 +38,7 @@ void Component::ShotGraphicsComponent::update()
 	this->sendToAll(Engine::Mediator::Message::GRAPHICS_REGISTERING);
 }
 
-void Component::ShotGraphicsComponent::handleImpact(Engine::Mediator::Message messageType, Engine::AComponent *sender)
+void Component::ShotGraphicsComponent::handleImpact(Engine::Mediator::Message, Engine::AComponent *)
 {
 	this->_isAlive = false;
 	if (this->_animationIds.size() == 2) {

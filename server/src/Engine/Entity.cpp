@@ -16,14 +16,14 @@ Engine::Entity::Entity(unsigned int id) : _id(id), _transformComponent(this), _c
 
 void Engine::Entity::update()
 {
-	for (int i = 0; i < _components.size(); ++i) {
+	for (unsigned int i = 0; i < _components.size(); ++i) {
 		this->_components[i]->update();
 	}
 }
 
 void Engine::Entity::executeCommands()
 {
-	for (int i = 0; i < _commands.size(); ++i) {
+	for (unsigned int i = 0; i < _commands.size(); ++i) {
 		this->_commands[i]->execute();
 	}
 	this->_commands.clear();
@@ -72,7 +72,7 @@ void Engine::Entity::setId(unsigned int _id)
 	this->_id = _id;
 }
 
-const unsigned int Engine::Entity::getId() const
+unsigned int Engine::Entity::getId() const
 {
 	return _id;
 }

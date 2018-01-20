@@ -24,7 +24,7 @@ void Component::APhysicsComponent::setCollisionDamages(int collisionDamages)
 	this->_collisionDamages = collisionDamages;
 }
 
-void Component::APhysicsComponent::handleCheckCollision(Engine::Mediator::Message messageType,
+void Component::APhysicsComponent::handleCheckCollision(Engine::Mediator::Message,
 														Engine::AComponent *sender)
 {
 	if (APhysicsComponent *other = dynamic_cast<APhysicsComponent *>(sender)) {
@@ -58,7 +58,7 @@ void Component::APhysicsComponent::blockingCollision(Component::APhysicsComponen
 	}
 }
 
-void Component::APhysicsComponent::damagingCollision(Component::APhysicsComponent &other)
+void Component::APhysicsComponent::damagingCollision(Component::APhysicsComponent &)
 {
 	if (!this->_mediators.empty()) {
 		this->_mediators[0]->send(Engine::Mediator::Message::HIT, this);

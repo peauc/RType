@@ -58,12 +58,12 @@ void Component::PlayerGraphicsComponent::update()
 	this->sendToAll(Engine::Mediator::Message::GRAPHICS_REGISTERING);
 }
 
-void Component::PlayerGraphicsComponent::handleDeath(Engine::Mediator::Message messageType, Engine::AComponent *sender)
+void Component::PlayerGraphicsComponent::handleDeath(Engine::Mediator::Message, Engine::AComponent *)
 {
 	this->_isHit = true;
 }
 
-void Component::PlayerGraphicsComponent::handleHit(Engine::Mediator::Message messageType, Engine::AComponent *sender)
+void Component::PlayerGraphicsComponent::handleHit(Engine::Mediator::Message, Engine::AComponent *)
 {
 	this->_isAlive = false;
 }

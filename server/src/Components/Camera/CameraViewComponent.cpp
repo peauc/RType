@@ -48,7 +48,7 @@ void Component::CameraViewComponent::update()
 	}
 }
 
-void Component::CameraViewComponent::handleGraphicsRegistration(Engine::Mediator::Message messageType,
+void Component::CameraViewComponent::handleGraphicsRegistration(Engine::Mediator::Message,
 																Engine::AComponent *sender)
 {
 	std::cout << "handling graphics registration" << std::endl;

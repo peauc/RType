@@ -7,7 +7,7 @@
 #include <Components/Projectiles/ShotAudioComponent.hpp>
 
 Component::ShotAudioComponent::ShotAudioComponent(Engine::Entity *parentEntity, Engine::Game *parentGame,
-												  unsigned char impactSoundId) :
+												  unsigned char) :
 		AAudioComponent(parentEntity, parentGame)
 {
 	this->_validMessageTypes[Engine::Mediator::Message::DEATH] = std::bind(&ShotAudioComponent::handleImpact,
@@ -19,7 +19,7 @@ void Component::ShotAudioComponent::update()
 {
 }
 
-void Component::ShotAudioComponent::handleImpact(Engine::Mediator::Message messageType, Engine::AComponent *sender)
+void Component::ShotAudioComponent::handleImpact(Engine::Mediator::Message, Engine::AComponent *)
 {
 	this->addSoundPacket(this->_soundIds[0], false);
 }

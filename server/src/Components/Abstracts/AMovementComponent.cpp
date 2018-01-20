@@ -13,7 +13,7 @@ Component::AMovementComponent::AMovementComponent(Engine::Entity *parentEntity) 
 																				 std::placeholders::_2);
 }
 
-void Component::AMovementComponent::handleCancelMove(Engine::Mediator::Message messageType, Engine::AComponent *sender)
+void Component::AMovementComponent::handleCancelMove(Engine::Mediator::Message, Engine::AComponent *sender)
 {
 	if (APhysicsComponent *physicsComponent = dynamic_cast<APhysicsComponent *>(sender)) {
 		if ((this->_lastMove.x > 0 && physicsComponent->getCollision(APhysicsComponent::Direction::RIGHT)) ||

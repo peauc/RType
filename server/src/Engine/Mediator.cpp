@@ -18,7 +18,7 @@ void Engine::Mediator::unregisterComponent(Engine::AComponent *component)
 
 void Engine::Mediator::send(Engine::Mediator::Message message, Engine::AComponent *sender)
 {
-	for (int i = 0; i < this->_subjects.size(); ++i) {
+	for (unsigned int i = 0; i < this->_subjects.size(); ++i) {
 		if (_subjects[i] != sender) {
 			_subjects[i]->receive(message, sender);
 		}

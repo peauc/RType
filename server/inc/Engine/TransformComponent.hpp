@@ -21,8 +21,8 @@ namespace Engine {
 		Vector2d &getPosition();
 		const Vector2d &getPosition() const;
 		void setPosition(Vector2d &_position);
-		const double getRotationRadians() const;
-		const double getRotation() const;
+		double getRotationRadians() const;
+		double getRotation() const;
 		void setRotation(double _rotation);
 
 	private:

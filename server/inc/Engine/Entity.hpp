@@ -32,7 +32,7 @@ namespace Engine {
 		TransformComponent &getTransformComponent();
 		const TransformComponent &getTransformComponent() const;
 		void setId(unsigned int _id);
-		const unsigned int getId() const;
+		unsigned int getId() const;
 
 		bool operator==(unsigned int id);
 		bool operator==(const Entity &other);

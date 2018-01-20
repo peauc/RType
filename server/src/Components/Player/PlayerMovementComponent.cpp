@@ -42,7 +42,7 @@ void Component::PlayerMovementComponent::update()
 	this->_yInput = 0;
 }
 
-void Component::PlayerMovementComponent::handleEvent(Engine::Mediator::Message messageType, Engine::AComponent *sender)
+void Component::PlayerMovementComponent::handleEvent(Engine::Mediator::Message, Engine::AComponent *sender)
 {
 	std::cout << "Handling event" << std::endl;
 	if (AInputComponent *inputComponent = dynamic_cast<AInputComponent *>(sender)) {
@@ -56,7 +56,7 @@ void Component::PlayerMovementComponent::handleEvent(Engine::Mediator::Message m
 	}
 }
 
-void Component::PlayerMovementComponent::handleCameraReposition(Engine::Mediator::Message messageType,
-																Engine::AComponent *sender)
+void Component::PlayerMovementComponent::handleCameraReposition(Engine::Mediator::Message,
+																Engine::AComponent *)
 {
 }

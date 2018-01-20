@@ -28,7 +28,7 @@ void Component::PlayerPhysicsComponent::update()
 	this->sendToAll(Engine::Mediator::Message::CHECK_COLLISION);
 }
 
-void Component::PlayerPhysicsComponent::cameraCollision(APhysicsComponent &other)
+void Component::PlayerPhysicsComponent::cameraCollision(APhysicsComponent &)
 {
 	std::cout << "Camera collision" << std::endl;
 }

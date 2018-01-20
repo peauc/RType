@@ -56,7 +56,7 @@ void Component::PlayerWeaponComponent::update()
 	this->_event = false;
 }
 
-void Component::PlayerWeaponComponent::handleEvent(Engine::Mediator::Message messageType, Engine::AComponent *sender)
+void Component::PlayerWeaponComponent::handleEvent(Engine::Mediator::Message, Engine::AComponent *sender)
 {
 	if (AInputComponent *inputComponent = dynamic_cast<AInputComponent *>(sender)) {
 		if (inputComponent->hasEvent()) {
