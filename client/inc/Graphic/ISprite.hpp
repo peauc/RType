@@ -7,6 +7,7 @@
 
 #ifndef RTYPE_ISPRITE_HPP
 # define RTYPE_ISPRITE_HPP
+#include <functional>
 
 class	ISprite
 {

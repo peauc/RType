@@ -10,7 +10,7 @@
 
 # include <SFML/Graphics/Sprite.hpp>
 # include <SFML/Graphics/Texture.hpp>
-# include "ASprite.hpp"
+# include "Graphic/ASprite.hpp"
 
 class SpriteSFML : public ASprite
 {

@@ -6,7 +6,7 @@
 */
 
 #include <iostream>
-#include "SpriteSFML.hpp"
+#include "Graphic/SpriteSFML.hpp"
 
 SpriteSFML::SpriteSFML() noexcept
 	: _sizeTileX(0), _sizeTileY(0),
@@ -19,8 +19,6 @@ SpriteSFML::SpriteSFML(const std::string &fileName,
  : _sizeTileX(sizeTileX), _sizeTileY(sizeTileY), _animationIndex(0)
 {
 	if (!this->_texture.loadFromFile(fileName)) {
-		std::cerr << "[Error] Cannot open file : " + fileName
-			  << std::endl;
 		throw std::runtime_error("Cannot open file : " + fileName);
 	} else {
 		this->applyTexture();
@@ -28,6 +26,7 @@ SpriteSFML::SpriteSFML(const std::string &fileName,
 }
 
 SpriteSFML::SpriteSFML(const SpriteSFML &other) noexcept
+ : ASprite(other)
 {
 	if (this != &other) {
 		this->_sprite = other._sprite;
@@ -42,6 +41,7 @@ SpriteSFML::SpriteSFML(const SpriteSFML &other) noexcept
 
 SpriteSFML &SpriteSFML::operator=(const SpriteSFML &other) noexcept
 {
+	ASprite::operator=(other);
 	if (this != &other) {
 		this->_sprite = other._sprite;
 		this->_texture = other._texture;

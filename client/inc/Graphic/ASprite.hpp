@@ -24,7 +24,6 @@ public:
 				 unsigned int sizeY) override = 0;
 	void	selectSprite(uint32_t tileNb, uint32_t lineNb) override = 0;
 	void	updateAnimation() override = 0;
-
 	int	getPosX() const noexcept override;
 	int	getPosY() const noexcept override;
 	void	setPosX(int x) noexcept override;
