@@ -29,6 +29,8 @@ void	LStock::loadByPath() {
 		}
 		closedir(dir);
 	}
+	else
+		std::cout << "Error openning "+this->path+" folder" << std::endl;
 }
 
 LStock::LStock(LStock const &other) {

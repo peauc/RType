@@ -17,7 +17,7 @@ private:
 	DLLoader<Engine::Entity>	loader;
 	std::vector<Engine::Entity*>	enemies;
 public:
-	EnemyLoader();
+	explicit EnemyLoader(const std::string &path);
 	EnemyLoader(const EnemyLoader &other);
 	EnemyLoader	&operator=(const EnemyLoader &other);
 	~EnemyLoader() = default;
