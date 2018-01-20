@@ -21,7 +21,7 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 																				   game.getEventList());
 	Engine::AComponent *playerGraphicsComponent = new Component::PlayerGraphicsComponent(playerShip,
 																						 game.getResourceLoader().get());
-	Engine::AComponent *playerWeaponComponent = new Component::PlayerWeaponComponent(playerShip, game.getWorld().get());
+	Engine::AComponent *playerWeaponComponent = new Component::PlayerWeaponComponent(playerShip, &game);
 
 	if (game.getWorld()->getCamera() != nullptr) {
 		playerGraphicsComponent->addObserver(game.getWorld()->getCamera().get());
@@ -49,7 +49,7 @@ Engine::Entity *Factory::EntityFactory::createCamera(unsigned int id, Engine::Ga
 	Engine::Entity *camera = new Engine::Entity(id);
 
 	camera->addComponent(new Component::CameraMovementComponent(camera, &game));
-	camera->addComponent(new Component::CameraViewComponent(camera, game.getWorld().get()));
+	camera->addComponent(new Component::CameraViewComponent(camera, &game));
 
 	return camera;
 }

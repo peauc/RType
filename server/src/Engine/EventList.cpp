@@ -21,6 +21,7 @@ const std::vector<std::unique_ptr<Engine::Event>> &Engine::EventList::getEvents(
 {
 	return _list;
 }
+
 std::unique_ptr<Engine::Event> Engine::EventList::getEventById(size_t id)
 noexcept
 {
@@ -34,4 +35,3 @@ noexcept
 	_list.erase(t);
 	return (std::move(*t));
 }
-

@@ -22,7 +22,7 @@ public:
 	Message &operator=(const Message &) noexcept;
 	~Message() = default;
 
-	Packet::DataPacket		getPacket() const noexcept;
+	Packet::DataPacket		getPacket() noexcept;
 	const std::string	getRawMessage() const noexcept override;
 private:
 	std::string		_rawMessage;

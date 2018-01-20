@@ -44,7 +44,7 @@ const std::string Message::getRawMessage() const noexcept
 	return (this->_rawMessage);
 }
 
-Packet::DataPacket Message::getPacket() const noexcept
+Packet::DataPacket Message::getPacket() noexcept
 {
 	return (this->_packet);
 }

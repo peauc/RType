@@ -5,10 +5,10 @@
 #include <memory>
 #include "Engine/PacketList.hpp"
 
-void Engine::PacketList::pushBack(std::unique_ptr<Packet::DataPacket> &e)
+void Engine::PacketList::pushBack(std::unique_ptr<Packet::DataPacket> &&e)
 {
 	_mutex.lock();
-	_list.push_back(e);
+	_list.push_back(std::move(e));
 	_mutex.unlock();
 }
 

@@ -14,7 +14,7 @@ namespace Component {
 	class PlayerWeaponComponent : public AWeaponComponent
 	{
 	public:
-		PlayerWeaponComponent(Engine::Entity *parentEntity, Engine::World *parentWorld);
+		PlayerWeaponComponent(Engine::Entity *parentEntity, Engine::Game *parentGame);
 		~PlayerWeaponComponent() override = default;
 
 		void update() override;

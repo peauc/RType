@@ -32,6 +32,7 @@ namespace Engine {
 		const std::unique_ptr<World> &getWorld() const;
 		const std::shared_ptr<RessourcesLoader> &getResourceLoader() const;
 		void setResourceLoader(const std::shared_ptr<RessourcesLoader> &_resourceLoader);
+		void pushDataPacket(Packet::DataPacket *packet);
 
 	private:
 		std::unique_ptr<World> _world;

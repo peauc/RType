@@ -11,11 +11,12 @@ namespace Component {
 	class PlayerPhysicsComponent : public APhysicsComponent
 	{
 	public:
-		PlayerPhysicsComponent(Engine::Entity *parentEntity, Engine::Hitbox *hitbox);
+		PlayerPhysicsComponent(Engine::Entity *parentEntity, Engine::Hitbox hitbox);
 		~PlayerPhysicsComponent() override = default;
 
 		void update() override;
-		void triggerCollision(APhysicsComponent &other);
+
+		void cameraCollision(APhysicsComponent &other);
 	};
 }
 

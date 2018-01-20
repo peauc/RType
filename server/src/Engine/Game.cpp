@@ -82,3 +82,8 @@ Engine::EventList &Engine::Game::getEventList()
 {
 	return _eventList;
 }
+
+void Engine::Game::pushDataPacket(Packet::DataPacket *packet)
+{
+	this->_packetList.pushBack(std::unique_ptr<Packet::DataPacket>(packet));
+}

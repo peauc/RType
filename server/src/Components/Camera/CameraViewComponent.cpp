@@ -7,8 +7,8 @@
 #include <Factories/PacketFactory.hpp>
 
 Component::CameraViewComponent::CameraViewComponent(Engine::Entity *parentEntity,
-													Engine::World *parentWorld) :
-		AComponent(parentEntity), _parentWorld(parentWorld)
+													Engine::Game *parentGame) :
+		AComponent(parentEntity), _parentGame(parentGame)
 {
 	this->_relativeTopLeft.x = 0;
 	this->_relativeTopLeft.y = 0;
@@ -30,7 +30,7 @@ void Component::CameraViewComponent::update()
 									this->_parentEntity->getTransformComponent().getPosition().y,
 									this->_relativeBottomRight.x, this->_relativeBottomRight.y)) {
 				std::cout << "Adding object" << std::endl;
-				this->_parentWorld->addPacketToSend(PacketFactory::createObjectPacket(
+				this->_parentGame->pushDataPacket(PacketFactory::createObjectPacket(
 						static_cast<short>(
 								component->getRelativeXPos(this->_parentEntity->getTransformComponent().getPosition().x,
 														   this->_relativeBottomRight.x) * 100.0f),

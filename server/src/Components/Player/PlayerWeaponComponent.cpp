@@ -5,8 +5,8 @@
 #include <Components/Player/PlayerWeaponComponent.hpp>
 #include <Components/Projectiles/ShotAudioComponent.hpp>
 
-Component::PlayerWeaponComponent::PlayerWeaponComponent(Engine::Entity *parentEntity, Engine::World *parentWorld)
-		: AWeaponComponent(parentEntity, parentWorld), _event(false), _firing(false), _charging(0)
+Component::PlayerWeaponComponent::PlayerWeaponComponent(Engine::Entity *parentEntity, Engine::Game *parentGame)
+		: AWeaponComponent(parentEntity, parentGame), _event(false), _firing(false), _charging(0)
 {
 	this->_shotAngle = 0;
 	this->_cooldown = 0;
@@ -29,14 +29,14 @@ void Component::PlayerWeaponComponent::update()
 		// TODO Change animation values
 		if (this->_charging < 30) { // Regular shot
 			shotGraphicsComponent = new Component::ShotGraphicsComponent(this->_parentEntity, 0, 0);
-			shotSoundComponent = new Component::ShotAudioComponent(this->_parentEntity, this->_parentWorld, 0);
+			shotSoundComponent = new Component::ShotAudioComponent(this->_parentEntity, this->_parentGame, 0);
 		} else { // Charged shot
 			shotGraphicsComponent = new Component::ShotGraphicsComponent(this->_parentEntity, 1, 1);
-			shotSoundComponent = new Component::ShotAudioComponent(this->_parentEntity, this->_parentWorld, 1);
+			shotSoundComponent = new Component::ShotAudioComponent(this->_parentEntity, this->_parentGame, 1);
 		}
 
-		if (this->_parentWorld->getCamera() != nullptr) {
-			shotGraphicsComponent->addObserver(this->_parentWorld->getCamera().get());
+		if (this->_parentGame->getWorld()->getCamera() != nullptr) {
+			shotGraphicsComponent->addObserver(this->_parentGame->getWorld()->getCamera().get());
 		}
 
 		shot->addComponent(shotMovementComponent);
@@ -48,7 +48,7 @@ void Component::PlayerWeaponComponent::update()
 		shot->getTransformComponent().getPosition().y =
 				this->_parentEntity->getTransformComponent().getPosition().y + this->_shotRelativeOrigin.y;
 
-		this->_parentWorld->addObject(std::move(shot));
+		this->_parentGame->getWorld()->addObject(std::move(shot));
 
 		this->_firing = false;
 		this->_charging = 0;

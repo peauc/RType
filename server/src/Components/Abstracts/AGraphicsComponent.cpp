@@ -13,7 +13,7 @@ Component::AGraphicsComponent::AGraphicsComponent(Engine::Entity *parentEntity, 
 {
 }
 
-bool Component::AGraphicsComponent::isInArea(float xPos, float yPos, float xRange, float yRange)
+bool Component::AGraphicsComponent::isInArea(double xPos, double yPos, double xRange, double yRange)
 {
 	return (this->_parentEntity->getTransformComponent().getPosition().x >= xPos &&
 			this->_parentEntity->getTransformComponent().getPosition().x <= xPos + xRange &&
@@ -21,12 +21,12 @@ bool Component::AGraphicsComponent::isInArea(float xPos, float yPos, float xRang
 			this->_parentEntity->getTransformComponent().getPosition().y <= yPos + yRange);
 }
 
-float Component::AGraphicsComponent::getRelativeXPos(float xPos, float xRange)
+double Component::AGraphicsComponent::getRelativeXPos(double xPos, double xRange)
 {
 	return (this->_parentEntity->getTransformComponent().getPosition().x - xPos) / xRange * 100;
 }
 
-float Component::AGraphicsComponent::getRelativeYPos(float yPos, float yRange)
+double Component::AGraphicsComponent::getRelativeYPos(double yPos, double yRange)
 {
 	return (this->_parentEntity->getTransformComponent().getPosition().y - yPos) / yRange * 100;
 }
