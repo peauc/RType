@@ -23,7 +23,8 @@ namespace Engine {
 			HIT,
 			CHECK_COLLISION,
 			GET_IMPACT_DAMAGES,
-			CANCEL_MOVE
+			CANCEL_MOVE,
+			CAMERA_REPOSITION
 		};
 
 		Mediator() = default;

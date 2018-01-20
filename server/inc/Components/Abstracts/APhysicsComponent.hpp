@@ -13,8 +13,10 @@
 namespace Component {
 	class APhysicsComponent : public Engine::AComponent
 	{
+		friend class CameraZoneComponent;
 	public:
-		enum Direction {
+		enum Direction
+		{
 			TOP,
 			RIGHT,
 			BOTTOM,
@@ -28,9 +30,10 @@ namespace Component {
 		int getCollisionDamages() const;
 		void setCollisionDamages(int collisionDamages);
 		bool getCollision(Direction) const;
+		void setOBB();
 
 		// handle methods
-		void handleCheckCollision(Engine::Mediator::Message messageType, Engine::AComponent *sender);
+		virtual void handleCheckCollision(Engine::Mediator::Message messageType, Engine::AComponent *sender);
 
 		// default collision methods
 		void blockingCollision(APhysicsComponent &other);
@@ -57,7 +60,6 @@ namespace Component {
 		std::unordered_map<Engine::Hitbox::Type, std::function<void(APhysicsComponent &)>> _collisionHandlers;
 		bool _collisions[UNDEFINED];
 
-	protected:
 		void triggerCollision(APhysicsComponent &other);
 		void setCollision(Direction, bool);
 		void resetCollisions();

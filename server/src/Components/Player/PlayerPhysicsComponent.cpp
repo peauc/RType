@@ -25,12 +25,11 @@ Component::PlayerPhysicsComponent::PlayerPhysicsComponent(Engine::Entity *parent
 
 void Component::PlayerPhysicsComponent::update()
 {
-	std::cout << "updating physics" << std::endl;
 	this->sendToAll(Engine::Mediator::Message::CHECK_COLLISION);
 }
 
-void Component::PlayerPhysicsComponent::cameraCollision(APhysicsComponent &)
+void Component::PlayerPhysicsComponent::cameraCollision(APhysicsComponent &physics)
 {
-	std::cout << "Camera collision" << std::endl;
+	this->sendToAll(Engine::Mediator::CAMERA_REPOSITION);
 }
 

@@ -32,13 +32,9 @@ void Component::APhysicsComponent::handleCheckCollision(Engine::Mediator::Messag
 	if (APhysicsComponent *other = dynamic_cast<APhysicsComponent *>(sender)) {
 		this->_orientedBoundingBox = OBB(this->_parentEntity->getTransformComponent(), this->_hitbox);
 		other->_orientedBoundingBox = OBB(other->_parentEntity->getTransformComponent(), other->_hitbox);
-		if (this->_orientedBoundingBox.checkIntersection(other->_orientedBoundingBox, *this) ||
-			other->_orientedBoundingBox.checkIntersection(this->_orientedBoundingBox, *other)) {
-			std::cout << "COLLISION !" << std::endl;
-			std::cout << this->_parentEntity->getTransformComponent().getPosition().x << " "
-					  << this->_parentEntity->getTransformComponent().getPosition().y << std::endl;
-			std::cout << other->_parentEntity->getTransformComponent().getPosition().x << " "
-					  << other->_parentEntity->getTransformComponent().getPosition().y << std::endl;
+
+		if (this->_orientedBoundingBox.checkIntersection(other->_orientedBoundingBox, *other) ||
+			other->_orientedBoundingBox.checkIntersection(this->_orientedBoundingBox, *this)) {
 			this->_collisionDamages = 0;
 			if (!this->_mediators.empty()) {
 				this->_mediators[0]->send(Engine::Mediator::Message::GET_IMPACT_DAMAGES, this);
@@ -46,8 +42,6 @@ void Component::APhysicsComponent::handleCheckCollision(Engine::Mediator::Messag
 			other->triggerCollision(*this);
 			this->triggerCollision(*other);
 			this->_collisionDamages = 0;
-		} else {
-			std::cout << "NO COLLISION !" << std::endl;
 		}
 	}
 }
@@ -58,6 +52,8 @@ void Component::APhysicsComponent::triggerCollision(Component::APhysicsComponent
 		if (!this->_mediators.empty()) {
 			this->_mediators[0]->send(Engine::Mediator::Message::GET_IMPACT_DAMAGES, this);
 		}
+	}
+	if (this->_collisionHandlers.count(other._hitbox._type) != 0) {
 		this->_collisionHandlers[other._hitbox._type](other);
 	}
 }
@@ -91,6 +87,11 @@ void Component::APhysicsComponent::resetCollisions()
 bool Component::APhysicsComponent::getCollision(Component::APhysicsComponent::Direction direction) const
 {
 	return this->_collisions[direction];
+}
+
+void Component::APhysicsComponent::setOBB()
+{
+	this->_orientedBoundingBox = OBB(this->_parentEntity->getTransformComponent(), this->_hitbox);
 }
 
 Component::APhysicsComponent::OBB::OBB(const Engine::TransformComponent &transformComponent,
@@ -143,10 +144,6 @@ bool Component::APhysicsComponent::OBB::checkIntersection(const Component::APhys
 	c2 = this->checkIntersection(other.p2);
 	c3 = this->checkIntersection(other.p3);
 	c4 = this->checkIntersection(other.p4);
-
-	std::cout << other.center.x << " " << other.center.y << std::endl;
-	std::cout << this->center.x << " " << this->center.y << std::endl;
-	std::cout << c1 << c2 << c3 << c4 << std::endl;
 
 	physics.setCollision(Direction::TOP, (c1 && c2) || (c2 && !c3) || (c1 && !c4));
 	physics.setCollision(Direction::RIGHT, (c2 && c3) || (c2 && !c1) || (c3 && !c4));

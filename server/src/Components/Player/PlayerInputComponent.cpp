@@ -12,8 +12,6 @@ Component::PlayerInputComponent::PlayerInputComponent(Engine::Entity *parentEnti
 
 void Component::PlayerInputComponent::update()
 {
-	std::cout << "Updating input" << std::endl;
-
 	this->_event = this->_eventList.getEventById(this->_parentEntity->getId());
 	if (this->_event == nullptr) {
 		return;

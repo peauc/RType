@@ -25,11 +25,9 @@ void Component::CameraViewComponent::update()
 {
 	for (AGraphicsComponent *component : this->_graphicComponents) {
 		if (component != nullptr) {
-			std::cout << "Checking sight" << std::endl;
 			if (component->isInArea(this->_parentEntity->getTransformComponent().getPosition().x,
 									this->_parentEntity->getTransformComponent().getPosition().y,
 									this->_relativeBottomRight.x, this->_relativeBottomRight.y)) {
-				std::cout << "Adding object" << std::endl;
 				this->_parentGame->pushDataPacket(PacketFactory::createObjectPacket(
 						static_cast<short>(
 								component->getRelativeXPos(this->_parentEntity->getTransformComponent().getPosition().x,
@@ -51,8 +49,12 @@ void Component::CameraViewComponent::update()
 void Component::CameraViewComponent::handleGraphicsRegistration(Engine::Mediator::Message,
 																Engine::AComponent *sender)
 {
-	std::cout << "handling graphics registration" << std::endl;
 	if (AGraphicsComponent *graphicsComponent = dynamic_cast<AGraphicsComponent *>(sender)) {
 		this->_graphicComponents.push_back(graphicsComponent);
 	}
+}
+
+const Vector2d &Component::CameraViewComponent::getRelativeBottomRight() const
+{
+	return _relativeBottomRight;
 }
