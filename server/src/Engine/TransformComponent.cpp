@@ -23,12 +23,12 @@ void Engine::TransformComponent::setPosition(Vector2d &_position)
 	TransformComponent::_position = _position;
 }
 
-const double Engine::TransformComponent::getRotation() const
+double Engine::TransformComponent::getRotation() const
 {
 	return _rotation;
 }
 
-const double Engine::TransformComponent::getRotationRadians() const
+double Engine::TransformComponent::getRotationRadians() const
 {
 	return this->_rotationRadians;
 }

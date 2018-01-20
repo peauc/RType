@@ -3,11 +3,95 @@
 //
 
 #include <Components/Abstracts/APhysicsComponent.hpp>
+#include <Engine/Entity.hpp>
 #include <iostream>
 
 Component::APhysicsComponent::APhysicsComponent(Engine::Entity *entity, Engine::Hitbox hitbox) : AComponent(entity),
 																								 _hitbox(hitbox)
 {
+	this->_validMessageTypes[Engine::Mediator::Message::CHECK_COLLISION] = std::bind(
+			&APhysicsComponent::handleCheckCollision,
+			this, std::placeholders::_1,
+			std::placeholders::_2);
+}
+
+int Component::APhysicsComponent::getCollisionDamages() const
+{
+	return _collisionDamages;
+}
+
+void Component::APhysicsComponent::setCollisionDamages(int collisionDamages)
+{
+	this->_collisionDamages = collisionDamages;
+}
+
+void Component::APhysicsComponent::handleCheckCollision(Engine::Mediator::Message,
+														Engine::AComponent *sender)
+{
+	std::cout << "Checking collision" << std::endl;
+	if (APhysicsComponent *other = dynamic_cast<APhysicsComponent *>(sender)) {
+		this->_orientedBoundingBox = OBB(this->_parentEntity->getTransformComponent(), this->_hitbox);
+		other->_orientedBoundingBox = OBB(other->_parentEntity->getTransformComponent(), other->_hitbox);
+
+		if (this->_orientedBoundingBox.checkIntersection(other->_orientedBoundingBox, *other) ||
+			other->_orientedBoundingBox.checkIntersection(this->_orientedBoundingBox, *this)) {
+			this->_collisionDamages = 0;
+			if (!this->_mediators.empty()) {
+				this->_mediators[0]->send(Engine::Mediator::Message::GET_IMPACT_DAMAGES, this);
+			}
+			other->triggerCollision(*this);
+			this->triggerCollision(*other);
+			this->_collisionDamages = 0;
+		}
+	}
+}
+
+void Component::APhysicsComponent::triggerCollision(Component::APhysicsComponent &other)
+{
+	if (this->_collisionDamages == 0) {
+		if (!this->_mediators.empty()) {
+			this->_mediators[0]->send(Engine::Mediator::Message::GET_IMPACT_DAMAGES, this);
+		}
+	}
+	if (this->_collisionHandlers.count(other._hitbox._type) != 0) {
+		this->_collisionHandlers[other._hitbox._type](other);
+	}
+}
+
+void Component::APhysicsComponent::blockingCollision(Component::APhysicsComponent &)
+{
+	if (!this->_mediators.empty()) {
+		this->_mediators[0]->send(Engine::Mediator::Message::CANCEL_MOVE, this);
+	}
+}
+
+void Component::APhysicsComponent::damagingCollision(Component::APhysicsComponent &)
+{
+	if (!this->_mediators.empty()) {
+		this->_mediators[0]->send(Engine::Mediator::Message::HIT, this);
+	}
+}
+
+void Component::APhysicsComponent::setCollision(Component::APhysicsComponent::Direction direction, bool hasHappened)
+{
+	this->_collisions[direction] = hasHappened;
+}
+
+void Component::APhysicsComponent::resetCollisions()
+{
+	for (bool &_collision : this->_collisions) {
+		_collision = false;
+	}
+}
+
+bool Component::APhysicsComponent::getCollision(Component::APhysicsComponent::Direction direction) const
+{
+	return this->_collisions[direction];
+}
+
+void Component::APhysicsComponent::setOBB()
+{
+	this->_orientedBoundingBox = OBB(this->_parentEntity->getTransformComponent(), this->_hitbox);
 }
 
 Component::APhysicsComponent::OBB::OBB(const Engine::TransformComponent &transformComponent,
@@ -52,10 +136,21 @@ Component::APhysicsComponent::OBB::OBB(const Engine::TransformComponent &transfo
 				 this->center.y;
 }
 
-bool Component::APhysicsComponent::OBB::checkIntersection(const Component::APhysicsComponent::OBB &other)
+bool Component::APhysicsComponent::OBB::checkIntersection(const Component::APhysicsComponent::OBB &other,
+														  APhysicsComponent &physics)
 {
-	return this->checkIntersection(other.p1) || this->checkIntersection(other.p2) ||
-		   this->checkIntersection(other.p3) || this->checkIntersection(other.p4);
+	bool c1, c2, c3, c4;
+	c1 = this->checkIntersection(other.p1);
+	c2 = this->checkIntersection(other.p2);
+	c3 = this->checkIntersection(other.p3);
+	c4 = this->checkIntersection(other.p4);
+
+	physics.setCollision(Direction::TOP, (c1 && c2) || (c2 && !c3) || (c1 && !c4));
+	physics.setCollision(Direction::RIGHT, (c2 && c3) || (c2 && !c1) || (c3 && !c4));
+	physics.setCollision(Direction::BOTTOM, (c3 && c4) || (c4 && !c1) || (c3 && !c2));
+	physics.setCollision(Direction::LEFT, (c4 && c1) || (c1 && !c2) || (c4 && !c3));
+
+	return (c1 || c2 || c3 || c4);
 }
 
 bool Component::APhysicsComponent::OBB::checkIntersection(const Vector2d &point)

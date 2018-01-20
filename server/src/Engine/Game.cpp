@@ -5,6 +5,7 @@
 #include <thread>
 #include <chrono>
 #include <iostream>
+#include <Logger.hpp>
 #include "Engine/Game.hpp"
 #include "Factories/EntityFactory.hpp"
 
@@ -13,9 +14,9 @@ Engine::Game::Game()
 {
 	this->_world = std::make_unique<World>();
 }
-
 void Engine::Game::run()
 {
+	Logger::Log(Logger::CRITICAL, "Game is starting");
 	std::chrono::time_point<std::chrono::system_clock> previous = std::chrono::system_clock::now();
 	double lag = 0;
 
@@ -40,6 +41,7 @@ void Engine::Game::setup(int nbOfPlayers, const std::shared_ptr<RessourcesLoader
 	std::unique_ptr<Engine::World> world = std::make_unique<Engine::World>();
 
 	this->setWorld(std::move(world));
+	this->_world->addMediator();
 	this->setResourceLoader(resourceLoader);
 	std::unique_ptr<Engine::Entity> camera = std::unique_ptr<Engine::Entity>
 			(Factory::EntityFactory::createCamera(0, *this));
@@ -84,7 +86,15 @@ Engine::EventList &Engine::Game::getEventList()
 {
 	return _eventList;
 }
+
+void Engine::Game::pushDataPacket(Packet::DataPacket *packet)
+{
+	this->_packetList.pushBack(std::unique_ptr<Packet::DataPacket>(packet));
+}
+
 void Engine::Game::start()
 {
-	_thread = std::thread(&Game::run, this);
+	_thread.detach();
+	std::thread(&Game::run, this).detach();
+	Logger::Log(Logger::INFO, "Started Game");
 }

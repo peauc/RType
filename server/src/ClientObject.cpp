@@ -1,4 +1,5 @@
 #include <Logger.hpp>
+#include <Message.hpp>
 #include "ClientObject.hpp"
 
 ClientObject::ClientObject(boost::asio::ip::udp::endpoint &endpoint) :
@@ -41,7 +42,14 @@ void ClientObject::toggleReady() noexcept
 	_isReady = !_isReady;
 }
 
-bool ClientObject::isReady() noexcept
+bool ClientObject::isReady() const noexcept
 {
 	return (_isReady);
+}
+
+bool ClientObject::sendMessage(Packet::DataPacket &packet)
+{
+	Message t(packet);
+	
+	
 }

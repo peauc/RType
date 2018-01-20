@@ -19,6 +19,7 @@ namespace Engine {
 			PLAYER_SHOT,
 			NEUTRAL,
 			ZONE,
+			CAMERA
 		};
 
 		const Type _type;

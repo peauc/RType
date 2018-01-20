@@ -15,7 +15,7 @@ public:
 	PacketList() = default;
 	~PacketList() = default;
 	
-	void pushBack(std::unique_ptr<Packet::DataPacket> &e);
+	void pushBack(std::unique_ptr<Packet::DataPacket> &&e);
 	std::unique_ptr<Packet::DataPacket> popBack();
 private:
 	std::vector<std::unique_ptr<Packet::DataPacket>> _list;

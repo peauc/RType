@@ -11,14 +11,20 @@
 
 namespace Engine {
 	class AComponent;
+
 	class Mediator
 	{
 	public:
-		enum Message {
+		enum Message
+		{
 			NEW_EVENT,
 			GRAPHICS_REGISTERING,
 			DEATH,
 			HIT,
+			CHECK_COLLISION,
+			GET_IMPACT_DAMAGES,
+			CANCEL_MOVE,
+			CAMERA_REPOSITION
 		};
 
 		Mediator() = default;

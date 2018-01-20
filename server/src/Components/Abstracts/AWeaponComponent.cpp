@@ -4,7 +4,7 @@
 
 #include <Components/Abstracts/AWeaponComponent.hpp>
 
-Component::AWeaponComponent::AWeaponComponent(Engine::Entity *parentEntity, Engine::World *parentWorld) :
-		AComponent(parentEntity)
+Component::AWeaponComponent::AWeaponComponent(Engine::Entity *parentEntity, Engine::Game *parentGame) :
+		AComponent(parentEntity), _parentGame(parentGame)
 {
 }

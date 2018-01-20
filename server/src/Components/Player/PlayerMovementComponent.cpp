@@ -6,6 +6,7 @@
 #include <Components/Abstracts/AInputComponent.hpp>
 #include <Engine/Commands/TransformPositionCommand.hpp>
 #include <iostream>
+#include <Components/Abstracts/APhysicsComponent.hpp>
 
 Component::PlayerMovementComponent::PlayerMovementComponent(Engine::Entity *parentEntity)
 		: AMovementComponent(parentEntity),
@@ -19,20 +20,24 @@ Component::PlayerMovementComponent::PlayerMovementComponent(Engine::Entity *pare
 	this->_validMessageTypes[Engine::Mediator::Message::NEW_EVENT] = std::bind(&PlayerMovementComponent::handleEvent,
 																			   this, std::placeholders::_1,
 																			   std::placeholders::_2);
+	this->_validMessageTypes[Engine::Mediator::Message::CAMERA_REPOSITION] = std::bind(
+			&PlayerMovementComponent::handleCameraReposition,
+			this, std::placeholders::_1,
+			std::placeholders::_2);
 }
 
 void Component::PlayerMovementComponent::update()
 {
-	std::cout << "Updating movement" << std::endl;
-	float xMovement = this->_baseSpeed + this->_xInput * this->_baseSpeed;
-	float yMovement = this->_lateralBaseSpeed + this->_yInput * this->_lateralMaxSpeed;
+	this->_lastMove.x = this->_baseSpeed + this->_xInput * this->_baseSpeed;
+	this->_lastMove.y = this->_lateralBaseSpeed + this->_yInput * this->_lateralMaxSpeed;
 
-	if (xMovement > this->_maxSpeed)
-		xMovement = this->_maxSpeed;
-	if (yMovement > this->_lateralMaxSpeed)
-		yMovement = this->_lateralMaxSpeed;
+	if (this->_lastMove.x > this->_maxSpeed)
+		this->_lastMove.x = this->_maxSpeed;
+	if (this->_lastMove.y > this->_lateralMaxSpeed)
+		this->_lastMove.y = this->_lateralMaxSpeed;
 
-	Engine::Commands::ICommand *command= new Engine::Commands::TransformPositionCommand(this->_parentEntity->getTransformComponent(), xMovement, yMovement);
+	Engine::Commands::ICommand *command = new Engine::Commands::TransformPositionCommand(
+			this->_parentEntity->getTransformComponent(), this->_lastMove.x, this->_lastMove.y);
 	command->execute();
 	this->_parentEntity->addCommand(command);
 
@@ -40,9 +45,8 @@ void Component::PlayerMovementComponent::update()
 	this->_yInput = 0;
 }
 
-void Component::PlayerMovementComponent::handleEvent(Engine::Mediator::Message messageType, Engine::AComponent *sender)
+void Component::PlayerMovementComponent::handleEvent(Engine::Mediator::Message, Engine::AComponent *sender)
 {
-	std::cout << "Handling event" << std::endl;
 	if (AInputComponent *inputComponent = dynamic_cast<AInputComponent *>(sender)) {
 		if (inputComponent->hasEvent()) {
 			this->_xInput = inputComponent->getEvent()._xVelocity;
@@ -50,6 +54,30 @@ void Component::PlayerMovementComponent::handleEvent(Engine::Mediator::Message m
 		} else {
 			this->_xInput = 0;
 			this->_yInput = 0;
+		}
+	}
+}
+
+void Component::PlayerMovementComponent::handleCameraReposition(Engine::Mediator::Message message,
+																Engine::AComponent *sender)
+{
+	if (APhysicsComponent *physicsComponent = dynamic_cast<APhysicsComponent *>(sender)) {
+
+		if ((this->_lastMove.y < 0 && !physicsComponent->getCollision(APhysicsComponent::Direction::TOP)) ||
+			(this->_lastMove.y > 0 && !physicsComponent->getCollision(APhysicsComponent::Direction::BOTTOM))) {
+			this->_parentEntity->getTransformComponent().getPosition().y -= this->_lastMove.y;
+			this->_lastMove.y = 0;
+		}
+		if (this->_lastMove.x > 0 && !physicsComponent->getCollision(APhysicsComponent::Direction::RIGHT)) {
+			this->_parentEntity->getTransformComponent().getPosition().x -= this->_lastMove.x;
+			this->_lastMove.x = 0;
+		}
+		if (!physicsComponent->getCollision(APhysicsComponent::Direction::LEFT)) {
+			this->_lastMove.x += this->_baseSpeed;
+			Engine::Commands::ICommand *command = new Engine::Commands::TransformPositionCommand(
+					this->_parentEntity->getTransformComponent(), this->_baseSpeed, 0);
+			command->execute();
+			this->_parentEntity->addCommand(command);
 		}
 	}
 }

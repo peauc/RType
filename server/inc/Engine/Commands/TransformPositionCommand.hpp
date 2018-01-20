@@ -13,15 +13,15 @@ namespace Engine {
 		class TransformPositionCommand : public ICommand
 		{
 		public:
-			explicit TransformPositionCommand(Engine::TransformComponent &transformComponent, float x, float y);
+			explicit TransformPositionCommand(Engine::TransformComponent &transformComponent, double x, double y);
 			~TransformPositionCommand() = default;
 
 			void execute() override;
 
 		private:
 			Engine::TransformComponent &_transformComponent;
-			float _x;
-			float _y;
+			double _x;
+			double _y;
 		};
 	}
 }

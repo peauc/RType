@@ -18,13 +18,12 @@ public:
 	void setPath(const std::string &path);
 
 public:
-	LStock();
+	LStock() = default;
 	LStock(LStock const &other);
 	LStock	&operator=(LStock const &other) = default;
 	~LStock() = default;
 
 	void							loadByPath();
-	void							addLib(const std::string &path);
 	const std::vector<std::string>	&getList() const;
 };
 

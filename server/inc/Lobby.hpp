@@ -20,11 +20,13 @@ public:
 	bool addClient(ClientObject &client) noexcept;
 	size_t size() const noexcept;
 	bool isFull() const noexcept;
+	bool isReady() const noexcept;
 	bool isClientContained(const ClientObject &client) const noexcept;
 	bool startGame();
 	ClientObject &getClientContained(const ClientObject &copy);
 	bool isSeededLobby() const noexcept;
 	unsigned short getSeed() const noexcept;
+	const std::vector<ClientObject> &getClientList();
 private:
 	bool _isSeededLobby;
 	unsigned short _seed;
