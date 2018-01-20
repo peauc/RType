@@ -5,14 +5,14 @@
 #ifndef RTYPE_ENEMYAICOMPONENT_HPP
 #define RTYPE_ENEMYAICOMPONENT_HPP
 
-#	include <Engine/AComponent.hpp>
-#	include <Engine/Event.hpp>
 #	include <queue>
 #	include <utility>
-#	include "AAIComponent.hpp"
+#	include "AComponent.hpp"
+#	include "Event.hpp"
+#	include "Abstracts/AInputComponent.hpp"
 
 namespace Component {
-	class EnemyAIComponent : public AAIComponent
+	class EnemyAIComponent : public AInputComponent
 	{
 	public:
 		explicit EnemyAIComponent(Engine::Entity *parentEntity,

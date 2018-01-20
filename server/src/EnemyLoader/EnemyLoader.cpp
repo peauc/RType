@@ -6,8 +6,8 @@
 #include <EnemyLoader/EnemyLoader.hpp>
 
 
-EnemyLoader::EnemyLoader() {
-	stock.setPath("");
+EnemyLoader::EnemyLoader(const std::string &path) {
+	stock.setPath(path);
 	stock.loadByPath();
 	for (auto str : stock.getList())
 		enemies.push_back(loader.getInstance(str));

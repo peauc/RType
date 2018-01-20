@@ -29,6 +29,8 @@ void	LStock::loadByPath() {
 		}
 		closedir(dir);
 	}
+	else
+		std::cout << "Error openning DLEnemies folder" << std::endl;
 }
 
 LStock::LStock(LStock const &other) {

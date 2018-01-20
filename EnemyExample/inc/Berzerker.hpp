@@ -5,9 +5,9 @@
 #ifndef RTYPE_BERZERKER_HPP
 #	define RTYPE_BERZERKER_HPP
 
-#	include <Engine/Entity.hpp>
+#	include "Entity.hpp"
 
-class Berzerker : Engine::Entity {
+class Berzerker : public Engine::Entity {
 public:
 	Berzerker();
 	Berzerker(const Berzerker &other);
