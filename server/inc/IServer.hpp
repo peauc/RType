@@ -5,13 +5,14 @@
 #ifndef RTYPE_ISERVER_HPP
 #define RTYPE_ISERVER_HPP
 #include "AServer.hpp"
+#include "Message.hpp"
 
 class IServer : public AServer {
 public:
 	
 	virtual bool start() = 0;
 	virtual bool stop() = 0;
-	virtual bool sendMessage(const ClientObject &client, const IMessage
+	virtual bool sendMessage(const ClientObject &client, const Packet::DataPacket
 	&message) = 0;
 	virtual bool tick() = 0;
 };

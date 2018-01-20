@@ -5,6 +5,7 @@
 #include <thread>
 #include <chrono>
 #include <iostream>
+#include <Logger.hpp>
 #include "Engine/Game.hpp"
 #include "Factories/EntityFactory.hpp"
 
@@ -15,6 +16,7 @@ Engine::Game::Game()
 }
 void Engine::Game::run()
 {
+	Logger::Log(Logger::CRITICAL, "Game is starting");
 	std::chrono::time_point<std::chrono::system_clock> previous = std::chrono::system_clock::now();
 	double lag = 0;
 
@@ -92,5 +94,7 @@ void Engine::Game::pushDataPacket(Packet::DataPacket *packet)
 
 void Engine::Game::start()
 {
-	_thread = std::thread(&Game::run, this);
+	_thread.detach();
+	std::thread(&Game::run, this).detach();
+	Logger::Log(Logger::INFO, "Started Game");
 }

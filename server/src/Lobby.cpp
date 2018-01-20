@@ -36,7 +36,7 @@ size_t Lobby::size() const noexcept
 }
 bool Lobby::isSeededLobby() const noexcept
 {
-	return (_isSeededLobby);
+	return (_isSeededLobby != 0);
 }
 
 Lobby::Lobby(unsigned short seed)
@@ -62,6 +62,14 @@ bool Lobby::startGame()
 {
 	_game.run();
 	return (true);
+}
+const std::vector<ClientObject> &Lobby::getClientList()
+{
+	return (_clientManager.getClientList());
+}
+bool Lobby::isReady() const noexcept
+{
+	return (_clientManager.isReady());
 }
 
 

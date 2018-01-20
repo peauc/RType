@@ -14,7 +14,7 @@ public:
 	bool isConnected();
 	long long int getChronoElapsed();
 	void resetChrono();
-private:
+protected:
 	std::chrono::steady_clock::time_point _timeoutStart;
 	bool _connected;
 };

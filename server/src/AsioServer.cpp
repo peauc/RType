@@ -4,6 +4,7 @@
 
 #include <boost/functional.hpp>
 #include <boost/bind.hpp>
+#include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
 #include <thread>
@@ -43,21 +44,19 @@ AsioServer::AsioServer() : _endpoint(boost::asio::ip::udp::v4(), 4242) ,
 	
 }
 
-bool AsioServer::sendMessage(const ClientObject &client, const IMessage
+bool AsioServer::sendMessage(const ClientObject &client, const Packet::DataPacket
 &message)
 {
-	boost::shared_ptr<std::string> toot(new std::string("toto"));
-	
-	_socket.async_send_to(boost::asio::buffer(*toot),
-	                      _endpoint,
+	_socket.async_send_to(boost::asio::buffer(&message, Packet::PACKETSIZE),
+	                      client.getEndpoint(),
 	                      boost::bind(&AsioServer::handleSend,
-	                                  this, toot,
+	                                  this, message,
 	                                  boost::asio::placeholders::error,
 	                                  boost::asio::placeholders::bytes_transferred));
 	return (true);
 }
 
-void AsioServer::handleSend(boost::shared_ptr<std::string> message,
+void AsioServer::handleSend(const Message &message,
                             const boost::system::error_code &error,
                             std::size_t bytesTransfered)
 {
@@ -79,6 +78,7 @@ void AsioServer::handleReceive(const boost::system::error_code &error,
 	if (received != Packet::PACKETSIZE)
 		return ;
 	Message message(std::string(_array.begin(), _array.end()));
+	_array.assign(0);
 	ClientObject tmp(_dummy_endpoint);
 	Lobby *t;
 	
@@ -93,13 +93,18 @@ void AsioServer::handleReceive(const boost::system::error_code &error,
 							      (tmp));
 	}
 	else {
-		Logger::Log(Logger::DEBUG, "New client");
+		Logger::Log(Logger::DEBUG, std::string("New client, command "
+							       "| " +
+							       std::to_string(message
+			.getPacket().cmd) + "|"));
+		
 		if (message.getPacket().cmd == Packet::CONNECT) {
-			_lobbyList.addClientToLobby(tmp, message.getPacket()
+			_lobbyList.addClientToLobby(tmp
+				, message.getPacket()
 			                                        .data
 			                                        .connection
 			                                        .seed);
-			sendMessage(tmp, Message(Packet::CONNECTED));
+			sendMessage(tmp, Packet::DataPacket(Packet::CONNECTED));
 		}
 	}
 	_lobbyList.dump();
@@ -117,6 +122,7 @@ bool AsioServer::tick()
 void	AsioServer::interpretPacket(const Packet::DataPacket &packet,
 					ClientObject &obj) noexcept
 {
+	Logger::Log(Logger::DEBUG, "Command n" + packet.cmd);
 	if (packet.cmd < Packet::UNKNOWN) {
 		(this->*fptr[packet.cmd])(packet, obj);
 	}
@@ -155,6 +161,17 @@ void AsioServer::ready(const Packet::DataPacket &packet, ClientObject &obj)
 noexcept
 {
 	obj.toggleReady();
+	if (_lobbyList.getClientLobby(obj)->isReady()) {
+		Logger::Log(Logger::DEBUG, "Starting game :)");
+		_lobbyList.getClientLobby(obj)->startGame();
+		for (auto &t: _lobbyList.getClientLobby(obj)->getClientList
+			()) {
+			sendMessage(t, Packet::DataPacket(Packet::STARTGAME));
+		}
+	}
+	else {
+		Logger::Log(Logger::DEBUG, "Game is not ready to start");
+	}
 }
 
 void AsioServer::position(const Packet::DataPacket &packet, ClientObject

@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <Message.hpp>
 #include "LobbyContainer.hpp"
 
 bool LobbyContainer::isClientContained(ClientObject &client)
@@ -65,5 +66,12 @@ void LobbyContainer::checkTimeout()
 {
 	for (auto &t : _lobbyList) {
 		t->checkTimeout();
+	}
+}
+void LobbyContainer::broadcastToclient(Packet::DataPacket packet)
+{
+	Message m(packet);
+	for (auto &t : _lobbyList) {
+	
 	}
 }

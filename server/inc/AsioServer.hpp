@@ -10,13 +10,15 @@
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include "IServer.hpp"
+#include "Message.hpp"
 #include "PacketInterpreterServer.hpp"
 #include "LobbyContainer.hpp"
 
 class AsioServer : public IServer {
 public:
 	bool
-	sendMessage(const ClientObject &client, const IMessage &message) final;
+	sendMessage(const ClientObject &client, const Packet::DataPacket &message)
+	final;
 	AsioServer();
 	~AsioServer() final;
 	virtual bool tick();
@@ -38,7 +40,7 @@ private:
 	void	pong(const Packet::DataPacket &packet, ClientObject &obj) noexcept;
 	
 	void startReceive();
-	void handleSend(boost::shared_ptr<std::string> message,
+	void handleSend(const Message &message,
 	                const boost::system::error_code& error,
 	                std::size_t bytesTransfered);
 	void handleReceive(const boost::system::error_code& error,

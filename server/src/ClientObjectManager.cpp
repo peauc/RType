@@ -15,7 +15,7 @@ std::vector<IMessage> ClientObjectManager::getClientsMessages()
 {
 	std::vector<IMessage> messageList;
 	//Todo:: Finish client
-	for (auto i = 0; i < _clientList.size(); i++)
+	for (size_t i = 0; i < _clientList.size(); i++)
 	{}
 	return (messageList);
 }
@@ -74,4 +74,16 @@ ClientObjectManager::getClientContained(const ClientObject &copy)
 	}
 	throw std::out_of_range("Specific client is not contained in this "
 		                        "Manager");
+}
+const std::vector<ClientObject> &ClientObjectManager::getClientList()
+{
+	return (_clientList);
+}
+bool ClientObjectManager::isReady() const noexcept
+{
+	for (auto it = _clientList.begin(); it < _clientList.end(); it++) {
+		if (!it->isReady())
+			return (false);
+	}
+	return (true);
 }

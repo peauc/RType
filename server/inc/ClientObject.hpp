@@ -7,6 +7,7 @@
 #include <boost/array.hpp>
 #include <boost/asio/ip/udp.hpp>
 #include <chrono>
+#include <DataPacket.hpp>
 
 class ClientObject {
 public:
@@ -16,8 +17,9 @@ public:
 	long long int currentTimout() const noexcept;
 	bool isTimedOut(long long int timeoutValue) const noexcept;
 	void resetTimeout() noexcept;
+	bool sendMessage(Packet::DataPacket &packet);
 	void toggleReady() noexcept;
-	bool isReady() noexcept;
+	bool isReady() const noexcept;
 private:
 	ClientObject();
 	bool _isReady;
