@@ -5,7 +5,6 @@
 
 // Copier ce main dans le dossier /server/src, pour test, remplacer le main du serveur par ce dernier.
 
-
 #include <EnemyLoader/EnemyLoader.hpp>
 
 int	main(int ac, char **av) {
