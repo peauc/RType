@@ -22,5 +22,3 @@ void Component::PlayerInputComponent::update()
 	this->sendToAll(Engine::Mediator::Message::NEW_EVENT);
 	this->_event = nullptr;
 }
-
-

@@ -39,6 +39,7 @@ void Engine::Game::setup(int nbOfPlayers, const std::shared_ptr<RessourcesLoader
 	std::unique_ptr<Engine::World> world = std::make_unique<Engine::World>();
 
 	this->setWorld(std::move(world));
+	this->_world->addMediator();
 	this->setResourceLoader(resourceLoader);
 	std::unique_ptr<Engine::Entity> camera = std::unique_ptr<Engine::Entity>
 			(Factory::EntityFactory::createCamera(0, *this));

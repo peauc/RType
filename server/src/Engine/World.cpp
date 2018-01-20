@@ -4,6 +4,7 @@
 
 #include <Engine/Entity.hpp>
 #include <Engine/World.hpp>
+#include <iostream>
 
 Engine::World::World() : _nextEntityId(0), _parentGame(nullptr)
 {
@@ -73,7 +74,7 @@ const std::unique_ptr<Engine::Mediator> &Engine::World::getMediator() const
 	return _mediator;
 }
 
-void Engine::World::setMediator(std::unique_ptr<Engine::Mediator> mediator)
+void Engine::World::addMediator()
 {
-	this->_mediator = std::move(mediator);
+	this->_mediator = std::make_unique<Engine::Mediator>();
 }

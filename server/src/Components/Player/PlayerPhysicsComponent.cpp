@@ -25,6 +25,7 @@ Component::PlayerPhysicsComponent::PlayerPhysicsComponent(Engine::Entity *parent
 
 void Component::PlayerPhysicsComponent::update()
 {
+	std::cout << "updating physics" << std::endl;
 	this->sendToAll(Engine::Mediator::Message::CHECK_COLLISION);
 }
 

@@ -33,7 +33,7 @@ namespace Engine {
 		void setCamera(std::unique_ptr<Entity> camera);
 		std::unique_ptr<Mediator> &getMediator();
 		const std::unique_ptr<Mediator> &getMediator() const;
-		void setMediator(std::unique_ptr<Mediator> _mediator);
+		void addMediator();
 
 		void update();
 
