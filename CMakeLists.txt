@@ -10,8 +10,8 @@ include_directories(RessourcesLoader/includes)
 
 ##SERVER
 
-file(GLOB_RECURSE SERVER_SRC server/src/*.cpp RessourcesLoader/sources/*.cpp)
-file(GLOB_RECURSE SERVER_INC server/inc/*.hpp RessourcesLoader/includes/*.hpp)
+file(GLOB_RECURSE SERVER_SRC server/src/*.cpp )
+file(GLOB_RECURSE SERVER_INC server/inc/*.hpp )
 set(SERVER_FILES ${SERVER_SRC} ${SERVER_INC})
 include_directories(server/inc)
 add_executable(server ${SERVER_FILES} ${COMMON_FILES})

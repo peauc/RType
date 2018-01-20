@@ -2,10 +2,12 @@
 // Created by romain on 12/01/18.
 //
 
-#include <Engine/Game.hpp>
+#include <thread>
 #include <chrono>
 #include <iostream>
-#include <Factories/EntityFactory.hpp>
+#include "Engine/Game.hpp"
+#include "Factories/EntityFactory.hpp"
+
 
 Engine::Game::Game()
 {
@@ -82,8 +84,7 @@ Engine::EventList &Engine::Game::getEventList()
 {
 	return _eventList;
 }
-
-void Engine::Game::pushDataPacket(Packet::DataPacket *packet)
+void Engine::Game::start()
 {
-	this->_packetList.pushBack(std::unique_ptr<Packet::DataPacket>(packet));
+	_thread = std::thread(&Game::run, this);
 }

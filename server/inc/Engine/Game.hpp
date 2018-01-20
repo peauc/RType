@@ -5,6 +5,7 @@
 #ifndef RTYPE_GAME_HPP
 #define RTYPE_GAME_HPP
 
+#include <thread>
 #include <queue>
 #include "World.hpp"
 #include "Event.hpp"
@@ -23,6 +24,7 @@ namespace Engine {
 		Game();
 		~Game() = default;
 
+		void start();
 		void run();
 		void setup(int nbOfPlayers, const std::shared_ptr<RessourcesLoader> &resourceLoader);
 
@@ -35,6 +37,7 @@ namespace Engine {
 		void pushDataPacket(Packet::DataPacket *packet);
 
 	private:
+		std::thread _thread;
 		std::unique_ptr<World> _world;
 		EventList _eventList;
 		PacketList _packetList;
