@@ -8,13 +8,13 @@
 int main(int ac, char **av)
 {
 	try {
-		Packet::DataPacket packet;
 		client::AsioClient client;
-		packet.cmd = Packet::CONNECT;
-		packet.data.connection.seed = 0;
 		client.connect("127.0.0.1");
 		client.resetChrono();
-		client.sendMessage(packet);
+		
+		Packet::DataPacket t;
+		t.cmd = Packet::READY;
+		client.sendMessage(t);
 		while (1) {
 			if (client.getChronoElapsed() > 1) {
 				client.sendMessage(Packet::DataPacket
