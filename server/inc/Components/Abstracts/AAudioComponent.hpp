@@ -12,12 +12,12 @@ namespace Component {
     class AAudioComponent : public Engine::AComponent
     {
     public:
-        explicit AAudioComponent(Engine::Entity *parentEntity, Engine::World *parentWorld);
+        explicit AAudioComponent(Engine::Entity *parentEntity, Engine::Game *parentGame);
         ~AAudioComponent() override = default;
 
 		void addSoundPacket(unsigned char soundId, bool repeat);
     protected:
-        Engine::World *_parentWorld;
+        Engine::Game *_parentGame;
         std::vector<unsigned char> _soundIds;
     };
 }

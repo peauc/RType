@@ -6,9 +6,13 @@ SRCS            =       Berzerker.cpp
 
 FILES           =       $(addprefix ./src/, $(SRCS))
 
-INCLUDES        =       -I ./inc -I ../server/inc
+INCLUDES        =       -I ./inc			\
+			-I ../server/inc		\
+			-I ../server/inc/Common		\
+			-I ../server/inc/Components	\
+			-I ../server/inc/Engine		\
 
-CPPFLAGS        =       -W -Wall -Wextra -std=c++14 -Werror -fPIC ${INCLUDES}
+CPPFLAGS        =       -std=c++14 -fPIC ${INCLUDES}
 
 LDFLAGS         =       -shared
 

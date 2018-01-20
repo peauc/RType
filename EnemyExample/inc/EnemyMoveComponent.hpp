@@ -5,8 +5,8 @@
 #ifndef RTYPE_ENEMYMOVECOMPONENT_HPP
 #	define RTYPE_ENEMYMOVECOMPONENT_HPP
 
-#	include <Engine/Event.hpp>
-#	include "Components/Abstracts/AMovementComponent.hpp"
+#	include "Event.hpp"
+#	include "Abstracts/AMovementComponent.hpp"
 
 namespace Component {
 	class EnemyMovementComponent : public AMovementComponent

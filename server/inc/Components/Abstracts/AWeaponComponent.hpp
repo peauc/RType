@@ -12,11 +12,11 @@ namespace Component {
 	class AWeaponComponent : public Engine::AComponent
 	{
 	public:
-		AWeaponComponent(Engine::Entity *parentEntity, Engine::World *parentWorld);
+		AWeaponComponent(Engine::Entity *parentEntity, Engine::Game *parentGame);
 		~AWeaponComponent() override = default;
 
 	protected:
-		Engine::World *_parentWorld;
+		Engine::Game *_parentGame;
 		double _shotAngle;
 		Vector2d _shotRelativeOrigin;
 		unsigned int _cooldown;

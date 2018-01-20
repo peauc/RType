@@ -14,9 +14,27 @@ namespace Component {
 	class APhysicsComponent : public Engine::AComponent
 	{
 	public:
+		enum Direction {
+			TOP,
+			RIGHT,
+			BOTTOM,
+			LEFT,
+			UNDEFINED
+		};
+
 		explicit APhysicsComponent(Engine::Entity *entity, Engine::Hitbox hitbox);
 		~APhysicsComponent() override = default;
 
+		int getCollisionDamages() const;
+		void setCollisionDamages(int collisionDamages);
+		bool getCollision(Direction) const;
+
+		// handle methods
+		void handleCheckCollision(Engine::Mediator::Message messageType, Engine::AComponent *sender);
+
+		// default collision methods
+		void blockingCollision(APhysicsComponent &other);
+		void damagingCollision(APhysicsComponent &other);
 	protected:
 		struct OBB
 		{
@@ -28,16 +46,21 @@ namespace Component {
 
 			OBB() = default;
 			OBB(const Engine::TransformComponent &transformComponent, const Engine::Hitbox &hitbox);
-			bool checkIntersection(const OBB &other);
+			bool checkIntersection(const OBB &other, APhysicsComponent &);
 			bool checkIntersection(const Vector2d &point);
 		};
 
 	protected:
 		Engine::Hitbox _hitbox;
 		OBB _orientedBoundingBox;
+		int _collisionDamages;
+		std::unordered_map<Engine::Hitbox::Type, std::function<void(APhysicsComponent &)>> _collisionHandlers;
+		bool _collisions[UNDEFINED];
 
 	protected:
-		virtual void triggerCollision(APhysicsComponent &other) = 0;
+		void triggerCollision(APhysicsComponent &other);
+		void setCollision(Direction, bool);
+		void resetCollisions();
 	};
 }
 

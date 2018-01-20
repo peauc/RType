@@ -16,6 +16,7 @@ Packet::DataPacket *PacketFactory::createObjectPacket(short x, short y, Packet::
 	dataPacket->data.object.y = y;
 	dataPacket->data.object.animated = true;
 	dataPacket->data.object.hit = hit;
+	dataPacket->data.object.id = id;
 	dataPacket->data.object.animationId = animationId;
 
 	return dataPacket;
@@ -29,7 +30,7 @@ Packet::DataPacket *PacketFactory::createScorePacket(Packet::GameState gameState
 	dataPacket->cmd = 0;
 	dataPacket->data.score.gameState = gameState;
 
-	for (int i = 0; i < playerScores.size(); ++i) {
+	for (unsigned int i = 0; i < playerScores.size(); ++i) {
 		dataPacket->data.score.playerScore[i] = playerScores[i];
 	}
 

@@ -77,18 +77,3 @@ void Engine::World::setMediator(std::unique_ptr<Engine::Mediator> mediator)
 {
 	this->_mediator = std::move(mediator);
 }
-
-void Engine::World::addPacketToSend(Packet::DataPacket *packet)
-{
-	this->_packetsToSend.push_back(std::unique_ptr<Packet::DataPacket>(packet));
-}
-
-const std::vector<std::unique_ptr<Packet::DataPacket>> &Engine::World::getPacketsToSend() const
-{
-	return this->_packetsToSend;
-}
-
-void Engine::World::emptyPacketsToSend()
-{
-	this->_packetsToSend.clear();
-}

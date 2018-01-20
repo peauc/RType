@@ -11,7 +11,7 @@ namespace Component {
 	class ShotAudioComponent : public AAudioComponent
 	{
 	public:
-		ShotAudioComponent(Engine::Entity *parentEntity, Engine::World *parentWorld, unsigned char impactSoundId);
+		ShotAudioComponent(Engine::Entity *parentEntity, Engine::Game *parentGame, unsigned char impactSoundId);
 		~ShotAudioComponent() override = default;
 
 		void update() override;

@@ -5,7 +5,7 @@
 ** No description
 */
 
-#include "RessourcesLoader.hpp"
+#include "../includes/RessourcesLoader.hpp"
 
 void RessourcesLoader::loadAnimations(const std::string &filePath) {
 	this->load(filePath, ANIMATION);

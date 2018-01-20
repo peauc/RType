@@ -14,7 +14,6 @@ Engine::Game::Game()
 {
 	this->_world = std::make_unique<World>();
 }
-
 void Engine::Game::run()
 {
 	Logger::Log(Logger::CRITICAL, "Game is starting");
@@ -86,6 +85,12 @@ Engine::EventList &Engine::Game::getEventList()
 {
 	return _eventList;
 }
+
+void Engine::Game::pushDataPacket(Packet::DataPacket *packet)
+{
+	this->_packetList.pushBack(std::unique_ptr<Packet::DataPacket>(packet));
+}
+
 void Engine::Game::start()
 {
 	_thread.detach();
