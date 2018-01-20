@@ -43,6 +43,11 @@ Component::PlayerGraphicsComponent::PlayerGraphicsComponent(Engine::Entity *pare
 	}
 	this->_currentAnimationId = this->_animationIds[0];
 
+	this->_relativeStartPos.x = -500;
+	this->_relativeStartPos.y = -300;
+	this->_relativeRange.x = 1000;
+	this->_relativeRange.y = 600;
+
 	// set handle methods
 	this->_validMessageTypes[Engine::Mediator::Message::DEATH] = std::bind(&PlayerGraphicsComponent::handleDeath,
 																		   this, std::placeholders::_1,

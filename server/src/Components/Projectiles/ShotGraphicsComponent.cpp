@@ -5,20 +5,6 @@
 #include <Components/Projectiles/ShotGraphicsComponent.hpp>
 
 Component::ShotGraphicsComponent::ShotGraphicsComponent(Engine::Entity *parentEntity,
-														unsigned char travelAnimationId,
-														unsigned char impactAnimationId)
-		: AGraphicsComponent(parentEntity)
-{
-	this->_animationIds.push_back(travelAnimationId);
-	this->_animationIds.push_back(impactAnimationId);
-	this->_currentAnimationId = travelAnimationId;
-
-	this->_validMessageTypes[Engine::Mediator::Message::DEATH] = std::bind(&ShotGraphicsComponent::handleImpact,
-																		   this, std::placeholders::_1,
-																		   std::placeholders::_2);
-}
-
-Component::ShotGraphicsComponent::ShotGraphicsComponent(Engine::Entity *parentEntity,
 														RessourcesLoader *resourceLoader,
 														unsigned char travelAnimationId,
 														unsigned char impactAnimationId)
@@ -27,6 +13,11 @@ Component::ShotGraphicsComponent::ShotGraphicsComponent(Engine::Entity *parentEn
 	this->_animationIds.push_back(travelAnimationId);
 	this->_animationIds.push_back(impactAnimationId);
 	this->_currentAnimationId = travelAnimationId;
+
+	this->_relativeStartPos.x = -300;
+	this->_relativeStartPos.y = -100;
+	this->_relativeRange.x = 600;
+	this->_relativeRange.y = 200;
 
 	this->_validMessageTypes[Engine::Mediator::Message::DEATH] = std::bind(&ShotGraphicsComponent::handleImpact,
 																		   this, std::placeholders::_1,

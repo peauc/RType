@@ -12,8 +12,6 @@ namespace Component {
 	class ShotGraphicsComponent : public AGraphicsComponent
 	{
 	public:
-		explicit ShotGraphicsComponent(Engine::Entity *parentEntity, unsigned char _travelAnimationId,
-									   unsigned char _impactAnimationId);
 		explicit ShotGraphicsComponent(Engine::Entity *parentEntity, RessourcesLoader *resourceLoader,
 									   unsigned char _travelAnimationId, unsigned char _impactAnimationId);
 		~ShotGraphicsComponent() override = default;

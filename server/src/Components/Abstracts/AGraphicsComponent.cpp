@@ -4,10 +4,6 @@
 
 #include <Components/Abstracts/AGraphicsComponent.hpp>
 
-Component::AGraphicsComponent::AGraphicsComponent(Engine::Entity *parentEntity) : AComponent(parentEntity)
-{
-}
-
 Component::AGraphicsComponent::AGraphicsComponent(Engine::Entity *parentEntity, RessourcesLoader *resourceLoader)
 		: AComponent(parentEntity), _resourceLoader(resourceLoader)
 {
@@ -64,4 +60,14 @@ bool Component::AGraphicsComponent::isAlive() const
 void Component::AGraphicsComponent::setIsAlive(bool _isAlive)
 {
 	AGraphicsComponent::_isAlive = _isAlive;
+}
+
+const Vector2d &Component::AGraphicsComponent::getRelativeStartPos() const
+{
+	return this->_relativeStartPos;
+}
+
+const Vector2d &Component::AGraphicsComponent::getRange() const
+{
+	return this->_relativeRange;
 }

@@ -9,6 +9,7 @@
 #include <Components/Camera/CameraViewComponent.hpp>
 #include <iostream>
 #include <Components/Player/PlayerWeaponComponent.hpp>
+#include <Components/Player/PlayerPhysicsComponent.hpp>
 #include "Factories/EntityFactory.hpp"
 
 Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine::Game &game)
@@ -19,23 +20,25 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 	Engine::AComponent *playerMoveComponent = new Component::PlayerMovementComponent(playerShip);
 	Engine::AComponent *playerInputComponent = new Component::PlayerInputComponent(playerShip,
 																				   game.getEventList());
-	Engine::AComponent *playerGraphicsComponent = new Component::PlayerGraphicsComponent(playerShip,
-																						 game.getResourceLoader().get());
+	Component::PlayerGraphicsComponent *playerGraphicsComponent = new Component::PlayerGraphicsComponent(playerShip,
+																										 game.getResourceLoader().get());
 	Engine::AComponent *playerWeaponComponent = new Component::PlayerWeaponComponent(playerShip, &game);
 
 	if (game.getWorld()->getCamera() != nullptr) {
 		playerGraphicsComponent->addObserver(game.getWorld()->getCamera().get());
 	}
 
-//	Engine::AComponent *playerPhysicsComponent = new Component::PlayerPhysicsComponent(playerShip);
-//	if (game.getWorld()->getMediator() != nullptr) {
-//		playerPhysicsComponent->registerToMediator(game.getWorld()->getMediator().get());
-//	}
+	Engine::AComponent *playerPhysicsComponent = new Component::PlayerPhysicsComponent(playerShip, Engine::Hitbox(
+			Engine::Hitbox::Type::PLAYER, playerGraphicsComponent->getRelativeStartPos(),
+			playerGraphicsComponent->getRange()));
+	if (game.getWorld()->getMediator() != nullptr) {
+		playerPhysicsComponent->registerToMediator(game.getWorld()->getMediator().get());
+	}
 
 	playerShip->addComponent(playerInputComponent);
 	playerShip->addComponent(playerMoveComponent);
 	playerShip->addComponent(playerWeaponComponent);
-//	playerShip->addComponent(playerPhysicsComponent);
+	playerShip->addComponent(playerPhysicsComponent);
 	playerShip->addComponent(playerGraphicsComponent);
 
 	playerShip->getTransformComponent().getPosition().x = 0;

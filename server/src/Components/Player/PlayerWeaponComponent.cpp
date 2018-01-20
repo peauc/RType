@@ -28,10 +28,14 @@ void Component::PlayerWeaponComponent::update()
 		Engine::AComponent *shotSoundComponent;
 		// TODO Change animation values
 		if (this->_charging < 30) { // Regular shot
-			shotGraphicsComponent = new Component::ShotGraphicsComponent(this->_parentEntity, 0, 0);
+			shotGraphicsComponent = new Component::ShotGraphicsComponent(this->_parentEntity,
+																		 this->_parentGame->getResourceLoader().get(),
+																		 0, 0);
 			shotSoundComponent = new Component::ShotAudioComponent(this->_parentEntity, this->_parentGame, 0);
 		} else { // Charged shot
-			shotGraphicsComponent = new Component::ShotGraphicsComponent(this->_parentEntity, 1, 1);
+			shotGraphicsComponent = new Component::ShotGraphicsComponent(this->_parentEntity,
+																		 this->_parentGame->getResourceLoader().get(),
+																		 1, 1);
 			shotSoundComponent = new Component::ShotAudioComponent(this->_parentEntity, this->_parentGame, 1);
 		}
 

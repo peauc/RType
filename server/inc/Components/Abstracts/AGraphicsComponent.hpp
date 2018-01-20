@@ -12,7 +12,6 @@ namespace Component {
 	class AGraphicsComponent : public Engine::AComponent
 	{
 	public:
-		explicit AGraphicsComponent(Engine::Entity *parentEntity);
 		explicit AGraphicsComponent(Engine::Entity *parentEntity, RessourcesLoader *resourceLoader);
 		~AGraphicsComponent() override = default;
 
@@ -27,10 +26,15 @@ namespace Component {
 		void setIsHit(bool isHit);
 		bool isAlive() const;
 		void setIsAlive(bool isAlive);
+		const Vector2d &getRelativeStartPos() const;
+		const Vector2d &getRange() const;
 	protected:
 		RessourcesLoader *_resourceLoader;
 		std::vector<unsigned char> _animationIds;
 		unsigned char _currentAnimationId;
+		Vector2d _relativeStartPos;
+		Vector2d _relativeRange;
+
 		bool _isHit;
 		bool _isAlive;
 	};
