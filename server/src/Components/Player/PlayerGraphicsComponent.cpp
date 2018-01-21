@@ -12,32 +12,32 @@ Component::PlayerGraphicsComponent::PlayerGraphicsComponent(Engine::Entity *pare
 {
 	switch (parentEntity->getId()) {
 		case 0:
-			this->_animationIds.push_back(8);
-			this->_animationIds.push_back(7);
-			this->_animationIds.push_back(5);
-			this->_animationIds.push_back(6);
-			this->_animationIds.push_back(4);
+			this->_animationIds.push_back(40);
+			this->_animationIds.push_back(39);
+			this->_animationIds.push_back(38);
+			this->_animationIds.push_back(36);
+			this->_animationIds.push_back(37);
 			break;
 		case 1:
-			this->_animationIds.push_back(20);
-			this->_animationIds.push_back(19);
-			this->_animationIds.push_back(17);
-			this->_animationIds.push_back(18);
-			this->_animationIds.push_back(16);
+			this->_animationIds.push_back(4);
+			this->_animationIds.push_back(3);
+			this->_animationIds.push_back(2);
+			this->_animationIds.push_back(0);
+			this->_animationIds.push_back(1);
 			break;
 		case 2:
-			this->_animationIds.push_back(14);
-			this->_animationIds.push_back(13);
-			this->_animationIds.push_back(11);
-			this->_animationIds.push_back(12);
-			this->_animationIds.push_back(10);
+			this->_animationIds.push_back(34);
+			this->_animationIds.push_back(33);
+			this->_animationIds.push_back(32);
+			this->_animationIds.push_back(30);
+			this->_animationIds.push_back(31);
 			break;
 		case 3:
-			this->_animationIds.push_back(26);
-			this->_animationIds.push_back(25);
-			this->_animationIds.push_back(23);
-			this->_animationIds.push_back(24);
-			this->_animationIds.push_back(23);
+			this->_animationIds.push_back(13);
+			this->_animationIds.push_back(12);
+			this->_animationIds.push_back(11);
+			this->_animationIds.push_back(9);
+			this->_animationIds.push_back(10);
 			break;
 		default:
 			break;
