@@ -2,8 +2,7 @@
 // Created by romain on 15/01/18.
 //
 
-#include <Components/Abstracts/AInputComponent.hpp>
-#include <iostream>
+#include "AInputComponent.hpp"
 
 Component::AInputComponent::AInputComponent(Engine::Entity *parentEntity) : AComponent(parentEntity)
 {

@@ -5,9 +5,20 @@
 ** No description
 */
 
+#include "DuplicableItem.hpp"
 #include "ASpriteBackground.hpp"
 
 ASpriteBackground::ASpriteBackground(AItem *parent) : ASpriteItem(parent) {
+
+}
+
+ASpriteBackground::ASpriteBackground(const ASpriteBackground &obj)
+		: ASpriteItem(obj) {
+
+}
+
+ASpriteBackground::ASpriteBackground(const DuplicableItem &obj)
+		: ASpriteItem(obj){
 
 }
 

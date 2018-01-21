@@ -24,6 +24,8 @@ public:
 	virtual void	addChild(AItem *child);
 	virtual void	lendBackgroundTexture(sf::Texture &texture);
 
+	const std::vector<std::shared_ptr<AItem>>	&getChilds() const;
+
 protected:
 
 	std::vector<std::shared_ptr<AItem>>	childs;

@@ -2,9 +2,8 @@
 // Created by romain on 18/01/18.
 //
 
-#include <Components/Player/PlayerWeaponComponent.hpp>
-#include <Components/Projectiles/ShotAudioComponent.hpp>
-#include <iostream>
+#include "PlayerWeaponComponent.hpp"
+#include "ShotAudioComponent.hpp"
 
 Component::PlayerWeaponComponent::PlayerWeaponComponent(Engine::Entity *parentEntity, Engine::Game *parentGame)
 		: AWeaponComponent(parentEntity, parentGame), _event(false), _firing(false), _charging(0)

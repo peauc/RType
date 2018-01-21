@@ -5,7 +5,7 @@
 #ifndef RTYPE_ENEMYSHOTPHYSICSCOMPONENT_HPP
 #define RTYPE_ENEMYSHOTPHYSICSCOMPONENT_HPP
 
-#include <Components/Abstracts/APhysicsComponent.hpp>
+#include "APhysicsComponent.hpp"
 
 namespace Component {
 	class EnemyShotPhysicsComponent : public APhysicsComponent

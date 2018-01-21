@@ -9,11 +9,11 @@
 #define MAPCREATOR_MAPVIEW_HPP
 
 #include "SpriteBackground.hpp"
-#include "AListModel.hpp"
+#include "MapModel.hpp"
 #include "AContainer.hpp"
 #include "AScroller.hpp"
 
-class MapView : public AContainer, public AScroller {
+class MapView : public AContainer, public AScroller, public IDragAndDrop {
 
 public:
 
@@ -28,17 +28,35 @@ public:
 	virtual void	refresh();
 
 	virtual void	onMouseWheelScrolled(const sf::Event &event);
+	virtual void	onMouseButtonPressed(const sf::Event &event);
+	virtual void	onMouseButtonReleased(const sf::Event &event);
+	virtual void	onMouseMoved(const sf::Event &event);
+	virtual void	onKeyPressed(const sf::Event &event);
 
 	virtual void	addChild(AItem *child);
 
-	void	setModel(AListModel *model);
+	void	setModel(MapModel *model);
 
 	virtual void	lendBackgroundTexture(sf::Texture &texture);
 
 protected:
 
-	std::unique_ptr<AListModel>		model;
+	unsigned int	getClosestChild(int x, int y);
+
+	std::unique_ptr<MapModel>		model;
 	SpriteBackground				spriteBackground;
+	bool 							scrollable;
+
+private:
+
+	void	resizeChild(const sf::Event &event);
+	void	changeSize(unsigned int childIndex, int newWidth, int newHeight);
+	void	createZone(const sf::Event &event);
+	void	sortChilds();
+	bool	onExistingZone(const sf::Event &event);
+
+	int		lastMouseX;
+	int 	lastMouseY;
 
 };
 

@@ -2,9 +2,8 @@
 // Created by romain on 20/01/18.
 //
 
-#include <Engine/Entity.hpp>
-#include <Components/Camera/CameraZoneComponent.hpp>
-#include <iostream>
+#include "Entity.hpp"
+#include "CameraZoneComponent.hpp"
 
 Component::CameraZoneComponent::CameraZoneComponent(Engine::Entity *parentEntity, Engine::Hitbox hitbox)
 		: APhysicsComponent(parentEntity, hitbox)

@@ -2,7 +2,7 @@
 // Created by romain on 21/01/18.
 //
 
-#include <Engine/Commands/RemoveEntityCommand.hpp>
+#include "RemoveEntityCommand.hpp"
 
 Engine::Commands::RemoveEntityCommand::RemoveEntityCommand(Engine::World &world, unsigned int entityId) :
 		_world(world), _entityId(entityId)

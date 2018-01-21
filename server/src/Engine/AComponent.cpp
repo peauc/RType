@@ -2,9 +2,8 @@
 // Created by romain on 12/01/18.
 //
 
-#include <Engine/AComponent.hpp>
-#include <Engine/Entity.hpp>
-#include <iostream>
+#include "AComponent.hpp"
+#include "Entity.hpp"
 
 Engine::AComponent::AComponent(Engine::Entity *parentEntity) : _parentEntity(parentEntity)
 {

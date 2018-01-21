@@ -2,7 +2,7 @@
 // Created by romain on 18/01/18.
 //
 
-#include <Components/Projectiles/ShotMovementComponent.hpp>
+#include "ShotMovementComponent.hpp"
 
 Component::ShotMovementComponent::ShotMovementComponent(Engine::Entity *parentEntity, double speed) :
 		AMovementComponent(parentEntity), _speed(speed)

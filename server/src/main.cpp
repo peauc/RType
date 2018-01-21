@@ -25,5 +25,10 @@ int main(int, char **)
 			  << std::endl;
 		return 1;
 	}
+//	Engine::Game *game = new Engine::Game();
+//	std::shared_ptr<RessourcesLoader> rl = std::make_shared<RessourcesLoader>();
+//
+//	game->setup(1, nullptr);
+//	game->getWorld()->update();
 }
 

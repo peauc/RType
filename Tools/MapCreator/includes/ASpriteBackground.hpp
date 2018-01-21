@@ -10,14 +10,18 @@
 
 #include "ASpriteItem.hpp"
 
+class DuplicableItem;
+
 class ASpriteBackground : public ASpriteItem {
 
 public:
 
 	ASpriteBackground(AItem *parent = nullptr);
 	~ASpriteBackground() = default;
-	ASpriteBackground(const ASpriteBackground&) = delete;
+	ASpriteBackground(const ASpriteBackground &obj);
 	ASpriteBackground	&operator=(const ASpriteBackground&) = delete;
+
+	ASpriteBackground(const DuplicableItem &obj);
 
 	virtual void	refresh();
 	virtual void	displayOnlyInParentBounds();

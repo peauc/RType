@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <chrono>
+#include <Logger.hpp>
 #include "ClientObjectManager.hpp"
 
 size_t ClientObjectManager::size() const
@@ -24,6 +25,7 @@ bool ClientObjectManager::addClient(ClientObject &obj) noexcept
 {
 	if (size() >= 4)
 		return (false);
+	obj.setEntityID(size());
 	_clientList.push_back(obj);
 	return (true);
 }

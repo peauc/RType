@@ -5,8 +5,8 @@
 #ifndef RTYPE_DEFAULTPLAYERMOVEMENTCOMPONENT_HPP
 #define RTYPE_DEFAULTPLAYERMOVEMENTCOMPONENT_HPP
 
-#include <Engine/Event.hpp>
-#include "Components/Abstracts/AMovementComponent.hpp"
+#include "Event.hpp"
+#include "AMovementComponent.hpp"
 
 namespace Component {
 	class PlayerMovementComponent : public AMovementComponent

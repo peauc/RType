@@ -10,7 +10,7 @@
 Component::EnemyGraphicsComponent::EnemyGraphicsComponent(Engine::Entity *parentEntity,
 															RessourcesLoader *resourceLoader) :
 		AGraphicsComponent(parentEntity, resourceLoader) {
-	this->_animationIds.push_back(0);
+	this->_animationIds.push_back(8);
 	this->_currentAnimationId = this->_animationIds[0];
 
 	this->_relativeStartPos.x = -500;
@@ -45,16 +45,16 @@ void Component::EnemyGraphicsComponent::handleHit(Engine::Mediator::Message, Eng
 void Component::EnemyGraphicsComponent::handleMove(Engine::Mediator::Message, Engine::AComponent *sender) noexcept {
 	if (AMovementComponent *movementComponent = dynamic_cast<AMovementComponent *>(sender)) {
 		if (movementComponent->getLastMove().y > 0) {
-			this->_currentAnimationId = this->_animationIds[1];
+			this->_currentAnimationId = this->_animationIds[8];
 		} else if (movementComponent->getLastMove().y < 0) {
-			this->_currentAnimationId = this->_animationIds[3];
+			this->_currentAnimationId = this->_animationIds[8];
 		} else {
-			if (this->_currentAnimationId == this->_animationIds[1]) {
-				this->_currentAnimationId = this->_animationIds[2];
-			} else if (this->_currentAnimationId == this->_animationIds[3]) {
-				this->_currentAnimationId = this->_animationIds[4];
+			if (this->_currentAnimationId == this->_animationIds[8]) {
+				this->_currentAnimationId = this->_animationIds[8];
+			} else if (this->_currentAnimationId == this->_animationIds[8]) {
+				this->_currentAnimationId = this->_animationIds[8];
 			} else {
-				this->_currentAnimationId = this->_animationIds[0];
+				this->_currentAnimationId = this->_animationIds[8];
 			}
 		}
 	}

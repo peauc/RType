@@ -5,9 +5,8 @@
 #include <thread>
 #include <chrono>
 #include <iostream>
-#include <Logger.hpp>
-#include "Engine/Game.hpp"
-#include "Factories/EntityFactory.hpp"
+#include "Logger.hpp"
+#include "Game.hpp"
 
 Engine::Game::Game()
 {
@@ -52,8 +51,8 @@ void Engine::Game::setup(size_t nbOfPlayers,
 		this->_world->addObject(Factory::EntityFactory::createPlayerShip);
 	}
 
-	this->_enemyLoader.setup("../DLEnemies/", *this);
-	this->_DLEntitiesMap = this->_enemyLoader.getEnemies();
+	//this->_enemyLoader.setup("../DLEnemies/", *this);
+	//this->_DLEntitiesMap = this->_enemyLoader.getEnemies();
 }
 
 std::unique_ptr<Engine::World> &Engine::Game::getWorld()

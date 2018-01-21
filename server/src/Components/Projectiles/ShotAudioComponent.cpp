@@ -2,9 +2,9 @@
 // Created by romain on 19/01/18.
 //
 
-#include <Engine/Entity.hpp>
-#include <Engine/World.hpp>
-#include <Components/Projectiles/ShotAudioComponent.hpp>
+#include "Entity.hpp"
+#include "World.hpp"
+#include "ShotAudioComponent.hpp"
 
 Component::ShotAudioComponent::ShotAudioComponent(Engine::Entity *parentEntity, Engine::Game *parentGame,
 												  unsigned char) :

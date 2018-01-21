@@ -2,9 +2,8 @@
 // Created by romain on 11/01/18.
 //
 
-#include <Engine/AComponent.hpp>
-#include <Engine/Mediator.hpp>
 #include <iostream>
+#include "AComponent.hpp"
 
 void Engine::Mediator::registerComponent(AComponent *component) noexcept
 {

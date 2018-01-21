@@ -2,11 +2,11 @@
 // Created by romain on 21/01/18.
 //
 
-#include <Engine/Entity.hpp>
-#include <Engine/Game.hpp>
-#include <Engine/Zone.hpp>
-#include <Engine/Hitbox.hpp>
-#include <Components/Zone/ZoneComponent.hpp>
+#include "Entity.hpp"
+#include "Game.hpp"
+#include "Zone.hpp"
+#include "Hitbox.hpp"
+#include "ZoneComponent.hpp"
 
 Engine::MapLoader::Zone::Zone(const Vector2d &topLeftCoords, const Vector2d &bottomRightCoords)
 {

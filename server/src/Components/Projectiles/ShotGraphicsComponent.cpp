@@ -2,8 +2,7 @@
 // Created by romain on 18/01/18.
 //
 
-#include <Components/Projectiles/ShotGraphicsComponent.hpp>
-#include <iostream>
+#include "ShotGraphicsComponent.hpp"
 
 Component::ShotGraphicsComponent::ShotGraphicsComponent(Engine::Entity *parentEntity,
 														RessourcesLoader *resourceLoader,

@@ -2,7 +2,7 @@
 // Created by romain on 18/01/18.
 //
 
-#include <Factories/PacketFactory.hpp>
+#include "PacketFactory.hpp"
 
 Packet::DataPacket *PacketFactory::createObjectPacket(short x, short y, Packet::EntityState entityState, bool hit,
 													  unsigned int id,

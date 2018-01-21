@@ -5,10 +5,10 @@
 #ifndef RTYPE_PLAYERWEAPONCOMPONENT_HPP
 #define RTYPE_PLAYERWEAPONCOMPONENT_HPP
 
-#include <Components/Abstracts/AInputComponent.hpp>
-#include <Components/Projectiles/ShotMovementComponent.hpp>
-#include <Components/Projectiles/ShotGraphicsComponent.hpp>
-#include <Components/Abstracts/AWeaponComponent.hpp>
+#include "AInputComponent.hpp"
+#include "ShotMovementComponent.hpp"
+#include "ShotGraphicsComponent.hpp"
+#include "AWeaponComponent.hpp"
 
 namespace Component {
 	class PlayerWeaponComponent : public AWeaponComponent

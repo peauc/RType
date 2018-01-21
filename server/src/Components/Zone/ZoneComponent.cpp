@@ -2,7 +2,7 @@
 // Created by romain on 21/01/18.
 //
 
-#include <Components/Zone/ZoneComponent.hpp>
+#include "ZoneComponent.hpp"
 
 Component::ZoneComponent::ZoneComponent(Engine::Entity *parentEntity,
 										const Engine::Hitbox &hitbox,
