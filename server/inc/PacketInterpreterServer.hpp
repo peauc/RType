@@ -30,12 +30,14 @@ public:
 	void	position(const Packet::DataPacket &packet) noexcept override;
 	void	hit(const Packet::DataPacket &packet) noexcept override;
 	void	event(const Packet::DataPacket &packet) noexcept override;
+	void pong(const Packet::DataPacket &packet);
 	
 	Engine::Event	createEventFromPacket(const Packet::DataPacket &packet,
 						   uint32_t id) noexcept;
 
 private:
-	void (PacketInterpreterServer::*fptr[UNKNOWN])(const Packet::DataPacket &packet);
+	void (PacketInterpreterServer::*fptr[Packet::UNKNOWN])(const
+	                                                Packet::DataPacket &packet);
 };
 
 #endif // !RTYPE_PACKETINTERPRETERSERVER_HPP_

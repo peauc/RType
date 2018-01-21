@@ -15,12 +15,15 @@
 class Message : public IMessage
 {
 public:
+	Message() = default;
 	explicit Message(const std::string &rawMessage) noexcept;
 	Message(const Message &) noexcept;
+	Message(Packet::Commands commands) noexcept;
+	Message(Packet::DataPacket &) noexcept;
 	Message &operator=(const Message &) noexcept;
 	~Message() = default;
 
-	Packet::DataPacket		getPacket() const noexcept;
+	Packet::DataPacket		getPacket() noexcept;
 	const std::string	getRawMessage() const noexcept override;
 private:
 	std::string		_rawMessage;

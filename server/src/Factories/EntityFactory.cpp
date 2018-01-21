@@ -7,8 +7,11 @@
 #include <Components/Camera/CameraMovementComponent.hpp>
 #include <Components/Player/PlayerGraphicsComponent.hpp>
 #include <Components/Camera/CameraViewComponent.hpp>
-#include <Components/Player/PlayerPhysicsComponent.hpp>
 #include <iostream>
+#include <Components/Player/PlayerWeaponComponent.hpp>
+#include <Components/Player/PlayerPhysicsComponent.hpp>
+#include <Components/HealthComponent.hpp>
+#include <Components/Camera/CameraZoneComponent.hpp>
 #include "Factories/EntityFactory.hpp"
 
 Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine::Game &game)
@@ -18,26 +21,33 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 
 	Engine::AComponent *playerMoveComponent = new Component::PlayerMovementComponent(playerShip);
 	Engine::AComponent *playerInputComponent = new Component::PlayerInputComponent(playerShip,
-																				   game.getEventsReference());
-	Engine::AComponent *playerGraphicsComponent = new Component::PlayerGraphicsComponent(playerShip,
-																						 game.getResourceLoader().get());
-	std::cout << "yay" << std::endl;
+																				   game.getEventList());
+	Component::PlayerGraphicsComponent *playerGraphicsComponent = new Component::PlayerGraphicsComponent(playerShip,
+																										 game.getResourceLoader().get());
+	Engine::AComponent *playerWeaponComponent = new Component::PlayerWeaponComponent(playerShip, &game);
+
+	Engine::AComponent *playerPhysicsComponent = new Component::PlayerPhysicsComponent(playerShip, Engine::Hitbox(
+			Engine::Hitbox::Type::PLAYER, playerGraphicsComponent->getRelativeStartPos(),
+			playerGraphicsComponent->getRange()));
+
+	Engine::AComponent *playerHealthComponent = new Component::HealthComponent(playerShip, 100, false, true);
+
+	playerShip->addComponent(playerInputComponent);
+	playerShip->addComponent(playerMoveComponent);
+	playerShip->addComponent(playerWeaponComponent);
+	playerShip->addComponent(playerPhysicsComponent);
+	playerShip->addComponent(playerGraphicsComponent);
+	playerShip->addComponent(playerHealthComponent);
+
+	if (game.getWorld()->getMediator() != nullptr) {
+		playerPhysicsComponent->registerToMediator(game.getWorld()->getMediator().get());
+	}
 
 	if (game.getWorld()->getCamera() != nullptr) {
 		playerGraphicsComponent->addObserver(game.getWorld()->getCamera().get());
 	}
 
-	Engine::AComponent *playerPhysicsComponent = new Component::PlayerPhysicsComponent(playerShip);
-	if (game.getWorld()->getMediator() != nullptr) {
-		playerPhysicsComponent->registerToMediator(game.getWorld()->getMediator().get());
-	}
-
-	playerShip->addComponent(playerInputComponent);
-	playerShip->addComponent(playerMoveComponent);
-	playerShip->addComponent(playerPhysicsComponent);
-	playerShip->addComponent(playerGraphicsComponent);
-
-	playerShip->getTransformComponent().getPosition().x = 0;
+	playerShip->getTransformComponent().getPosition().x = 1000;
 	playerShip->getTransformComponent().getPosition().y = 2000 + id * 2000;
 
 	return playerShip;
@@ -47,8 +57,20 @@ Engine::Entity *Factory::EntityFactory::createCamera(unsigned int id, Engine::Ga
 {
 	Engine::Entity *camera = new Engine::Entity(id);
 
-	camera->addComponent(new Component::CameraMovementComponent(camera, &game));
-	camera->addComponent(new Component::CameraViewComponent(camera, game.getWorld().get()));
+	Engine::AComponent *movementComponent = new Component::CameraMovementComponent(camera, &game);
+	Component::CameraViewComponent *viewComponent = new Component::CameraViewComponent(camera, &game);
+	Engine::AComponent *zoneComponent = new Component::CameraZoneComponent(camera,
+																		   Engine::Hitbox(Engine::Hitbox::CAMERA,
+																						  Vector2d(0, 0),
+																						  Vector2d(
+																								  viewComponent->getRelativeBottomRight())));
+	camera->addComponent(movementComponent);
+	camera->addComponent(viewComponent);
+	camera->addComponent(zoneComponent);
+
+	if (game.getWorld()->getMediator() != nullptr) {
+		zoneComponent->registerToMediator(game.getWorld()->getMediator().get());
+	}
 
 	return camera;
 }

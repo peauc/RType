@@ -12,9 +12,15 @@ class LobbyContainer {
 public:
 	LobbyContainer();
 	~LobbyContainer();
+	
+	void checkTimeout();
 	bool isClientContained(ClientObject &client);
-	std::unique_ptr<Lobby> &getClientLobby(ClientObject &client);
-	bool addClientToLobby(ClientObject &client);
+	std::unique_ptr<Lobby>::pointer getClientLobby(ClientObject &client);
+	bool addClientToLobby(ClientObject &client, unsigned short seed) noexcept;
+	void dump();
+	std::vector<std::pair<std::vector<std::unique_ptr<Packet::DataPacket
+	>>, Lobby *>>
+	getPacketFromGames();
 private:
 	std::vector<std::unique_ptr<Lobby> > _lobbyList;
 };

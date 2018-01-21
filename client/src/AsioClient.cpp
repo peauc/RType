@@ -5,20 +5,23 @@
 #include <boost/asio.hpp>
 #include <boost/array.hpp>
 #include <iostream>
+#include <thread>
+#include <chrono>
 #include <boost/bind.hpp>
 #include <Logger.hpp>
 #include <Message.hpp>
 #include "AsioClient.hpp"
 
 client::AsioClient::AsioClient(const std::string &host) : _ioService(),
-                                                          _socket(_ioService)
+                                                          _socket(_ioService),
+							  _isConnected(false)
 {
 	std::cout << "Host constructor" << std::endl;
 	_socket.open(boost::asio::ip::udp::v4());
 }
 
-
-client::AsioClient::AsioClient() : _ioService(), _socket(_ioService)
+client::AsioClient::AsioClient() : _ioService(), _socket(_ioService),
+				   _isConnected(false)
 {
 	std::cout << "Regular constructor" << std::endl;
 	_socket.open(boost::asio::ip::udp::v4());
@@ -60,6 +63,16 @@ bool client::AsioClient::connect(const std::string &host) noexcept
 	boost::asio::ip::udp::resolver resolver(_ioService);
 	boost::asio::ip::udp::resolver::query query(host, "4242");
 	_receiverEndpoint = *resolver.resolve(query);
+	readMessage();
+	while (!isConnected()) {
+		using namespace std::chrono_literals;
+		Packet::DataPacket packet;
+		packet.cmd = Packet::CONNECT;
+		packet.data.connection.seed = 0;
+		sendMessage(packet);
+		_ioService.poll();
+		std::this_thread::sleep_for(0.2s);
+	}
 	return (true);
 }
 
@@ -77,19 +90,33 @@ void client::AsioClient::handleSend(boost::shared_ptr<std::string> message,
                                     const boost::system::error_code &error,
                                     std::size_t bytesTransfered)
 {
-	std::cout << "Received " << message << " of "
+	std::cout << "Sent " << message << " of "
 		"size " << std::to_string(bytesTransfered) << std::endl;
 }
 
 void client::AsioClient::handleReceive(const boost::system::error_code &error,
                                        std::size_t bytesTransfered)
 {
-	std::cout << "Sent " << std::to_string(bytesTransfered) << std::endl;
+	Message message(std::string(_data_array.begin(), _data_array.end()));
+	if (message.getPacket().cmd == Packet::CONNECTED) {
+		_connected = true;
+		Logger::Log(Logger::DEBUG, "Client is now connected");
+	}
+	std::cout << "Received command " << message.getPacket().cmd << " " <<
+								    Packet::CONNECTED <<
+	                                                           std::endl;
+	readMessage();
 }
 void client::AsioClient::handleSendPacket(const Packet::DataPacket &packet,
                                     const boost::system::error_code &error,
                                     std::size_t bytesTransfered)
 {
-	std::cout << "Received a packet of "
+	std::cout << "Sent a packet of command " << packet.cmd << " and "
 		"size " << std::to_string(bytesTransfered) << std::endl;
+}
+
+void client::AsioClient::tick() noexcept
+{
+	_ioService.poll();
+	_ioService.reset();
 }

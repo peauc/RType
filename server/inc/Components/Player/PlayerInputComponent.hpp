@@ -9,6 +9,7 @@
 #include <Engine/Event.hpp>
 #include <queue>
 #include <utility>
+#include <Engine/EventList.hpp>
 #include "Components/Abstracts/AInputComponent.hpp"
 
 namespace Component {
@@ -16,12 +17,12 @@ namespace Component {
 	{
 	public:
 		explicit PlayerInputComponent(Engine::Entity *parentEntity,
-											 std::vector<std::unique_ptr<Engine::Event>> &gameEvents);
-		~PlayerInputComponent() = default;
+									  Engine::EventList &eventList);
+		~PlayerInputComponent() override = default;
 
-		void update();
+		void update() override;
 	private:
-		std::vector<std::unique_ptr<Engine::Event>> &_gameEvents;
+		Engine::EventList &_eventList;
 	};
 }
 

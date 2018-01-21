@@ -2,18 +2,21 @@
 // Created by romain on 12/01/18.
 //
 
-#include <Engine/Game.hpp>
+#include <thread>
 #include <chrono>
 #include <iostream>
-#include <Factories/EntityFactory.hpp>
+#include <Logger.hpp>
+#include "Engine/Game.hpp"
+#include "Factories/EntityFactory.hpp"
+
 
 Engine::Game::Game()
 {
 	this->_world = std::make_unique<World>();
 }
-
 void Engine::Game::run()
 {
+	Logger::Log(Logger::CRITICAL, "Game is starting");
 	std::chrono::time_point<std::chrono::system_clock> previous = std::chrono::system_clock::now();
 	double lag = 0;
 
@@ -38,6 +41,7 @@ void Engine::Game::setup(int nbOfPlayers, const std::shared_ptr<RessourcesLoader
 	std::unique_ptr<Engine::World> world = std::make_unique<Engine::World>();
 
 	this->setWorld(std::move(world));
+	this->_world->addMediator();
 	this->setResourceLoader(resourceLoader);
 	std::unique_ptr<Engine::Entity> camera = std::unique_ptr<Engine::Entity>
 			(Factory::EntityFactory::createCamera(0, *this));
@@ -47,16 +51,6 @@ void Engine::Game::setup(int nbOfPlayers, const std::shared_ptr<RessourcesLoader
 	for (int i = 0; i < nbOfPlayers; ++i) {
 		this->_world->addObject(Factory::EntityFactory::createPlayerShip);
 	}
-}
-
-const std::vector<std::unique_ptr<Engine::Event>> &Engine::Game::getEvents() const
-{
-	return _events;
-}
-
-std::vector<std::unique_ptr<Engine::Event>> &Engine::Game::getEventsReference()
-{
-	return _events;
 }
 
 std::unique_ptr<Engine::World> &Engine::Game::getWorld()
@@ -88,4 +82,37 @@ void Engine::Game::setResourceLoader(const std::shared_ptr<RessourcesLoader> &_r
 	this->_resourceLoader = _resourceLoader;
 }
 
+Engine::EventList &Engine::Game::getEventList()
+{
+	return _eventList;
+}
 
+void Engine::Game::pushDataPacket(Packet::DataPacket *packet)
+{
+	this->_packetList.pushBack(std::unique_ptr<Packet::DataPacket>(packet));
+}
+
+void Engine::Game::start()
+{
+	_thread = std::thread(&Game::run, this);
+	Logger::Log(Logger::INFO, "Started Game");
+}
+Engine::Game::~Game()
+{
+	if (_thread.joinable())
+		_thread.join();
+	Logger::Log(Logger::CRITICAL, "Deleting the game");\
+}
+void Engine::Game::stop()
+{
+	_stop = true;
+}
+
+std::vector<std::unique_ptr<Packet::DataPacket>> Engine::Game::getPackets() {
+	std::vector<std::unique_ptr<Packet::DataPacket>> l;
+	std::unique_ptr<Packet::DataPacket> packet;
+	while ((packet = _packetList.popBack()) != nullptr) {
+		l.push_back(std::move(packet));
+	}
+	return (l);
+}

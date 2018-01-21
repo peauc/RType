@@ -4,14 +4,18 @@
 
 #ifndef RTYPE_ACLIENT_HPP
 #define RTYPE_ACLIENT_HPP
-
+#include <chrono>
 #include "IClient.hpp"
 
 namespace client {
-class AClient : IClient{
+class AClient : public IClient{
 public:
+	AClient();
 	bool isConnected();
-private:
+	long long int getChronoElapsed();
+	void resetChrono();
+protected:
+	std::chrono::steady_clock::time_point _timeoutStart;
 	bool _connected;
 };
 }

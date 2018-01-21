@@ -15,7 +15,9 @@ int main(int ac, char **av)
 	try {
 		AsioServer server;
 		server.start();
-		server.tick();
+		while (1) {
+			server.tick();
+		}
 	} catch(boost::system::system_error& e)
 	{
 		std::cout<<"Error: " << e.what()<< std::endl;

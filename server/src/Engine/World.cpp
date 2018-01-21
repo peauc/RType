@@ -4,6 +4,7 @@
 
 #include <Engine/Entity.hpp>
 #include <Engine/World.hpp>
+#include <iostream>
 
 Engine::World::World() : _nextEntityId(0), _parentGame(nullptr)
 {
@@ -18,6 +19,10 @@ unsigned int Engine::World::addObject(Engine::Entity *(*call)(unsigned int, Engi
 
 unsigned int Engine::World::addObject(std::unique_ptr<Entity> entity)
 {
+	if (entity->getId() == 0) {
+		entity->setId(this->_nextEntityId);
+		this->_nextEntityId++;
+	}
 	this->_objects.push_back(std::move(entity));
 	return this->_objects.end()->get()->getId();
 }
@@ -69,22 +74,7 @@ const std::unique_ptr<Engine::Mediator> &Engine::World::getMediator() const
 	return _mediator;
 }
 
-void Engine::World::setMediator(std::unique_ptr<Engine::Mediator> mediator)
+void Engine::World::addMediator()
 {
-	this->_mediator = std::move(mediator);
-}
-
-void Engine::World::addPacketToSend(Packet::DataPacket *packet)
-{
-	this->_packetsToSend.push_back(std::unique_ptr<Packet::DataPacket>(packet));
-}
-
-const std::vector<std::unique_ptr<Packet::DataPacket>> &Engine::World::getPacketsToSend() const
-{
-	return this->_packetsToSend;
-}
-
-void Engine::World::emptyPacketsToSend()
-{
-	this->_packetsToSend.clear();
+	this->_mediator = std::make_unique<Engine::Mediator>();
 }

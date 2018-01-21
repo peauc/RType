@@ -5,6 +5,7 @@
 #ifndef RTYPE_TRANSFORMCOMPONENT_HPP
 #define RTYPE_TRANSFORMCOMPONENT_HPP
 
+#include <cmath>
 #include <Common/Vector2d.hpp>
 #include "AComponent.hpp"
 
@@ -18,13 +19,16 @@ namespace Engine {
 		void update() override;
 
 		Vector2d &getPosition();
+		const Vector2d &getPosition() const;
 		void setPosition(Vector2d &_position);
-		Vector2d &getRotation();
-		void setRotation(Vector2d &_rotation);
+		double getRotationRadians() const;
+		double getRotation() const;
+		void setRotation(double _rotation);
 
 	private:
 		Vector2d _position;
-		Vector2d _rotation;
+		double _rotation;
+		double _rotationRadians;
 	};
 }
 

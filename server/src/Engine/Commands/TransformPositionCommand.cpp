@@ -5,7 +5,7 @@
 #include <Engine/Commands/TransformPositionCommand.hpp>
 
 Engine::Commands::TransformPositionCommand::TransformPositionCommand(Engine::TransformComponent &transformComponent,
-                                                                     float x, float y)
+                                                                     double x, double y)
         : _transformComponent(transformComponent)
 {
     this->_x = x;

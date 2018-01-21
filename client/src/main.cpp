@@ -8,11 +8,21 @@
 int main(int ac, char **av)
 {
 	try {
-		Packet::DataPacket packet;
 		client::AsioClient client;
-		packet.cmd = 0;
 		client.connect("127.0.0.1");
-		client.sendMessage(packet);
+		client.resetChrono();
+		
+		Packet::DataPacket t;
+		t.cmd = Packet::READY;
+		client.sendMessage(t);
+		while (1) {
+			if (client.getChronoElapsed() > 1) {
+				client.sendMessage(Packet::DataPacket
+					                   (Packet::PONG));
+				client.resetChrono();
+			}
+			client.tick();
+		}
 	}
 	catch (std::exception &e) {
 		std::cout << e.what() << std::endl;

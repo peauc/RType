@@ -12,7 +12,7 @@
 #include "PacketInterpreterClient.hpp"
 
 namespace client {
-class AsioClient : AClient {
+class AsioClient : public AClient {
 public:
 	virtual ~AsioClient() final;
 	AsioClient();
@@ -20,6 +20,7 @@ public:
 	bool sendMessage(const std::string &message) noexcept final;
 	bool sendMessage(const Packet::DataPacket &packet) noexcept;
 	bool connect(const std::string &message) noexcept final;
+	void tick() noexcept;
 	
 private:
 	void handleSend(boost::shared_ptr<std::string> message,
@@ -32,6 +33,7 @@ private:
 	                std::size_t bytesTransfered);
 	bool readMessage() noexcept;
 	
+	bool _isConnected;
 	boost::asio::io_service _ioService;
 	boost::asio::ip::udp::socket _socket;
 	boost::asio::ip::udp::endpoint _receiverEndpoint;

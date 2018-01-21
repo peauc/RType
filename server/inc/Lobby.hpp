@@ -8,18 +8,34 @@
 #include <boost/asio.hpp>
 #include "Engine/Game.hpp"
 #include "ClientObject.hpp"
+#include "ClientObjectManager.hpp"
 
 class Lobby {
 public:
-	Lobby();
+	Lobby() = delete;
+	explicit Lobby(unsigned short seed);
 	~Lobby();
 	
+	void checkTimeout() noexcept;
 	bool addClient(ClientObject &client) noexcept;
-	bool isFull() const noexcept ;
-	bool isClientContained(const ClientObject &client) const noexcept ;
-private:
+	size_t size() const noexcept;
+	bool isFull() const noexcept;
+	bool isReady() const noexcept;
+	bool isStarted() const noexcept;
+	bool isClientContained(const ClientObject &client) const noexcept;
+	void pullEventInList(std::unique_ptr<Engine::Event> &event) noexcept;
+	bool startGame();
+	ClientObject &getClientContained(const ClientObject &copy);
+	bool isSeededLobby() const noexcept;
+	unsigned short getSeed() const noexcept;
+	const std::vector<ClientObject> &getClientList();
+	std::vector<std::unique_ptr<Packet::DataPacket>> getPackets();
+		private:
+	bool _isSeededLobby;
+	unsigned short _seed;
+	bool _isStarted;
 	Engine::Game _game;
-	std::vector<ClientObject> _clientList;
+	ClientObjectManager _clientManager;
 };
 
 #endif //RTYPE_LOBBY_HPP

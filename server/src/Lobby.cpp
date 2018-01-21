@@ -2,34 +2,87 @@
 // Created by Clément Péau on 15/01/2018.
 //
 
+#include <iostream>
+#include <thread>
+#include <Logger.hpp>
 #include "Lobby.hpp"
 
 bool Lobby::isClientContained(const ClientObject &client) const noexcept
 {
-	for (auto &t : _clientList) {
-		if (t == client)
-			return (true);
-	}
-	return (false);
+	return (_clientManager.isClientContained(client));
 }
 
 bool Lobby::isFull() const noexcept
 {
-	return (_clientList.size() >= 4);
+	return (_clientManager.isFull());
 }
 
 bool Lobby::addClient(ClientObject &client) noexcept
 {
-	_clientList.push_back(client);
+	_clientManager.addClient(client);
 	return (true);
 }
 
-Lobby::Lobby()
+Lobby::Lobby(unsigned short seed)
 {
+	_seed = seed;
+	_isSeededLobby = true;
+	_isStarted = false;
 }
 
 Lobby::~Lobby()
 {
+	Logger::Log(Logger::CRITICAL, "Deleting a lobby");
+	_game.stop();
+}
+
+size_t Lobby::size() const noexcept
+{
+	return (_clientManager.size());
+}
+bool Lobby::isSeededLobby() const noexcept
+{
+	return (_isSeededLobby != 0);
+}
+
+unsigned short Lobby::getSeed() const noexcept
+{
+	return (_seed);
+}
+void Lobby::checkTimeout() noexcept
+{
+	_clientManager.checkClientsTimeout();
+}
+
+ClientObject &Lobby::getClientContained(const ClientObject &copy)
+{
+	return (_clientManager.getClientContained(copy));
+}
+bool Lobby::startGame()
+{
+	_game.start();
+	return (true);
+}
+const std::vector<ClientObject> &Lobby::getClientList()
+{
+	return (_clientManager.getClientList());
+}
+bool Lobby::isReady() const noexcept
+{
+	return (_clientManager.isReady());
+}
+bool Lobby::isStarted() const noexcept
+{
+	return (_isStarted);
+}
+
+void Lobby::pullEventInList(std::unique_ptr<Engine::Event> &event) noexcept
+{
+	_game.getEventList().pushBack(event);
+}
+
+std::vector<std::unique_ptr<Packet::DataPacket>> Lobby::getPackets() {
+	return (_game.getPackets());
 }
 
 

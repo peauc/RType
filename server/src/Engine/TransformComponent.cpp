@@ -4,28 +4,39 @@
 
 #include <Engine/TransformComponent.hpp>
 
-Engine::TransformComponent::TransformComponent(Entity *parentEntity) : AComponent(parentEntity)
+Engine::TransformComponent::TransformComponent(Entity *parentEntity) : AComponent(parentEntity), _position(0, 0)
 {
 }
 
 Vector2d &Engine::TransformComponent::getPosition()
 {
-    return _position;
+	return _position;
+}
+
+const Vector2d &Engine::TransformComponent::getPosition() const
+{
+	return _position;
 }
 
 void Engine::TransformComponent::setPosition(Vector2d &_position)
 {
-    TransformComponent::_position = _position;
+	TransformComponent::_position = _position;
 }
 
-Vector2d &Engine::TransformComponent::getRotation()
+double Engine::TransformComponent::getRotation() const
 {
-    return _rotation;
+	return _rotation;
 }
 
-void Engine::TransformComponent::setRotation(Vector2d &_rotation)
+double Engine::TransformComponent::getRotationRadians() const
 {
-    TransformComponent::_rotation = _rotation;
+	return this->_rotationRadians;
+}
+
+void Engine::TransformComponent::setRotation(double _rotation)
+{
+	TransformComponent::_rotation = _rotation;
+	this->_rotationRadians = this->_rotation * M_PI / 180;
 }
 
 void Engine::TransformComponent::update()

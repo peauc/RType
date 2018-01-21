@@ -19,13 +19,14 @@ namespace Component {
 
 		// handle methods
 		void handleEvent(Engine::Mediator::Message messageType, AComponent *sender);
+		void handleCameraReposition(Engine::Mediator::Message messageType, AComponent *sender);
 	private:
-		float _baseSpeed;
-		float _lateralBaseSpeed;
-		float _maxSpeed;
-		float _lateralMaxSpeed;
-		float _xInput;
-		float _yInput;
+		double _baseSpeed;
+		double _lateralBaseSpeed;
+		double _maxSpeed;
+		double _lateralMaxSpeed;
+		double _xInput;
+		double _yInput;
 	};
 }
 
