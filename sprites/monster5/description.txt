@@ -1,0 +1,3 @@
+Animation1 -> déplacement
+Animation2 -> position de tir
+Animation3 -> propulsion

@@ -1,0 +1,2 @@
+Animation0 -> mouvement saut
+Animation1 -> Tir

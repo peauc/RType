@@ -1,0 +1,4 @@
+Animation1 -> déplacement droit
+Animation2 -> déplacement bas
+Animation3 -> déplacement haut
+Animation4 -> tir
