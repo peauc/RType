@@ -2,7 +2,7 @@
 // Created by romain on 15/01/18.
 //
 
-#include "Components/Player/PlayerInputComponent.hpp"
+#include "PlayerInputComponent.hpp"
 
 Component::PlayerInputComponent::PlayerInputComponent(Engine::Entity *parentEntity, Engine::EventList *eventList)
 		: AInputComponent(parentEntity), _eventList(eventList)

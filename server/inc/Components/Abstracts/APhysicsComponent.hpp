@@ -6,9 +6,9 @@
 #define RTYPE_APHYSICSCOMPONENT_HPP
 
 #include <cmath>
-#include "Engine/AComponent.hpp"
-#include "Engine/Hitbox.hpp"
-#include "Engine/TransformComponent.hpp"
+#include "AComponent.hpp"
+#include "Hitbox.hpp"
+#include "TransformComponent.hpp"
 
 namespace Component {
 	class APhysicsComponent : public Engine::AComponent

@@ -2,8 +2,8 @@
 // Created by romain on 17/01/18.
 //
 
-#include "Components/Abstracts/APhysicsComponent.hpp"
-#include "Engine/Entity.hpp"
+#include "APhysicsComponent.hpp"
+#include "Entity.hpp"
 
 Component::APhysicsComponent::APhysicsComponent(Engine::Entity *entity, const Engine::Hitbox &hitbox) :
 		AComponent(entity), _hitbox(hitbox)

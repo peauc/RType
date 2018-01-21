@@ -5,7 +5,7 @@
 #ifndef RTYPE_DEFAULTPLAYERGRAPHICSCOMPONENT_HPP
 #define RTYPE_DEFAULTPLAYERGRAPHICSCOMPONENT_HPP
 
-#include "Components/Abstracts/AGraphicsComponent.hpp"
+#include "AGraphicsComponent.hpp"
 
 namespace Component {
 	class PlayerGraphicsComponent : public AGraphicsComponent

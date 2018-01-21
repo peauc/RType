@@ -2,7 +2,7 @@
 // Created by romain on 15/01/18.
 //
 
-#include "Engine/Commands/TransformPositionCommand.hpp"
+#include "TransformPositionCommand.hpp"
 
 Engine::Commands::TransformPositionCommand::TransformPositionCommand(Engine::TransformComponent &transformComponent,
                                                                      double x, double y)

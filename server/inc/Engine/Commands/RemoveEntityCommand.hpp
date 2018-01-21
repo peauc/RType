@@ -5,7 +5,7 @@
 #ifndef RTYPE_REMOVEENTITYCOMMAND_HPP
 #define RTYPE_REMOVEENTITYCOMMAND_HPP
 
-#include "Engine/World.hpp"
+#include "World.hpp"
 #include "ICommand.hpp"
 
 namespace Engine::Commands {

@@ -7,10 +7,10 @@
 
 #include <queue>
 #include <utility>
-#include "Engine/EventList.hpp"
-#include "Components/Abstracts/AInputComponent.hpp"
-#include "Engine/AComponent.hpp"
-#include "Engine/Event.hpp"
+#include "EventList.hpp"
+#include "AInputComponent.hpp"
+#include "AComponent.hpp"
+#include "Event.hpp"
 
 namespace Component {
 	class PlayerInputComponent : public AInputComponent

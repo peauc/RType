@@ -5,8 +5,8 @@
 #ifndef RTYPE_DEFAULTCAMERAMOVEMENTCOMPONENT_HPP
 #define RTYPE_DEFAULTCAMERAMOVEMENTCOMPONENT_HPP
 
-#include "Engine/Game.hpp"
-#include "Components/Abstracts/AMovementComponent.hpp"
+#include "Game.hpp"
+#include "AMovementComponent.hpp"
 
 namespace Component {
 	class CameraMovementComponent : public AMovementComponent

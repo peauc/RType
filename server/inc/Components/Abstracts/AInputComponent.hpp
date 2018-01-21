@@ -5,8 +5,8 @@
 #ifndef RTYPE_AINPUTCOMPONENT_HPP
 #define RTYPE_AINPUTCOMPONENT_HPP
 
-#include "Engine/Entity.hpp"
-#include "Engine/Event.hpp"
+#include "Entity.hpp"
+#include "Event.hpp"
 
 namespace Component {
 	class AInputComponent : public Engine::AComponent

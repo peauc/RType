@@ -2,8 +2,8 @@
 // Created by romain on 12/01/18.
 //
 
-#include "Engine/Entity.hpp"
-#include "Engine/World.hpp"
+#include "Entity.hpp"
+#include "World.hpp"
 
 Engine::World::World() : _nextEntityId(0), _parentGame(nullptr)
 {

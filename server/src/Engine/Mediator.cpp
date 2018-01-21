@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "Engine/AComponent.hpp"
+#include "AComponent.hpp"
 
 void Engine::Mediator::registerComponent(AComponent *component) noexcept
 {

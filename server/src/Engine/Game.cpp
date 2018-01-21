@@ -6,7 +6,7 @@
 #include <chrono>
 #include <iostream>
 #include "Logger.hpp"
-#include "Engine/Game.hpp"
+#include "Game.hpp"
 
 Engine::Game::Game()
 {

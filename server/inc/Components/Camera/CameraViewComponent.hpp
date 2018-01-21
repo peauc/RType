@@ -5,8 +5,8 @@
 #ifndef RTYPE_DEFAULTCAMERAVIEWCOMPONENT_HPP
 #define RTYPE_DEFAULTCAMERAVIEWCOMPONENT_HPP
 
-#include "Engine/AComponent.hpp"
-#include "Components/Abstracts/AGraphicsComponent.hpp"
+#include "AComponent.hpp"
+#include "AGraphicsComponent.hpp"
 
 namespace Component {
 	class CameraViewComponent : public Engine::AComponent

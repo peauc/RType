@@ -6,7 +6,7 @@
 #define RTYPE_TRANSFORMCOMPONENT_HPP
 
 #include <cmath>
-#include "Common/Vector2d.hpp"
+#include "Vector2d.hpp"
 #include "AComponent.hpp"
 
 namespace Engine {

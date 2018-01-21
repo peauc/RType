@@ -5,8 +5,8 @@
 #ifndef RTYPE_HEALTHCOMPONENT_HPP
 #define RTYPE_HEALTHCOMPONENT_HPP
 
-#include "Engine/AComponent.hpp"
-#include "Engine/World.hpp"
+#include "AComponent.hpp"
+#include "World.hpp"
 
 namespace Component {
 	class HealthComponent : public Engine::AComponent

@@ -5,7 +5,7 @@
 #ifndef RTYPE_CAMERAZONECOMPONENT_HPP
 #define RTYPE_CAMERAZONECOMPONENT_HPP
 
-#include "Components/Abstracts/APhysicsComponent.hpp"
+#include "APhysicsComponent.hpp"
 
 namespace Component {
 	class CameraZoneComponent : public APhysicsComponent

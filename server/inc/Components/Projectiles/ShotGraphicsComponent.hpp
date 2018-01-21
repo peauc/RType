@@ -6,7 +6,7 @@
 #define RTYPE_PLAYERSHOTGRAPHICSCOMPONENT_HPP
 
 #include "RessourcesLoader.hpp"
-#include "Components/Abstracts/AGraphicsComponent.hpp"
+#include "AGraphicsComponent.hpp"
 
 namespace Component {
 	class ShotGraphicsComponent : public AGraphicsComponent

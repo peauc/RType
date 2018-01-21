@@ -2,8 +2,8 @@
 // Created by romain on 16/01/18.
 //
 
-#include "Components/Camera/CameraMovementComponent.hpp"
-#include "Engine/Commands/TransformPositionCommand.hpp"
+#include "CameraMovementComponent.hpp"
+#include "TransformPositionCommand.hpp"
 
 Component::CameraMovementComponent::CameraMovementComponent(Engine::Entity *parentEntity,
 																		  Engine::Game *parentGame)
