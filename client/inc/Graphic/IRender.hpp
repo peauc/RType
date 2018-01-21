@@ -11,7 +11,8 @@
 # include <string>
 # include <queue>
 # include "Texture.hpp"
-# include "ISprite.hpp"
+# include "Graphic/ISprite.hpp"
+# include "Graphic/IText.hpp"
 
 class IRender
 {
@@ -25,6 +26,7 @@ public:
 	virtual void	clear() = 0;
 	virtual void	closeWindow() = 0;
 	virtual void	draw(const ISprite *sprite) = 0;
+	virtual void	draw(const IText *text) = 0;
 	virtual std::unique_ptr<ISprite> createSprite(const std::string
 						      &fileName,
 						      uint32_t sizeTileX,
@@ -35,17 +37,20 @@ public:
 	virtual void	loadAnimations(std::unordered_map<uint32_t,
 		std::vector<Texture>> textureMap) = 0;
 	
-	enum	EventAction
+	enum class EventAction
 	{
 		UP	= 0,
 		DOWN	= 1,
 		LEFT	= 2,
 		RIGHT	= 3,
 		SPACE	= 4,
+		MOUSE1	= 5,
 		UNKNOWN
 	};
 	
 	virtual std::queue<EventAction>		pollEvents() = 0;
+	virtual bool	isSpriteClicked(const ISprite *sprite,
+					    const EventAction &event) = 0;
 };
 
 #endif //RTYPE_IRENDER_HPP

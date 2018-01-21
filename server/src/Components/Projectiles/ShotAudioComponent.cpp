@@ -23,3 +23,12 @@ void Component::ShotAudioComponent::handleImpact(Engine::Mediator::Message, Engi
 {
 	this->addSoundPacket(this->_soundIds[0], false);
 }
+
+Engine::AComponent *Component::ShotAudioComponent::clone(Engine::Entity *parentEntity) const
+{
+	ShotAudioComponent *newComp = new ShotAudioComponent(parentEntity, this->_parentGame, 0);
+
+	*newComp = *this;
+
+	return newComp;
+}

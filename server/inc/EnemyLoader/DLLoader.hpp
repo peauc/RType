@@ -8,6 +8,7 @@
 #	include <iostream>
 #	include <string>
 #	include <dlfcn.h>
+#	include <Engine/Game.hpp>
 
 template <class T>
 class	DLLoader {
@@ -16,7 +17,7 @@ public:
 	~DLLoader() = default;
 
 	void	diagnoseError();
-	T		*getInstance(const std::string &libPath);
+	T		*getInstance(const std::string &libPath, Engine::Game &game);
 };
 
 #endif //RTYPE_DLLOADER_HPP
@@ -29,17 +30,18 @@ void	DLLoader<T>::diagnoseError() {
 }
 
 template<class T>
-T		*DLLoader<T>::getInstance(const std::string &libPath) {
+T		*DLLoader<T>::getInstance(const std::string &libPath, Engine::Game &game) {
 	void	*handler;
-	T	*(*entr)();
+	T	*(*entr)(Engine::Game &game);
 
 	if ((handler = dlopen(libPath.c_str(), RTLD_LAZY)) == nullptr) {
 		this->diagnoseError();
 		return (NULL);
 	}
-	if ((entr = (T *(*)()) dlsym(handler, "entryPoint")) == NULL) {
+	if ((entr = (T *(*)(Engine::Game &game)) dlsym(handler, "entryPoint")) == NULL) {
 		this->diagnoseError();
 		return (NULL);
 	}
-	return ((*entr)());
+	std::cout << "End of getInstance" << std::endl;
+	return ((*entr)(game));
 }

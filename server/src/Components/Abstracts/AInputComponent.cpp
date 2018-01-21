@@ -3,6 +3,7 @@
 //
 
 #include <Components/Abstracts/AInputComponent.hpp>
+#include <iostream>
 
 Component::AInputComponent::AInputComponent(Engine::Entity *parentEntity) : AComponent(parentEntity)
 {
@@ -16,4 +17,11 @@ const Engine::Event &Component::AInputComponent::getEvent() const
 bool Component::AInputComponent::hasEvent() const
 {
 	return this->_event != nullptr;
+}
+
+Component::AInputComponent &Component::AInputComponent::operator=(const Component::AInputComponent &)
+{
+	this->_event = nullptr;
+
+	return *this;
 }

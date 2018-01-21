@@ -5,9 +5,12 @@
 #include <Components/HealthComponent.hpp>
 #include <Components/Abstracts/APhysicsComponent.hpp>
 #include <iostream>
+#include <Engine/Commands/RemoveEntityCommand.hpp>
 
-Component::HealthComponent::HealthComponent(Engine::Entity *parentEntity, int health, bool godMode, bool instantDeath) :
-		AComponent(parentEntity), _godMode(godMode), _health(health), _maxHealth(health), _instantDeath(instantDeath)
+Component::HealthComponent::HealthComponent(Engine::Entity *parentEntity, Engine::World *world, int health,
+											bool godMode, bool instantDeath) :
+		AComponent(parentEntity), _world(world), _godMode(godMode), _health(health), _maxHealth(health),
+		_instantDeath(instantDeath)
 {
 	this->_validMessageTypes[Engine::Mediator::Message::GET_IMPACT_DAMAGES] = std::bind(
 			&HealthComponent::handleGetImpactDamages,
@@ -29,6 +32,8 @@ void Component::HealthComponent::takeDamage(int damages)
 		this->_health -= (this->_instantDeath) ? this->_health : damages;
 		if (this->_health <= 0) {
 			this->sendToAll(Engine::Mediator::Message::DEATH);
+			this->_parentEntity->addCommand(new Engine::Commands::RemoveEntityCommand(*this->_world,
+																					  this->_parentEntity->getId()));
 		}
 	}
 }
@@ -45,4 +50,16 @@ void Component::HealthComponent::handleHit(Engine::Mediator::Message, Engine::AC
 	if (APhysicsComponent *physics = dynamic_cast<APhysicsComponent *>(sender)) {
 		this->takeDamage(physics->getCollisionDamages());
 	}
+}
+
+Engine::AComponent *
+Component::HealthComponent::clone(Engine::Entity *parentEntity) const
+{
+	Component::HealthComponent *healthComponent = new Component::HealthComponent(parentEntity, this->_world,
+																				 this->_maxHealth, this->_godMode,
+																				 this->_instantDeath);
+
+	*healthComponent = *this;
+
+	return healthComponent;
 }

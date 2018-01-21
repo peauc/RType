@@ -17,3 +17,12 @@ void Component::ShotMovementComponent::update()
 	this->_parentEntity->getTransformComponent().getPosition().x += this->_lastMove.x;
 	this->_parentEntity->getTransformComponent().getPosition().y += this->_lastMove.y;
 }
+
+Engine::AComponent *Component::ShotMovementComponent::clone(Engine::Entity *parentEntity) const
+{
+	ShotMovementComponent *newComp = new ShotMovementComponent(parentEntity, this->_speed);
+
+	*newComp = *this;
+
+	return newComp;
+}

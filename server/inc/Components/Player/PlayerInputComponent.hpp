@@ -17,12 +17,15 @@ namespace Component {
 	{
 	public:
 		explicit PlayerInputComponent(Engine::Entity *parentEntity,
-									  Engine::EventList &eventList);
+									  Engine::EventList *eventList);
 		~PlayerInputComponent() override = default;
 
 		void update() override;
+
+		AComponent *clone(Engine::Entity *parentEntity) const override;
+
 	private:
-		Engine::EventList &_eventList;
+		Engine::EventList *_eventList;
 	};
 }
 

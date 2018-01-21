@@ -17,6 +17,8 @@ namespace Component {
 		void update() override;
 
 		void cameraCollision(APhysicsComponent &other);
+
+		AComponent *clone(Engine::Entity *parentEntity) const override;
 	};
 }
 

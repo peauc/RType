@@ -1,28 +1,19 @@
-//
-// Created by Clément Péau on 14/01/2018.
-//
+/*
+** EPITECH  PROJECT , 2020
+** rtype
+** File  description:
+** 	No description
+*/
 
 #include <iostream>
-#include "AsioClient.hpp"
+#include "ClientGame.hpp"
 
 int main(int ac, char **av)
 {
+	//TODO Pass parameters for info connection
 	try {
-		client::AsioClient client;
-		client.connect("127.0.0.1");
-		client.resetChrono();
-		
-		Packet::DataPacket t;
-		t.cmd = Packet::READY;
-		client.sendMessage(t);
-		while (1) {
-			if (client.getChronoElapsed() > 1) {
-				client.sendMessage(Packet::DataPacket
-					                   (Packet::PONG));
-				client.resetChrono();
-			}
-			client.tick();
-		}
+		ClientGame game("127.0.0.1", "../AssetsId.txt");
+		game.run();
 	}
 	catch (std::exception &e) {
 		std::cout << e.what() << std::endl;

@@ -22,12 +22,13 @@ namespace Engine {
 			CAMERA
 		};
 
-		const Type _type;
-		const Vector2d _relativeStartPos;
-		const Vector2d _relativeRange;
+		Type _type;
+		Vector2d _relativeStartPos;
+		Vector2d _relativeRange;
 
 		Hitbox() = delete;
 		Hitbox(Type type, const Vector2d &relativeStartPos, const Vector2d &relativeRange);
+		Hitbox(const Hitbox &other);
 		~Hitbox() = default;
 	};
 }

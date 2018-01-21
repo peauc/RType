@@ -22,28 +22,33 @@ public:
 
 	void	setParent(AItem *parent);
 
-	void	setX(unsigned int x);
-	void	setY(unsigned int y);
-	void	setWidth(unsigned int width);
-	void	setHeight(unsigned int height);
+	void	setX(int x);
+	void	setY(int y);
+	void	setWidth(int width);
+	void	setHeight(int height);
 
-	unsigned int	getX() const;
-	unsigned int	getY() const;
-	unsigned int	getWidth() const;
-	unsigned int	getHeight() const;
+	int				getX() const;
+	int				getY() const;
+	int				getWidth() const;
+	int				getHeight() const;
+
+	void			fillParent();
+	void			fillParentWidth();
+	void			fillParentHeight();
 
 	virtual void	displayOnWindow(sf::RenderWindow &window) = 0;
 	virtual void	associateEvents() = 0;
 	virtual void	receiveEvent(const sf::Event &event) = 0;
+	virtual void	refresh() = 0;
+
+	bool	inBounds(int x, int y) const;
 
 protected:
 
 	AItem				*parent;
-	unsigned int		x;
-	unsigned int		y;
-	unsigned int		width;
-	unsigned int		height;
 	sf::RectangleShape	background;
+
+	void	backgroundFillAItem();
 
 	using Callback = void (AItem::*) (const sf::Event &event);
 
@@ -52,7 +57,10 @@ protected:
 
 private:
 
-	void	backgroundFillAItem();
+	int		x;
+	int		y;
+	int		width;
+	int		height;
 };
 
 

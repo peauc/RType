@@ -20,6 +20,8 @@ namespace Component {
 		// handle methods
 		void handleEvent(Engine::Mediator::Message messageType, AComponent *sender);
 		void handleCameraReposition(Engine::Mediator::Message messageType, AComponent *sender);
+
+		AComponent *clone(Engine::Entity *parentEntity) const override;
 	private:
 		double _baseSpeed;
 		double _lateralBaseSpeed;

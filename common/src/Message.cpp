@@ -33,7 +33,7 @@ Message &Message::operator=(const Message &other) noexcept
 	return (*this);
 }
 
-void	Message::transformStringToPacket(const std::string &str) noexcept
+void	Message::transformStringToPacket(const std::string &) noexcept
 {
 	std::memcpy(&this->_packet,
 		    this->_rawMessage.c_str(),

@@ -7,23 +7,22 @@
 
 #include <iostream>
 #include "WindowManager.hpp"
-#include "GridView.hpp"
 
 int main(int ac, char **av, char **env) {
-	WindowManager	windowManager;
-	GridView		gridView(windowManager);
+	std::string     dest = (ac > 2 ? av[2] : "./");
 
-//	std::string     dest = (ac > 2 ? av[2] : "./");
-//
-//#ifdef __unix__
-//	if (env == nullptr || std::getenv("DISPLAY") == nullptr)
-//		return (84);
-//#endif
-//
-//	if (ac > 1) {
-//
-//	} else
-//		std::cerr << "[Source Directory .so] [Source Directory Backgrounds] "
-//				"[Output Directory]" << std::endl;
+#ifdef __unix__
+	if (env == nullptr || std::getenv("DISPLAY") == nullptr)
+		return (84);
+#endif
+
+	if (ac > 2) {
+		WindowManager	windowManager(av[1], av[2], dest);
+
+		windowManager.start();
+	} else
+		std::cerr << "[Source directory .so -> .png] "
+				"[Source directory backgrounds] "
+				"[Output directory]" << std::endl;
 	return (0);
 }

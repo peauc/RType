@@ -28,6 +28,8 @@ namespace Component {
 		void setIsAlive(bool isAlive);
 		const Vector2d &getRelativeStartPos() const;
 		const Vector2d &getRange() const;
+
+		AGraphicsComponent &operator=(const AGraphicsComponent &other);
 	protected:
 		RessourcesLoader *_resourceLoader;
 		std::vector<unsigned char> _animationIds;

@@ -4,6 +4,7 @@
 
 #include <Components/Player/PlayerWeaponComponent.hpp>
 #include <Components/Projectiles/ShotAudioComponent.hpp>
+#include <iostream>
 
 Component::PlayerWeaponComponent::PlayerWeaponComponent(Engine::Entity *parentEntity, Engine::Game *parentGame)
 		: AWeaponComponent(parentEntity, parentGame), _event(false), _firing(false), _charging(0)
@@ -20,6 +21,7 @@ Component::PlayerWeaponComponent::PlayerWeaponComponent(Engine::Entity *parentEn
 
 void Component::PlayerWeaponComponent::update()
 {
+	std::cout << "Weapon" << this->_parentEntity->getId() << this->_parentEntity->getId() << std::endl;
 	if (this->_firing || (this->_charging > 0 && !this->_event)) {
 		std::unique_ptr<Engine::Entity> shot = std::make_unique<Engine::Entity>();
 
@@ -74,4 +76,13 @@ void Component::PlayerWeaponComponent::handleEvent(Engine::Mediator::Message, En
 			this->_charging = 0;
 		}
 	}
+}
+
+Engine::AComponent *Component::PlayerWeaponComponent::clone(Engine::Entity *parentEntity) const
+{
+	PlayerWeaponComponent *newComp = new PlayerWeaponComponent(parentEntity, this->_parentGame);
+
+	*newComp = *this;
+
+	return newComp;
 }
