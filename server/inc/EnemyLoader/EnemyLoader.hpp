@@ -6,8 +6,7 @@
 #	define RTYPE_ENEMYLOADER_HPP
 
 #	include <iostream>
-#	include <unordered_map>
-#include <map>
+#	include <map>
 #	include "Engine/Entity.hpp"
 #	include "EnemyLoader/LStock.hpp"
 #	include "EnemyLoader/DLLoader.hpp"
@@ -24,4 +23,5 @@ public:
 	std::unique_ptr<std::map<const std::string, Engine::Entity*>> getEnemies() const;
 	void setup(const std::string &path, Engine::Game &game);
 };
+
 #endif //RTYPE_ENEMYLOADER_HPP
