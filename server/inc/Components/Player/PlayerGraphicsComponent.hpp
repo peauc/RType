@@ -19,6 +19,8 @@ namespace Component {
 		// handle methods
 		void handleDeath(Engine::Mediator::Message messageType, AComponent *sender);
 		void handleHit(Engine::Mediator::Message messageType, AComponent *sender);
+
+		AComponent *clone(Engine::Entity *parentEntity) const override;
 	};
 }
 

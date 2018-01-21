@@ -17,6 +17,7 @@ namespace Engine {
 	{
 	public:
 		explicit AComponent(Entity *parentEntity);
+		explicit AComponent(const AComponent &other, Entity *parentEntity);
 		virtual ~AComponent() = default;
 
 		void registerToMediator(Mediator *mediator);
@@ -30,6 +31,10 @@ namespace Engine {
 		unsigned int getParentEntityId() const;
 
 		virtual void update() = 0;
+
+		AComponent &operator=(const AComponent &other);
+
+		virtual AComponent *clone(Entity *parentEntity) const;
 
 	protected:
 		Entity *_parentEntity;

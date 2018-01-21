@@ -12,14 +12,14 @@ Engine::AComponent::AComponent(Engine::Entity *parentEntity) : _parentEntity(par
 
 void Engine::AComponent::registerToMediator(Engine::Mediator *mediator)
 {
-    this->_mediators.push_back(mediator);
-    mediator->registerComponent(this);
+	this->_mediators.push_back(mediator);
+	mediator->registerComponent(this);
 }
 
 void Engine::AComponent::unregisterToMediator(Engine::Mediator *mediator)
 {
-    this->_mediators.erase(std::find(this->_mediators.begin(), this->_mediators.end(), mediator));
-    mediator->unregisterComponent(this);
+	this->_mediators.erase(std::find(this->_mediators.begin(), this->_mediators.end(), mediator));
+	mediator->unregisterComponent(this);
 }
 
 void Engine::AComponent::receive(Engine::Mediator::Message messageType, Engine::AComponent *sender)
@@ -57,3 +57,32 @@ unsigned int Engine::AComponent::getParentEntityId() const
 {
 	return this->_parentEntity->getId();
 }
+
+Engine::AComponent::AComponent(const Engine::AComponent &other, Engine::Entity *parentEntity)
+{
+	this->_parentEntity = parentEntity;
+
+	for (auto mediator : other._mediators) {
+		if (mediator != &other._parentEntity->getMediator()) {
+			this->registerToMediator(mediator);
+		}
+	}
+}
+
+Engine::AComponent &Engine::AComponent::operator=(const Engine::AComponent &other)
+{
+	this->_validMessageTypes = other._validMessageTypes;
+	this->_observers = other._observers;
+	for (auto mediator : other._mediators) {
+		if (mediator != &other._parentEntity->getMediator()) {
+			this->registerToMediator(mediator);
+		}
+	}
+	return *this;
+}
+
+Engine::AComponent *Engine::AComponent::clone(Engine::Entity *	) const
+{
+	return nullptr;
+}
+

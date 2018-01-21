@@ -10,7 +10,7 @@ Packet::DataPacket *PacketFactory::createObjectPacket(short x, short y, Packet::
 {
 	Packet::DataPacket *dataPacket = new Packet::DataPacket;
 
-	dataPacket->cmd = 0;
+	dataPacket->cmd = Packet::Commands::POSITION;
 	dataPacket->data.object.entityState = entityState;
 	dataPacket->data.object.x = x;
 	dataPacket->data.object.y = y;

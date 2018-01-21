@@ -86,3 +86,14 @@ bool Engine::Entity::operator==(const Engine::Entity &other)
 {
 	return other._id == this->_id;
 }
+
+Engine::Entity *Engine::Entity::clone()
+{
+	Engine::Entity *newEntity = new Engine::Entity();
+
+	newEntity->_transformComponent = this->_transformComponent;
+	for (auto &component : this->_components) {
+		newEntity->addComponent(component->clone(newEntity));
+	}
+	return newEntity;
+}

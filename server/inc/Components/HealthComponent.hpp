@@ -21,6 +21,8 @@ namespace Component {
 		// handle methods
 		void handleGetImpactDamages(Engine::Mediator::Message messageType, Engine::AComponent *sender);
 		void handleHit(Engine::Mediator::Message messageType, Engine::AComponent *sender);
+
+		Engine::AComponent *clone(Engine::Entity *parentEntity) const override;
 	private:
 		bool _godMode;
 		int _health;

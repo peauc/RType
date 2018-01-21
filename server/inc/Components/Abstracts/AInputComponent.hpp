@@ -17,6 +17,8 @@ namespace Component {
 
 		const Engine::Event &getEvent() const;
 		bool hasEvent() const;
+		
+		AInputComponent &operator=(const AInputComponent &other);
 	protected:
 		std::unique_ptr<Engine::Event> _event;
 	};

@@ -59,6 +59,7 @@ Component::PlayerGraphicsComponent::PlayerGraphicsComponent(Engine::Entity *pare
 
 void Component::PlayerGraphicsComponent::update()
 {
+	std::cout << "Graphics" << this->_parentEntity->getId() << std::endl;
 	this->sendToAll(Engine::Mediator::Message::GRAPHICS_REGISTERING);
 }
 
@@ -70,4 +71,13 @@ void Component::PlayerGraphicsComponent::handleDeath(Engine::Mediator::Message, 
 void Component::PlayerGraphicsComponent::handleHit(Engine::Mediator::Message, Engine::AComponent *)
 {
 	this->_isAlive = false;
+}
+
+Engine::AComponent *Component::PlayerGraphicsComponent::clone(Engine::Entity *parentEntity) const
+{
+	PlayerGraphicsComponent *newComponent = new PlayerGraphicsComponent(parentEntity, this->_resourceLoader);
+
+	*newComponent = *this;
+
+	return newComponent;
 }

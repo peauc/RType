@@ -16,6 +16,8 @@ namespace Component {
 		~ShotMovementComponent() override = default;
 
 		void update() override;
+
+		AComponent *clone(Engine::Entity *parentEntity) const override;
 	private:
 		double _speed;
 	};

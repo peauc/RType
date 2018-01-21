@@ -46,3 +46,13 @@ void Component::HealthComponent::handleHit(Engine::Mediator::Message, Engine::AC
 		this->takeDamage(physics->getCollisionDamages());
 	}
 }
+
+Engine::AComponent *
+Component::HealthComponent::clone(Engine::Entity *parentEntity) const
+{
+	Component::HealthComponent *healthComponent = new Component::HealthComponent(parentEntity, this->_maxHealth, this->_godMode, this->_instantDeath);
+
+	*healthComponent = *this;
+
+	return healthComponent;
+}

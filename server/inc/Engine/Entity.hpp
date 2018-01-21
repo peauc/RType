@@ -36,6 +36,7 @@ namespace Engine {
 
 		bool operator==(unsigned int id);
 		bool operator==(const Entity &other);
+		Entity *clone();
 
 	private:
 		unsigned int _id;

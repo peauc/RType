@@ -25,11 +25,21 @@ Component::PlayerPhysicsComponent::PlayerPhysicsComponent(Engine::Entity *parent
 
 void Component::PlayerPhysicsComponent::update()
 {
+	std::cout << "Physics" << this->_parentEntity->getId() << std::endl;
 	this->sendToAll(Engine::Mediator::Message::CHECK_COLLISION);
 }
 
-void Component::PlayerPhysicsComponent::cameraCollision(APhysicsComponent &physics)
+void Component::PlayerPhysicsComponent::cameraCollision(APhysicsComponent &)
 {
 	this->sendToAll(Engine::Mediator::CAMERA_REPOSITION);
+}
+
+Engine::AComponent *Component::PlayerPhysicsComponent::clone(Engine::Entity *parentEntity) const
+{
+	PlayerPhysicsComponent *newComp = new PlayerPhysicsComponent(parentEntity, this->_hitbox);
+
+	*newComp = *this;
+
+	return newComp;
 }
 

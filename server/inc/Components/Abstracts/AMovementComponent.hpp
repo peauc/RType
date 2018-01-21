@@ -18,6 +18,8 @@ namespace Component {
 
 		// handle methods
 		void handleCancelMove(Engine::Mediator::Message messageType, Engine::AComponent *sender);
+
+		AMovementComponent &operator=(const AMovementComponent &other);
 	protected:
 		std::unique_ptr<Engine::Event> _event;
 		Vector2d _lastMove;

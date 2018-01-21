@@ -24,7 +24,7 @@ unsigned int Engine::World::addObject(std::unique_ptr<Entity> entity)
 		this->_nextEntityId++;
 	}
 	this->_objects.push_back(std::move(entity));
-	return this->_objects.end()->get()->getId();
+	return this->_objects.back()->getId();
 }
 
 void Engine::World::removeObject(unsigned int id)

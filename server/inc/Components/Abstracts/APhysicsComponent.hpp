@@ -38,6 +38,8 @@ namespace Component {
 		// default collision methods
 		void blockingCollision(APhysicsComponent &other);
 		void damagingCollision(APhysicsComponent &other);
+
+		APhysicsComponent &operator=(const APhysicsComponent &other);
 	protected:
 		struct OBB
 		{

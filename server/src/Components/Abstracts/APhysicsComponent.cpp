@@ -28,7 +28,6 @@ void Component::APhysicsComponent::setCollisionDamages(int collisionDamages)
 void Component::APhysicsComponent::handleCheckCollision(Engine::Mediator::Message,
 														Engine::AComponent *sender)
 {
-	std::cout << "Checking collision" << std::endl;
 	if (APhysicsComponent *other = dynamic_cast<APhysicsComponent *>(sender)) {
 		this->_orientedBoundingBox = OBB(this->_parentEntity->getTransformComponent(), this->_hitbox);
 		other->_orientedBoundingBox = OBB(other->_parentEntity->getTransformComponent(), other->_hitbox);
@@ -92,6 +91,14 @@ bool Component::APhysicsComponent::getCollision(Component::APhysicsComponent::Di
 void Component::APhysicsComponent::setOBB()
 {
 	this->_orientedBoundingBox = OBB(this->_parentEntity->getTransformComponent(), this->_hitbox);
+}
+
+Component::APhysicsComponent &Component::APhysicsComponent::operator=(const Component::APhysicsComponent &other)
+{
+	this->_hitbox = other._hitbox;
+	this->_collisionHandlers = other._collisionHandlers;
+
+	return *this;
 }
 
 Component::APhysicsComponent::OBB::OBB(const Engine::TransformComponent &transformComponent,

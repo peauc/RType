@@ -71,3 +71,17 @@ const Vector2d &Component::AGraphicsComponent::getRange() const
 {
 	return this->_relativeRange;
 }
+
+Component::AGraphicsComponent &Component::AGraphicsComponent::operator=(const Component::AGraphicsComponent &other)
+{
+	this->_relativeRange = other._relativeRange;
+	this->_relativeStartPos = other._relativeStartPos;
+	this->_currentAnimationId = other._currentAnimationId;
+	this->_resourceLoader = other._resourceLoader;
+	this->_isHit = other._isHit;
+	this->_animationIds = other._animationIds;
+	
+	return *this;
+}
+
+
