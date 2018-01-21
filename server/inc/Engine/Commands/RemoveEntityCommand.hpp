@@ -8,19 +8,22 @@
 #include "World.hpp"
 #include "ICommand.hpp"
 
-namespace Engine::Commands {
-	class RemoveEntityCommand : public ICommand
-	{
-	public:
-		explicit RemoveEntityCommand(Engine::World &world, unsigned int entityId);
-		~RemoveEntityCommand() = default;
+namespace Engine {
+	namespace Commands {
+		class RemoveEntityCommand : public ICommand {
+		public:
+			explicit RemoveEntityCommand(Engine::World &world,
+										 unsigned int entityId);
 
-		void execute() noexcept override;
+			~RemoveEntityCommand() = default;
 
-	private:
-		Engine::World &_world;
-		unsigned int _entityId;
-	};
+			void execute() noexcept override;
+
+		private:
+			Engine::World &_world;
+			unsigned int _entityId;
+		};
+	}
 }
 
 #endif //RTYPE_REMOVEENTITYCOMMAND_HPP
