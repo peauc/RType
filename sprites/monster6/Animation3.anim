@@ -1,8 +1,8 @@
 {
 	 Animation : 
 		[
-			{ File : "Tools/Mapper/images_to_map/r-typesheet29.png", x : 102, y : 3, width : 26, height : 29 },
-			{ File : "Tools/Mapper/images_to_map/r-typesheet29.png", x : 138, y : 3, width : 26, height : 29 },
-			{ File : "Tools/Mapper/images_to_map/r-typesheet29.png", x : 102, y : 3, width : 26, height : 29 }
+			{ File : "../images_to_map/r-typesheet29.png", x : 102, y : 3, width : 26, height : 29 },
+			{ File : "../images_to_map/r-typesheet29.png", x : 138, y : 3, width : 26, height : 29 },
+			{ File : "../images_to_map/r-typesheet29.png", x : 102, y : 3, width : 26, height : 29 }
 		]
 }

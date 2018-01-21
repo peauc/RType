@@ -1,13 +1,13 @@
 {
 	 Animation : 
 		[
-			{ File : images_to_map/r-typesheet32.png, x : 262, y : 2, width : 256, height : 140 },
-			{ File : images_to_map/r-typesheet32.png, x : 2, y : 2, width : 256, height : 140 },
-			{ File : images_to_map/r-typesheet32.png, x : 262, y : 145, width : 256, height : 140 },
-			{ File : images_to_map/r-typesheet32.png, x : 2, y : 145, width : 256, height : 140 },
-			{ File : images_to_map/r-typesheet32.png, x : 262, y : 288, width : 256, height : 140 },
-			{ File : images_to_map/r-typesheet32.png, x : 2, y : 288, width : 256, height : 140 },
-			{ File : images_to_map/r-typesheet32.png, x : 262, y : 431, width : 256, height : 140 },
-			{ File : images_to_map/r-typesheet32.png, x : 2, y : 431, width : 256, height : 140 }
+			{ File : ../images_to_map/r-typesheet32.png, x : 262, y : 2, width : 256, height : 140 },
+			{ File : ../images_to_map/r-typesheet32.png, x : 2, y : 2, width : 256, height : 140 },
+			{ File : ../images_to_map/r-typesheet32.png, x : 262, y : 145, width : 256, height : 140 },
+			{ File : ../images_to_map/r-typesheet32.png, x : 2, y : 145, width : 256, height : 140 },
+			{ File : ../images_to_map/r-typesheet32.png, x : 262, y : 288, width : 256, height : 140 },
+			{ File : ../images_to_map/r-typesheet32.png, x : 2, y : 288, width : 256, height : 140 },
+			{ File : ../images_to_map/r-typesheet32.png, x : 262, y : 431, width : 256, height : 140 },
+			{ File : ../images_to_map/r-typesheet32.png, x : 2, y : 431, width : 256, height : 140 }
 		]
 }
