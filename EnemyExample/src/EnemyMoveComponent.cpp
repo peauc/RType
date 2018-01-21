@@ -19,20 +19,21 @@ Component::EnemyMoveComponent::EnemyMoveComponent(Engine::Entity *parentEntity)
 																			   std::placeholders::_2);
 }
 
-void Component::EnemyMoveComponent::update()
-{
+void Component::EnemyMoveComponent::update() noexcept {
 	std::cout << "Updating movement" << std::endl;
-	float xMovement = this->_baseSpeed + this->_xInput;
-	float yMovement = this->_lateralBaseSpeed + this->_yInput;
+	this->_lastMove.x = this->_baseSpeed + this->_xInput * this->_baseSpeed;
+	this->_lastMove.y = this->_lateralBaseSpeed + this->_yInput * this->_lateralMaxSpeed;
 
-	if (xMovement > this->_maxSpeed)
-		xMovement = this->_maxSpeed;
-	if (yMovement > this->_lateralMaxSpeed)
-		yMovement = this->_lateralMaxSpeed;
+	if (this->_lastMove.x > this->_maxSpeed)
+		this->_lastMove.x = this->_maxSpeed;
+	if (this->_lastMove.y > this->_lateralMaxSpeed)
+		this->_lastMove.y = this->_lateralMaxSpeed;
 
-	Engine::Commands::ICommand *command= new Engine::Commands::TransformPositionCommand(this->_parentEntity->getTransformComponent(), xMovement, yMovement);
+	Engine::Commands::ICommand *command = new Engine::Commands::TransformPositionCommand(
+			this->_parentEntity->getTransformComponent(), this->_lastMove.x, this->_lastMove.y);
 	command->execute();
-	this->_parentEntity->addCommand(command);
+
+	this->sendToAll(Engine::Mediator::Message::MOVE);
 
 	this->_xInput = 0;
 	this->_yInput = 0;
@@ -50,4 +51,13 @@ void Component::EnemyMoveComponent::handleEvent(Engine::Mediator::Message messag
 			this->_yInput = 0;
 		}
 	}
+}
+
+Engine::AComponent *Component::EnemyMoveComponent::clone(Engine::Entity *parentEntity) const noexcept
+{
+	EnemyMoveComponent *newComp = new EnemyMoveComponent(parentEntity);
+
+	*newComp = *this;
+
+	return newComp;
 }

@@ -54,7 +54,7 @@ void Engine::Game::setup(size_t nbOfPlayers,
 	}
 
 	this->_enemyLoader.setup("../DLEnemies/", *this);
-	//this->_DLEntitiesMap = this->_enemyLoader.getEnemies();
+	this->_DLEntitiesMap = move(this->_enemyLoader.getEnemies());
 }
 
 std::unique_ptr<Engine::World> &Engine::Game::getWorld()
