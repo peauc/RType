@@ -77,7 +77,7 @@ bool Lobby::isStarted() const noexcept
 	return (_isStarted);
 }
 
-void Lobby::pullEventInList(std::unique_ptr<Engine::Event> &event) noexcept
+void Lobby::pushEventInList(std::unique_ptr<Engine::Event> &event) noexcept
 {
 	_game.getEventList().pushBack(event);
 }

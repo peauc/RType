@@ -23,7 +23,7 @@ public:
 	bool isReady() const noexcept;
 	bool isStarted() const noexcept;
 	bool isClientContained(const ClientObject &client) const noexcept;
-	void pullEventInList(std::unique_ptr<Engine::Event> &event) noexcept;
+	void pushEventInList(std::unique_ptr<Engine::Event> &event) noexcept;
 	bool startGame();
 	ClientObject &getClientContained(const ClientObject &copy);
 	bool isSeededLobby() const noexcept;
