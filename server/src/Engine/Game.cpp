@@ -127,8 +127,8 @@ Engine::Game::getPackets() {
 
 Engine::Entity *Engine::Game::cloneEntity(const std::string &name) const
 {
-	std::map<const std::string, Entity *>::const_iterator ent = this->_DLEntitiesMap.find(name);
-	if (ent != this->_DLEntitiesMap.end()) {
+	std::map<const std::string, Entity *>::const_iterator ent = this->_DLEntitiesMap->find(name);
+	if (ent != this->_DLEntitiesMap->end()) {
 		return ent->second->clone();
 	}
 	return nullptr;

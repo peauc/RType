@@ -40,13 +40,15 @@ namespace Engine {
 		void stop();
 		std::unique_ptr<std::vector<std::unique_ptr<Packet::DataPacket>>>
 		getPackets();
+		Entity *cloneEntity(const std::string &name) const;
+
 	private:
 		std::thread _thread;
 		std::unique_ptr<World> _world;
 		EventList _eventList;
 		PacketList _packetList;
-		EnemyLoader	_enemyLoader;
-		std::unique_ptr<std::map<const std::string, Engine::Entity*>>	_DLEntitiesMap;
+		EnemyLoader _enemyLoader;
+		std::unique_ptr<std::map<const std::string, Engine::Entity *>> _DLEntitiesMap;
 		std::shared_ptr<RessourcesLoader> _resourceLoader;
 		bool _stop;
 	};
