@@ -19,7 +19,7 @@ void Extractor::extractSprites(const std::string &file) {
 }
 
 void Extractor::createPixels(unsigned int x, unsigned int y) {
-	this->pixels.reset(new PixelsArray(x, y, false));
+	this->pixels = std::make_unique<PixelsArray>(x, y, false);
 }
 
 void Extractor::browsePixels() {

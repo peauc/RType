@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <thread>
+#include <Logger.hpp>
 #include "Lobby.hpp"
 
 bool Lobby::isClientContained(const ClientObject &client) const noexcept
@@ -22,12 +23,17 @@ bool Lobby::addClient(ClientObject &client) noexcept
 	return (true);
 }
 
-Lobby::Lobby()
+Lobby::Lobby(unsigned short seed)
 {
+	_seed = seed;
+	_isSeededLobby = true;
+	_isStarted = false;
 }
 
 Lobby::~Lobby()
 {
+	Logger::Log(Logger::CRITICAL, "Deleting a lobby");
+	_game.stop();
 }
 
 size_t Lobby::size() const noexcept
@@ -37,12 +43,6 @@ size_t Lobby::size() const noexcept
 bool Lobby::isSeededLobby() const noexcept
 {
 	return (_isSeededLobby != 0);
-}
-
-Lobby::Lobby(unsigned short seed)
-{
-	_seed = seed;
-	_isSeededLobby = true;
 }
 
 unsigned short Lobby::getSeed() const noexcept
@@ -60,7 +60,7 @@ ClientObject &Lobby::getClientContained(const ClientObject &copy)
 }
 bool Lobby::startGame()
 {
-	_game.run();
+	_game.start();
 	return (true);
 }
 const std::vector<ClientObject> &Lobby::getClientList()
@@ -70,6 +70,19 @@ const std::vector<ClientObject> &Lobby::getClientList()
 bool Lobby::isReady() const noexcept
 {
 	return (_clientManager.isReady());
+}
+bool Lobby::isStarted() const noexcept
+{
+	return (_isStarted);
+}
+
+void Lobby::pullEventInList(std::unique_ptr<Engine::Event> &event) noexcept
+{
+	_game.getEventList().pushBack(event);
+}
+
+std::vector<std::unique_ptr<Packet::DataPacket>> Lobby::getPackets() {
+	return (_game.getPackets());
 }
 
 

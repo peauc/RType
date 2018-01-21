@@ -20,7 +20,6 @@ protected:
 	virtual void	onGainedFocus(const sf::Event &event) = 0;
 	virtual void	onKeyPressed(const sf::Event &event) = 0;
 	virtual void	onKeyReleased(const sf::Event &event) = 0;
-	virtual void	onMouseMoved(const sf::Event &event) = 0;
 	virtual void	onMouseEntered(const sf::Event &event) = 0;
 	virtual void	onMouseLeft(const sf::Event &event) = 0;
 

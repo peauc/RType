@@ -16,6 +16,7 @@ protected:
 
 	virtual void	onMouseButtonPressed(const sf::Event &event) = 0;
 	virtual void	onMouseButtonReleased(const sf::Event &event) = 0;
+	virtual void	onMouseMoved(const sf::Event &event) = 0;
 
 };
 

@@ -2,9 +2,10 @@
 // Created by buis_p on 1/18/18.
 //
 
-#include <Engine/AComponent.hpp>
+#include <iostream>
+#include "EnemyMoveComponent.hpp"
 
-Component::EnemyMovementComponent::EnemyMovementComponent(Engine::Entity *parentEntity)
+Component::EnemyMoveComponent::EnemyMoveComponent(Engine::Entity *parentEntity)
 		: AMovementComponent(parentEntity),
 		  _baseSpeed(1.0f),
 		  _lateralBaseSpeed(0.0f),
@@ -13,12 +14,12 @@ Component::EnemyMovementComponent::EnemyMovementComponent(Engine::Entity *parent
 		  _xInput(0.0f),
 		  _yInput(0.0f)
 {
-	this->_validMessageTypes[Engine::Mediator::Message::NEW_EVENT] = std::bind(&EnemyMovementComponent::handleEvent,
+	this->_validMessageTypes[Engine::Mediator::Message::NEW_EVENT] = std::bind(&EnemyMoveComponent::handleEvent,
 																			   this, std::placeholders::_1,
 																			   std::placeholders::_2);
 }
 
-void Component::EnemyMovementComponent::update()
+void Component::EnemyMoveComponent::update()
 {
 	std::cout << "Updating movement" << std::endl;
 	float xMovement = this->_baseSpeed + this->_xInput;
@@ -37,10 +38,10 @@ void Component::EnemyMovementComponent::update()
 	this->_yInput = 0;
 }
 
-void Component::EnemyMovementComponent::handleEvent(Engine::Mediator::Message messageType, Engine::AComponent *sender)
+void Component::EnemyMoveComponent::handleEvent(Engine::Mediator::Message messageType, Engine::AComponent *sender)
 {
 	std::cout << "Handling event" << std::endl;
-	if (AAIComponent *inputComponent = dynamic_cast<AAIComponent *>(sender)) {
+	if (AInputComponent *inputComponent = dynamic_cast<AInputComponent *>(sender)) {
 		if (inputComponent->hasEvent()) {
 			this->_xInput = inputComponent->getEvent()._xVelocity;
 			this->_yInput = inputComponent->getEvent()._yVelocity;
@@ -50,4 +51,3 @@ void Component::EnemyMovementComponent::handleEvent(Engine::Mediator::Message me
 		}
 	}
 }
-

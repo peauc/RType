@@ -6,11 +6,16 @@
 #	define RTYPE_BERZERKER_HPP
 
 #	include "Entity.hpp"
+#	include "EnemyMoveComponent.hpp"
+#	include "EnemyAIComponent.hpp"
+#	include "EnemyPhysicsComponent.hpp"
+#	include "EnemyGraphicsComponent.hpp"
+#	include "Components/HealthComponent.hpp"
 
 class Berzerker : public Engine::Entity {
 public:
-	Berzerker();
-	Berzerker(const Berzerker &other);
+	Berzerker(Engine::Game &game);
+	Berzerker(const Berzerker &other) = default;
 	Berzerker	&operator=(const Berzerker &other) = default;
 	~Berzerker() = default;
 };
