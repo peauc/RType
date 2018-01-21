@@ -2,10 +2,10 @@
 // Created by romain on 21/01/18.
 //
 
-#include <Engine/Entity.hpp>
-#include <Engine/Hitbox.hpp>
-#include <Components/Abstracts/APhysicsComponent.hpp>
-#include <Components/Projectiles/PlayerShotPhysicsComponent.hpp>
+#include "Engine/Entity.hpp"
+#include "Engine/Hitbox.hpp"
+#include "Components/Abstracts/APhysicsComponent.hpp"
+#include "Components/Projectiles/PlayerShotPhysicsComponent.hpp"
 
 Component::PlayerShotPhysicsComponent::PlayerShotPhysicsComponent(Engine::Entity *parentEntity,
 																  const Engine::Hitbox &hitbox)

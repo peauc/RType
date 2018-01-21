@@ -5,8 +5,8 @@
 #ifndef RTYPE_AAUDIOCOMPONENT_HPP
 #define RTYPE_AAUDIOCOMPONENT_HPP
 
-#include <Engine/AComponent.hpp>
-#include <Engine/World.hpp>
+#include "Engine/AComponent.hpp"
+#include "Engine/World.hpp"
 
 namespace Component {
 	class AAudioComponent : public Engine::AComponent

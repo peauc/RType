@@ -5,9 +5,9 @@
 #ifndef RTYPE_AMOVEMENTCOMPONENT_HPP
 #define RTYPE_AMOVEMENTCOMPONENT_HPP
 
-#include <Engine/Entity.hpp>
-#include <Engine/AComponent.hpp>
-#include <Engine/Event.hpp>
+#include "Engine/Entity.hpp"
+#include "Engine/AComponent.hpp"
+#include "Engine/Event.hpp"
 
 namespace Component {
 	class AMovementComponent : public Engine::AComponent

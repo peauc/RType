@@ -5,8 +5,8 @@
 #ifndef RTYPE_FACTORY_HPP
 #define RTYPE_FACTORY_HPP
 
-#include <Engine/Entity.hpp>
-#include <Engine/Game.hpp>
+#include "Engine/Entity.hpp"
+#include "Engine/Game.hpp"
 
 namespace Engine {
 	class Game;

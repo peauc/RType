@@ -5,9 +5,8 @@
 #include <thread>
 #include <chrono>
 #include <iostream>
-#include <Logger.hpp>
+#include "Logger.hpp"
 #include "Engine/Game.hpp"
-#include "Factories/EntityFactory.hpp"
 
 Engine::Game::Game()
 {

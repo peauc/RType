@@ -5,7 +5,7 @@
 #ifndef RTYPE_HITBOX_HPP
 #define RTYPE_HITBOX_HPP
 
-#include <Common/Vector2d.hpp>
+#include "Common/Vector2d.hpp"
 
 namespace Engine {
 	class Hitbox

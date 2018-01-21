@@ -5,9 +5,9 @@
 #ifndef RTYPE_PACKETFACTORY_HPP
 #define RTYPE_PACKETFACTORY_HPP
 
-#include <DataPacket.hpp>
 #include <vector>
 #include <memory>
+#include "DataPacket.hpp"
 
 class PacketFactory
 {

@@ -5,8 +5,8 @@
 #ifndef RTYPE_AGRAPHICSCOMPONENT_HPP
 #define RTYPE_AGRAPHICSCOMPONENT_HPP
 
-#include <Engine/AComponent.hpp>
-#include <Engine/Game.hpp>
+#include "Engine/AComponent.hpp"
+#include "Engine/Game.hpp"
 
 namespace Component {
 	class AGraphicsComponent : public Engine::AComponent

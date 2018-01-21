@@ -2,10 +2,9 @@
 // Created by romain on 15/01/18.
 //
 
-#include <Components/Abstracts/AInputComponent.hpp>
-#include <Components/Abstracts/AMovementComponent.hpp>
-#include <Components/Abstracts/APhysicsComponent.hpp>
-#include <iostream>
+#include "Components/Abstracts/AInputComponent.hpp"
+#include "Components/Abstracts/AMovementComponent.hpp"
+#include "Components/Abstracts/APhysicsComponent.hpp"
 
 Component::AMovementComponent::AMovementComponent(Engine::Entity *parentEntity) : AComponent(parentEntity)
 {

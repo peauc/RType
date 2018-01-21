@@ -5,12 +5,12 @@
 #ifndef RTYPE_DEFAULTPLAYERINPUTCOMPONENT_HPP
 #define RTYPE_DEFAULTPLAYERINPUTCOMPONENT_HPP
 
-#include <Engine/AComponent.hpp>
-#include <Engine/Event.hpp>
 #include <queue>
 #include <utility>
-#include <Engine/EventList.hpp>
+#include "Engine/EventList.hpp"
 #include "Components/Abstracts/AInputComponent.hpp"
+#include "Engine/AComponent.hpp"
+#include "Engine/Event.hpp"
 
 namespace Component {
 	class PlayerInputComponent : public AInputComponent

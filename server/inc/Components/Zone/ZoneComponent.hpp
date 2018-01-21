@@ -5,9 +5,9 @@
 #ifndef RTYPE_ZONECOMPONENT_HPP
 #define RTYPE_ZONECOMPONENT_HPP
 
-#include <Engine/AComponent.hpp>
-#include <Engine/World.hpp>
-#include <Components/Abstracts/APhysicsComponent.hpp>
+#include "Engine/AComponent.hpp"
+#include "Engine/World.hpp"
+#include "Components/Abstracts/APhysicsComponent.hpp"
 
 namespace Component {
 	class ZoneComponent : public Component::APhysicsComponent

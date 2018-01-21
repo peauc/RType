@@ -5,7 +5,7 @@
 #ifndef RTYPE_PLAYERPHYSICSCOMPONENT_HPP
 #define RTYPE_PLAYERPHYSICSCOMPONENT_HPP
 
-#include <Components/Abstracts/APhysicsComponent.hpp>
+#include "Components/Abstracts/APhysicsComponent.hpp"
 
 namespace Component {
 	class PlayerPhysicsComponent : public APhysicsComponent

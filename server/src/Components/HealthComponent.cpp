@@ -2,10 +2,9 @@
 // Created by romain on 19/01/18.
 //
 
-#include <Components/HealthComponent.hpp>
-#include <Components/Abstracts/APhysicsComponent.hpp>
-#include <iostream>
-#include <Engine/Commands/RemoveEntityCommand.hpp>
+#include "Components/HealthComponent.hpp"
+#include "Components/Abstracts/APhysicsComponent.hpp"
+#include "Engine/Commands/RemoveEntityCommand.hpp"
 
 Component::HealthComponent::HealthComponent(Engine::Entity *parentEntity, Engine::World *world, int health,
 											bool godMode, bool instantDeath) :
