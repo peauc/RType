@@ -19,7 +19,6 @@ private:
 	std::map<const std::string, Engine::Entity*>	enemies;
 public:
 	EnemyLoader() = default;
-	explicit EnemyLoader(const std::string &path, Engine::Game &game);
 	~EnemyLoader() = default;
 
 	std::unique_ptr<std::map<const std::string, Engine::Entity*>> getEnemies() const;
