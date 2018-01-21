@@ -39,7 +39,8 @@ namespace Engine {
 		void setResourceLoader(const std::shared_ptr<RessourcesLoader> &_resourceLoader);
 		void pushDataPacket(Packet::DataPacket *packet);
 		void stop();
-		std::vector<std::unique_ptr<Packet::DataPacket>> getPackets();
+		std::unique_ptr<std::vector<std::unique_ptr<Packet::DataPacket>>>
+		getPackets();
 	private:
 		std::thread _thread;
 		std::unique_ptr<World> _world;

@@ -41,17 +41,25 @@ void	ClientGame::run() noexcept
 	while (this->_render->isWindowOpen()) { //TODO Game Loop
 		//TODO
 		// Get Packets and Interpret
-		if (std::chrono::duration_cast<std::chrono::milliseconds>
-			    (std::chrono::steady_clock::now() - begin)
-			    .count() > FRAMEDURATION) {
-			eventsQueue = this->_render->pollEvents();
-			this->_render->clear();
-			this->drawSprites();
-			this->_render->display();
-			this->updateAnimations(nbTicks);
-			this->processEvents(eventsQueue); // Send packets
-			++nbTicks;
-			begin = std::chrono::steady_clock::now();
+		_client.tick();
+		if (_gameState == GAMESTATE::INGAME)
+		{
+		
+		}
+		else {
+			if (std::chrono::duration_cast<std::chrono::milliseconds>
+				    (std::chrono::steady_clock::now() - begin)
+				    .count() > FRAMEDURATION) {
+				eventsQueue = this->_render->pollEvents();
+				this->_render->clear();
+				this->drawSprites();
+				this->_render->display();
+				this->updateAnimations(nbTicks);
+				this->processEvents(
+					eventsQueue); // Send packets
+				++nbTicks;
+				begin = std::chrono::steady_clock::now();
+			}
 		}
 	}
 }

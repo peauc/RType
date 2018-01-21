@@ -76,21 +76,14 @@ void LobbyContainer::checkTimeout()
 		, _lobbyList.end());
 }
 
-std::unique_ptr<std::vector<std::pair<std::vector<std::unique_ptr<Packet
-::DataPacket>>, Lobby *>>> &&LobbyContainer::getPacketFromGames()
+std::unique_ptr<std::vector<std::pair<std::unique_ptr<std::vector<std
+::unique_ptr<Packet::DataPacket>>>, Lobby *>>> LobbyContainer::getPacketFromGames()
 {
-	//todo make smart;
-	auto v = std::make_unique<std::vector<std::pair<std
-	::vector<std::unique_ptr<Packet::DataPacket>>, Lobby *>>>();
+	auto v = std::make_unique<std::vector<std::pair<std::unique_ptr<std
+	::vector<std::unique_ptr<Packet::DataPacket>>>, Lobby *>>>();
 	for (auto &t : _lobbyList) {
 		auto pair = std::make_pair(t->getPackets(), t.get());
-		pair.first = t->getPackets();
-		if (!pair.first.empty()) {
-			Logger::Log(Logger::DEBUG, "Packet have been read "
-				"from the lobby");
-		}
-		pair.second = t.get();
 		v->push_back(std::move(pair));
 	}
-	return (std::move(v));
+	return (v);
 }

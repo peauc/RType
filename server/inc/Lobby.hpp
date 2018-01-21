@@ -29,7 +29,8 @@ public:
 	bool isSeededLobby() const noexcept;
 	unsigned short getSeed() const noexcept;
 	const std::vector<ClientObject> &getClientList();
-	std::vector<std::unique_ptr<Packet::DataPacket>> getPackets();
+	std::unique_ptr<std::vector<std::unique_ptr<Packet::DataPacket>>>
+	getPackets();
 		private:
 	bool _isSeededLobby;
 	unsigned short _seed;

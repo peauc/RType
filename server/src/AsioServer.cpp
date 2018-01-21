@@ -116,8 +116,8 @@ bool AsioServer::tick()
 	auto t = _lobbyList.getPacketFromGames();
 	if (t != nullptr) {
 		for(auto it = t->begin(); it < t->end(); it++) {
-			for(auto it2 = it->first.begin();
-			    it2 < it->first.end(); it2++) {
+			for(auto it2 = it->first->begin();
+			    it2 < it->first->end(); it2++) {
 				for(auto clients = it->second->getClientList().begin();
 				    clients <
 				    it->second->getClientList().end(); clients++) {
@@ -127,7 +127,6 @@ bool AsioServer::tick()
 			}
 		}
 	}
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	return (true);
 }
 

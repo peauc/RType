@@ -16,7 +16,6 @@ Engine::Game::Game()
 }
 void Engine::Game::run()
 {
-	Logger::Log(Logger::CRITICAL, "Game is starting");
 	std::chrono::time_point<std::chrono::system_clock> previous = std::chrono::system_clock::now();
 	double lag = 0;
 
@@ -29,6 +28,7 @@ void Engine::Game::run()
 
 		// PROCESS INPUT
 		while (lag > MS_PER_UPDATE) {
+			Logger::Log(Logger::DEBUG, "Run");
 			this->_world->update();
 			lag -= MS_PER_UPDATE;
 		}
@@ -54,7 +54,7 @@ void Engine::Game::setup(size_t nbOfPlayers,
 	}
 
 	this->_enemyLoader.setup("../DLEnemies/", *this);
-	this->_DLEntitiesMap	= this->_enemyLoader.getEnemies();
+	//this->_DLEntitiesMap = this->_enemyLoader.getEnemies();
 }
 
 std::unique_ptr<Engine::World> &Engine::Game::getWorld()
@@ -112,11 +112,13 @@ void Engine::Game::stop()
 	_stop = true;
 }
 
-std::vector<std::unique_ptr<Packet::DataPacket>> Engine::Game::getPackets() {
-	std::vector<std::unique_ptr<Packet::DataPacket>> l;
+std::unique_ptr<std::vector<std::unique_ptr<Packet::DataPacket>>>
+Engine::Game::getPackets() {
+	auto l = std::make_unique<std::vector<std::unique_ptr<Packet
+	::DataPacket>>>();
 	std::unique_ptr<Packet::DataPacket> packet;
 	while ((packet = _packetList.popBack()) != nullptr) {
-		l.push_back(std::move(packet));
+		l->push_back(std::move(packet));
 	}
 	return (l);
 }
