@@ -9,7 +9,6 @@
 #include <boost/asio.hpp>
 #include "DataPacket.hpp"
 #include "AClient.hpp"
-#include "PacketInterpreterClient.hpp"
 
 namespace client {
 class AsioClient : public AClient {
@@ -39,7 +38,6 @@ private:
 	boost::asio::ip::udp::socket _socket;
 	boost::asio::ip::udp::endpoint _receiverEndpoint;
 	boost::array<char, 65000> _data_array;
-	PacketInterpreterClient	_interpreter;
 };
 }
 

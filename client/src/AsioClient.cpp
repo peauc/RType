@@ -23,7 +23,6 @@ client::AsioClient::AsioClient(const std::string &host) : _ioService(),
 client::AsioClient::AsioClient() : _ioService(), _socket(_ioService),
 				   _isConnected(false)
 {
-	std::cout << "Regular constructor" << std::endl;
 	_socket.open(boost::asio::ip::udp::v4());
 }
 

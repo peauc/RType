@@ -10,7 +10,6 @@
 #include <string>
 # include "DataPacket.hpp"
 # include "IMessage.hpp"
-# include "PacketInterpreterClient.hpp"
 
 class Message : public IMessage
 {

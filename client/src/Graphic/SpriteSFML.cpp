@@ -112,7 +112,7 @@ void	SpriteSFML::setAnimationVector(const std::vector<sf::Texture>
  */
 void	SpriteSFML::updateAnimation() noexcept
 {
-	if (this->_animationVector.size() > 1 &&
+	if (this->_animationVector.size() >= 1 &&
 	    this->_animationIndex < this->_animationVector.size()) {
 		this->_sprite.setTexture(_animationVector[_animationIndex],
 					 true);

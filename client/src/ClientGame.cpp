@@ -161,7 +161,8 @@ void ClientGame::createMenu()
 	
 	playButton->setPos(-200, -300);
 	playButton->setOnClick([&]() {
-		this->_waitingReady = true;
+//		this->_waitingReady = true;
+		this->sendReadyPacket();
 	});
 	
 	quitButton->setPos(-600, -300);
@@ -211,6 +212,8 @@ void	ClientGame::modifyInputPacket(const IRender::EventAction &event,
 	}
 }
 
+# include <iostream>
+
 /**
  * Create and send a DataPacket with the command Event and with an input
  * @param input
@@ -219,6 +222,8 @@ void ClientGame::sendEventPacket(const Packet::Input &input) noexcept
 {
 	Packet::DataPacket packet((int)Packet::Commands::EVENT);
 	packet.data.input = input;
+	std::cout << input.xVelocity << " - " << input.yVelocity << " - "
+		  << input.charged << std::endl;
 	this->_client.sendMessage(packet);
 }
 
@@ -238,6 +243,8 @@ void	ClientGame::setVelocityInput(short x, short y,
 	input.xVelocity = y;
 }
 
+#include <iostream> //TODO
+
 /**
  * Interpret all packets in the vector
  * @param packets vector of packets
@@ -250,12 +257,15 @@ void ClientGame::interpretPacket(const std::vector<Packet::DataPacket>
 			case Packet::Commands::STARTGAME:
 				this->_waitingReady = false;
 				this->_gameState = GameState::INGAME;
+			std::cout << "GAME STARTING" << std::endl;
 				break;
 			case Packet::Commands::POSITION:
 				this->updateObject(packet);
 				break;
 			case Packet::Commands::READY:
 				this->_waitingReady = false;
+				std::cout << "READYYYYYYYYYYYYYYYYYYYY" <<
+								   std::endl;
 				break;
 			default:
 				break;
@@ -318,7 +328,8 @@ void ClientGame::updateInfosObject(ISprite *sprite, bool repeatAnimation,
 std::pair<short, short> ClientGame::calculateRealPosition(short x,
 							  short y) noexcept
 {
-	auto realX = (short)(x * this->_render->getWidth() / 10'000);
-	auto realY = (short)(y * this->_render->getHeight() / 10'000);
+	auto realX = -(short)(x * this->_render->getWidth() / 10'000);
+	auto realY = -(short)(y * this->_render->getHeight() / 10'000);
+	std::cout << realX << " - " << realY << std::endl;
 	return (std::make_pair(realX, realY));
 }
