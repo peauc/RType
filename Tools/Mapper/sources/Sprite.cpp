@@ -80,7 +80,8 @@ unsigned int Sprite::getHeight() const {
 void Sprite::setWidth(unsigned int width) {
 	int		range = (width - this->getWidth()) / 2;
 
-	this->minX -= range;
+	if (this->minX > 0)
+		this->minX -= range;
 	this->maxX += range;
 	if (range == 0)
 		this->maxX = this->minX + (width - 1);
@@ -89,6 +90,7 @@ void Sprite::setWidth(unsigned int width) {
 void Sprite::setHeight(unsigned int height) {
 	int		range = (height - this->getHeight()) / 2;
 
+	if (this->minY > 0)
 	this->minY -= range;
 	this->maxY += range;
 	if (range == 0)
