@@ -18,7 +18,6 @@ Engine::Entity::Entity(unsigned int id) : _id(id), _active(false), _transformCom
 void Engine::Entity::update() noexcept
 {
 	if (this->_active) {
-		std::cout << "Updating" << std::endl;
 		for (unsigned int i = 0; i < _components.size(); ++i) {
 			this->_components[i]->update();
 		}

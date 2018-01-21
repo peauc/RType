@@ -13,19 +13,19 @@
 
 ClientGame::ClientGame(const std::string &ip, const std::string &animationFile,
 		       uint16_t width, uint16_t height)
-	: _gameState(GameState::INMENU)
+	: _gameState(GameState::INGAME)
 {
 //	this->_client.connect(ip); //TODO Async ? avec une queue de packets
 	this->_render = std::make_unique<RenderSFML>(width, height, "R-TYPE");
 	this->_resourcesLoader.loadAnimations(animationFile);
 	this->_render->loadAnimations(this->_resourcesLoader.getAnimations());
-	this->_startMenu = std::make_unique<MenuSFML>();
-	try {
-		this->createMenu();
-	} catch (const std::runtime_error &e) {
-		e.what();
-		throw std::runtime_error("Can't load start menu");
-	}
+//	this->_startMenu = std::make_unique<MenuSFML>();
+//	try {
+//		this->createMenu();
+//	} catch (const std::runtime_error &e) {
+//		e.what();
+//		throw std::runtime_error("Can't load start menu");
+//	}
 }
 
 void	ClientGame::run() noexcept
