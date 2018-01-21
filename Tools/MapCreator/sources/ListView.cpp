@@ -16,7 +16,7 @@ ListView::ListView(Scroll scroll, AItem *parent) : AContainer(parent) {
 	this->childMarginBot = 15;
 	this->childMarginLeft = 30;
 	this->childMarginRight = 30;
-	this->background.setFillColor(sf::Color::Blue);
+	this->background.setFillColor(sf::Color(84, 110, 122, 255));
 	this->associateEvents();
 }
 
