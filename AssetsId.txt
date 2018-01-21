@@ -36,11 +36,10 @@
 			{ Asset : "Tools/AssetsIdGenerator/../../sprites/player3/Animation2.anim", Id : 32 },
 			{ Asset : "Tools/AssetsIdGenerator/../../sprites/player3/Animation1.anim", Id : 33 },
 			{ Asset : "Tools/AssetsIdGenerator/../../sprites/player3/Animation0.anim", Id : 34 },
-			{ Asset : "Tools/AssetsIdGenerator/../../sprites/monster2/Animation0.anim", Id : 35 },
-			{ Asset : "Tools/AssetsIdGenerator/../../sprites/player1/Animation3.anim", Id : 36 },
-			{ Asset : "Tools/AssetsIdGenerator/../../sprites/player1/Animation4.anim", Id : 37 },
-			{ Asset : "Tools/AssetsIdGenerator/../../sprites/player1/Animation2.anim", Id : 38 },
-			{ Asset : "Tools/AssetsIdGenerator/../../sprites/player1/Animation1.anim", Id : 39 },
-			{ Asset : "Tools/AssetsIdGenerator/../../sprites/player1/Animation0.anim", Id : 40 }
+			{ Asset : "Tools/AssetsIdGenerator/../../sprites/player1/Animation3.anim", Id : 35 },
+			{ Asset : "Tools/AssetsIdGenerator/../../sprites/player1/Animation4.anim", Id : 36 },
+			{ Asset : "Tools/AssetsIdGenerator/../../sprites/player1/Animation2.anim", Id : 37 },
+			{ Asset : "Tools/AssetsIdGenerator/../../sprites/player1/Animation1.anim", Id : 38 },
+			{ Asset : "Tools/AssetsIdGenerator/../../sprites/player1/Animation0.anim", Id : 39 }
 		]
 }

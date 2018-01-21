@@ -13,17 +13,22 @@
 
 int main(int, char **)
 {
-	try {
-		AsioServer server;
-		server.start();
-		while (1) {
-			server.tick();
-		}
-	} catch (boost::system::system_error &e) {
-		std::cout << "Error: " << e.what() << std::endl;
-		std::cout << "Info: " << boost::diagnostic_information(e)
-			  << std::endl;
-		return 1;
-	}
+//	try {
+//		AsioServer server;
+//		server.start();
+//		while (1) {
+//			server.tick();
+//		}
+//	} catch (boost::system::system_error &e) {
+//		std::cout << "Error: " << e.what() << std::endl;
+//		std::cout << "Info: " << boost::diagnostic_information(e)
+//			  << std::endl;
+//		return 1;
+//	}
+	Engine::Game *game = new Engine::Game();
+	std::shared_ptr<RessourcesLoader> rl = std::make_shared<RessourcesLoader>();
+
+	game->setup(1, rl);
+	game->getWorld()->update();
 }
 
