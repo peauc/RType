@@ -243,8 +243,6 @@ void	ClientGame::setVelocityInput(short x, short y,
 	input.xVelocity = y;
 }
 
-#include <iostream> //TODO
-
 /**
  * Interpret all packets in the vector
  * @param packets vector of packets
