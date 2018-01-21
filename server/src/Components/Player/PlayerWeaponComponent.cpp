@@ -31,12 +31,12 @@ void Component::PlayerWeaponComponent::update() noexcept
 		if (this->_charging < 30) { // Regular shot
 			shotGraphicsComponent = new Component::ShotGraphicsComponent(this->_parentEntity,
 																		 this->_parentGame->getResourceLoader().get(),
-																		 0, 0);
+																		 19, 19);
 			shotSoundComponent = new Component::ShotAudioComponent(this->_parentEntity, this->_parentGame, 0);
 		} else { // Charged shot
 			shotGraphicsComponent = new Component::ShotGraphicsComponent(this->_parentEntity,
 																		 this->_parentGame->getResourceLoader().get(),
-																		 1, 1);
+																		 19, 19);
 			shotSoundComponent = new Component::ShotAudioComponent(this->_parentEntity, this->_parentGame, 1);
 		}
 
