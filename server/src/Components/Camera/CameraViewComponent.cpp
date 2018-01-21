@@ -44,6 +44,7 @@ void Component::CameraViewComponent::update() noexcept
 			}
 		}
 	}
+	this->_graphicComponents.clear();
 }
 
 void Component::CameraViewComponent::handleGraphicsRegistration(Engine::Mediator::Message,
