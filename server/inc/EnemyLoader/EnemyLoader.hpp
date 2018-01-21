@@ -6,22 +6,22 @@
 #	define RTYPE_ENEMYLOADER_HPP
 
 #	include <iostream>
-#	include <map>
-#	include <Engine/Entity.hpp>
-#	include <EnemyLoader/LStock.hpp>
-#	include <EnemyLoader/DLLoader.hpp>
+#	include <unordered_map>
+#	include "Engine/Entity.hpp"
+#	include "EnemyLoader/LStock.hpp"
+#	include "EnemyLoader/DLLoader.hpp"
 
 class EnemyLoader {
 private:
 	LStock		stock;
 	DLLoader<Engine::Entity>	loader;
-	std::map<const std::string, Engine::Entity*>	enemies;
+	std::unordered_map<const std::string, Engine::Entity*>	enemies;
 public:
+	EnemyLoader() = default;
 	explicit EnemyLoader(const std::string &path, Engine::Game &game);
-	EnemyLoader(const EnemyLoader &other) = default;
-	EnemyLoader	&operator=(const EnemyLoader &other) = default;
 	~EnemyLoader() = default;
 
-	const std::map<const std::string, Engine::Entity*> &getEnemies() const;
+	const std::unordered_map<const std::string, Engine::Entity*> &getEnemies() const;
+	void setup(const std::string &path, Engine::Game &game);
 };
 #endif //RTYPE_ENEMYLOADER_HPP
