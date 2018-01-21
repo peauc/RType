@@ -4,12 +4,12 @@
 
 #include <algorithm>
 #include <Logger.hpp>
+#include <iostream>
 #include "Engine/EventList.hpp"
 
 void Engine::EventList::pushBack(std::unique_ptr<Engine::Event> &e)
 {
 	_mutex.lock();
-	Logger::Log(Logger::DEBUG, "Pushing event");
 	_list.push_back(std::move(e));
 	_mutex.unlock();
 }
@@ -25,16 +25,27 @@ const std::vector<std::unique_ptr<Engine::Event>> &Engine::EventList::getEvents(
 }
 
 std::unique_ptr<Engine::Event> Engine::EventList::getEventById(size_t id)
-noexcept
 {
 	std::lock_guard<std::mutex> l(_mutex);
-	Logger::Log(Logger::DEBUG, "Poping evnet");
-	auto t = std::find_if(_list.begin(), _list.end(), [id]
-		(std::unique_ptr<Engine::Event> &e){
-		return (e->_entityId == id);
+	auto t = std::find_if(_list.begin(), _list.end(),
+			      [id](std::unique_ptr<Engine::Event> &e) {
+				      if (!e.get())
+					      return (false);
+				      return (e->_entityId == id);
 	});
 	if (t == _list.end())
 		return (nullptr);
 	_list.erase(t);
+
+	auto d = std::find_if(_list.begin(), _list.end(),
+	[](std::unique_ptr<Engine::Event> &e) {
+		return (e.get() == nullptr);
+	});
+	Logger::Log(Logger::CRITICAL, std::to_string(_list.size()));
+	if (d != _list.end())
+		_list.erase(d);
+	
+	
+	Logger::Log(Logger::CRITICAL, std::to_string(_list.size()));
 	return (std::move(*t));
 }
