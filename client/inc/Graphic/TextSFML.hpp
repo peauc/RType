@@ -26,9 +26,9 @@ public:
 	void setCharSize(uint32_t charSize) noexcept override;
 	void setPosX(int x) noexcept override;
 	void setPosY(int y) noexcept override;
+	void setPos(int x, int y) noexcept override;
 	const std::string &getText() const noexcept override;
 	const sf::Text &getSText() const noexcept;
-	
 
 private:
 	sf::Text	_sText;

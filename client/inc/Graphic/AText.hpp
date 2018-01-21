@@ -23,8 +23,9 @@ public:
 	void	setText(const std::string &text) noexcept override;
 	void	setPosX(int x) noexcept override;
 	void 	setPosY(int y) noexcept override;
-	int getPosX() const noexcept override;
-	int getPosY() const noexcept override;
+	void	setPos(int x, int y) noexcept override;
+	int	getPosX() const noexcept override;
+	int	getPosY() const noexcept override;
 	const std::string	&getText() const noexcept override;
 
 protected:

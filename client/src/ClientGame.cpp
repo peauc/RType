@@ -125,14 +125,12 @@ void ClientGame::createMenu() noexcept
 	auto rtypeText(std::make_unique<TextSFML>(
 		"../Assets/MenuSprite/ELRIOTT2.TTF", "R-TYPE", 80));
 	
-	playButton->setPosY(-300);
-	playButton->setPosX(-200);
+	playButton->setPos(-200, -300);
 	playButton->setOnClick([&]() {
 		this->_gameState = GAMESTATE::INGAME;
 	});
 	
-	quitButton->setPosY(-300);
-	quitButton->setPosX(-600);
+	quitButton->setPos(-600, -300);
 	quitButton->setOnClick([this]() {
 		this->_render->closeWindow();
 	});

@@ -28,6 +28,7 @@ public:
 	int	getPosY() const noexcept override;
 	void	setPosX(int x) noexcept override;
 	void	setPosY(int y) noexcept override;
+	void	setPos(int x, int y) noexcept override;
 	void	onClick() override;
 	void	setOnClick(std::function<void()>
 			       f) noexcept override;

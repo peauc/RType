@@ -56,3 +56,9 @@ int	AText::getPosY() const noexcept
 {
 	return (this->_y);
 }
+
+void AText::setPos(int x, int y) noexcept
+{
+	this->_x = x;
+	this->_y = y;
+}

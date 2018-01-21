@@ -74,3 +74,9 @@ void TextSFML::setPosY(int y) noexcept
 	AText::setPosY(y);
 	this->_sText.setPosition(this->_x, y);
 }
+
+void TextSFML::setPos(int x, int y) noexcept
+{
+	AText::setPos(x, y);
+	this->_sText.setPosition(x, y);
+}

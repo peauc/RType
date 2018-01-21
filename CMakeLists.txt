@@ -4,7 +4,8 @@ project(rtype)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -pthread -W -Wall -Wextra")
 
 ##COMMON
-file(GLOB_RECURSE COMMON_FILES common/*.cpp common/*.hpp)
+file(GLOB_RECURSE COMMON_FILES common/*.cpp common/*.hpp
+        RessourcesLoader/*.cpp)
 include_directories(common/inc)
 include_directories(RessourcesLoader/includes)
 
