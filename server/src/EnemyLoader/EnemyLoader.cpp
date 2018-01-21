@@ -15,7 +15,7 @@ EnemyLoader::EnemyLoader(const std::string &path, Engine::Game	&game) {
 	}
 }
 
- const std::unordered_map<const std::string, Engine::Entity*> &EnemyLoader::getEnemies() const {
+ const std::map<const std::string, Engine::Entity*> &EnemyLoader::getEnemies() const {
 	return (this->enemies);
 }
 

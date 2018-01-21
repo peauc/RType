@@ -46,7 +46,7 @@ namespace Engine {
 		EventList _eventList;
 		PacketList _packetList;
 		EnemyLoader	_enemyLoader;
-		std::unordered_map<const std::string, Engine::Entity*>	_DLEntitiesMap;
+		std::map<const std::string, Engine::Entity*>	_DLEntitiesMap;
 		std::shared_ptr<RessourcesLoader> _resourceLoader;
 		bool _stop;
 	};
