@@ -12,7 +12,6 @@ Component::PlayerInputComponent::PlayerInputComponent(Engine::Entity *parentEnti
 
 void Component::PlayerInputComponent::update() noexcept
 {
-	std::cout << "Input" << this->_parentEntity->getId() << std::endl;
 	this->_event = this->_eventList->getEventById(this->_parentEntity->getId());
 	if (this->_event == nullptr) {
 		return;
