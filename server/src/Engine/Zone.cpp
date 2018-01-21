@@ -41,6 +41,11 @@ void Engine::MapLoader::Zone::createZone(Game &game) const
 	game.getWorld()->addObject(std::unique_ptr<Entity>(zone));
 }
 
+void Engine::MapLoader::Zone::addZoneObject(
+		const Engine::MapLoader::Zone::ZoneObject &zoneObject) {
+	this->_zoneObjects.push_back(zoneObject);
+}
+
 Engine::MapLoader::Zone::ZoneObject::ZoneObject(const std::string &libname, const Vector2d &pos) : _libname(libname),
 																								   _pos(pos)
 {

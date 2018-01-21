@@ -28,7 +28,7 @@ void WindowManager::fillGridView() {
 	mapModel->setOutputDirectory(this->outputDirectory);
 	mapModel->setExecDirectory(this->execDirectory);
 	mapModel->setExistingMap(this->existingMap);
-	mapView->setModel(new MapModel(mapView));
+	mapView->setModel(mapModel);
 	this->gridLayout.addChild(mapView,
 							  GridLayout::Range {15, 100, 15, 100,} );
 	listView->setModel(new EnemiesListModel(this->enemiesDirectory,

@@ -109,9 +109,13 @@ std::string MapModel::saveChildInZone(const ChildMap *child) const {
 	result += "{ ";
 	result += "\"Path\" : \"" + this->execDirectory + child->getPathItem()
 			  + "\", ";
-	result += "\"X\" : " + std::to_string(child->getX() + child->getWidth() / 2)
+	result += "\"X\" : "
+			  + std::to_string(child->getX() + child->getWidth() / 2)
 			  + ", ";
-	result += "\"Y\" : " + std::to_string(child->getY() + child->getHeight() / 2);
+	result += "\"Y\" : "
+			  + std::to_string(child->getY() + child->getHeight() / 2) + ", ";
+	result += "\"Width\" : " + std::to_string(child->getWidth()) + ", ";
+	result += "\"Height\" : " + std::to_string(child->getHeight());
 	result += " }";
 	return (result);
 }

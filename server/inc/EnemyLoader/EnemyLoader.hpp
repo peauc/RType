@@ -8,9 +8,9 @@
 #	include <iostream>
 #	include <unordered_map>
 #include <map>
-#	include "Engine/Entity.hpp"
-#	include "EnemyLoader/LStock.hpp"
-#	include "EnemyLoader/DLLoader.hpp"
+#	include "Entity.hpp"
+#	include "LStock.hpp"
+#	include "DLLoader.hpp"
 
 class EnemyLoader {
 private:

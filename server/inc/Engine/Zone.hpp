@@ -30,6 +30,8 @@ namespace Engine {
 				Engine::Entity *createEntity(Game &game) const;
 			};
 
+			void addZoneObject(const ZoneObject &zoneObject);
+
 		private:
 			Vector2d _topLeftCoords;
 			Vector2d _bottomRightCoords;

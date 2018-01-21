@@ -10,7 +10,7 @@
 #include "World.hpp"
 #include "Event.hpp"
 #include "EventList.hpp"
-#include "EnemyLoader/EnemyLoader.hpp"
+#include "EnemyLoader.hpp"
 #include "../../../RessourcesLoader/includes/RessourcesLoader.hpp"
 #include "PacketList.hpp"
 
