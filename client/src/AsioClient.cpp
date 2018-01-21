@@ -58,6 +58,7 @@ bool client::AsioClient::sendMessage(const Packet::DataPacket &packet) noexcept
 	return (true);
 }
 
+//TODO: changer la seed et le port
 bool client::AsioClient::connect(const std::string &host) noexcept
 {
 	boost::asio::ip::udp::resolver resolver(_ioService);

@@ -84,6 +84,7 @@ void AsioServer::handleReceive(const boost::system::error_code &error,
 	
 	if (_lobbyList.isClientContained(tmp)) {
 		t = _lobbyList.getClientLobby(tmp);
+		t->getClientContained(tmp).resetTimeout();
 		try {
 			t->getClientContained(tmp).resetTimeout();
 		} catch (std::out_of_range &e) {
