@@ -27,6 +27,8 @@ public:
 	virtual void	setPos(int x, int y) = 0;
 	virtual void 	setPosX(int x) = 0;
 	virtual void 	setPosY(int y) = 0;
+	virtual uint32_t getAnimationId() const = 0;
+	virtual void	setAnimationId(uint32_t id) = 0;
 	virtual void	updateAnimation() = 0;
 	virtual void	onClick() = 0;
 	virtual void	setOnClick(std::function<void()> f) = 0;

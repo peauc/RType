@@ -29,6 +29,8 @@ public:
 	void	setPosX(int x) noexcept override;
 	void	setPosY(int y) noexcept override;
 	void	setPos(int x, int y) noexcept override;
+	uint32_t getAnimationId() const noexcept override;
+	void setAnimationId(uint32_t id) noexcept override;
 	void	onClick() override;
 	void	setOnClick(std::function<void()>
 			       f) noexcept override;
@@ -37,6 +39,7 @@ protected:
 	int		_posX;
 	int		_posY;
 	std::function<void()> _onClick;
+	unsigned int	_animationId;
 };
 
 #endif // !RTYPE_ASPRITE_HPP_

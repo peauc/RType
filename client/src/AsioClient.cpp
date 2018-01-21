@@ -127,7 +127,5 @@ void client::AsioClient::tick() noexcept
 std::vector<Packet::DataPacket> client::AsioClient::getDataPacketList()
 {
 	std::vector<Packet::DataPacket> v;
-	v = _packetList;
-	_packetList.clear();
-	return (v);
+	return (std::exchange(_packetList, v));
 }
