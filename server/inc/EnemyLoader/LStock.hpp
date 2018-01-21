@@ -15,6 +15,7 @@ private:
 	std::vector<std::string>::const_iterator	it;
 	std::string path;
 public:
+	bool	isFolder = true;
 	void setPath(const std::string &path);
 
 public:

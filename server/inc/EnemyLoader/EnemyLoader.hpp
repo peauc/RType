@@ -22,7 +22,7 @@ public:
 	explicit EnemyLoader(const std::string &path, Engine::Game &game);
 	~EnemyLoader() = default;
 
-	std::unique_ptr<std::map<const std::string, Engine::Entity*>> &getEnemies() const;
+	std::unique_ptr<std::map<const std::string, Engine::Entity*>> getEnemies() const;
 	void setup(const std::string &path, Engine::Game &game);
 };
 #endif //RTYPE_ENEMYLOADER_HPP
