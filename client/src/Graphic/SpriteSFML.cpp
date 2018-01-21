@@ -105,6 +105,9 @@ void	SpriteSFML::setAnimationVector(const std::vector<sf::Texture>
 
 /**
  * Set next texture to draw
+ * If more than one animation and didnt played all animations
+ * If animation finished and animation has to be repeated, restart Animation
+ * else set a black rectangle
  */
 void	SpriteSFML::updateAnimation() noexcept
 {
@@ -119,6 +122,7 @@ void	SpriteSFML::updateAnimation() noexcept
 		}
 	} else {
 		this->_sprite.setTextureRect(sf::IntRect());
+		// TODO To delete
 	}
 }
 

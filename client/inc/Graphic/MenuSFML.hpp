@@ -17,20 +17,21 @@
 class	MenuSFML : public IMenu
 {
 public:
-	MenuSFML();
-	MenuSFML(std::vector<const ISprite*> sprites) noexcept;
+	MenuSFML() = default;
 	MenuSFML(const MenuSFML &) = delete;
 	MenuSFML &operator=(const MenuSFML &) = delete;
 	~MenuSFML() override = default;
 	
-	std::vector<const ISprite *> &getSpritesToDraw() noexcept override;
-	std::vector<const IText *> &getTextsToDraw() noexcept override;
-	void	addSprite(const ISprite *sprite) noexcept override;
-	void	addText(const IText *text) noexcept override;
+	const std::vector<std::unique_ptr<ISprite>>
+			&getSpritesToDraw() const noexcept override;
+	const std::vector<std::unique_ptr<IText>>
+			&getTextsToDraw() const noexcept override;
+	void	addSprite(std::unique_ptr<ISprite>sprite) noexcept override;
+	void	addText(std::unique_ptr<IText> text) noexcept override;
 	
 private:
-	std::vector<const ISprite*> _sprites;
-	std::vector<const IText*> _texts;
+	std::vector<std::unique_ptr<ISprite>> _sprites;
+	std::vector<std::unique_ptr<IText>> _texts;
 };
 
 #endif // !RTYPE_MENUSFML_HPP_

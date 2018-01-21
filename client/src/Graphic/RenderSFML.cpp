@@ -18,14 +18,14 @@ RenderSFML::RenderSFML()
 }
 
 RenderSFML::RenderSFML(unsigned int width, unsigned int height,
-                       const std::string &windowName) noexcept
+                       const std::string &windowName)
  : _window(nullptr)
 {
 	this->initEventMap();
 	this->openWindow(width, height, windowName);
 }
 
-void	RenderSFML::initEventMap() noexcept
+void	RenderSFML::initEventMap()
 {
 	this->_eventMap.insert(std::make_pair(sf::Keyboard::Up,
 					      IRender::EventAction::UP));
@@ -42,7 +42,7 @@ void	RenderSFML::initEventMap() noexcept
 }
 
 void	RenderSFML::openWindow(unsigned int width, unsigned int height,
-                               const std::string &windowName) noexcept
+                               const std::string &windowName)
 {
 	if (this->_window != nullptr) {
 		this->closeWindow();
@@ -82,7 +82,7 @@ void	RenderSFML::closeWindow() noexcept
 
 std::unique_ptr<ISprite> RenderSFML::createSprite(const std::string &fileName,
 						  uint32_t sizeTileX,
-						  uint32_t sizeTileY) noexcept
+						  uint32_t sizeTileY)
 {
 	return (std::make_unique<SpriteSFML>(fileName, sizeTileX, sizeTileY));
 }
@@ -135,7 +135,7 @@ void	RenderSFML::addEventToQueue(std::queue<IRender::EventAction>
 }
 
 void	RenderSFML::loadAnimations(std::unordered_map<uint32_t,
-	std::vector<Texture>> textureMap) noexcept
+	std::vector<Texture>> textureMap)
 {
 	for (auto &it : textureMap) {
 		auto &vectorTexture = it.second;

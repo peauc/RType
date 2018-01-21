@@ -8,27 +8,21 @@
 #include <utility>
 #include "Graphic/MenuSFML.hpp"
 
-MenuSFML::MenuSFML(std::vector<const ISprite*> sprites) noexcept
- : _sprites(std::move(sprites))
-{
-}
-
-std::vector<const ISprite*>	&MenuSFML::getSpritesToDraw() noexcept
+const std::vector<std::unique_ptr<ISprite>> &MenuSFML::getSpritesToDraw() const noexcept
 {
 	return (_sprites);
 }
 
-void	MenuSFML::addSprite(const ISprite *sprite) noexcept
+void	MenuSFML::addSprite(std::unique_ptr<ISprite> sprite) noexcept
 {
-	this->_sprites.push_back(sprite);
+	this->_sprites.push_back(std::move(sprite));
 }
 
-std::vector<const IText*> &MenuSFML::getTextsToDraw() noexcept
+const std::vector<std::unique_ptr<IText>> &MenuSFML::getTextsToDraw() const noexcept
 {
 	return (_texts);
 }
-
-void MenuSFML::addText(const IText *text) noexcept
+void MenuSFML::addText(std::unique_ptr<IText> text) noexcept
 {
-	this->_texts.push_back(text);
+	this->_texts.push_back(std::move(text));
 }
