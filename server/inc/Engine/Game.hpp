@@ -10,9 +10,10 @@
 #include "World.hpp"
 #include "Event.hpp"
 #include "EventList.hpp"
-#include "EnemyLoader.hpp"
-#include "../../../RessourcesLoader/includes/RessourcesLoader.hpp"
+#include "EnemyLoader/EnemyLoader.hpp"
 #include "PacketList.hpp"
+
+class RessourcesLoader;
 
 namespace Engine {
 	class World;

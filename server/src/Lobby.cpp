@@ -4,8 +4,9 @@
 
 #include <iostream>
 #include <thread>
-#include <Logger.hpp>
+#include "Logger.hpp"
 #include "Lobby.hpp"
+#include "RessourcesLoader.hpp"
 
 bool Lobby::isClientContained(const ClientObject &client) const noexcept
 {

@@ -3,6 +3,7 @@
 //
 
 #include "AGraphicsComponent.hpp"
+#include "RessourcesLoader.hpp"
 
 Component::AGraphicsComponent::AGraphicsComponent(Engine::Entity *parentEntity, RessourcesLoader *resourceLoader)
 		: AComponent(parentEntity), _resourceLoader(resourceLoader), _isHit(false), _isAlive(true)

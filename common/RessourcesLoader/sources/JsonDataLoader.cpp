@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include <fstream>
-#include "../includes/JsonDataLoader.hpp"
+#include "JsonDataLoader.hpp"
 
 JsonDataLoader::Type JsonDataLoader::resolveType(char ref) const
 {

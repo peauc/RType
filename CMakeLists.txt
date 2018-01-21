@@ -5,16 +5,11 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -pthread -W -Wall -Wextra")
 
 ##COMMON
 file(GLOB_RECURSE COMMON_FILES common/*.cpp common/*.hpp
-        RessourcesLoader/*.cpp)
-include_directories(common/inc)
-include_directories(RessourcesLoader/includes)
-
-##SERVER
-
-file(GLOB_RECURSE SERVER_SRC server/src/*.cpp)
-file(GLOB_RECURSE SERVER_INC server/inc/*.hpp)
-set(SERVER_FILES ${SERVER_SRC} ${SERVER_INC})
-include_directories(server/inc
+        common/RessourcesLoader/inc/*.hpp
+        common/RessourcesLoader/sources/*.cpp)
+include_directories(common/inc
+        common/RessourcesLoader/inc
+        server/inc
         server/inc/Engine/
         server/inc/Common
         server/inc/Components
@@ -24,16 +19,22 @@ include_directories(server/inc
         server/inc/Components/Projectiles
         server/inc/Components/Zone
         server/inc/Factories
-        server/inc/Engine/Commands)
-add_executable(server ${SERVER_FILES} ${COMMON_FILES})
+        server/inc/Engine/Commands
+        client/inc)
+
+##SERVER
+
+file(GLOB_RECURSE SERVER_SRC server/src/*.cpp)
+file(GLOB_RECURSE SERVER_INC server/inc/*.hpp)
+set(SERVER_FILES ${SERVER_SRC} ${SERVER_INC})
+add_executable(server ${COMMON_FILES} ${SERVER_FILES})
 
 ##CLIENT
 
 file(GLOB_RECURSE CLIENT_SRC client/src/*.cpp)
 file(GLOB_RECURSE CLIENT_INC client/inc/*.hpp)
 set(CLIENT_FILES ${CLIENT_SRC} ${CLIENT_INC})
-include_directories(client/inc)
-add_executable(client ${CLIENT_FILES} ${COMMON_FILES})
+add_executable(client ${COMMON_FILES} ${CLIENT_FILES})
 
 ##BOOST
 if (WIN32)

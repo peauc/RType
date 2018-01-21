@@ -6,7 +6,7 @@
 */
 
 #include <algorithm>
-#include "../includes/Object.hpp"
+#include "Object.hpp"
 
 Object::Object(const std::string &data)
 {

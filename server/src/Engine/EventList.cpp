@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include "EventList.hpp"
+#include "Logger.hpp"
 
 void Engine::EventList::pushBack(std::unique_ptr<Engine::Event> &e)
 {
