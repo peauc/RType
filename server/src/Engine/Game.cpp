@@ -93,7 +93,25 @@ void Engine::Game::pushDataPacket(Packet::DataPacket *packet)
 
 void Engine::Game::start()
 {
-	_thread.detach();
-	std::thread(&Game::run, this).detach();
+	_thread = std::thread(&Game::run, this);
 	Logger::Log(Logger::INFO, "Started Game");
+}
+Engine::Game::~Game()
+{
+	if (_thread.joinable())
+		_thread.join();
+	Logger::Log(Logger::CRITICAL, "Deleting the game");\
+}
+void Engine::Game::stop()
+{
+	_stop = true;
+}
+
+std::vector<std::unique_ptr<Packet::DataPacket>> Engine::Game::getPackets() {
+	std::vector<std::unique_ptr<Packet::DataPacket>> l;
+	std::unique_ptr<Packet::DataPacket> packet;
+	while ((packet = _packetList.popBack()) != nullptr) {
+		l.push_back(std::move(packet));
+	}
+	return (l);
 }

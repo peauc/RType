@@ -75,17 +75,16 @@ const size_t PACKETSIZE = sizeof(DataPacket);
 
 enum Commands
 {
-	CONNECT		= 0,
-	DISCONNECT	= 1,
-	CONNECTED	= 2,
-	DISCONNECTED	= 3,
-	STARTGAME	= 4,
-	READY		= 5,
-	POSITION	= 6,
-	HIT		= 7,
-	EVENT		= 8,
-	PONG            = 9,
-	UNKNOWN		= 10
+	CONNECT	= 0,
+	DISCONNECT,
+	CONNECTED,
+	DISCONNECTED,
+	STARTGAME,
+	READY,
+	POSITION,
+	EVENT,
+	PONG,
+	UNKNOWN
 };
 }
 #endif //SFMLDEMO_DATAPACKET_HPP

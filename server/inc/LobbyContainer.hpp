@@ -18,7 +18,9 @@ public:
 	std::unique_ptr<Lobby>::pointer getClientLobby(ClientObject &client);
 	bool addClientToLobby(ClientObject &client, unsigned short seed) noexcept;
 	void dump();
-	void broadcastToclient(Packet::DataPacket packet);
+	std::vector<std::pair<std::vector<std::unique_ptr<Packet::DataPacket
+	>>, Lobby *>>
+	getPacketFromGames();
 private:
 	std::vector<std::unique_ptr<Lobby> > _lobbyList;
 };

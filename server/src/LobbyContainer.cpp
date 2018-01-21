@@ -2,8 +2,10 @@
 // Created by Clément Péau on 16/01/2018.
 //
 
+#include <vector>
 #include <iostream>
 #include <Message.hpp>
+#include <Logger.hpp>
 #include "LobbyContainer.hpp"
 
 bool LobbyContainer::isClientContained(ClientObject &client)
@@ -29,7 +31,7 @@ bool LobbyContainer::addClientToLobby(ClientObject &client,
                                       unsigned short seed) noexcept
 {
 	for (auto &t : _lobbyList) {
-		if (!t->isFull() && t->getSeed() == seed) {
+		if (t->isStarted() && !t->isFull() && t->getSeed() == seed) {
 			t->addClient(client);
 			return (true);
 		}
@@ -67,11 +69,29 @@ void LobbyContainer::checkTimeout()
 	for (auto &t : _lobbyList) {
 		t->checkTimeout();
 	}
+	_lobbyList.erase(std::find_if(_lobbyList.begin(), _lobbyList.end(),
+				      [](const std::unique_ptr<Lobby> &lob) {
+					      return (lob->size() == 0);
+				      })
+		, _lobbyList.end());
 }
-void LobbyContainer::broadcastToclient(Packet::DataPacket packet)
+
+std::vector<std::pair<std::vector<std::unique_ptr<Packet::DataPacket>>,
+	Lobby *>> LobbyContainer::getPacketFromGames()
 {
-	Message m(packet);
+	//todo make smart;
+	std::vector<std::pair<std::vector<std::unique_ptr<Packet::DataPacket
+	>>, Lobby *>> v;
 	for (auto &t : _lobbyList) {
-	
+		std::vector<std::pair<std::vector<std::unique_ptr<Packet
+		::DataPacket>>, Lobby *>> packets;
+		std::pair<std::vector<std::unique_ptr<Packet::DataPacket>>,
+			Lobby	*> pair;
+		pair.first = t->getPackets();
+		pair.second = t.get();
+		packets.push_back(std::move(pair));
+		v.insert(v.end(), std::make_move_iterator(packets.begin()),
+			 std::make_move_iterator(packets.end()));
 	}
+	return (v);
 }
