@@ -19,6 +19,7 @@ public:
 	virtual void	setCharSize(uint32_t charSize) = 0;
 	virtual void	setPosX(int x) = 0;
 	virtual void	setPosY(int y) = 0;
+	virtual void	setPos(int x, int y) = 0;
 	virtual const	std::string &getText() const = 0;
 	virtual int 	getPosX() const = 0;
 	virtual int	getPosY() const = 0;

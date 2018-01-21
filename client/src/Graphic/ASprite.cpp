@@ -60,3 +60,9 @@ void ASprite::setOnClick(std::function<void()> f) noexcept
 {
 	this->_onClick = f;
 }
+
+void ASprite::setPos(int x, int y) noexcept
+{
+	this->_posX = x;
+	this->_posY = y;
+}

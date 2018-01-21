@@ -137,3 +137,9 @@ void SpriteSFML::setPosY(int y) noexcept
 	ASprite::setPosY(y);
 	this->_sprite.setOrigin(this->_posX, y);
 }
+
+void SpriteSFML::setPos(int x, int y) noexcept
+{
+	ASprite::setPos(x, y);
+	this->_sprite.setOrigin(x, y);
+}

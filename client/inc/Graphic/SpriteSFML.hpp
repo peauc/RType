@@ -35,6 +35,7 @@ public:
 	void	updateAnimation() noexcept override;
 	void	setPosX(int x) noexcept override;
 	void	setPosY(int y) noexcept override;
+	void	setPos(int x, int y) noexcept override;
 
 private:
 	sf::Sprite	_sprite;
