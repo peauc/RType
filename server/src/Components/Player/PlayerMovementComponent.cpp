@@ -20,11 +20,14 @@ Component::PlayerMovementComponent::PlayerMovementComponent(Engine::Entity *pare
 	this->_validMessageTypes[Engine::Mediator::Message::NEW_EVENT] = std::bind(&PlayerMovementComponent::handleEvent,
 																			   this, std::placeholders::_1,
 																			   std::placeholders::_2);
+	this->_validMessageTypes[Engine::Mediator::Message::CAMERA_REPOSITION] = std::bind(
+			&PlayerMovementComponent::handleCameraReposition,
+			this, std::placeholders::_1,
+			std::placeholders::_2);
 }
 
 void Component::PlayerMovementComponent::update()
 {
-	std::cout << "Updating movement" << std::endl;
 	this->_lastMove.x = this->_baseSpeed + this->_xInput * this->_baseSpeed;
 	this->_lastMove.y = this->_lateralBaseSpeed + this->_yInput * this->_lateralMaxSpeed;
 
@@ -44,7 +47,6 @@ void Component::PlayerMovementComponent::update()
 
 void Component::PlayerMovementComponent::handleEvent(Engine::Mediator::Message, Engine::AComponent *sender)
 {
-	std::cout << "Handling event" << std::endl;
 	if (AInputComponent *inputComponent = dynamic_cast<AInputComponent *>(sender)) {
 		if (inputComponent->hasEvent()) {
 			this->_xInput = inputComponent->getEvent()._xVelocity;
@@ -56,7 +58,26 @@ void Component::PlayerMovementComponent::handleEvent(Engine::Mediator::Message, 
 	}
 }
 
-void Component::PlayerMovementComponent::handleCameraReposition(Engine::Mediator::Message,
-																Engine::AComponent *)
+void Component::PlayerMovementComponent::handleCameraReposition(Engine::Mediator::Message message,
+																Engine::AComponent *sender)
 {
+	if (APhysicsComponent *physicsComponent = dynamic_cast<APhysicsComponent *>(sender)) {
+
+		if ((this->_lastMove.y < 0 && !physicsComponent->getCollision(APhysicsComponent::Direction::TOP)) ||
+			(this->_lastMove.y > 0 && !physicsComponent->getCollision(APhysicsComponent::Direction::BOTTOM))) {
+			this->_parentEntity->getTransformComponent().getPosition().y -= this->_lastMove.y;
+			this->_lastMove.y = 0;
+		}
+		if (this->_lastMove.x > 0 && !physicsComponent->getCollision(APhysicsComponent::Direction::RIGHT)) {
+			this->_parentEntity->getTransformComponent().getPosition().x -= this->_lastMove.x;
+			this->_lastMove.x = 0;
+		}
+		if (!physicsComponent->getCollision(APhysicsComponent::Direction::LEFT)) {
+			this->_lastMove.x += this->_baseSpeed;
+			Engine::Commands::ICommand *command = new Engine::Commands::TransformPositionCommand(
+					this->_parentEntity->getTransformComponent(), this->_baseSpeed, 0);
+			command->execute();
+			this->_parentEntity->addCommand(command);
+		}
+	}
 }

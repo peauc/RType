@@ -16,6 +16,7 @@ namespace Component {
 		~CameraViewComponent() override = default;
 
 		void update() override;
+		const Vector2d &getRelativeBottomRight() const;
 
 		// handle methods
 		void handleGraphicsRegistration(Engine::Mediator::Message messageType, AComponent *sender);

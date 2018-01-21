@@ -4,6 +4,7 @@
 
 #include <Engine/AComponent.hpp>
 #include <Engine/Entity.hpp>
+#include <iostream>
 
 Engine::AComponent::AComponent(Engine::Entity *parentEntity) : _parentEntity(parentEntity)
 {

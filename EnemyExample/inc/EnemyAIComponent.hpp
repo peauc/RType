@@ -15,13 +15,12 @@ namespace Component {
 	class EnemyAIComponent : public AInputComponent
 	{
 	public:
-		explicit EnemyAIComponent(Engine::Entity *parentEntity,
-									  std::vector<std::unique_ptr<Engine::Event>> &gameEvents);
+		explicit EnemyAIComponent(Engine::Entity *parentEntity);
 		~EnemyAIComponent() = default;
 
 		void update();
 	private:
-		std::vector<std::unique_ptr<Engine::Event>> &_gameEvents;
+		std::vector<std::unique_ptr<Engine::Event>> _gameEvents;
 	};
 }
 

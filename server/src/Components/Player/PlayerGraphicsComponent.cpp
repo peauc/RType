@@ -59,7 +59,6 @@ Component::PlayerGraphicsComponent::PlayerGraphicsComponent(Engine::Entity *pare
 
 void Component::PlayerGraphicsComponent::update()
 {
-	std::cout << "Updating graphics" << std::endl;
 	this->sendToAll(Engine::Mediator::Message::GRAPHICS_REGISTERING);
 }
 

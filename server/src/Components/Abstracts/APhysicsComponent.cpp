@@ -3,6 +3,7 @@
 //
 
 #include <Components/Abstracts/APhysicsComponent.hpp>
+#include <Engine/Entity.hpp>
 #include <iostream>
 
 Component::APhysicsComponent::APhysicsComponent(Engine::Entity *entity, Engine::Hitbox hitbox) : AComponent(entity),
@@ -27,9 +28,13 @@ void Component::APhysicsComponent::setCollisionDamages(int collisionDamages)
 void Component::APhysicsComponent::handleCheckCollision(Engine::Mediator::Message,
 														Engine::AComponent *sender)
 {
+	std::cout << "Checking collision" << std::endl;
 	if (APhysicsComponent *other = dynamic_cast<APhysicsComponent *>(sender)) {
-		if (this->_orientedBoundingBox.checkIntersection(other->_orientedBoundingBox, *this) ||
-			other->_orientedBoundingBox.checkIntersection(this->_orientedBoundingBox, *other)) {
+		this->_orientedBoundingBox = OBB(this->_parentEntity->getTransformComponent(), this->_hitbox);
+		other->_orientedBoundingBox = OBB(other->_parentEntity->getTransformComponent(), other->_hitbox);
+
+		if (this->_orientedBoundingBox.checkIntersection(other->_orientedBoundingBox, *other) ||
+			other->_orientedBoundingBox.checkIntersection(this->_orientedBoundingBox, *this)) {
 			this->_collisionDamages = 0;
 			if (!this->_mediators.empty()) {
 				this->_mediators[0]->send(Engine::Mediator::Message::GET_IMPACT_DAMAGES, this);
@@ -47,6 +52,8 @@ void Component::APhysicsComponent::triggerCollision(Component::APhysicsComponent
 		if (!this->_mediators.empty()) {
 			this->_mediators[0]->send(Engine::Mediator::Message::GET_IMPACT_DAMAGES, this);
 		}
+	}
+	if (this->_collisionHandlers.count(other._hitbox._type) != 0) {
 		this->_collisionHandlers[other._hitbox._type](other);
 	}
 }
@@ -80,6 +87,11 @@ void Component::APhysicsComponent::resetCollisions()
 bool Component::APhysicsComponent::getCollision(Component::APhysicsComponent::Direction direction) const
 {
 	return this->_collisions[direction];
+}
+
+void Component::APhysicsComponent::setOBB()
+{
+	this->_orientedBoundingBox = OBB(this->_parentEntity->getTransformComponent(), this->_hitbox);
 }
 
 Component::APhysicsComponent::OBB::OBB(const Engine::TransformComponent &transformComponent,

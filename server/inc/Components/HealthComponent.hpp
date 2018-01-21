@@ -18,8 +18,6 @@ namespace Component {
 
 		void takeDamage(int damages);
 
-		int getHealth() const;
-
 		// handle methods
 		void handleGetImpactDamages(Engine::Mediator::Message messageType, Engine::AComponent *sender);
 		void handleHit(Engine::Mediator::Message messageType, Engine::AComponent *sender);
