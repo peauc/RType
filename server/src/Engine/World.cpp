@@ -5,6 +5,7 @@
 #include <Engine/Entity.hpp>
 #include <Engine/World.hpp>
 #include <iostream>
+#include <Logger.hpp>
 
 Engine::World::World() : _nextEntityId(0), _parentGame(nullptr)
 {

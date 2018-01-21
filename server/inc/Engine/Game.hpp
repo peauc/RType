@@ -14,8 +14,7 @@
 #include "../../../RessourcesLoader/includes/RessourcesLoader.hpp"
 #include "PacketList.hpp"
 
-
-#define MS_PER_UPDATE 16
+#define NS_PER_UPDATE 16000000
 
 namespace Engine {
 	class World;
@@ -29,7 +28,7 @@ namespace Engine {
 		void start();
 		void run();
 		void setup(size_t nbOfPlayers,
-			   const std::shared_ptr<RessourcesLoader> &resourceLoader);
+				   const std::shared_ptr<RessourcesLoader> &resourceLoader);
 
 		EventList &getEventList();
 		void setWorld(std::unique_ptr<World> world);
@@ -41,13 +40,15 @@ namespace Engine {
 		void stop();
 		std::unique_ptr<std::vector<std::unique_ptr<Packet::DataPacket>>>
 		getPackets();
+		Entity *cloneEntity(const std::string &name) const;
+
 	private:
 		std::thread _thread;
 		std::unique_ptr<World> _world;
 		EventList _eventList;
 		PacketList _packetList;
-		EnemyLoader	_enemyLoader;
-		std::unique_ptr<std::map<const std::string, Engine::Entity*>>	_DLEntitiesMap;
+		EnemyLoader _enemyLoader;
+		std::unique_ptr<std::map<const std::string, Engine::Entity *>> _DLEntitiesMap;
 		std::shared_ptr<RessourcesLoader> _resourceLoader;
 		bool _stop;
 	};

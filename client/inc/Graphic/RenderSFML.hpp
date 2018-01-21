@@ -43,6 +43,8 @@ public:
 	void	setAnimationToSprite(ISprite *sprite,
 					 uint32_t idAnimation,
 					 bool repeat) noexcept override;
+	uint32_t getWidth() const noexcept override;
+	uint32_t getHeight() const noexcept override;
 
 private:
 	const unsigned int					BPP = 32;
@@ -50,6 +52,8 @@ private:
 	std::unique_ptr<sf::RenderWindow>			_window;
 	std::unordered_map<int, IRender::EventAction>		_eventMap;
 	std::unordered_map<uint32_t, std::vector<sf::Texture>>	_textureMap;
+	uint32_t 						_width;
+	uint32_t 						_height;
 
 	void	addEventToQueue(std::queue<IRender::EventAction> &eventQueue,
 				    int key) noexcept;

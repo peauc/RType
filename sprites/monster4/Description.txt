@@ -1,0 +1,2 @@
+Animation2 -> position de tir
+Animation1 -> déplacement

@@ -1,0 +1,8 @@
+{
+	 Animation : 
+		[
+			{ File : "Tools/Mapper/images_to_map/r-typesheet29.png", x : 67, y : 201, width : 25, height : 28 },
+			{ File : "Tools/Mapper/images_to_map/r-typesheet29.png", x : 102, y : 201, width : 25, height : 28 },
+			{ File : "Tools/Mapper/images_to_map/r-typesheet29.png", x : 67, y : 201, width : 25, height : 28 }
+		]
+}

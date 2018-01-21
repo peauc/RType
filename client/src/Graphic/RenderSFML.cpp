@@ -12,7 +12,7 @@
 #include "Graphic/RenderSFML.hpp"
 
 RenderSFML::RenderSFML()
- : _window(nullptr)
+ : _window(nullptr), _width(0), _height(0)
 {
 	this->initEventMap();
 }
@@ -44,6 +44,8 @@ void	RenderSFML::initEventMap()
 void	RenderSFML::openWindow(unsigned int width, unsigned int height,
                                const std::string &windowName)
 {
+	this->_width = width;
+	this->_height = height;
 	if (this->_window != nullptr) {
 		this->closeWindow();
 	}
@@ -103,9 +105,6 @@ void	RenderSFML::draw(const IText *text) noexcept
 	}
 }
 
-/**
- * Renvoi une queue d'events
- */
 std::queue<IRender::EventAction> RenderSFML::pollEvents() noexcept
 {
 	sf::Event				event{};
@@ -175,6 +174,7 @@ void	RenderSFML::setAnimationToSprite(ISprite *sprite,
 	auto spriteSFML = dynamic_cast<SpriteSFML*>(sprite);
 	auto it = this->_textureMap.find(idAnimation);
 	if (it != this->_textureMap.end()) {
+		spriteSFML->setAnimationId(idAnimation);
 		spriteSFML->setAnimationVector(it->second, repeat);
 	}
 }
@@ -187,4 +187,14 @@ bool	RenderSFML::isSpriteClicked(const ISprite *sprite,
 	sf::FloatRect fr = spriteSFML->getSprite().getGlobalBounds();
 
 	return (event == EventAction::MOUSE1 && fr.contains(mPos.x, mPos.y));
+}
+
+uint32_t RenderSFML::getWidth() const noexcept
+{
+	return (this->_width);
+}
+
+uint32_t RenderSFML::getHeight() const noexcept
+{
+	return (this->_height);
 }

@@ -172,6 +172,7 @@ void AsioServer::ready(const Packet::DataPacket &packet, ClientObject &obj)
 noexcept
 {
 	obj.toggleReady();
+	sendMessage(obj, Packet::DataPacket(Packet::READY));
 	if (_lobbyList.getClientLobby(obj)->isReady()) {
 		Logger::Log(Logger::DEBUG, "Starting game :)");
 		_lobbyList.getClientLobby(obj)->startGame();
@@ -203,7 +204,7 @@ noexcept
 	e->_shotReleased = input.shot;
 	e->_xVelocity = input.xVelocity;
 	e->_yVelocity = input.yVelocity;
-	_lobbyList.getClientLobby(obj)->pullEventInList(e);
+	_lobbyList.getClientLobby(obj)->pushEventInList(e);
 }
 void AsioServer::pong(const Packet::DataPacket &packet, ClientObject &obj)
 noexcept

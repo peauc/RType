@@ -41,6 +41,7 @@ private:
 	std::unique_ptr<IMenu>		_startMenu;
 	std::unordered_map<uint32_t, std::unique_ptr<ISprite>>	_objects;
 	GameState 			_gameState;
+	bool 				_waitingReady;
 	
 	const short FRAMEDURATION = 16;
 	const short ANIMATIONDURATION = 16;
@@ -49,13 +50,22 @@ private:
 	void	updateAnimations(int &nbTicks) noexcept;
 	void	processEvents(std::queue<IRender::EventAction>
 				  &eventsQueue) noexcept;
+	
 	void	processEventMenu(const IRender::EventAction &event) noexcept;
 	void	createMenu();
 	void	modifyInputPacket(const IRender::EventAction &event,
 				      Packet::Input &input) noexcept;
 	void	sendEventPacket(const Packet::Input &input) noexcept;
+	void	sendReadyPacket() noexcept;
 	void	setVelocityInput(short x, short y,
 				     Packet::Input &input) noexcept;
+	void	interpretPacket(const std::vector<Packet::DataPacket>
+				     &packets) noexcept;
+	void	updateObject(const Packet::DataPacket &packet) noexcept;
+	void	updateInfosObject(ISprite *sprite, bool repeatAnimation,
+				      const Packet::Object &objInfos) noexcept;
+	std::pair<short, short>	calculateRealPosition(short x,
+							     short y) noexcept;
 };
 
 #endif // !RTYPE_CLIENTGAME_HPP_

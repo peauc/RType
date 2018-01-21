@@ -9,35 +9,34 @@
 #include "Engine/Game.hpp"
 #include "Factories/EntityFactory.hpp"
 
-
 Engine::Game::Game()
 {
 	this->_world = std::make_unique<World>();
 }
+
 void Engine::Game::run()
 {
+	Logger::Log(Logger::CRITICAL, "Game is starting");
 	std::chrono::time_point<std::chrono::system_clock> previous = std::chrono::system_clock::now();
-	double lag = 0;
+	long lag = 0;
+	this->_stop = false;
 
 	while (!this->_stop) {
 		std::chrono::time_point<std::chrono::system_clock> current = std::chrono::system_clock::now();
-		double elapsed = static_cast<double>(std::chrono::duration_cast<std::chrono::milliseconds>
-				(current - previous).count());
+		auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>
+				(current - previous);
 		previous = current;
-		lag += elapsed;
+		lag += elapsed.count();
 
-		// PROCESS INPUT
-		while (lag > MS_PER_UPDATE) {
-			Logger::Log(Logger::DEBUG, "Run");
+		while (lag >= NS_PER_UPDATE) {
 			this->_world->update();
-			lag -= MS_PER_UPDATE;
+			lag -= NS_PER_UPDATE;
 		}
-		// SEND INFORMATIONS TO CLIENT
 	}
 }
 
 void Engine::Game::setup(size_t nbOfPlayers,
-			 const std::shared_ptr<RessourcesLoader> &resourceLoader)
+						 const std::shared_ptr<RessourcesLoader> &resourceLoader)
 {
 	std::unique_ptr<Engine::World> world = std::make_unique<Engine::World>();
 
@@ -49,7 +48,7 @@ void Engine::Game::setup(size_t nbOfPlayers,
 
 	this->_world->setCamera(std::move(camera));
 
-	for (int i = 0; i < nbOfPlayers; ++i) {
+	for (unsigned int i = 0; i < nbOfPlayers; ++i) {
 		this->_world->addObject(Factory::EntityFactory::createPlayerShip);
 	}
 
@@ -101,12 +100,15 @@ void Engine::Game::start()
 	_thread = std::thread(&Game::run, this);
 	Logger::Log(Logger::INFO, "Started Game");
 }
+
 Engine::Game::~Game()
 {
 	if (_thread.joinable())
 		_thread.join();
 	Logger::Log(Logger::CRITICAL, "Deleting the game");\
+
 }
+
 void Engine::Game::stop()
 {
 	_stop = true;
@@ -121,4 +123,13 @@ Engine::Game::getPackets() {
 		l->push_back(std::move(packet));
 	}
 	return (l);
+}
+
+Engine::Entity *Engine::Game::cloneEntity(const std::string &name) const
+{
+	std::map<const std::string, Entity *>::const_iterator ent = this->_DLEntitiesMap->find(name);
+	if (ent != this->_DLEntitiesMap->end()) {
+		return ent->second->clone();
+	}
+	return nullptr;
 }
