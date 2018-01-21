@@ -6,6 +6,7 @@
 #define RTYPE_APHYSICSCOMPONENT_HPP
 
 #include <cmath>
+#include <map>
 #include "AComponent.hpp"
 #include "Hitbox.hpp"
 #include "TransformComponent.hpp"
@@ -65,7 +66,8 @@ namespace Component {
 		const Engine::Hitbox _hitbox;
 		std::unique_ptr<OBB> _orientedBoundingBox;
 		int _collisionDamages;
-		std::unordered_map<Engine::Hitbox::Type, std::function<void(APhysicsComponent &)>> _collisionHandlers;
+		std::map<Engine::Hitbox::Type, std::function<void
+			(APhysicsComponent &)>> _collisionHandlers;
 		bool _collisions[UNDEFINED];
 
 		void triggerCollision(APhysicsComponent &other) noexcept;

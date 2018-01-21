@@ -6,7 +6,7 @@
 #define RTYPE_ACOMPONENT_HPP
 
 #include <memory>
-#include <unordered_map>
+#include <map>
 #include "Mediator.hpp"
 #include "Observer.hpp"
 
@@ -40,7 +40,7 @@ namespace Engine {
 		std::vector<Mediator *> _mediators;
 		std::vector<Observer *> _observers;
 
-		std::unordered_map<Mediator::Message, std::function<void(Mediator::Message, AComponent *)>> _validMessageTypes;
+		std::map<Mediator::Message, std::function<void(Mediator::Message, AComponent *)>> _validMessageTypes;
 	};
 }
 
