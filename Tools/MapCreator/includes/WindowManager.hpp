@@ -17,14 +17,19 @@ class WindowManager : public AItem, public IWindow {
 
 public:
 
-	WindowManager(const std::string &enemiesDirectory,
-				  const std::string &backgroundsDirectory,
-				  const std::string &dest);
+	WindowManager();
 	~WindowManager() = default;
 	WindowManager(const WindowManager&) = delete;
 	WindowManager    operator=(const WindowManager&) = delete;
 
 	void	start();
+
+	void	setEnemiesDirectory(const std::string &enemiesDirectory);
+	void	setBackgroundsDirectory(const std::string &backgroundsDirectory);
+	void	setOutputDirectory(const std::string &outputDirectory);
+	void	setExecDirectory(const std::string &execDirectory);
+	void	setExistingMap(const std::string &existingMap);
+
 
 protected:
 
@@ -45,12 +50,16 @@ protected:
 private:
 
 	bool	needRefresh();
-	void	fillGridView(const std::string &enemiesDirectory,
-						 const std::string &backgroundsDirectory,
-						 const std::string &dest);
+	void	fillGridView();
 
 	sf::RenderWindow	window;
 	GridLayout			gridLayout;
+
+	std::string			enemiesDirectory;
+	std::string			backgroundsDirectory;
+	std::string			outputDirectory;
+	std::string			execDirectory;
+	std::string			existingMap;
 
 	std::chrono::time_point<std::chrono::system_clock> timePoint;
 	std::chrono::time_point<std::chrono::system_clock> currentTime;

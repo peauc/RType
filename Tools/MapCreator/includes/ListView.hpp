@@ -8,7 +8,7 @@
 #ifndef MAPCREATOR_LISTVIEW_HPP
 #define MAPCREATOR_LISTVIEW_HPP
 
-#include "AListModel.hpp"
+#include "AModel.hpp"
 #include "AContainer.hpp"
 #include "AScroller.hpp"
 
@@ -30,11 +30,11 @@ public:
 
 	virtual void	addChild(AItem *child);
 
-	void	setModel(AListModel *model);
+	void	setModel(AModel *model);
 
 protected:
 
-	std::unique_ptr<AListModel>		model;
+	std::unique_ptr<AModel>		model;
 	int								childWidth;
 	int 							childHeight;
 

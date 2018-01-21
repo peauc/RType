@@ -6,8 +6,8 @@
 */
 
 #include "AContainer.hpp"
-#include "AListModel.hpp"
+#include "AModel.hpp"
 
-AListModel::AListModel(AContainer *container) : container(container) {
+AModel::AModel(AContainer *container) : container(container) {
 
 }

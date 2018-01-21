@@ -51,7 +51,7 @@ void ListView::addChild(AItem *child) {
 	AContainer::addChild(child);
 }
 
-void ListView::setModel(AListModel *model) {
+void ListView::setModel(AModel *model) {
 	this->model.reset(model);
 	this->model->loadDataModel();
 }
