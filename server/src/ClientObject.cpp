@@ -47,12 +47,12 @@ bool ClientObject::isReady() const noexcept
 	return (_isReady);
 }
 
-unsigned int ClientObject::getEntityID() const noexcept
+size_t ClientObject::getEntityID() const noexcept
 {
 	return (_entityID);
 }
 
-void ClientObject::setEntityID(unsigned int entityID) noexcept
+void ClientObject::setEntityID(size_t entityID) noexcept
 {
 	_entityID = entityID;
 }

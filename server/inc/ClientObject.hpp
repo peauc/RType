@@ -19,8 +19,8 @@ public:
 	void resetTimeout() noexcept;
 	void toggleReady() noexcept;
 	bool isReady() const noexcept;
-	unsigned int getEntityID() const noexcept;
-	void setEntityID(unsigned int) noexcept;
+	size_t getEntityID() const noexcept;
+	void setEntityID(size_t id) noexcept;
 private:
 	ClientObject();
 	bool _isReady;

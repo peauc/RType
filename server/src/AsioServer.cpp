@@ -133,7 +133,6 @@ bool AsioServer::tick()
 void	AsioServer::interpretPacket(const Packet::DataPacket &packet,
 					ClientObject &obj) noexcept
 {
-	Logger::Log(Logger::DEBUG, "Command n" + packet.cmd);
 	if (packet.cmd < Packet::UNKNOWN) {
 		(this->*fptr[packet.cmd])(packet, obj);
 	}
@@ -171,13 +170,14 @@ void AsioServer::startGame(const Packet::DataPacket &packet, ClientObject
 void AsioServer::ready(const Packet::DataPacket &packet, ClientObject &obj)
 noexcept
 {
-	obj.toggleReady();
+	if (!_lobbyList.getClientLobby(obj)->isStarted())
+		obj.toggleReady();
 	sendMessage(obj, Packet::DataPacket(Packet::READY));
-	if (_lobbyList.getClientLobby(obj)->isReady()) {
+	if (_lobbyList.getClientLobby(obj)->isReady() && !_lobbyList
+								 .getClientLobby(obj)->isStarted()) {
 		Logger::Log(Logger::DEBUG, "Starting game :)");
 		_lobbyList.getClientLobby(obj)->startGame();
-		for (auto &t: _lobbyList.getClientLobby(obj)->getClientList
-			()) {
+		for (auto &t: _lobbyList.getClientLobby(obj)->getClientList()) {
 			sendMessage(t, Packet::DataPacket(Packet::STARTGAME));
 		}
 	}
@@ -194,9 +194,8 @@ void AsioServer::position(const Packet::DataPacket &packet, ClientObject
 void AsioServer::event(const Packet::DataPacket &packet, ClientObject &obj)
 noexcept
 {
-	Packet::Input input;
+	Packet::Input input = packet.data.input;
 	
-	input = packet.data.input;
 	std::unique_ptr<Engine::Event> e = std::make_unique<Engine::Event>
 		(obj.getEntityID());
 	
