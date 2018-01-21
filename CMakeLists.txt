@@ -16,23 +16,6 @@ set(SERVER_FILES ${SERVER_SRC} ${SERVER_INC})
 include_directories(server/inc)
 add_executable(server ${SERVER_FILES} ${COMMON_FILES})
 
-##BOOST
-if (WIN32)
-    set(BOOST_ROOT "C:\\boost_1_65_1")
-    set(BOOST_LIBRARYDIR ${BOOST_ROOT}/stage/lib/)
-endif (WIN32)
-set(Boost_USE_STATIC_LIBS        ON)
-find_package(Boost REQUIRED COMPONENTS system thread filesystem regex serialization)
-include_directories( ${Boost_INCLUDE_DIRS} )
-target_link_libraries(server
-        ${Boost_LOG_SETUP_LIBRARY}
-        ${Boost_LOG_LIBRARY}
-        ${Boost_FILESYSTEM_LIBRARY}
-        ${Boost_THREAD_LIBRARY}
-        ${Boost_SYSTEM_LIBRARY}
-        -ldl
-        )
-
 ##CLIENT
 
 file(GLOB_RECURSE CLIENT_SRC client/src/*.cpp)

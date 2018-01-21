@@ -26,7 +26,6 @@ public:
 	void	startGame(const Packet::DataPacket &packet) noexcept override;
 	void	ready(const Packet::DataPacket &packet) noexcept override;
 	void	position(const Packet::DataPacket &packet) noexcept override;
-	void	hit(const Packet::DataPacket &packet) noexcept override;
 	void	event(const Packet::DataPacket &packet) noexcept override;
 
 private:
