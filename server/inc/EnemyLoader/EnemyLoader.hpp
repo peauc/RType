@@ -11,17 +11,19 @@
 #	include <EnemyLoader/LStock.hpp>
 #	include <EnemyLoader/DLLoader.hpp>
 
-class EnemyLoader {
+class EnemyLoader
+{
 private:
-	LStock		stock;
-	DLLoader<Engine::Entity>	loader;
-	std::vector<Engine::Entity*>	enemies;
+	LStock stock;
+	DLLoader<Engine::Entity> loader;
+	std::vector<Engine::Entity *> enemies;
 public:
 	explicit EnemyLoader(const std::string &path);
 	EnemyLoader(const EnemyLoader &other) = default;
-	EnemyLoader	&operator=(const EnemyLoader &other) = default;
+	EnemyLoader &operator=(const EnemyLoader &other) = default;
 	~EnemyLoader() = default;
 
-	const std::vector<Engine::Entity*> &getEnemies() const;
+	const std::vector<Engine::Entity *> &getEnemies() const;
 };
+
 #endif //RTYPE_ENEMYLOADER_HPP

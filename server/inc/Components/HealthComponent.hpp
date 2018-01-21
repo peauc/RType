@@ -6,12 +6,13 @@
 #define RTYPE_HEALTHCOMPONENT_HPP
 
 #include <Engine/AComponent.hpp>
+#include <Engine/World.hpp>
 
 namespace Component {
 	class HealthComponent : public Engine::AComponent
 	{
 	public:
-		HealthComponent(Engine::Entity *parentEntity, int health, bool godMode, bool instantDeath);
+		HealthComponent(Engine::Entity *parentEntity, Engine::World *world, int health, bool godMode, bool instantDeath);
 		~HealthComponent() override = default;
 
 		void update() override;
@@ -24,6 +25,7 @@ namespace Component {
 
 		Engine::AComponent *clone(Engine::Entity *parentEntity) const override;
 	private:
+		Engine::World *_world;
 		bool _godMode;
 		int _health;
 		int _maxHealth;

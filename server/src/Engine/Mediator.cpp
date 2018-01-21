@@ -20,7 +20,8 @@ void Engine::Mediator::send(Engine::Mediator::Message message, Engine::AComponen
 {
 	for (unsigned int i = 0; i < this->_subjects.size(); ++i) {
 		if (_subjects[i] != sender) {
-			_subjects[i]->receive(message, sender);
+			if (_subjects[i]->isParentActive())
+				_subjects[i]->receive(message, sender);
 		}
 	}
 }

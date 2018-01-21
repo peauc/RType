@@ -31,8 +31,10 @@ namespace Engine {
 		const Mediator &getMediator() const;
 		TransformComponent &getTransformComponent();
 		const TransformComponent &getTransformComponent() const;
-		void setId(unsigned int _id);
+		void setId(unsigned int id);
 		unsigned int getId() const;
+		bool isActive() const;
+		void setActive(bool active);
 
 		bool operator==(unsigned int id);
 		bool operator==(const Entity &other);
@@ -40,6 +42,7 @@ namespace Engine {
 
 	private:
 		unsigned int _id;
+		bool _active;
 		TransformComponent _transformComponent;
 		std::vector<std::unique_ptr<AComponent>> _components;
 		std::vector<std::unique_ptr<Commands::ICommand>> _commands;

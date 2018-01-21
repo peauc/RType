@@ -29,6 +29,7 @@ namespace Engine {
 		void removeObserver(Observer *);
 
 		unsigned int getParentEntityId() const;
+		bool isParentActive() const;
 
 		virtual void update() = 0;
 

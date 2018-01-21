@@ -16,6 +16,8 @@ namespace Component {
 		explicit AMovementComponent(Engine::Entity *parentEntity);
 		~AMovementComponent() override = default;
 
+		const Vector2d &getLastMove() const;
+
 		// handle methods
 		void handleCancelMove(Engine::Mediator::Message messageType, Engine::AComponent *sender);
 

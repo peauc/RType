@@ -40,7 +40,8 @@ void Component::PlayerMovementComponent::update()
 	Engine::Commands::ICommand *command = new Engine::Commands::TransformPositionCommand(
 			this->_parentEntity->getTransformComponent(), this->_lastMove.x, this->_lastMove.y);
 	command->execute();
-	this->_parentEntity->addCommand(command);
+
+	this->sendToAll(Engine::Mediator::Message::MOVE);
 
 	this->_xInput = 0;
 	this->_yInput = 0;

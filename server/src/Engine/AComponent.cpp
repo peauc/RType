@@ -58,6 +58,11 @@ unsigned int Engine::AComponent::getParentEntityId() const
 	return this->_parentEntity->getId();
 }
 
+bool Engine::AComponent::isParentActive() const
+{
+	return this->_parentEntity->isActive();
+}
+
 Engine::AComponent::AComponent(const Engine::AComponent &other, Engine::Entity *parentEntity)
 {
 	this->_parentEntity = parentEntity;

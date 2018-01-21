@@ -36,3 +36,8 @@ Component::AMovementComponent &Component::AMovementComponent::operator=(const Co
 
 	return *this;
 }
+
+const Vector2d &Component::AMovementComponent::getLastMove() const
+{
+	return _lastMove;
+}
