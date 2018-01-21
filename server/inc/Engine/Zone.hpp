@@ -7,7 +7,7 @@
 
 #include <string>
 #include <vector>
-#include "Common/Vector2d.hpp"
+#include "Vector2d.hpp"
 #include "Entity.hpp"
 #include "Game.hpp"
 
@@ -19,7 +19,7 @@ namespace Engine {
 			Zone(const Vector2d &topLeftCoords, const Vector2d &bottomRightCoords);
 			~Zone() = default;
 			void createZone(Game &game) const;
-		private:
+
 			struct ZoneObject
 			{
 				const std::string _libname;
@@ -30,6 +30,7 @@ namespace Engine {
 				Engine::Entity *createEntity(Game &game) const;
 			};
 
+		private:
 			Vector2d _topLeftCoords;
 			Vector2d _bottomRightCoords;
 			std::vector<ZoneObject> _zoneObjects;
