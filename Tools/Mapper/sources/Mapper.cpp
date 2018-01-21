@@ -14,7 +14,7 @@ void Mapper::setInfos(const std::string &filePath, const std::string &dest,
 }
 
 void Mapper::start() {
-	this->displayer.reset(new Displayer(this->spriteManager));
+	this->displayer = std::make_unique<Displayer>(this->spriteManager);
 	this->spriteManager.setSprites(this->extractor.getSprites());
 	this->spriteManager
 			.setSpritesEqualize(this->extractor.getSpritesEqualize());
