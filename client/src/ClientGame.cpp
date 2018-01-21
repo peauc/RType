@@ -13,14 +13,19 @@
 
 ClientGame::ClientGame(const std::string &ip, const std::string &animationFile,
 		       uint16_t width, uint16_t height)
-	: _gameState(GAMESTATE::INMENU)
+	: _gameState(GameState::INMENU)
 {
-	this->_client.connect(ip); //TODO Async ? avec une queue de packets
+//	this->_client.connect(ip); //TODO Async ? avec une queue de packets
 	this->_render = std::make_unique<RenderSFML>(width, height, "R-TYPE");
 	this->_resourcesLoader.loadAnimations(animationFile);
 	this->_render->loadAnimations(this->_resourcesLoader.getAnimations());
 	this->_startMenu = std::make_unique<MenuSFML>();
-	this->createMenu();
+	try {
+		this->createMenu();
+	} catch (const std::runtime_error &e) {
+		e.what();
+		throw std::runtime_error("Can't load start menu");
+	}
 }
 
 void	ClientGame::run() noexcept
@@ -41,25 +46,17 @@ void	ClientGame::run() noexcept
 	while (this->_render->isWindowOpen()) { //TODO Game Loop
 		//TODO
 		// Get Packets and Interpret
-		_client.tick();
-		if (_gameState == GAMESTATE::INGAME)
-		{
-		
-		}
-		else {
-			if (std::chrono::duration_cast<std::chrono::milliseconds>
-				    (std::chrono::steady_clock::now() - begin)
-				    .count() > FRAMEDURATION) {
-				eventsQueue = this->_render->pollEvents();
-				this->_render->clear();
-				this->drawSprites();
-				this->_render->display();
-				this->updateAnimations(nbTicks);
-				this->processEvents(
-					eventsQueue); // Send packets
-				++nbTicks;
-				begin = std::chrono::steady_clock::now();
-			}
+		if (std::chrono::duration_cast<std::chrono::milliseconds>
+			    (std::chrono::steady_clock::now() - begin)
+			    .count() > FRAMEDURATION) {
+			eventsQueue = this->_render->pollEvents();
+			this->_render->clear();
+			this->drawSprites();
+			this->_render->display();
+			this->updateAnimations(nbTicks);
+			this->processEvents(eventsQueue); // Send packets
+			++nbTicks;
+			begin = std::chrono::steady_clock::now();
 		}
 	}
 }
@@ -71,11 +68,11 @@ void	ClientGame::run() noexcept
  */
 void ClientGame::drawSprites() noexcept
 {
-	if (this->_gameState == GAMESTATE::INGAME) {
+	if (this->_gameState == GameState::INGAME) {
 		for (const auto &obj : this->_objects) {
 			this->_render->draw(obj.second.get());
 		}
-	} else if (this->_gameState == GAMESTATE::INMENU) {
+	} else if (this->_gameState == GameState::INMENU) {
 		for (const auto &sprite : _startMenu->getSpritesToDraw()) {
 			this->_render->draw(sprite.get());
 		}
@@ -95,22 +92,34 @@ void ClientGame::updateAnimations(int &nbTicks) noexcept
 	}
 }
 
+/**
+ *
+ * @param eventsQueue
+ */
 void ClientGame::processEvents(std::queue<IRender::EventAction>
 			       &eventsQueue) noexcept
 {
+	Packet::Input	input{0, 0, false, false};
+
 	while (!eventsQueue.empty()) {
 		const IRender::EventAction &event = eventsQueue.front();
 		eventsQueue.pop();
 
-		if (this->_gameState == GAMESTATE::INMENU &&
+		if (this->_gameState == GameState::INMENU &&
 		    event == IRender::EventAction::MOUSE1) {
 			this->processEventMenu(event);
-		} else {
-			//TODO Create Packet and send
+		} else if (this->_gameState == GameState::INGAME) {
+			this->modifyInputPacket(event, input);
 		}
 	}
+	this->sendEventPacket(input);
 }
 
+/**
+ * Check if a sprite from the menu has been clicked.
+ * If yes, execute the onClick function attached to the sprite
+ * @param event Event to be passed to isSpriteClicked
+ */
 void ClientGame::processEventMenu(const IRender::EventAction &event) noexcept
 {
 	for (const auto &sprite : _startMenu->getSpritesToDraw()) {
@@ -121,10 +130,10 @@ void ClientGame::processEventMenu(const IRender::EventAction &event) noexcept
 	}
 }
 
-void ClientGame::createMenu() noexcept
+void ClientGame::createMenu()
 {
 	auto background
-		= this->_render->createSprite("../Assets/MenuSprite/space.jpg",
+		= this->_render->createSprite("../Assets/MenuSprite/spac.jpg",
 					      0, 0);
 	auto playButton = this->_render->createSprite(
 		"../Assets/MenuSprite/playActive.png", 0, 0);
@@ -135,7 +144,7 @@ void ClientGame::createMenu() noexcept
 	
 	playButton->setPos(-200, -300);
 	playButton->setOnClick([&]() {
-		this->_gameState = GAMESTATE::INGAME;
+		this->_gameState = GameState::INGAME;
 	});
 	
 	quitButton->setPos(-600, -300);
@@ -149,4 +158,56 @@ void ClientGame::createMenu() noexcept
 	this->_startMenu->addSprite(std::move(playButton));
 	this->_startMenu->addSprite(std::move(quitButton));
 	this->_startMenu->addText(std::move(rtypeText));
+}
+
+/**
+ * Modify Input Packet
+ * @param event Depending on the event, the input is modified
+ * @param input Input to be modified
+ */
+void	ClientGame::modifyInputPacket(const IRender::EventAction &event,
+					  Packet::Input &input) noexcept
+{
+	short	speed = 10000;
+
+	switch (event) {
+		case IRender::EventAction::UP:
+			this->setVelocityInput(0, -speed, input);
+			break;
+		case IRender::EventAction::DOWN:
+			this->setVelocityInput(0, speed, input);
+			break;
+		case IRender::EventAction::LEFT:
+			this->setVelocityInput(-speed, 0, input);
+			break;
+		case IRender::EventAction::RIGHT:
+			this->setVelocityInput(speed, 0, input);
+			break;
+		case IRender::EventAction::SPACE:
+			input.charged = true;
+			break;
+		case IRender::EventAction::MOUSE1:
+			input.charged = true;
+			break;
+		default:
+			break;
+	}
+}
+
+/**
+ * Create and send a DataPacket with the command Event and with an input
+ * @param input
+ */
+void ClientGame::sendEventPacket(const Packet::Input &input) noexcept
+{
+	Packet::DataPacket packet((int)Packet::Commands::EVENT);
+	packet.data.input = input;
+	this->_client.sendMessage(packet);
+}
+
+void	ClientGame::setVelocityInput(short x, short y,
+					 Packet::Input &input) noexcept
+{
+	input.yVelocity = x;
+	input.xVelocity = y;
 }
