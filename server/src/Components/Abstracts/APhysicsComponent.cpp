@@ -96,7 +96,7 @@ bool Component::APhysicsComponent::getCollision(Component::APhysicsComponent::Di
 
 void Component::APhysicsComponent::setOBB() noexcept
 {
-	if (this->_orientedBoundingBox == nullptr)
+	//if (this->_orientedBoundingBox == nullptr)
 		this->_orientedBoundingBox = std::make_unique<OBB>(this->_parentEntity->getTransformComponent(), this->_hitbox);
 }
 

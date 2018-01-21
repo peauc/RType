@@ -59,8 +59,9 @@ void AsioServer::handleSend(const Message &message,
                             const boost::system::error_code &error,
                             std::size_t bytesTransfered)
 {
-	Logger::Log(Logger::DEBUG, "Sent " + std::to_string(message
-								    .getPacket().cmd));
+	if (error) {
+		Logger::Log(Logger::MAJOR, error.message());
+	}
 }
 
 void AsioServer::startReceive()
@@ -121,7 +122,6 @@ bool AsioServer::tick()
 				for(auto clients = it->second->getClientList().begin();
 				    clients <
 				    it->second->getClientList().end(); clients++) {
-					Logger::Log(Logger::DEBUG, "Sending message");
 					sendMessage(*clients, *(it2->get()));
 				}
 			}
@@ -203,6 +203,8 @@ noexcept
 	e->_shotReleased = input.shot;
 	e->_xVelocity = input.xVelocity;
 	e->_yVelocity = input.yVelocity;
+	std::cout << "Event Method : "<< e->_yVelocity << " " << e->_xVelocity
+		  << std::endl << e->_entityId << std::endl;
 	_lobbyList.getClientLobby(obj)->pushEventInList(e);
 }
 void AsioServer::pong(const Packet::DataPacket &packet, ClientObject &obj)
