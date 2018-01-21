@@ -32,3 +32,7 @@ void AContainer::addChild(AItem *child) {
 void AContainer::lendBackgroundTexture(sf::Texture &texture) {
 	this->background.setTexture(&texture, true);
 }
+
+const std::vector<std::shared_ptr<AItem>> &AContainer::getChilds() const {
+	return (this->childs);
+}

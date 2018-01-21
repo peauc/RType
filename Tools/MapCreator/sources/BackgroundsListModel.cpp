@@ -12,7 +12,7 @@
 BackgroundsListModel::BackgroundsListModel(const std::string &directory,
 										   AContainer *parent,
 										   AContainer *employer)
-		: AListModel(parent) {
+		: AModel(parent) {
 	this->directory = directory;
 	this->employer = employer;
 }

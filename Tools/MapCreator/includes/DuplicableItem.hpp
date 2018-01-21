@@ -31,21 +31,12 @@ public:
 	virtual void	onMouseButtonReleased(const sf::Event &event);
 	virtual void	onMouseMoved(const sf::Event &event);
 
-	void			setXOnDuplicate(int value);
-	void			setYOnDuplicate(int value);
-	void			setScrollOnDuplicate(int value);
-	int				getXOnDuplicate();
-	int				getYOnDuplicate();
-	int				getScrollOnDuplicate();
+	const std::string		&getPathItem() const;
 
 protected:
 
 	AContainer		*employer;
 	std::string		pathItem;
-	int				xOnDuplicate;
-	int 			yOnDuplicate;
-	int 			scrollOnDuplicate;
-	bool			selected;
 
 };
 

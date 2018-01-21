@@ -9,9 +9,9 @@
 #define MAPCREATOR_BACKGROUNDSLISTMODEL_HPP
 
 #include <boost/filesystem.hpp>
-#include "AListModel.hpp"
+#include "AModel.hpp"
 
-class BackgroundsListModel : public AListModel {
+class BackgroundsListModel : public AModel {
 
 public:
 

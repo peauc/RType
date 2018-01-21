@@ -5,13 +5,14 @@
 ** No description
 */
 
+#include <boost/filesystem.hpp>
 #include "AContainer.hpp"
 #include "DuplicableItem.hpp"
 #include "EnemiesListModel.hpp"
 
 EnemiesListModel::EnemiesListModel(const std::string &directory,
 								   AContainer *parent,
-								   AContainer *employer) : AListModel(parent) {
+								   AContainer *employer) : AModel(parent) {
 	this->directory = directory;
 	this->employer = employer;
 }
