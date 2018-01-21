@@ -16,8 +16,12 @@ namespace Component {
 		explicit AMovementComponent(Engine::Entity *parentEntity);
 		~AMovementComponent() override = default;
 
+		const Vector2d &getLastMove() const;
+
 		// handle methods
 		void handleCancelMove(Engine::Mediator::Message messageType, Engine::AComponent *sender);
+
+		AMovementComponent &operator=(const AMovementComponent &other);
 	protected:
 		std::unique_ptr<Engine::Event> _event;
 		Vector2d _lastMove;

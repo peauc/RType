@@ -4,6 +4,7 @@
 
 #include <Components/Player/PlayerGraphicsComponent.hpp>
 #include <iostream>
+#include <Components/Abstracts/AMovementComponent.hpp>
 
 Component::PlayerGraphicsComponent::PlayerGraphicsComponent(Engine::Entity *parentEntity,
 															RessourcesLoader *resourceLoader) :
@@ -55,10 +56,14 @@ Component::PlayerGraphicsComponent::PlayerGraphicsComponent(Engine::Entity *pare
 	this->_validMessageTypes[Engine::Mediator::Message::HIT] = std::bind(&PlayerGraphicsComponent::handleHit,
 																		 this, std::placeholders::_1,
 																		 std::placeholders::_2);
+	this->_validMessageTypes[Engine::Mediator::Message::MOVE] = std::bind(&PlayerGraphicsComponent::handleMove,
+																		  this, std::placeholders::_1,
+																		  std::placeholders::_2);
 }
 
 void Component::PlayerGraphicsComponent::update()
 {
+	std::cout << "Graphics" << this->_parentEntity->getId() << std::endl;
 	this->sendToAll(Engine::Mediator::Message::GRAPHICS_REGISTERING);
 }
 
@@ -70,4 +75,32 @@ void Component::PlayerGraphicsComponent::handleDeath(Engine::Mediator::Message, 
 void Component::PlayerGraphicsComponent::handleHit(Engine::Mediator::Message, Engine::AComponent *)
 {
 	this->_isAlive = false;
+}
+
+void Component::PlayerGraphicsComponent::handleMove(Engine::Mediator::Message, Engine::AComponent *sender)
+{
+	if (AMovementComponent *movementComponent = dynamic_cast<AMovementComponent *>(sender)) {
+		if (movementComponent->getLastMove().y > 0) {
+			this->_currentAnimationId = this->_animationIds[1];
+		} else if (movementComponent->getLastMove().y < 0) {
+			this->_currentAnimationId = this->_animationIds[3];
+		} else {
+			if (this->_currentAnimationId == this->_animationIds[1]) {
+				this->_currentAnimationId = this->_animationIds[2];
+			} else if (this->_currentAnimationId == this->_animationIds[3]) {
+				this->_currentAnimationId = this->_animationIds[4];
+			} else {
+				this->_currentAnimationId = this->_animationIds[0];
+			}
+		}
+	}
+}
+
+Engine::AComponent *Component::PlayerGraphicsComponent::clone(Engine::Entity *parentEntity) const
+{
+	PlayerGraphicsComponent *newComponent = new PlayerGraphicsComponent(parentEntity, this->_resourceLoader);
+
+	*newComponent = *this;
+
+	return newComponent;
 }

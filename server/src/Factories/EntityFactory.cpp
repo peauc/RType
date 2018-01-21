@@ -4,14 +4,14 @@
 
 #include <Components/Player/PlayerMovementComponent.hpp>
 #include <Components/Player/PlayerInputComponent.hpp>
-#include <Components/Camera/CameraMovementComponent.hpp>
-#include <Components/Player/PlayerGraphicsComponent.hpp>
-#include <Components/Camera/CameraViewComponent.hpp>
-#include <iostream>
 #include <Components/Player/PlayerWeaponComponent.hpp>
 #include <Components/Player/PlayerPhysicsComponent.hpp>
-#include <Components/HealthComponent.hpp>
+#include <Components/Player/PlayerGraphicsComponent.hpp>
+#include <Components/Camera/CameraMovementComponent.hpp>
+#include <Components/Camera/CameraViewComponent.hpp>
 #include <Components/Camera/CameraZoneComponent.hpp>
+#include <Components/Zone/ZoneComponent.hpp>
+#include <Components/HealthComponent.hpp>
 #include "Factories/EntityFactory.hpp"
 
 Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine::Game &game)
@@ -21,7 +21,7 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 
 	Engine::AComponent *playerMoveComponent = new Component::PlayerMovementComponent(playerShip);
 	Engine::AComponent *playerInputComponent = new Component::PlayerInputComponent(playerShip,
-																				   game.getEventList());
+																				   &game.getEventList());
 	Component::PlayerGraphicsComponent *playerGraphicsComponent = new Component::PlayerGraphicsComponent(playerShip,
 																										 game.getResourceLoader().get());
 	Engine::AComponent *playerWeaponComponent = new Component::PlayerWeaponComponent(playerShip, &game);
@@ -30,7 +30,7 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 			Engine::Hitbox::Type::PLAYER, playerGraphicsComponent->getRelativeStartPos(),
 			playerGraphicsComponent->getRange()));
 
-	Engine::AComponent *playerHealthComponent = new Component::HealthComponent(playerShip, 100, false, true);
+	Engine::AComponent *playerHealthComponent = new Component::HealthComponent(playerShip, game.getWorld().get(), 100, false, true);
 
 	playerShip->addComponent(playerInputComponent);
 	playerShip->addComponent(playerMoveComponent);
@@ -49,6 +49,8 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 
 	playerShip->getTransformComponent().getPosition().x = 1000;
 	playerShip->getTransformComponent().getPosition().y = 2000 + id * 2000;
+
+	playerShip->setActive(true);
 
 	return playerShip;
 }
@@ -72,5 +74,27 @@ Engine::Entity *Factory::EntityFactory::createCamera(unsigned int id, Engine::Ga
 		zoneComponent->registerToMediator(game.getWorld()->getMediator().get());
 	}
 
+	camera->setActive(true);
+
 	return camera;
+}
+
+Engine::Entity *Factory::EntityFactory::createZone(unsigned int id, Engine::Game &game, const Vector2d &size)
+{
+	Engine::Entity *zone = new Engine::Entity(id);
+
+	Component::ZoneComponent *zoneComponent = new Component::ZoneComponent(zone,
+																		   Engine::Hitbox(Engine::Hitbox::ZONE,
+																						  Vector2d(0, 0), size),
+																		   game.getWorld().get());
+
+	zone->addComponent(zoneComponent);
+
+	if (game.getWorld()->getMediator() != nullptr) {
+		zoneComponent->registerToMediator(game.getWorld()->getMediator().get());
+	}
+
+	zone->setActive(true);
+
+	return zone;
 }

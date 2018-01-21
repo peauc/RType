@@ -14,6 +14,7 @@ namespace Component {
 	class APhysicsComponent : public Engine::AComponent
 	{
 		friend class CameraZoneComponent;
+		friend class ZoneComponent;
 	public:
 		enum Direction
 		{
@@ -24,7 +25,7 @@ namespace Component {
 			UNDEFINED
 		};
 
-		explicit APhysicsComponent(Engine::Entity *entity, Engine::Hitbox hitbox);
+		explicit APhysicsComponent(Engine::Entity *entity, const Engine::Hitbox &hitbox);
 		~APhysicsComponent() override = default;
 
 		int getCollisionDamages() const;
@@ -34,10 +35,13 @@ namespace Component {
 
 		// handle methods
 		virtual void handleCheckCollision(Engine::Mediator::Message messageType, Engine::AComponent *sender);
+		void handleMove(Engine::Mediator::Message messageType, Engine::AComponent *sender);
 
 		// default collision methods
 		void blockingCollision(APhysicsComponent &other);
 		void damagingCollision(APhysicsComponent &other);
+
+		APhysicsComponent &operator=(const APhysicsComponent &other);
 	protected:
 		struct OBB
 		{
@@ -49,13 +53,13 @@ namespace Component {
 
 			OBB() = default;
 			OBB(const Engine::TransformComponent &transformComponent, const Engine::Hitbox &hitbox);
-			bool checkIntersection(const OBB &other, APhysicsComponent &);
+			bool checkIntersection(APhysicsComponent &);
 			bool checkIntersection(const Vector2d &point);
 		};
 
 	protected:
-		Engine::Hitbox _hitbox;
-		OBB _orientedBoundingBox;
+		const Engine::Hitbox _hitbox;
+		std::unique_ptr<OBB> _orientedBoundingBox;
 		int _collisionDamages;
 		std::unordered_map<Engine::Hitbox::Type, std::function<void(APhysicsComponent &)>> _collisionHandlers;
 		bool _collisions[UNDEFINED];

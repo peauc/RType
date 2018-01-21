@@ -21,6 +21,8 @@ namespace Component {
 
 		// handle methods
 		void handleEvent(Engine::Mediator::Message messageType, AComponent *sender);
+
+		AComponent *clone(Engine::Entity *parentEntity) const override;
 	private:
 		bool _event;
 		bool _firing;

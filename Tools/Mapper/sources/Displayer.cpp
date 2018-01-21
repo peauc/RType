@@ -30,8 +30,8 @@ void Displayer::displaySprites() {
 		sf::Event event;
 		while (this->window.pollEvent(event)) {
 			this->checkEvents(event);
+			this->drawSprite();
 		}
-		this->drawSprite();
 	}
 }
 

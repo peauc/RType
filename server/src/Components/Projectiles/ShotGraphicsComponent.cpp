@@ -36,3 +36,12 @@ void Component::ShotGraphicsComponent::handleImpact(Engine::Mediator::Message, E
 		this->_currentAnimationId = this->_animationIds[1];
 	}
 }
+
+Engine::AComponent *Component::ShotGraphicsComponent::clone(Engine::Entity *parentEntity) const
+{
+	ShotGraphicsComponent *newComp = new ShotGraphicsComponent(parentEntity, this->_resourceLoader, 0, 0);
+
+	*newComp = *this;
+
+	return newComp;
+}

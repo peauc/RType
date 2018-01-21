@@ -17,15 +17,17 @@ public:
 	long long int currentTimout() const noexcept;
 	bool isTimedOut(long long int timeoutValue) const noexcept;
 	void resetTimeout() noexcept;
-	bool sendMessage(Packet::DataPacket &packet);
 	void toggleReady() noexcept;
 	bool isReady() const noexcept;
+	unsigned int getEntityID() const noexcept;
+	void setEntityID(unsigned int) noexcept;
 private:
 	ClientObject();
 	bool _isReady;
 	boost::asio::ip::udp::endpoint _endpoint;
 	std::chrono::steady_clock::time_point _timeoutStart;
 	std::chrono::steady_clock::duration _maxTimout;
+	unsigned int	_entityID;
 };
 
 

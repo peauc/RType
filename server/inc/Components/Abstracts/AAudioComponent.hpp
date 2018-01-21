@@ -9,17 +9,19 @@
 #include <Engine/World.hpp>
 
 namespace Component {
-    class AAudioComponent : public Engine::AComponent
-    {
-    public:
-        explicit AAudioComponent(Engine::Entity *parentEntity, Engine::Game *parentGame);
-        ~AAudioComponent() override = default;
+	class AAudioComponent : public Engine::AComponent
+	{
+	public:
+		explicit AAudioComponent(Engine::Entity *parentEntity, Engine::Game *parentGame);
+		~AAudioComponent() override = default;
 
 		void addSoundPacket(unsigned char soundId, bool repeat);
-    protected:
-        Engine::Game *_parentGame;
-        std::vector<unsigned char> _soundIds;
-    };
+
+		AAudioComponent &operator=(const AAudioComponent &other);
+	protected:
+		Engine::Game *_parentGame;
+		std::vector<unsigned char> _soundIds;
+	};
 }
 
 #endif //RTYPE_AAUDIOCOMPONENT_HPP

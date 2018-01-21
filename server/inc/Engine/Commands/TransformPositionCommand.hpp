@@ -8,22 +8,20 @@
 #include <Engine/TransformComponent.hpp>
 #include "ICommand.hpp"
 
-namespace Engine {
-	namespace Commands {
-		class TransformPositionCommand : public ICommand
-		{
-		public:
-			explicit TransformPositionCommand(Engine::TransformComponent &transformComponent, double x, double y);
-			~TransformPositionCommand() = default;
+namespace Engine::Commands {
+	class TransformPositionCommand : public ICommand
+	{
+	public:
+		explicit TransformPositionCommand(Engine::TransformComponent &transformComponent, double x, double y);
+		~TransformPositionCommand() = default;
 
-			void execute() override;
+		void execute() override;
 
-		private:
-			Engine::TransformComponent &_transformComponent;
-			double _x;
-			double _y;
-		};
-	}
+	private:
+		Engine::TransformComponent &_transformComponent;
+		double _x;
+		double _y;
+	};
 }
 
 #endif //RTYPE_TRANSFORMPOSITIONCOMMAND_HPP

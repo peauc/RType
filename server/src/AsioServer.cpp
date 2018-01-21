@@ -38,7 +38,6 @@ AsioServer::AsioServer() : _endpoint(boost::asio::ip::udp::v4(), 4242) ,
 	fptr[Packet::STARTGAME] = &AsioServer::startGame;
 	fptr[Packet::READY] = &AsioServer::ready;
 	fptr[Packet::POSITION] = &AsioServer::position;
-	fptr[Packet::HIT] = &AsioServer::hit;
 	fptr[Packet::EVENT] = &AsioServer::event;
 	fptr[Packet::PONG] = &AsioServer::pong;
 	
@@ -115,6 +114,18 @@ bool AsioServer::tick()
 	_ioService.poll();
 	_ioService.reset();
 	_lobbyList.checkTimeout();
+	std::vector<std::pair<std::vector<std::unique_ptr<Packet::DataPacket
+	>>, Lobby *>> t = _lobbyList.getPacketFromGames();
+	for (auto it = t.begin(); it < t.end(); it++) {
+		for (auto it2 = it->first.begin(); it2 < it->first.end();
+			it2++) {
+			for (auto clients = it->second->getClientList()
+					      .begin(); clients <
+				it->second->getClientList().end(); clients++) {
+				sendMessage(*clients, *(it2->get()));
+			}
+		}
+	}
 	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	return (true);
 }
@@ -179,14 +190,20 @@ void AsioServer::position(const Packet::DataPacket &packet, ClientObject
 {
 }
 
-void AsioServer::hit(const Packet::DataPacket &packet, ClientObject &obj)
-noexcept
-{
-}
-
 void AsioServer::event(const Packet::DataPacket &packet, ClientObject &obj)
 noexcept
 {
+	Packet::Input input;
+	
+	input = packet.data.input;
+	std::unique_ptr<Engine::Event> e = std::make_unique<Engine::Event>
+		(obj.getEntityID());
+	
+	e->_chargingShot = input.charged;
+	e->_shotReleased = input.shot;
+	e->_xVelocity = input.xVelocity;
+	e->_yVelocity = input.yVelocity;
+	_lobbyList.getClientLobby(obj)->pullEventInList(e);
 }
 void AsioServer::pong(const Packet::DataPacket &packet, ClientObject &obj)
 noexcept

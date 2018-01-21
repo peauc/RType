@@ -12,7 +12,7 @@
 
 class Lobby {
 public:
-	Lobby();
+	Lobby() = delete;
 	explicit Lobby(unsigned short seed);
 	~Lobby();
 	
@@ -21,15 +21,19 @@ public:
 	size_t size() const noexcept;
 	bool isFull() const noexcept;
 	bool isReady() const noexcept;
+	bool isStarted() const noexcept;
 	bool isClientContained(const ClientObject &client) const noexcept;
+	void pullEventInList(std::unique_ptr<Engine::Event> &event) noexcept;
 	bool startGame();
 	ClientObject &getClientContained(const ClientObject &copy);
 	bool isSeededLobby() const noexcept;
 	unsigned short getSeed() const noexcept;
 	const std::vector<ClientObject> &getClientList();
-private:
+	std::vector<std::unique_ptr<Packet::DataPacket>> getPackets();
+		private:
 	bool _isSeededLobby;
 	unsigned short _seed;
+	bool _isStarted;
 	Engine::Game _game;
 	ClientObjectManager _clientManager;
 };

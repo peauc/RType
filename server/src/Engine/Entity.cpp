@@ -4,20 +4,22 @@
 
 #include <Engine/Entity.hpp>
 
-Engine::Entity::Entity() : _id(0), _transformComponent(this), _components(),
+Engine::Entity::Entity() : _id(0), _active(false), _transformComponent(this), _components(),
 						   _mediator(std::make_unique<Mediator>())
 {
 }
 
-Engine::Entity::Entity(unsigned int id) : _id(id), _transformComponent(this), _components(),
+Engine::Entity::Entity(unsigned int id) : _id(id), _active(false), _transformComponent(this), _components(),
 										  _mediator(std::make_unique<Mediator>())
 {
 }
 
 void Engine::Entity::update()
 {
-	for (unsigned int i = 0; i < _components.size(); ++i) {
-		this->_components[i]->update();
+	if (this->_active) {
+		for (unsigned int i = 0; i < _components.size(); ++i) {
+			this->_components[i]->update();
+		}
 	}
 }
 
@@ -85,4 +87,25 @@ bool Engine::Entity::operator==(unsigned int id)
 bool Engine::Entity::operator==(const Engine::Entity &other)
 {
 	return other._id == this->_id;
+}
+
+Engine::Entity *Engine::Entity::clone()
+{
+	Engine::Entity *newEntity = new Engine::Entity();
+
+	newEntity->_transformComponent = this->_transformComponent;
+	for (auto &component : this->_components) {
+		newEntity->addComponent(component->clone(newEntity));
+	}
+	return newEntity;
+}
+
+bool Engine::Entity::isActive() const
+{
+	return _active;
+}
+
+void Engine::Entity::setActive(bool _active)
+{
+	Entity::_active = _active;
 }

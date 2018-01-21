@@ -47,9 +47,12 @@ bool ClientObject::isReady() const noexcept
 	return (_isReady);
 }
 
-bool ClientObject::sendMessage(Packet::DataPacket &packet)
+unsigned int ClientObject::getEntityID() const noexcept
 {
-	Message t(packet);
-	
-	
+	return (_entityID);
+}
+
+void ClientObject::setEntityID(unsigned int entityID) noexcept
+{
+	_entityID = entityID;
 }

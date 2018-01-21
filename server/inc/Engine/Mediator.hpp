@@ -24,7 +24,9 @@ namespace Engine {
 			CHECK_COLLISION,
 			GET_IMPACT_DAMAGES,
 			CANCEL_MOVE,
-			CAMERA_REPOSITION
+			CAMERA_REPOSITION,
+			MOVE,
+			TRIGGER_ZONE
 		};
 
 		Mediator() = default;

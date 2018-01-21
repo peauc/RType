@@ -20,6 +20,8 @@ namespace Component {
 
 		// handleMethod
 		void handleImpact(Engine::Mediator::Message messageType, Engine::AComponent *sender);
+
+		AComponent *clone(Engine::Entity *parentEntity) const override;
 	};
 }
 
