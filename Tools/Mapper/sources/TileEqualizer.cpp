@@ -34,7 +34,6 @@ void TileEqualizer::equalize() {
 void TileEqualizer::equalizeWidth(unsigned int start, unsigned int end) {
 	unsigned int	biggestWidth = this->getBiggestWidth(start, end);
 
-
 	for (unsigned int index = 0; start + index < end; ++index)
 		this->sprites.at(start + index).setWidth(biggestWidth);
 }
