@@ -2,8 +2,7 @@
 // Created by romain on 12/01/18.
 //
 
-#include <Engine/Entity.hpp>
-#include <iostream>
+#include "Engine/Entity.hpp"
 
 Engine::Entity::Entity() : _id(0), _active(false), _transformComponent(this), _components(),
 						   _mediator(std::make_unique<Mediator>())

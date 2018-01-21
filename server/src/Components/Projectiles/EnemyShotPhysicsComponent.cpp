@@ -2,7 +2,7 @@
 // Created by romain on 21/01/18.
 //
 
-#include <Components/Projectiles/EnemyShotPhysicsComponent.hpp>
+#include "Components/Projectiles/EnemyShotPhysicsComponent.hpp"
 
 Component::EnemyShotPhysicsComponent::EnemyShotPhysicsComponent(Engine::Entity *parentEntity,
 																const Engine::Hitbox &hitbox) :

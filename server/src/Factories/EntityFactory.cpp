@@ -2,17 +2,16 @@
 // Created by romain on 15/01/18.
 //
 
-#include <Components/Player/PlayerMovementComponent.hpp>
-#include <Components/Player/PlayerInputComponent.hpp>
-#include <Components/Player/PlayerWeaponComponent.hpp>
-#include <Components/Player/PlayerPhysicsComponent.hpp>
-#include <Components/Player/PlayerGraphicsComponent.hpp>
-#include <Components/Camera/CameraMovementComponent.hpp>
-#include <Components/Camera/CameraViewComponent.hpp>
-#include <Components/Camera/CameraZoneComponent.hpp>
-#include <Components/Zone/ZoneComponent.hpp>
-#include <Components/HealthComponent.hpp>
-#include "Factories/EntityFactory.hpp"
+#include "Components/Player/PlayerMovementComponent.hpp"
+#include "Components/Player/PlayerInputComponent.hpp"
+#include "Components/Player/PlayerWeaponComponent.hpp"
+#include "Components/Player/PlayerPhysicsComponent.hpp"
+#include "Components/Player/PlayerGraphicsComponent.hpp"
+#include "Components/Camera/CameraMovementComponent.hpp"
+#include "Components/Camera/CameraViewComponent.hpp"
+#include "Components/Camera/CameraZoneComponent.hpp"
+#include "Components/Zone/ZoneComponent.hpp"
+#include "Components/HealthComponent.hpp"
 
 Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine::Game &game) noexcept
 {

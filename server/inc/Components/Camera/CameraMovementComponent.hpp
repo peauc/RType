@@ -5,7 +5,7 @@
 #ifndef RTYPE_DEFAULTCAMERAMOVEMENTCOMPONENT_HPP
 #define RTYPE_DEFAULTCAMERAMOVEMENTCOMPONENT_HPP
 
-#include <Engine/Game.hpp>
+#include "Engine/Game.hpp"
 #include "Components/Abstracts/AMovementComponent.hpp"
 
 namespace Component {

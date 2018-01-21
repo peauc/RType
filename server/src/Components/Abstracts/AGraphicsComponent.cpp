@@ -2,7 +2,7 @@
 // Created by romain on 16/01/18.
 //
 
-#include <Components/Abstracts/AGraphicsComponent.hpp>
+#include "Components/Abstracts/AGraphicsComponent.hpp"
 
 Component::AGraphicsComponent::AGraphicsComponent(Engine::Entity *parentEntity, RessourcesLoader *resourceLoader)
 		: AComponent(parentEntity), _resourceLoader(resourceLoader), _isHit(false), _isAlive(true)

@@ -5,7 +5,7 @@
 #ifndef RTYPE_TRANSFORMPOSITIONCOMMAND_HPP
 #define RTYPE_TRANSFORMPOSITIONCOMMAND_HPP
 
-#include <Engine/TransformComponent.hpp>
+#include "Engine/TransformComponent.hpp"
 #include "ICommand.hpp"
 
 namespace Engine::Commands {

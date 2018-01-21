@@ -6,7 +6,7 @@
 #define RTYPE_PLAYERSHOTMOVEMENTCOMPONENT_HPP
 
 #include <cmath>
-#include <Components/Abstracts/AMovementComponent.hpp>
+#include "Components/Abstracts/AMovementComponent.hpp"
 
 namespace Component {
 	class ShotMovementComponent : public AMovementComponent

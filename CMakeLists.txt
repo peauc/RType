@@ -14,7 +14,7 @@ include_directories(RessourcesLoader/includes)
 file(GLOB_RECURSE SERVER_SRC server/src/*.cpp )
 file(GLOB_RECURSE SERVER_INC server/inc/*.hpp )
 set(SERVER_FILES ${SERVER_SRC} ${SERVER_INC})
-include_directories(server/inc)
+include_directories(server/inc server/inc/Engine/ server/inc/Common server/inc/Components/Zone)
 add_executable(server ${SERVER_FILES} ${COMMON_FILES})
 
 ##CLIENT

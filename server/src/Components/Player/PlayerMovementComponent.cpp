@@ -2,11 +2,10 @@
 // Created by romain on 12/01/18.
 //
 
-#include <Components/Player/PlayerMovementComponent.hpp>
-#include <Components/Abstracts/AInputComponent.hpp>
-#include <Engine/Commands/TransformPositionCommand.hpp>
-#include <iostream>
-#include <Components/Abstracts/APhysicsComponent.hpp>
+#include "Components/Player/PlayerMovementComponent.hpp"
+#include "Components/Abstracts/AInputComponent.hpp"
+#include "Engine/Commands/TransformPositionCommand.hpp"
+#include "Components/Abstracts/APhysicsComponent.hpp"
 
 Component::PlayerMovementComponent::PlayerMovementComponent(Engine::Entity *parentEntity)
 		: AMovementComponent(parentEntity),

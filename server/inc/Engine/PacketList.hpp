@@ -4,10 +4,11 @@
 
 #ifndef RTYPE_PACKETLIST_HPP
 #define RTYPE_PACKETLIST_HPP
-#include <DataPacket.hpp>
+
 #include <memory>
 #include <mutex>
 #include <vector>
+#include "DataPacket.hpp"
 
 namespace Engine {
 class PacketList {

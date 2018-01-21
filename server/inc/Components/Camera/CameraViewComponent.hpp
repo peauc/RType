@@ -5,7 +5,7 @@
 #ifndef RTYPE_DEFAULTCAMERAVIEWCOMPONENT_HPP
 #define RTYPE_DEFAULTCAMERAVIEWCOMPONENT_HPP
 
-#include <Engine/AComponent.hpp>
+#include "Engine/AComponent.hpp"
 #include "Components/Abstracts/AGraphicsComponent.hpp"
 
 namespace Component {

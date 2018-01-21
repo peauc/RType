@@ -5,7 +5,7 @@
 #ifndef RTYPE_SHOTPHYSICSCOMPONENT_HPP
 #define RTYPE_SHOTPHYSICSCOMPONENT_HPP
 
-#include <Components/Abstracts/APhysicsComponent.hpp>
+#include "Components/Abstracts/APhysicsComponent.hpp"
 
 namespace Component {
 	class PlayerShotPhysicsComponent : public APhysicsComponent

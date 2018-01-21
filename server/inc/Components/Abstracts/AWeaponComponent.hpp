@@ -5,8 +5,8 @@
 #ifndef RTYPE_AWEAPONCOMPONENT_HPP
 #define RTYPE_AWEAPONCOMPONENT_HPP
 
-#include <Engine/AComponent.hpp>
-#include <Engine/World.hpp>
+#include "Engine/AComponent.hpp"
+#include "Engine/World.hpp"
 
 namespace Component {
 	class AWeaponComponent : public Engine::AComponent

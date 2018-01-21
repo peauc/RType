@@ -7,7 +7,7 @@
 
 #include <list>
 #include <queue>
-#include <Factories/EntityFactory.hpp>
+#include "Factories/EntityFactory.hpp"
 #include "Game.hpp"
 
 namespace Engine {

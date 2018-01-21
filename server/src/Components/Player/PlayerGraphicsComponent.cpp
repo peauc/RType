@@ -2,9 +2,8 @@
 // Created by romain on 17/01/18.
 //
 
-#include <Components/Player/PlayerGraphicsComponent.hpp>
-#include <iostream>
-#include <Components/Abstracts/AMovementComponent.hpp>
+#include "Components/Player/PlayerGraphicsComponent.hpp"
+#include "Components/Abstracts/AMovementComponent.hpp"
 
 Component::PlayerGraphicsComponent::PlayerGraphicsComponent(Engine::Entity *parentEntity,
 															RessourcesLoader *resourceLoader) :

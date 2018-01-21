@@ -5,7 +5,7 @@
 #ifndef RTYPE_PLAYERSHOTAUDIOCOMPONENT_HPP
 #define RTYPE_PLAYERSHOTAUDIOCOMPONENT_HPP
 
-#include <Components/Abstracts/AAudioComponent.hpp>
+#include "Components/Abstracts/AAudioComponent.hpp"
 
 namespace Component {
 	class ShotAudioComponent : public AAudioComponent

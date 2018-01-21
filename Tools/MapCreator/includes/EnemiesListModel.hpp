@@ -8,10 +8,9 @@
 #ifndef MAPCREATOR_ENEMIESLISTMODEL_HPP
 #define MAPCREATOR_ENEMIESLISTMODEL_HPP
 
-#include <boost/filesystem.hpp>
-#include "AListModel.hpp"
+#include "AModel.hpp"
 
-class EnemiesListModel : public AListModel {
+class EnemiesListModel : public AModel {
 
 public:
 
