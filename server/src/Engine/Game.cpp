@@ -36,7 +36,8 @@ void Engine::Game::run()
 	}
 }
 
-void Engine::Game::setup(int nbOfPlayers, const std::shared_ptr<RessourcesLoader> &resourceLoader)
+void Engine::Game::setup(size_t nbOfPlayers,
+			 const std::shared_ptr<RessourcesLoader> &resourceLoader)
 {
 	std::unique_ptr<Engine::World> world = std::make_unique<Engine::World>();
 

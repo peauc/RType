@@ -23,6 +23,7 @@ public:
 	Message &operator=(const Message &) noexcept;
 	~Message() = default;
 
+	const Packet::DataPacket getPacket() const noexcept;
 	Packet::DataPacket		getPacket() noexcept;
 	const std::string	getRawMessage() const noexcept override;
 private:
