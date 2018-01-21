@@ -19,9 +19,8 @@ Component::PlayerWeaponComponent::PlayerWeaponComponent(Engine::Entity *parentEn
 																			   std::placeholders::_2);
 }
 
-void Component::PlayerWeaponComponent::update()
+void Component::PlayerWeaponComponent::update() noexcept
 {
-	std::cout << "Weapon" << this->_parentEntity->getId() << this->_parentEntity->getId() << std::endl;
 	if (this->_firing || (this->_charging > 0 && !this->_event)) {
 		std::unique_ptr<Engine::Entity> shot = std::make_unique<Engine::Entity>();
 
@@ -62,7 +61,7 @@ void Component::PlayerWeaponComponent::update()
 	this->_event = false;
 }
 
-void Component::PlayerWeaponComponent::handleEvent(Engine::Mediator::Message, Engine::AComponent *sender)
+void Component::PlayerWeaponComponent::handleEvent(Engine::Mediator::Message, Engine::AComponent *sender) noexcept
 {
 	if (AInputComponent *inputComponent = dynamic_cast<AInputComponent *>(sender)) {
 		if (inputComponent->hasEvent()) {
@@ -78,7 +77,7 @@ void Component::PlayerWeaponComponent::handleEvent(Engine::Mediator::Message, En
 	}
 }
 
-Engine::AComponent *Component::PlayerWeaponComponent::clone(Engine::Entity *parentEntity) const
+Engine::AComponent *Component::PlayerWeaponComponent::clone(Engine::Entity *parentEntity) const noexcept
 {
 	PlayerWeaponComponent *newComp = new PlayerWeaponComponent(parentEntity, this->_parentGame);
 

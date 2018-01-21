@@ -15,7 +15,8 @@ namespace Engine::Commands {
 		explicit RemoveEntityCommand(Engine::World &world, unsigned int entityId);
 		~RemoveEntityCommand() = default;
 
-		void execute() override;
+		void execute() noexcept override;
+
 	private:
 		Engine::World &_world;
 		unsigned int _entityId;

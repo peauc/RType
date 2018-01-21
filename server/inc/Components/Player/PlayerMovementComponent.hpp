@@ -15,13 +15,13 @@ namespace Component {
 		explicit PlayerMovementComponent(Engine::Entity *parentEntity);
 		~PlayerMovementComponent() override = default;
 
-		void update() override;
+		void update() noexcept override;
 
 		// handle methods
-		void handleEvent(Engine::Mediator::Message messageType, AComponent *sender);
-		void handleCameraReposition(Engine::Mediator::Message messageType, AComponent *sender);
+		void handleEvent(Engine::Mediator::Message messageType, AComponent *sender) noexcept;
+		void handleCameraReposition(Engine::Mediator::Message messageType, AComponent *sender) noexcept;
 
-		AComponent *clone(Engine::Entity *parentEntity) const override;
+		AComponent *clone(Engine::Entity *parentEntity) const noexcept override;
 	private:
 		double _baseSpeed;
 		double _lateralBaseSpeed;

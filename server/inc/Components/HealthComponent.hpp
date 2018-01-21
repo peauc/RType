@@ -12,18 +12,19 @@ namespace Component {
 	class HealthComponent : public Engine::AComponent
 	{
 	public:
-		HealthComponent(Engine::Entity *parentEntity, Engine::World *world, int health, bool godMode, bool instantDeath);
+		HealthComponent(Engine::Entity *parentEntity, Engine::World *world, int health, bool godMode,
+						bool instantDeath);
 		~HealthComponent() override = default;
 
-		void update() override;
+		void update() noexcept override;
 
-		void takeDamage(int damages);
+		void takeDamage(int damages) noexcept;
 
 		// handle methods
-		void handleGetImpactDamages(Engine::Mediator::Message messageType, Engine::AComponent *sender);
-		void handleHit(Engine::Mediator::Message messageType, Engine::AComponent *sender);
+		void handleGetImpactDamages(Engine::Mediator::Message messageType, Engine::AComponent *sender) noexcept;
+		void handleHit(Engine::Mediator::Message messageType, Engine::AComponent *sender) noexcept;
 
-		Engine::AComponent *clone(Engine::Entity *parentEntity) const override;
+		Engine::AComponent *clone(Engine::Entity *parentEntity) const noexcept override;
 	private:
 		Engine::World *_world;
 		bool _godMode;

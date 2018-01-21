@@ -14,7 +14,7 @@ Component::AMovementComponent::AMovementComponent(Engine::Entity *parentEntity) 
 																				 std::placeholders::_2);
 }
 
-void Component::AMovementComponent::handleCancelMove(Engine::Mediator::Message, Engine::AComponent *sender)
+void Component::AMovementComponent::handleCancelMove(Engine::Mediator::Message, Engine::AComponent *sender) noexcept
 {
 	if (APhysicsComponent *physicsComponent = dynamic_cast<APhysicsComponent *>(sender)) {
 		if ((this->_lastMove.x > 0 && physicsComponent->getCollision(APhysicsComponent::Direction::RIGHT)) ||
@@ -30,14 +30,14 @@ void Component::AMovementComponent::handleCancelMove(Engine::Mediator::Message, 
 	}
 }
 
-Component::AMovementComponent &Component::AMovementComponent::operator=(const Component::AMovementComponent &)
+Component::AMovementComponent &Component::AMovementComponent::operator=(const Component::AMovementComponent &) noexcept
 {
 	this->_event = nullptr;
 
 	return *this;
 }
 
-const Vector2d &Component::AMovementComponent::getLastMove() const
+const Vector2d &Component::AMovementComponent::getLastMove() const noexcept
 {
 	return _lastMove;
 }

@@ -14,6 +14,11 @@ Component::ShotGraphicsComponent::ShotGraphicsComponent(Engine::Entity *parentEn
 	this->_animationIds.push_back(impactAnimationId);
 	this->_currentAnimationId = travelAnimationId;
 
+	//	this->_relativeStartPos.x = -this->_resourceLoader->getAnimations().at(this->_currentAnimationId).at(0).width * 50;
+//	this->_relativeStartPos.y = -this->_resourceLoader->getAnimations().at(this->_currentAnimationId).at(0).height * 50;
+//	this->_relativeRange.x = this->_resourceLoader->getAnimations().at(this->_currentAnimationId).at(0).width * 100;
+//	this->_relativeRange.y = this->_resourceLoader->getAnimations().at(this->_currentAnimationId).at(0).height * 100;
+
 	this->_relativeStartPos.x = -300;
 	this->_relativeStartPos.y = -100;
 	this->_relativeRange.x = 600;
@@ -24,12 +29,12 @@ Component::ShotGraphicsComponent::ShotGraphicsComponent(Engine::Entity *parentEn
 																		   std::placeholders::_2);
 }
 
-void Component::ShotGraphicsComponent::update()
+void Component::ShotGraphicsComponent::update() noexcept
 {
 	this->sendToAll(Engine::Mediator::Message::GRAPHICS_REGISTERING);
 }
 
-void Component::ShotGraphicsComponent::handleImpact(Engine::Mediator::Message, Engine::AComponent *)
+void Component::ShotGraphicsComponent::handleImpact(Engine::Mediator::Message, Engine::AComponent *) noexcept
 {
 	this->_isAlive = false;
 	if (this->_animationIds.size() == 2) {
@@ -37,7 +42,7 @@ void Component::ShotGraphicsComponent::handleImpact(Engine::Mediator::Message, E
 	}
 }
 
-Engine::AComponent *Component::ShotGraphicsComponent::clone(Engine::Entity *parentEntity) const
+Engine::AComponent *Component::ShotGraphicsComponent::clone(Engine::Entity *parentEntity) const noexcept
 {
 	ShotGraphicsComponent *newComp = new ShotGraphicsComponent(parentEntity, this->_resourceLoader, 0, 0);
 

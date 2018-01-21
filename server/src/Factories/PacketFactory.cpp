@@ -6,7 +6,7 @@
 
 Packet::DataPacket *PacketFactory::createObjectPacket(short x, short y, Packet::EntityState entityState, bool hit,
 													  unsigned int id,
-													  unsigned char animationId)
+													  unsigned char animationId) noexcept
 {
 	Packet::DataPacket *dataPacket = new Packet::DataPacket;
 
@@ -23,7 +23,7 @@ Packet::DataPacket *PacketFactory::createObjectPacket(short x, short y, Packet::
 }
 
 Packet::DataPacket *PacketFactory::createScorePacket(Packet::GameState gameState,
-													 const std::vector<Packet::PlayerScore> &playerScores)
+													 const std::vector<Packet::PlayerScore> &playerScores) noexcept
 {
 	Packet::DataPacket *dataPacket = new Packet::DataPacket;
 
@@ -37,7 +37,7 @@ Packet::DataPacket *PacketFactory::createScorePacket(Packet::GameState gameState
 	return dataPacket;
 }
 
-Packet::DataPacket *PacketFactory::createSoundPacket(unsigned char soundId, bool music, bool repeat)
+Packet::DataPacket *PacketFactory::createSoundPacket(unsigned char soundId, bool music, bool repeat) noexcept
 {
 	Packet::DataPacket *dataPacket = new Packet::DataPacket;
 

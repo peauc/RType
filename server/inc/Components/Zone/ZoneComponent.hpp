@@ -16,13 +16,13 @@ namespace Component {
 		explicit ZoneComponent(Engine::Entity *parentEntity, const Engine::Hitbox &, Engine::World *parentWorld);
 		~ZoneComponent() override = default;
 
-		void update() override;
-		void trigger();
+		void update() noexcept override;
+		void trigger() noexcept;
 
-		void addEntity(std::unique_ptr<Engine::Entity> entity);
+		void addEntity(std::unique_ptr<Engine::Entity> entity) noexcept;
 
 		// handle methods
-		void handleCheckCollision(Engine::Mediator::Message, AComponent *sender) override;
+		void handleCheckCollision(Engine::Mediator::Message, AComponent *sender) noexcept override;
 	private:
 		Engine::World *_parentWorld;
 		std::vector<std::unique_ptr<Engine::Entity>> _entities;

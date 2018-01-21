@@ -9,7 +9,7 @@ Component::ShotMovementComponent::ShotMovementComponent(Engine::Entity *parentEn
 {
 }
 
-void Component::ShotMovementComponent::update()
+void Component::ShotMovementComponent::update() noexcept
 {
 	this->_lastMove.x = this->_speed * cos(this->_parentEntity->getTransformComponent().getRotationRadians());
 	this->_lastMove.y = this->_speed * sin(this->_parentEntity->getTransformComponent().getRotationRadians());
@@ -18,7 +18,7 @@ void Component::ShotMovementComponent::update()
 	this->_parentEntity->getTransformComponent().getPosition().y += this->_lastMove.y;
 }
 
-Engine::AComponent *Component::ShotMovementComponent::clone(Engine::Entity *parentEntity) const
+Engine::AComponent *Component::ShotMovementComponent::clone(Engine::Entity *parentEntity) const noexcept
 {
 	ShotMovementComponent *newComp = new ShotMovementComponent(parentEntity, this->_speed);
 

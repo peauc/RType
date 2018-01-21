@@ -14,11 +14,11 @@ namespace Component {
 		PlayerPhysicsComponent(Engine::Entity *parentEntity, Engine::Hitbox hitbox);
 		~PlayerPhysicsComponent() override = default;
 
-		void update() override;
+		void update() noexcept override;
 
-		void cameraCollision(APhysicsComponent &other);
+		void cameraCollision(APhysicsComponent &other) noexcept;
 
-		AComponent *clone(Engine::Entity *parentEntity) const override;
+		AComponent *clone(Engine::Entity *parentEntity) const noexcept override;
 	};
 }
 

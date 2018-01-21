@@ -15,9 +15,11 @@ namespace Component {
 		explicit AAudioComponent(Engine::Entity *parentEntity, Engine::Game *parentGame);
 		~AAudioComponent() override = default;
 
-		void addSoundPacket(unsigned char soundId, bool repeat);
+		void addSoundPacket(unsigned char soundId, bool repeat) noexcept;
 
-		AAudioComponent &operator=(const AAudioComponent &other);
+		// operator overloads
+		AAudioComponent &operator=(const AAudioComponent &other) noexcept;
+
 	protected:
 		Engine::Game *_parentGame;
 		std::vector<unsigned char> _soundIds;

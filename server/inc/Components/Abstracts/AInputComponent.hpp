@@ -15,10 +15,10 @@ namespace Component {
 		explicit AInputComponent(Engine::Entity *parentEntity);
 		~AInputComponent() override = default;
 
-		const Engine::Event &getEvent() const;
-		bool hasEvent() const;
-		
-		AInputComponent &operator=(const AInputComponent &other);
+		const Engine::Event &getEvent() const noexcept;
+		bool hasEvent() const noexcept;
+
+		AInputComponent &operator=(const AInputComponent &other) noexcept;
 	protected:
 		std::unique_ptr<Engine::Event> _event;
 	};

@@ -15,11 +15,11 @@ namespace Component {
 		explicit CameraViewComponent(Engine::Entity *parentEntity, Engine::Game *parentGame);
 		~CameraViewComponent() override = default;
 
-		void update() override;
-		const Vector2d &getRelativeBottomRight() const;
+		void update() noexcept override;
+		const Vector2d &getRelativeBottomRight() const noexcept;
 
 		// handle methods
-		void handleGraphicsRegistration(Engine::Mediator::Message messageType, AComponent *sender);
+		void handleGraphicsRegistration(Engine::Mediator::Message messageType, AComponent *sender) noexcept;
 	private:
 		Engine::Game *_parentGame;
 		std::vector<Component::AGraphicsComponent *> _graphicComponents;

@@ -10,7 +10,7 @@ Component::PlayerInputComponent::PlayerInputComponent(Engine::Entity *parentEnti
 {
 }
 
-void Component::PlayerInputComponent::update()
+void Component::PlayerInputComponent::update() noexcept
 {
 	std::cout << "Input" << this->_parentEntity->getId() << std::endl;
 	this->_event = this->_eventList->getEventById(this->_parentEntity->getId());
@@ -22,7 +22,7 @@ void Component::PlayerInputComponent::update()
 	this->_event = nullptr;
 }
 
-Engine::AComponent *Component::PlayerInputComponent::clone(Engine::Entity *parentEntity) const
+Engine::AComponent *Component::PlayerInputComponent::clone(Engine::Entity *parentEntity) const noexcept
 {
 	PlayerInputComponent *newComp = new PlayerInputComponent(parentEntity, this->_eventList);
 

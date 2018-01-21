@@ -9,17 +9,17 @@ Component::AInputComponent::AInputComponent(Engine::Entity *parentEntity) : ACom
 {
 }
 
-const Engine::Event &Component::AInputComponent::getEvent() const
+const Engine::Event &Component::AInputComponent::getEvent() const noexcept
 {
 	return *this->_event;
 }
 
-bool Component::AInputComponent::hasEvent() const
+bool Component::AInputComponent::hasEvent() const noexcept
 {
 	return this->_event != nullptr;
 }
 
-Component::AInputComponent &Component::AInputComponent::operator=(const Component::AInputComponent &)
+Component::AInputComponent &Component::AInputComponent::operator=(const Component::AInputComponent &) noexcept
 {
 	this->_event = nullptr;
 

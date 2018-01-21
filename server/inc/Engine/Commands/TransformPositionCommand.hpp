@@ -15,7 +15,7 @@ namespace Engine::Commands {
 		explicit TransformPositionCommand(Engine::TransformComponent &transformComponent, double x, double y);
 		~TransformPositionCommand() = default;
 
-		void execute() override;
+		void execute() noexcept override;
 
 	private:
 		Engine::TransformComponent &_transformComponent;

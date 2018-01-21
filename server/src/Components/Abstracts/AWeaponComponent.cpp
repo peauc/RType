@@ -9,7 +9,7 @@ Component::AWeaponComponent::AWeaponComponent(Engine::Entity *parentEntity, Engi
 {
 }
 
-Component::AWeaponComponent &Component::AWeaponComponent::operator=(const Component::AWeaponComponent &other)
+Component::AWeaponComponent &Component::AWeaponComponent::operator=(const Component::AWeaponComponent &other) noexcept
 {
 	this->_parentGame = other._parentGame;
 	this->_cooldown = other._cooldown;

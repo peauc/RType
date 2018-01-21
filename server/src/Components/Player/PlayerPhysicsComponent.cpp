@@ -23,18 +23,18 @@ Component::PlayerPhysicsComponent::PlayerPhysicsComponent(Engine::Entity *parent
 																		this, std::placeholders::_1);
 }
 
-void Component::PlayerPhysicsComponent::update()
+void Component::PlayerPhysicsComponent::update() noexcept
 {
 	std::cout << "Physics" << this->_parentEntity->getId() << std::endl;
 	this->sendToAll(Engine::Mediator::Message::CHECK_COLLISION);
 }
 
-void Component::PlayerPhysicsComponent::cameraCollision(APhysicsComponent &)
+void Component::PlayerPhysicsComponent::cameraCollision(APhysicsComponent &) noexcept
 {
 	this->sendToAll(Engine::Mediator::CAMERA_REPOSITION);
 }
 
-Engine::AComponent *Component::PlayerPhysicsComponent::clone(Engine::Entity *parentEntity) const
+Engine::AComponent *Component::PlayerPhysicsComponent::clone(Engine::Entity *parentEntity) const noexcept
 {
 	PlayerPhysicsComponent *newComp = new PlayerPhysicsComponent(parentEntity, this->_hitbox);
 
@@ -42,4 +42,3 @@ Engine::AComponent *Component::PlayerPhysicsComponent::clone(Engine::Entity *par
 
 	return newComp;
 }
-

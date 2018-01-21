@@ -15,12 +15,12 @@ Component::CameraZoneComponent::CameraZoneComponent(Engine::Entity *parentEntity
 			std::placeholders::_2);
 }
 
-void Component::CameraZoneComponent::update()
+void Component::CameraZoneComponent::update() noexcept
 {
 }
 
 void Component::CameraZoneComponent::handleCheckCollision(Engine::Mediator::Message,
-														  Engine::AComponent *sender)
+														  Engine::AComponent *sender) noexcept
 {
 	if (APhysicsComponent *other = dynamic_cast<APhysicsComponent *>(sender)) {
 

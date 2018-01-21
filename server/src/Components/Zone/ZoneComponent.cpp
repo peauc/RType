@@ -16,11 +16,11 @@ Component::ZoneComponent::ZoneComponent(Engine::Entity *parentEntity,
 			std::placeholders::_2);
 }
 
-void Component::ZoneComponent::update()
+void Component::ZoneComponent::update() noexcept
 {
 }
 
-void Component::ZoneComponent::handleCheckCollision(Engine::Mediator::Message, Engine::AComponent *sender)
+void Component::ZoneComponent::handleCheckCollision(Engine::Mediator::Message, Engine::AComponent *sender) noexcept
 {
 	if (APhysicsComponent *other = dynamic_cast<APhysicsComponent *>(sender)) {
 		other->setOBB();
@@ -32,12 +32,12 @@ void Component::ZoneComponent::handleCheckCollision(Engine::Mediator::Message, E
 	}
 }
 
-void Component::ZoneComponent::addEntity(std::unique_ptr<Engine::Entity> entity)
+void Component::ZoneComponent::addEntity(std::unique_ptr<Engine::Entity> entity) noexcept
 {
 	this->_entities.push_back(std::move(entity));
 }
 
-void Component::ZoneComponent::trigger()
+void Component::ZoneComponent::trigger() noexcept
 {
 	for (auto &entity : this->_entities) {
 		entity->setActive(true);

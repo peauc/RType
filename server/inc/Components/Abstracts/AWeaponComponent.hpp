@@ -15,7 +15,8 @@ namespace Component {
 		AWeaponComponent(Engine::Entity *parentEntity, Engine::Game *parentGame);
 		~AWeaponComponent() override = default;
 
-		AWeaponComponent &operator=(const AWeaponComponent &other);
+		// operator overloads
+		AWeaponComponent &operator=(const AWeaponComponent &other) noexcept ;
 	protected:
 		Engine::Game *_parentGame;
 		double _shotAngle;

@@ -15,21 +15,22 @@ namespace Component {
 		explicit AGraphicsComponent(Engine::Entity *parentEntity, RessourcesLoader *resourceLoader);
 		~AGraphicsComponent() override = default;
 
-		bool isInArea(double xPos, double yPos, double xRange, double yRange);
-		double getRelativeXPos(double xPos, double xRange);
-		double getRelativeYPos(double yPos, double yRange);
+		bool isInArea(double xPos, double yPos, double xRange, double yRange) noexcept;
+		double getRelativeXPos(double xPos, double xRange) noexcept;
+		double getRelativeYPos(double yPos, double yRange) noexcept;
 
-		RessourcesLoader *getResourceLoader() const;
-		void setResourceLoader(RessourcesLoader *_resourceLoader);
-		unsigned char getCurrentAnimationId() const;
-		bool isHit() const;
-		void setIsHit(bool isHit);
-		bool isAlive() const;
-		void setIsAlive(bool isAlive);
-		const Vector2d &getRelativeStartPos() const;
-		const Vector2d &getRange() const;
+		RessourcesLoader *getResourceLoader() const noexcept;
+		void setResourceLoader(RessourcesLoader *_resourceLoader) noexcept;
+		unsigned char getCurrentAnimationId() const noexcept;
+		bool isHit() const noexcept;
+		void setIsHit(bool isHit) noexcept;
+		bool isAlive() const noexcept;
+		void setIsAlive(bool isAlive) noexcept;
+		const Vector2d &getRelativeStartPos() const noexcept;
+		const Vector2d &getRange() const noexcept;
 
-		AGraphicsComponent &operator=(const AGraphicsComponent &other);
+		// operator overloads
+		AGraphicsComponent &operator=(const AGraphicsComponent &other) noexcept;
 	protected:
 		RessourcesLoader *_resourceLoader;
 		std::vector<unsigned char> _animationIds;

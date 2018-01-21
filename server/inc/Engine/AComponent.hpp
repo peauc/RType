@@ -20,22 +20,20 @@ namespace Engine {
 		explicit AComponent(const AComponent &other, Entity *parentEntity);
 		virtual ~AComponent() = default;
 
-		void registerToMediator(Mediator *mediator);
-		void unregisterToMediator(Mediator *mediator);
-		void receive(Mediator::Message messageType, AComponent *sender) override;
-		void sendToAll(Mediator::Message messageType);
+		AComponent &operator=(const AComponent &other) noexcept ;
 
-		void addObserver(Observer *);
-		void removeObserver(Observer *);
-
-		unsigned int getParentEntityId() const;
-		bool isParentActive() const;
+		void registerToMediator(Mediator *mediator) noexcept ;
+		void unregisterToMediator(Mediator *mediator) noexcept ;
+		void receive(Mediator::Message messageType, AComponent *sender) noexcept  override;
+		void sendToAll(Mediator::Message messageType) noexcept ;
+		void addObserver(Observer *) noexcept ;
+		void removeObserver(Observer *) noexcept ;
+		unsigned int getParentEntityId() const noexcept ;
+		bool isParentActive() const noexcept ;
 
 		virtual void update() = 0;
 
-		AComponent &operator=(const AComponent &other);
-
-		virtual AComponent *clone(Entity *parentEntity) const;
+		virtual AComponent *clone(Entity *parentEntity) const noexcept ;
 
 	protected:
 		Entity *_parentEntity;

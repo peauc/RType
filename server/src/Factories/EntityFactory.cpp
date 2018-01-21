@@ -14,7 +14,7 @@
 #include <Components/HealthComponent.hpp>
 #include "Factories/EntityFactory.hpp"
 
-Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine::Game &game)
+Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine::Game &game) noexcept
 {
 
 	Engine::Entity *playerShip = new Engine::Entity(id);
@@ -55,7 +55,7 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 	return playerShip;
 }
 
-Engine::Entity *Factory::EntityFactory::createCamera(unsigned int id, Engine::Game &game)
+Engine::Entity *Factory::EntityFactory::createCamera(unsigned int id, Engine::Game &game) noexcept
 {
 	Engine::Entity *camera = new Engine::Entity(id);
 
@@ -79,7 +79,7 @@ Engine::Entity *Factory::EntityFactory::createCamera(unsigned int id, Engine::Ga
 	return camera;
 }
 
-Engine::Entity *Factory::EntityFactory::createZone(unsigned int id, Engine::Game &game, const Vector2d &size)
+Engine::Entity *Factory::EntityFactory::createZone(unsigned int id, Engine::Game &game, const Vector2d &size) noexcept
 {
 	Engine::Entity *zone = new Engine::Entity(id);
 

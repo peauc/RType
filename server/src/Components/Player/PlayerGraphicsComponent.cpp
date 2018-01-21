@@ -44,6 +44,11 @@ Component::PlayerGraphicsComponent::PlayerGraphicsComponent(Engine::Entity *pare
 	}
 	this->_currentAnimationId = this->_animationIds[0];
 
+//	this->_relativeStartPos.x = -this->_resourceLoader->getAnimations().at(this->_currentAnimationId).at(0).width * 50;
+//	this->_relativeStartPos.y = -this->_resourceLoader->getAnimations().at(this->_currentAnimationId).at(0).height * 50;
+//	this->_relativeRange.x = this->_resourceLoader->getAnimations().at(this->_currentAnimationId).at(0).width * 100;
+//	this->_relativeRange.y = this->_resourceLoader->getAnimations().at(this->_currentAnimationId).at(0).height * 100;
+
 	this->_relativeStartPos.x = -500;
 	this->_relativeStartPos.y = -300;
 	this->_relativeRange.x = 1000;
@@ -61,23 +66,23 @@ Component::PlayerGraphicsComponent::PlayerGraphicsComponent(Engine::Entity *pare
 																		  std::placeholders::_2);
 }
 
-void Component::PlayerGraphicsComponent::update()
+void Component::PlayerGraphicsComponent::update() noexcept
 {
 	std::cout << "Graphics" << this->_parentEntity->getId() << std::endl;
 	this->sendToAll(Engine::Mediator::Message::GRAPHICS_REGISTERING);
 }
 
-void Component::PlayerGraphicsComponent::handleDeath(Engine::Mediator::Message, Engine::AComponent *)
+void Component::PlayerGraphicsComponent::handleDeath(Engine::Mediator::Message, Engine::AComponent *) noexcept
 {
 	this->_isHit = true;
 }
 
-void Component::PlayerGraphicsComponent::handleHit(Engine::Mediator::Message, Engine::AComponent *)
+void Component::PlayerGraphicsComponent::handleHit(Engine::Mediator::Message, Engine::AComponent *) noexcept
 {
 	this->_isAlive = false;
 }
 
-void Component::PlayerGraphicsComponent::handleMove(Engine::Mediator::Message, Engine::AComponent *sender)
+void Component::PlayerGraphicsComponent::handleMove(Engine::Mediator::Message, Engine::AComponent *sender) noexcept
 {
 	if (AMovementComponent *movementComponent = dynamic_cast<AMovementComponent *>(sender)) {
 		if (movementComponent->getLastMove().y > 0) {
@@ -96,7 +101,7 @@ void Component::PlayerGraphicsComponent::handleMove(Engine::Mediator::Message, E
 	}
 }
 
-Engine::AComponent *Component::PlayerGraphicsComponent::clone(Engine::Entity *parentEntity) const
+Engine::AComponent *Component::PlayerGraphicsComponent::clone(Engine::Entity *parentEntity) const noexcept
 {
 	PlayerGraphicsComponent *newComponent = new PlayerGraphicsComponent(parentEntity, this->_resourceLoader);
 

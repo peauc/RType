@@ -16,12 +16,12 @@ namespace Component {
 									   unsigned char _travelAnimationId, unsigned char _impactAnimationId);
 		~ShotGraphicsComponent() override = default;
 
-		void update() override;
+		void update() noexcept override;
 
 		// handleMethod
-		void handleImpact(Engine::Mediator::Message messageType, Engine::AComponent *sender);
+		void handleImpact(Engine::Mediator::Message messageType, Engine::AComponent *sender) noexcept;
 
-		AComponent *clone(Engine::Entity *parentEntity) const override;
+		AComponent *clone(Engine::Entity *parentEntity) const noexcept override;
 	};
 }
 

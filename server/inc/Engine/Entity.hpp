@@ -20,25 +20,23 @@ namespace Engine {
 		explicit Entity(unsigned int id);
 		~Entity() = default;
 
-		void update();
-		void executeCommands();
-		void receive(Mediator::Message messageType, AComponent *sender) override;
+		void update() noexcept;
+		void executeCommands() noexcept;
+		void receive(Mediator::Message messageType, AComponent *sender) noexcept override;
+		void addComponent(AComponent *component) noexcept;
+		void addCommand(Commands::ICommand *command) noexcept;
+		Mediator &getMediator() noexcept;
+		const Mediator &getMediator() const noexcept;
+		TransformComponent &getTransformComponent() noexcept;
+		const TransformComponent &getTransformComponent() const noexcept;
+		void setId(unsigned int id) noexcept;
+		unsigned int getId() const noexcept;
+		bool isActive() const noexcept;
+		void setActive(bool active) noexcept;
 
-		void addComponent(AComponent *component);
-		void addCommand(Commands::ICommand *command);
-
-		Mediator &getMediator();
-		const Mediator &getMediator() const;
-		TransformComponent &getTransformComponent();
-		const TransformComponent &getTransformComponent() const;
-		void setId(unsigned int id);
-		unsigned int getId() const;
-		bool isActive() const;
-		void setActive(bool active);
-
-		bool operator==(unsigned int id);
-		bool operator==(const Entity &other);
-		Entity *clone();
+		bool operator==(unsigned int id) noexcept;
+		bool operator==(const Entity &other) noexcept;
+		Entity *clone() noexcept;
 
 	private:
 		unsigned int _id;

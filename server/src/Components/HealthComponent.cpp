@@ -22,11 +22,11 @@ Component::HealthComponent::HealthComponent(Engine::Entity *parentEntity, Engine
 			std::placeholders::_2);
 }
 
-void Component::HealthComponent::update()
+void Component::HealthComponent::update() noexcept
 {
 }
 
-void Component::HealthComponent::takeDamage(int damages)
+void Component::HealthComponent::takeDamage(int damages) noexcept
 {
 	if (!this->_godMode) {
 		this->_health -= (this->_instantDeath) ? this->_health : damages;
@@ -38,14 +38,14 @@ void Component::HealthComponent::takeDamage(int damages)
 	}
 }
 
-void Component::HealthComponent::handleGetImpactDamages(Engine::Mediator::Message, Engine::AComponent *sender)
+void Component::HealthComponent::handleGetImpactDamages(Engine::Mediator::Message, Engine::AComponent *sender) noexcept
 {
 	if (APhysicsComponent *physics = dynamic_cast<APhysicsComponent *>(sender)) {
 		physics->setCollisionDamages(this->_maxHealth);
 	}
 }
 
-void Component::HealthComponent::handleHit(Engine::Mediator::Message, Engine::AComponent *sender)
+void Component::HealthComponent::handleHit(Engine::Mediator::Message, Engine::AComponent *sender) noexcept
 {
 	if (APhysicsComponent *physics = dynamic_cast<APhysicsComponent *>(sender)) {
 		this->takeDamage(physics->getCollisionDamages());
@@ -53,7 +53,7 @@ void Component::HealthComponent::handleHit(Engine::Mediator::Message, Engine::AC
 }
 
 Engine::AComponent *
-Component::HealthComponent::clone(Engine::Entity *parentEntity) const
+Component::HealthComponent::clone(Engine::Entity *parentEntity) const noexcept
 {
 	Component::HealthComponent *healthComponent = new Component::HealthComponent(parentEntity, this->_world,
 																				 this->_maxHealth, this->_godMode,

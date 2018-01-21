@@ -12,7 +12,7 @@ Engine::Commands::TransformPositionCommand::TransformPositionCommand(Engine::Tra
     this->_y = y;
 }
 
-void Engine::Commands::TransformPositionCommand::execute()
+void Engine::Commands::TransformPositionCommand::execute() noexcept
 {
     this->_transformComponent.getPosition().x += this->_x;
     this->_transformComponent.getPosition().y += this->_y;

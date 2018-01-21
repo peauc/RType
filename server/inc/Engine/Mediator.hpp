@@ -32,9 +32,9 @@ namespace Engine {
 		Mediator() = default;
 		~Mediator() = default;
 
-		void send(Message message, AComponent *sender);
-		void registerComponent(AComponent *component);
-		void unregisterComponent(AComponent *component);
+		void send(Message message, AComponent *sender)  noexcept;
+		void registerComponent(AComponent *component)  noexcept;
+		void unregisterComponent(AComponent *component)  noexcept;
 
 	private:
 		std::vector<AComponent *> _subjects;

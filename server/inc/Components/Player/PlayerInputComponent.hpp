@@ -20,9 +20,9 @@ namespace Component {
 									  Engine::EventList *eventList);
 		~PlayerInputComponent() override = default;
 
-		void update() override;
+		void update() noexcept override;
 
-		AComponent *clone(Engine::Entity *parentEntity) const override;
+		AComponent *clone(Engine::Entity *parentEntity) const noexcept override;
 
 	private:
 		Engine::EventList *_eventList;

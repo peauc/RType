@@ -12,7 +12,7 @@ namespace Component {
 	{
 	public:
 		EnemyShotPhysicsComponent(Engine::Entity *parentEntity, const Engine::Hitbox &hitbox);
-		~PlayerShotPhysicsComponent() override = default;
+		~EnemyShotPhysicsComponent() override = default;
 
 		void update() noexcept override;
 	};

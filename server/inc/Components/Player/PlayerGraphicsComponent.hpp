@@ -14,14 +14,14 @@ namespace Component {
 		explicit PlayerGraphicsComponent(Engine::Entity *parentEntity, RessourcesLoader *resourceLoader);
 		~PlayerGraphicsComponent() override = default;
 
-		void update() override;
+		void update() noexcept override;
 
 		// handle methods
-		void handleDeath(Engine::Mediator::Message messageType, AComponent *sender);
-		void handleHit(Engine::Mediator::Message messageType, AComponent *sender);
-		void handleMove(Engine::Mediator::Message messageType, AComponent *sender);
+		void handleDeath(Engine::Mediator::Message messageType, AComponent *sender) noexcept;
+		void handleHit(Engine::Mediator::Message messageType, AComponent *sender) noexcept;
+		void handleMove(Engine::Mediator::Message messageType, AComponent *sender) noexcept;
 
-		AComponent *clone(Engine::Entity *parentEntity) const override;
+		AComponent *clone(Engine::Entity *parentEntity) const noexcept override;
 	};
 }
 

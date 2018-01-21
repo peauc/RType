@@ -15,7 +15,7 @@ namespace Component {
 		explicit CameraMovementComponent(Engine::Entity *parentEntity, Engine::Game *parentGame);
 		~CameraMovementComponent() override = default;
 
-		void update() override;
+		void update() noexcept override;
 	private:
 		Engine::Game *_parentGame;
 	};
