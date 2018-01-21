@@ -48,7 +48,7 @@ const	std::string &TextSFML::getText() const noexcept
 void	TextSFML::setFont(const std::string &font)
 {
 	if (!this->_font.loadFromFile(font)) {
-		throw std::runtime_error("Cannot open file : " + font);
+		throw std::runtime_error("Cannot open font : " + font);
 	}
 	this->_sText.setFont(this->_font);
 }

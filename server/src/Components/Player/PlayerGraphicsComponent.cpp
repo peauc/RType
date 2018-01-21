@@ -12,11 +12,11 @@ Component::PlayerGraphicsComponent::PlayerGraphicsComponent(Engine::Entity *pare
 {
 	switch (parentEntity->getId()) {
 		case 0:
-			this->_animationIds.push_back(40);
 			this->_animationIds.push_back(39);
 			this->_animationIds.push_back(38);
-			this->_animationIds.push_back(36);
 			this->_animationIds.push_back(37);
+			this->_animationIds.push_back(35);
+			this->_animationIds.push_back(36);
 			break;
 		case 1:
 			this->_animationIds.push_back(4);

@@ -18,7 +18,6 @@ void	LStock::loadByPath() {
 		while ((p = readdir(dir)) != nullptr) {
 			s = p->d_name;
 			if (s.find(".so") != s.npos) {
-//				s = this->path + p->d_name;
 				this->libList.push_back(s);
 				if (i == 0)
 					this->it = this->libList.begin();

@@ -162,8 +162,6 @@ void ClientGame::createMenu()
 	playButton->setPos(-200, -300);
 	playButton->setOnClick([&]() {
 		this->_waitingReady = true;
-		Packet::DataPacket packet((int)Packet::Commands::READY);
-		this->_client.sendMessage(packet);
 	});
 	
 	quitButton->setPos(-600, -300);
@@ -250,6 +248,7 @@ void ClientGame::interpretPacket(const std::vector<Packet::DataPacket>
 	for (const auto &packet : packets) {
 		switch (packet.cmd) {
 			case Packet::Commands::STARTGAME:
+				this->_waitingReady = false;
 				this->_gameState = GameState::INGAME;
 				break;
 			case Packet::Commands::POSITION:
@@ -300,7 +299,7 @@ void ClientGame::updateInfosObject(ISprite *sprite, bool repeatAnimation,
 								  objInfos.y);
 	sprite->setPos(pos.first, pos.second);
 	if (objInfos.entityState == Packet::EntityState::DEAD) {
-		repeatAnimation = false; //TODO FInd a way to delete them
+		repeatAnimation = false; //TODO Find a way to delete them
 	}
 	if (sprite->getAnimationId() != objInfos.animationId) {
 		this->_render->setAnimationToSprite(sprite,
@@ -319,7 +318,7 @@ void ClientGame::updateInfosObject(ISprite *sprite, bool repeatAnimation,
 std::pair<short, short> ClientGame::calculateRealPosition(short x,
 							  short y) noexcept
 {
-	short realX = (short)(x * this->_render->getWidth() / 10'000);
-	short realY = (short)(y * this->_render->getHeight() / 10'000);
+	auto realX = (short)(x * this->_render->getWidth() / 10'000);
+	auto realY = (short)(y * this->_render->getHeight() / 10'000);
 	return (std::make_pair(realX, realY));
 }
