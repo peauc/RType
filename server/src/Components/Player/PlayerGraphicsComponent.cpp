@@ -62,7 +62,6 @@ Component::PlayerGraphicsComponent::PlayerGraphicsComponent(Engine::Entity *pare
 
 void Component::PlayerGraphicsComponent::update() noexcept
 {
-	std::cout << "Graphics" << this->_parentEntity->getId() << std::endl;
 	this->sendToAll(Engine::Mediator::Message::GRAPHICS_REGISTERING);
 }
 

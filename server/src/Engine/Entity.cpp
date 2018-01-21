@@ -3,6 +3,7 @@
 //
 
 #include <Engine/Entity.hpp>
+#include <iostream>
 
 Engine::Entity::Entity() : _id(0), _active(false), _transformComponent(this), _components(),
 						   _mediator(std::make_unique<Mediator>())
@@ -17,6 +18,7 @@ Engine::Entity::Entity(unsigned int id) : _id(id), _active(false), _transformCom
 void Engine::Entity::update() noexcept
 {
 	if (this->_active) {
+		std::cout << "Updating" << std::endl;
 		for (unsigned int i = 0; i < _components.size(); ++i) {
 			this->_components[i]->update();
 		}

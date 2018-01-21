@@ -25,7 +25,6 @@ Component::PlayerPhysicsComponent::PlayerPhysicsComponent(Engine::Entity *parent
 
 void Component::PlayerPhysicsComponent::update() noexcept
 {
-	std::cout << "Physics" << this->_parentEntity->getId() << std::endl;
 	this->sendToAll(Engine::Mediator::Message::CHECK_COLLISION);
 }
 

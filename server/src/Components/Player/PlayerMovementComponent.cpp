@@ -28,7 +28,6 @@ Component::PlayerMovementComponent::PlayerMovementComponent(Engine::Entity *pare
 
 void Component::PlayerMovementComponent::update() noexcept
 {
-	std::cout << "Movement" << this->_parentEntity->getId() << std::endl;
 	this->_lastMove.x = this->_baseSpeed + this->_xInput * this->_baseSpeed;
 	this->_lastMove.y = this->_lateralBaseSpeed + this->_yInput * this->_lateralMaxSpeed;
 

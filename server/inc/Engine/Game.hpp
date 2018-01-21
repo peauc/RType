@@ -10,8 +10,10 @@
 #include "World.hpp"
 #include "Event.hpp"
 #include "EventList.hpp"
+#include "EnemyLoader/EnemyLoader.hpp"
 #include "../../../RessourcesLoader/includes/RessourcesLoader.hpp"
 #include "PacketList.hpp"
+
 
 #define MS_PER_UPDATE 16
 
@@ -43,6 +45,8 @@ namespace Engine {
 		std::unique_ptr<World> _world;
 		EventList _eventList;
 		PacketList _packetList;
+		EnemyLoader	_enemyLoader;
+		std::map<const std::string, Engine::Entity*>	_DLEntitiesMap;
 		std::shared_ptr<RessourcesLoader> _resourceLoader;
 		bool _stop;
 	};

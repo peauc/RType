@@ -52,6 +52,9 @@ void Engine::Game::setup(size_t nbOfPlayers,
 	for (int i = 0; i < nbOfPlayers; ++i) {
 		this->_world->addObject(Factory::EntityFactory::createPlayerShip);
 	}
+
+	this->_enemyLoader.setup("../DLEnemies/", *this);
+	this->_DLEntitiesMap	= this->_enemyLoader.getEnemies();
 }
 
 std::unique_ptr<Engine::World> &Engine::Game::getWorld()
