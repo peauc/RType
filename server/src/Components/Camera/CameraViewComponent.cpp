@@ -28,6 +28,7 @@ void Component::CameraViewComponent::update() noexcept
 			if (component->isInArea(this->_parentEntity->getTransformComponent().getPosition().x,
 									this->_parentEntity->getTransformComponent().getPosition().y,
 									this->_relativeBottomRight.x, this->_relativeBottomRight.y)) {
+				std::cout << "Pushing data packet" << std::endl;
 				this->_parentGame->pushDataPacket(PacketFactory::createObjectPacket(
 						static_cast<short>(
 								component->getRelativeXPos(this->_parentEntity->getTransformComponent().getPosition().x,

@@ -9,14 +9,19 @@ Component::AGraphicsComponent::AGraphicsComponent(Engine::Entity *parentEntity, 
 {
 }
 
-void Component::AGraphicsComponent::setHitbox()
+int Component::AGraphicsComponent::setHitbox()
 {
+	if (this->_resourceLoader == nullptr ||
+		this->_resourceLoader->getAnimations().count(this->_currentAnimationId) == 0) {
+		return 1;
+	}
 	const RessourcesLoader::Animation animation = this->_resourceLoader->getAnimations().at(this->_currentAnimationId);
 
 	this->_relativeStartPos.x = -animation.at(0).width * 50;
 	this->_relativeStartPos.y = -animation.at(0).height * 50;
 	this->_relativeRange.x = animation.at(0).width * 100;
 	this->_relativeRange.y = animation.at(0).height * 100;
+	return 0;
 }
 
 bool Component::AGraphicsComponent::isInArea(double xPos, double yPos, double xRange, double yRange) noexcept

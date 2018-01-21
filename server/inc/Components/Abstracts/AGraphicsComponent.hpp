@@ -27,7 +27,7 @@ namespace Component {
 		void setIsAlive(bool isAlive) noexcept;
 		const Vector2d &getRelativeStartPos() const noexcept;
 		const Vector2d &getRange() const noexcept;
-		void setHitbox();
+		int setHitbox();
 
 		// operator overloads
 		AGraphicsComponent &operator=(const AGraphicsComponent &other) noexcept;

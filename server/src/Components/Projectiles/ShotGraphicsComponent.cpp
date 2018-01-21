@@ -3,6 +3,7 @@
 //
 
 #include <Components/Projectiles/ShotGraphicsComponent.hpp>
+#include <iostream>
 
 Component::ShotGraphicsComponent::ShotGraphicsComponent(Engine::Entity *parentEntity,
 														RessourcesLoader *resourceLoader,
@@ -14,7 +15,9 @@ Component::ShotGraphicsComponent::ShotGraphicsComponent(Engine::Entity *parentEn
 	this->_animationIds.push_back(impactAnimationId);
 	this->_currentAnimationId = travelAnimationId;
 
-	this->setHitbox();
+	if (this->setHitbox()) {
+		std::cerr << "Missing ressource" << std::endl;
+	}
 
 	this->_validMessageTypes[Engine::Mediator::Message::DEATH] = std::bind(&ShotGraphicsComponent::handleImpact,
 																		   this, std::placeholders::_1,

@@ -44,7 +44,9 @@ Component::PlayerGraphicsComponent::PlayerGraphicsComponent(Engine::Entity *pare
 	}
 	this->_currentAnimationId = this->_animationIds[0];
 
-	this->setHitbox();
+	if (this->setHitbox()) {
+		std::cerr << "Missing ressource" << std::endl;
+	}
 
 	// set handle methods
 	this->_validMessageTypes[Engine::Mediator::Message::DEATH] = std::bind(&PlayerGraphicsComponent::handleDeath,
