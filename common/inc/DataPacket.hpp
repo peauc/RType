@@ -65,15 +65,16 @@ union UData {
 	Sound sound;
 };
 struct DataPacket {
-	DataPacket() {};
+	DataPacket() = default;
+	explicit DataPacket(unsigned short cmd) : cmd(cmd) {}
 	DataPacket(const DataPacket &pket) : cmd(pket.cmd), data(pket.data) {}
-	explicit DataPacket(unsigned short cmd) : cmd(cmd) {};
-	unsigned short cmd;
-	union UData data;
+
+	unsigned short cmd{0};
+	union UData data{};
 };
 const size_t PACKETSIZE = sizeof(DataPacket);
 
-enum Commands
+enum	Commands
 {
 	CONNECT	= 0,
 	DISCONNECT,
