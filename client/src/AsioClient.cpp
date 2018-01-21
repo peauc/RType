@@ -101,6 +101,9 @@ void client::AsioClient::handleReceive(const boost::system::error_code &error,
 	if (message.getPacket().cmd == Packet::CONNECTED) {
 		_connected = true;
 		Logger::Log(Logger::DEBUG, "Client is now connected");
+	} else {
+		_packetList.push_back(message.getPacket());
+		Logger::Log(Logger::DEBUG, std::to_string(_packetList.size()));
 	}
 	std::cout << "Received command " << message.getPacket().cmd << " " <<
 								    Packet::CONNECTED <<
@@ -119,4 +122,12 @@ void client::AsioClient::tick() noexcept
 {
 	_ioService.poll();
 	_ioService.reset();
+}
+
+std::vector<Packet::DataPacket> client::AsioClient::getDataPacketList()
+{
+	std::vector<Packet::DataPacket> v;
+	v = _packetList;
+	_packetList.clear();
+	return (v);
 }

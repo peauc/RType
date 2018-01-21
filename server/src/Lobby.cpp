@@ -82,7 +82,8 @@ void Lobby::pullEventInList(std::unique_ptr<Engine::Event> &event) noexcept
 	_game.getEventList().pushBack(event);
 }
 
-std::vector<std::unique_ptr<Packet::DataPacket>> Lobby::getPackets() {
+std::unique_ptr<std::vector<std::unique_ptr<Packet::DataPacket>>>
+Lobby::getPackets() {
 	return (_game.getPackets());
 }
 

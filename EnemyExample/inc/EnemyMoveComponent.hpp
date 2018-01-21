@@ -18,10 +18,12 @@ namespace Component {
 		explicit EnemyMoveComponent(Engine::Entity *parentEntity);
 		~EnemyMoveComponent() override = default;
 
-		void update() override;
+		void update() noexcept;
 
 		// handle methods
 		void handleEvent(Engine::Mediator::Message messageType, AComponent *sender);
+		AComponent *clone(Engine::Entity *parentEntity) const noexcept;
+
 	private:
 		float _baseSpeed;
 		float _lateralBaseSpeed;

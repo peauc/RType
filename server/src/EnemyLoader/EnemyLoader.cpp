@@ -15,8 +15,10 @@ EnemyLoader::EnemyLoader(const std::string &path, Engine::Game	&game) {
 	}
 }
 
- const std::map<const std::string, Engine::Entity*> &EnemyLoader::getEnemies() const {
-	return (this->enemies);
+std::unique_ptr<std::map<const std::string, Engine::Entity*>> &EnemyLoader::getEnemies() const {
+	std::unique_ptr<std::map<const std::string, Engine::Entity*>>	ptr = std::make_unique<
+			std::map<const std::string, Engine::Entity*>>();
+	return (ptr);
 }
 
 void EnemyLoader::setup(const std::string &path, Engine::Game &game) {

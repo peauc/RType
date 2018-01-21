@@ -19,13 +19,11 @@ int main(int, char **)
 		while (1) {
 			server.tick();
 		}
-	} catch(boost::system::system_error& e)
-	{
-		std::cout<<"Error: " << e.what()<< std::endl;
-		std::cout<<"Info: "  << boost::diagnostic_information(e)
-		         << std::endl;
+	} catch (boost::system::system_error &e) {
+		std::cout << "Error: " << e.what() << std::endl;
+		std::cout << "Info: " << boost::diagnostic_information(e)
+			  << std::endl;
 		return 1;
-
 	}
-	return (0);
 }
+

@@ -17,8 +17,11 @@ namespace Component {
 		void update() override;
 
 		// handle methods
-		void handleDeath(Engine::Mediator::Message messageType, AComponent *sender);
-		void handleHit(Engine::Mediator::Message messageType, AComponent *sender);
+		void handleDeath(Engine::Mediator::Message messageType, AComponent *sender) noexcept;
+		void handleHit(Engine::Mediator::Message messageType, AComponent *sender)noexcept;
+		void handleMove(Engine::Mediator::Message, Engine::AComponent *sender) noexcept;
+
+		AComponent *clone(Engine::Entity *parentEntity) const noexcept;
 	};
 }
 

@@ -38,15 +38,15 @@ namespace Engine {
 		void setResourceLoader(const std::shared_ptr<RessourcesLoader> &_resourceLoader);
 		void pushDataPacket(Packet::DataPacket *packet);
 		void stop();
-		std::vector<std::unique_ptr<Packet::DataPacket>> getPackets();
-		Entity *cloneEntity(const std::string &name) const;
+		std::unique_ptr<std::vector<std::unique_ptr<Packet::DataPacket>>>
+		getPackets();
 	private:
 		std::thread _thread;
 		std::unique_ptr<World> _world;
 		EventList _eventList;
 		PacketList _packetList;
-		EnemyLoader _enemyLoader;
-		std::map<const std::string, Engine::Entity *> _DLEntitiesMap;
+		EnemyLoader	_enemyLoader;
+		std::unique_ptr<std::map<const std::string, Engine::Entity*>>	_DLEntitiesMap;
 		std::shared_ptr<RessourcesLoader> _resourceLoader;
 		bool _stop;
 	};

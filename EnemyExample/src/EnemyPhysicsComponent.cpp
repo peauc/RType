@@ -12,13 +12,11 @@
 Component::EnemyPhysicsComponent::EnemyPhysicsComponent(Engine::Entity *parentEntity, Engine::Hitbox hitbox)
 		: APhysicsComponent(parentEntity, hitbox)
 {
-	this->_collisionHandlers[Engine::Hitbox::Type::CAMERA] = std::bind(&EnemyPhysicsComponent::cameraCollision,
+	this->_collisionHandlers[Engine::Hitbox::Type::PLAYER] = std::bind(&APhysicsComponent::damagingCollision,
 																	   this, std::placeholders::_1);
-	this->_collisionHandlers[Engine::Hitbox::Type::PLAYER] = std::bind(&APhysicsComponent::blockingCollision,
-																	   this, std::placeholders::_1);
-	this->_collisionHandlers[Engine::Hitbox::Type::ENEMY] = std::bind(&APhysicsComponent::damagingCollision,
+	this->_collisionHandlers[Engine::Hitbox::Type::ENEMY] = std::bind(&APhysicsComponent::blockingCollision,
 																	  this, std::placeholders::_1);
-	this->_collisionHandlers[Engine::Hitbox::Type::ENEMY_SHOT] = std::bind(&APhysicsComponent::damagingCollision,
+	this->_collisionHandlers[Engine::Hitbox::Type::PLAYER_SHOT] = std::bind(&APhysicsComponent::damagingCollision,
 																		   this, std::placeholders::_1);
 	this->_collisionHandlers[Engine::Hitbox::Type::NEUTRAL] = std::bind(&APhysicsComponent::damagingCollision,
 																		this, std::placeholders::_1);
@@ -29,8 +27,11 @@ void Component::EnemyPhysicsComponent::update()
 	this->sendToAll(Engine::Mediator::Message::CHECK_COLLISION);
 }
 
-void Component::EnemyPhysicsComponent::cameraCollision(APhysicsComponent &)
+Engine::AComponent *Component::EnemyPhysicsComponent::clone(Engine::Entity *parentEntity) const noexcept
 {
-	std::cout << "Camera collision" << std::endl;
-}
+	EnemyPhysicsComponent *newComp = new EnemyPhysicsComponent(parentEntity, this->_hitbox);
 
+	*newComp = *this;
+
+	return newComp;
+}

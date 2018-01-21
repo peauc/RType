@@ -16,11 +16,10 @@ namespace Component {
 	{
 	public:
 		explicit EnemyAIComponent(Engine::Entity *parentEntity);
-		~EnemyAIComponent() = default;
+		~EnemyAIComponent() override = default;
 
-		void update();
-	private:
-		std::vector<std::unique_ptr<Engine::Event>> _gameEvents;
+		void update() noexcept override;
+		AComponent *clone(Engine::Entity *parentEntity) const noexcept override;
 	};
 }
 

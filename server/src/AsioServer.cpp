@@ -105,7 +105,7 @@ void AsioServer::handleReceive(const boost::system::error_code &error,
 			sendMessage(tmp, Packet::DataPacket(Packet::CONNECTED));
 		}
 	}
-	_lobbyList.dump();
+	//_lobbyList.dump();
 }
 
 bool AsioServer::tick()
@@ -114,18 +114,19 @@ bool AsioServer::tick()
 	_ioService.reset();
 	_lobbyList.checkTimeout();
 	auto t = _lobbyList.getPacketFromGames();
-	for (auto it = t.begin(); it < t.end(); it++) {
-		for (auto it2 = it->first.begin(); it2 < it->first.end(); it2++) {
-			Logger::Log(Logger::DEBUG, std::to_string(it->first
-								    .size())
-						   + " packets");
-			for (auto clients = it->second->getClientList().begin(); clients < it->second->getClientList().end(); clients++) {
-				sendMessage(*clients, *(it2->get()));
-				Logger::Log(Logger::DEBUG, "Sending message");
+	if (t != nullptr) {
+		for(auto it = t->begin(); it < t->end(); it++) {
+			for(auto it2 = it->first->begin();
+			    it2 < it->first->end(); it2++) {
+				for(auto clients = it->second->getClientList().begin();
+				    clients <
+				    it->second->getClientList().end(); clients++) {
+					Logger::Log(Logger::DEBUG, "Sending message");
+					sendMessage(*clients, *(it2->get()));
+				}
 			}
 		}
 	}
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	return (true);
 }
 
