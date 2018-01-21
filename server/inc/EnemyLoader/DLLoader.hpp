@@ -8,7 +8,10 @@
 #	include <iostream>
 #	include <string>
 #	include <dlfcn.h>
-#	include <Engine/Game.hpp>
+
+namespace Engine {
+	class Game;
+}
 
 template <class T>
 class	DLLoader {
