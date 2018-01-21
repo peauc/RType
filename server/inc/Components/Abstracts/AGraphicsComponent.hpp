@@ -18,7 +18,6 @@ namespace Component {
 		bool isInArea(double xPos, double yPos, double xRange, double yRange) noexcept;
 		double getRelativeXPos(double xPos, double xRange) noexcept;
 		double getRelativeYPos(double yPos, double yRange) noexcept;
-
 		RessourcesLoader *getResourceLoader() const noexcept;
 		void setResourceLoader(RessourcesLoader *_resourceLoader) noexcept;
 		unsigned char getCurrentAnimationId() const noexcept;
@@ -28,6 +27,7 @@ namespace Component {
 		void setIsAlive(bool isAlive) noexcept;
 		const Vector2d &getRelativeStartPos() const noexcept;
 		const Vector2d &getRange() const noexcept;
+		void setHitbox();
 
 		// operator overloads
 		AGraphicsComponent &operator=(const AGraphicsComponent &other) noexcept;

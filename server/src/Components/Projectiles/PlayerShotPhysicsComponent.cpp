@@ -19,4 +19,5 @@ Component::PlayerShotPhysicsComponent::PlayerShotPhysicsComponent(Engine::Entity
 
 void Component::PlayerShotPhysicsComponent::update() noexcept
 {
+	this->sendToAll(Engine::Mediator::Message::CHECK_COLLISION);
 }

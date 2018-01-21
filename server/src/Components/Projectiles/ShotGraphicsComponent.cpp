@@ -14,15 +14,7 @@ Component::ShotGraphicsComponent::ShotGraphicsComponent(Engine::Entity *parentEn
 	this->_animationIds.push_back(impactAnimationId);
 	this->_currentAnimationId = travelAnimationId;
 
-	//	this->_relativeStartPos.x = -this->_resourceLoader->getAnimations().at(this->_currentAnimationId).at(0).width * 50;
-//	this->_relativeStartPos.y = -this->_resourceLoader->getAnimations().at(this->_currentAnimationId).at(0).height * 50;
-//	this->_relativeRange.x = this->_resourceLoader->getAnimations().at(this->_currentAnimationId).at(0).width * 100;
-//	this->_relativeRange.y = this->_resourceLoader->getAnimations().at(this->_currentAnimationId).at(0).height * 100;
-
-	this->_relativeStartPos.x = -300;
-	this->_relativeStartPos.y = -100;
-	this->_relativeRange.x = 600;
-	this->_relativeRange.y = 200;
+	this->setHitbox();
 
 	this->_validMessageTypes[Engine::Mediator::Message::DEATH] = std::bind(&ShotGraphicsComponent::handleImpact,
 																		   this, std::placeholders::_1,
