@@ -19,7 +19,8 @@ SpriteSFML::SpriteSFML(const std::string &fileName,
  : _sizeTileX(sizeTileX), _sizeTileY(sizeTileY), _animationIndex(0)
 {
 	if (!this->_texture.loadFromFile(fileName)) {
-		throw std::runtime_error("Cannot open file : " + fileName);
+		throw std::runtime_error("Cannot open sprite file : " +
+						 fileName);
 	} else {
 		this->applyTexture();
 	}

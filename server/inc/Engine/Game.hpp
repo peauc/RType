@@ -14,14 +14,14 @@
 #include "../../../RessourcesLoader/includes/RessourcesLoader.hpp"
 #include "PacketList.hpp"
 
-#define NS_PER_UPDATE 16000000
-
 namespace Engine {
 	class World;
 
 	class Game
 	{
 	public:
+		const long NS_PER_UPDATE = 16000000;
+
 		Game();
 		~Game();
 
