@@ -7,6 +7,7 @@
 
 #	include <iostream>
 #	include <unordered_map>
+#include <map>
 #	include "Engine/Entity.hpp"
 #	include "EnemyLoader/LStock.hpp"
 #	include "EnemyLoader/DLLoader.hpp"
@@ -15,13 +16,13 @@ class EnemyLoader {
 private:
 	LStock		stock;
 	DLLoader<Engine::Entity>	loader;
-	std::unordered_map<const std::string, Engine::Entity*>	enemies;
+	std::map<const std::string, Engine::Entity*>	enemies;
 public:
 	EnemyLoader() = default;
 	explicit EnemyLoader(const std::string &path, Engine::Game &game);
 	~EnemyLoader() = default;
 
-	const std::unordered_map<const std::string, Engine::Entity*> &getEnemies() const;
+	const std::map<const std::string, Engine::Entity*> &getEnemies() const;
 	void setup(const std::string &path, Engine::Game &game);
 };
 #endif //RTYPE_ENEMYLOADER_HPP
