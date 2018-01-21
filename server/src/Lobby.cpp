@@ -61,6 +61,7 @@ ClientObject &Lobby::getClientContained(const ClientObject &copy)
 bool Lobby::startGame()
 {
 	_game.start();
+	_game.setup(_clientManager.size(), nullptr);
 	return (true);
 }
 const std::vector<ClientObject> &Lobby::getClientList()

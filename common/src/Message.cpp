@@ -45,11 +45,15 @@ const std::string Message::getRawMessage() const noexcept
 	std::string str;
 	str.reserve(Packet::PACKETSIZE);
 	std::memcpy(&str, &_packet, Packet::PACKETSIZE);
-	std::cout << "Converted str : " << str << std::endl;
 	return (this->_rawMessage);
 }
 
 Packet::DataPacket Message::getPacket() noexcept
+{
+	return (this->_packet);
+}
+
+const Packet::DataPacket Message::getPacket() const noexcept
 {
 	return (this->_packet);
 }

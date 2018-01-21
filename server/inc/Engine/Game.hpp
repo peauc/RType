@@ -26,7 +26,8 @@ namespace Engine {
 
 		void start();
 		void run();
-		void setup(int nbOfPlayers, const std::shared_ptr<RessourcesLoader> &resourceLoader);
+		void setup(size_t nbOfPlayers,
+			   const std::shared_ptr<RessourcesLoader> &resourceLoader);
 
 		EventList &getEventList();
 		void setWorld(std::unique_ptr<World> world);

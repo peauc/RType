@@ -59,7 +59,8 @@ void AsioServer::handleSend(const Message &message,
                             const boost::system::error_code &error,
                             std::size_t bytesTransfered)
 {
-	Logger::Log(Logger::DEBUG, "Sent " + std::to_string(bytesTransfered));
+	Logger::Log(Logger::DEBUG, "Sent " + std::to_string(message
+								    .getPacket().cmd));
 }
 
 void AsioServer::startReceive()
@@ -92,12 +93,10 @@ void AsioServer::handleReceive(const boost::system::error_code &error,
 							      (tmp));
 	}
 	else {
-		Logger::Log(Logger::DEBUG, std::string("New client, command "
-							       "| " +
-							       std::to_string(message
-			.getPacket().cmd) + "|"));
 		
 		if (message.getPacket().cmd == Packet::CONNECT) {
+			Logger::Log(Logger::DEBUG, std::string("New client, "
+								       "command"));
 			_lobbyList.addClientToLobby(tmp
 				, message.getPacket()
 			                                        .data
@@ -114,15 +113,15 @@ bool AsioServer::tick()
 	_ioService.poll();
 	_ioService.reset();
 	_lobbyList.checkTimeout();
-	std::vector<std::pair<std::vector<std::unique_ptr<Packet::DataPacket
-	>>, Lobby *>> t = _lobbyList.getPacketFromGames();
+	auto t = _lobbyList.getPacketFromGames();
 	for (auto it = t.begin(); it < t.end(); it++) {
-		for (auto it2 = it->first.begin(); it2 < it->first.end();
-			it2++) {
-			for (auto clients = it->second->getClientList()
-					      .begin(); clients <
-				it->second->getClientList().end(); clients++) {
+		for (auto it2 = it->first.begin(); it2 < it->first.end(); it2++) {
+			Logger::Log(Logger::DEBUG, std::to_string(it->first
+								    .size())
+						   + " packets");
+			for (auto clients = it->second->getClientList().begin(); clients < it->second->getClientList().end(); clients++) {
 				sendMessage(*clients, *(it2->get()));
+				Logger::Log(Logger::DEBUG, "Sending message");
 			}
 		}
 	}
