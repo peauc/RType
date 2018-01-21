@@ -10,7 +10,7 @@
 
 # include <SFML/Graphics/Sprite.hpp>
 # include <SFML/Graphics/Texture.hpp>
-# include "ASprite.hpp"
+# include "Graphic/ASprite.hpp"
 
 class SpriteSFML : public ASprite
 {
@@ -35,6 +35,7 @@ public:
 	void	updateAnimation() noexcept override;
 	void	setPosX(int x) noexcept override;
 	void	setPosY(int y) noexcept override;
+	void	setPos(int x, int y) noexcept override;
 
 private:
 	sf::Sprite	_sprite;

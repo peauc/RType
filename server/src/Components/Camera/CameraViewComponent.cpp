@@ -21,7 +21,7 @@ Component::CameraViewComponent::CameraViewComponent(Engine::Entity *parentEntity
 			std::placeholders::_2);
 }
 
-void Component::CameraViewComponent::update()
+void Component::CameraViewComponent::update() noexcept
 {
 	for (AGraphicsComponent *component : this->_graphicComponents) {
 		if (component != nullptr) {
@@ -44,17 +44,18 @@ void Component::CameraViewComponent::update()
 			}
 		}
 	}
+	this->_graphicComponents.clear();
 }
 
 void Component::CameraViewComponent::handleGraphicsRegistration(Engine::Mediator::Message,
-																Engine::AComponent *sender)
+																Engine::AComponent *sender) noexcept
 {
 	if (AGraphicsComponent *graphicsComponent = dynamic_cast<AGraphicsComponent *>(sender)) {
 		this->_graphicComponents.push_back(graphicsComponent);
 	}
 }
 
-const Vector2d &Component::CameraViewComponent::getRelativeBottomRight() const
+const Vector2d &Component::CameraViewComponent::getRelativeBottomRight() const noexcept
 {
 	return _relativeBottomRight;
 }

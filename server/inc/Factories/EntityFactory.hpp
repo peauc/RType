@@ -18,8 +18,9 @@ namespace Factory {
 	class EntityFactory
 	{
 	public:
-		static Engine::Entity *createPlayerShip(unsigned int id, Engine::Game &game);
-		static Engine::Entity *createCamera(unsigned int id, Engine::Game &game);
+		static Engine::Entity *createPlayerShip(unsigned int id, Engine::Game &game) noexcept;
+		static Engine::Entity *createCamera(unsigned int id, Engine::Game &game) noexcept;
+		static Engine::Entity *createZone(unsigned int id, Engine::Game &game, const Vector2d &size) noexcept;
 	};
 }
 

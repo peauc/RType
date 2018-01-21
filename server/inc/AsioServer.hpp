@@ -11,7 +11,6 @@
 #include <boost/asio.hpp>
 #include "IServer.hpp"
 #include "Message.hpp"
-#include "PacketInterpreterServer.hpp"
 #include "LobbyContainer.hpp"
 
 class AsioServer : public IServer {

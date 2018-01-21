@@ -6,7 +6,7 @@
 */
 
 #include <iostream>
-#include "SpriteSFML.hpp"
+#include "Graphic/SpriteSFML.hpp"
 
 SpriteSFML::SpriteSFML() noexcept
 	: _sizeTileX(0), _sizeTileY(0),
@@ -19,15 +19,15 @@ SpriteSFML::SpriteSFML(const std::string &fileName,
  : _sizeTileX(sizeTileX), _sizeTileY(sizeTileY), _animationIndex(0)
 {
 	if (!this->_texture.loadFromFile(fileName)) {
-		std::cerr << "[Error] Cannot open file : " + fileName
-			  << std::endl;
-		throw std::runtime_error("Cannot open file : " + fileName);
+		throw std::runtime_error("Cannot open sprite file : " +
+						 fileName);
 	} else {
 		this->applyTexture();
 	}
 }
 
 SpriteSFML::SpriteSFML(const SpriteSFML &other) noexcept
+ : ASprite(other)
 {
 	if (this != &other) {
 		this->_sprite = other._sprite;
@@ -42,6 +42,7 @@ SpriteSFML::SpriteSFML(const SpriteSFML &other) noexcept
 
 SpriteSFML &SpriteSFML::operator=(const SpriteSFML &other) noexcept
 {
+	ASprite::operator=(other);
 	if (this != &other) {
 		this->_sprite = other._sprite;
 		this->_texture = other._texture;
@@ -86,7 +87,7 @@ void	SpriteSFML::setAnimationVector(const std::vector<sf::Texture>
 
 	if (vector.size() == this->_animationVector.size() &&
 		vector.size() > 1) {
-		for (int i = 0;
+		for (unsigned int i = 0;
 		     i < vector.size() && i < this->_animationVector.size();
 		     ++i) {
 			if (&vector[i] != &this->_animationVector[i]) {
@@ -105,6 +106,9 @@ void	SpriteSFML::setAnimationVector(const std::vector<sf::Texture>
 
 /**
  * Set next texture to draw
+ * If more than one animation and didnt played all animations
+ * If animation finished and animation has to be repeated, restart Animation
+ * else set a black rectangle
  */
 void	SpriteSFML::updateAnimation() noexcept
 {
@@ -119,6 +123,7 @@ void	SpriteSFML::updateAnimation() noexcept
 		}
 	} else {
 		this->_sprite.setTextureRect(sf::IntRect());
+		// TODO To delete
 	}
 }
 
@@ -132,4 +137,10 @@ void SpriteSFML::setPosY(int y) noexcept
 {
 	ASprite::setPosY(y);
 	this->_sprite.setOrigin(this->_posX, y);
+}
+
+void SpriteSFML::setPos(int x, int y) noexcept
+{
+	ASprite::setPos(x, y);
+	this->_sprite.setOrigin(x, y);
 }

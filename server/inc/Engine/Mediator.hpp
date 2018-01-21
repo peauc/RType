@@ -24,15 +24,17 @@ namespace Engine {
 			CHECK_COLLISION,
 			GET_IMPACT_DAMAGES,
 			CANCEL_MOVE,
-			CAMERA_REPOSITION
+			CAMERA_REPOSITION,
+			MOVE,
+			TRIGGER_ZONE
 		};
 
 		Mediator() = default;
 		~Mediator() = default;
 
-		void send(Message message, AComponent *sender);
-		void registerComponent(AComponent *component);
-		void unregisterComponent(AComponent *component);
+		void send(Message message, AComponent *sender)  noexcept;
+		void registerComponent(AComponent *component)  noexcept;
+		void unregisterComponent(AComponent *component)  noexcept;
 
 	private:
 		std::vector<AComponent *> _subjects;

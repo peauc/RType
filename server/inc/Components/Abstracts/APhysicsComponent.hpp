@@ -14,6 +14,9 @@ namespace Component {
 	class APhysicsComponent : public Engine::AComponent
 	{
 		friend class CameraZoneComponent;
+
+		friend class ZoneComponent;
+
 	public:
 		enum Direction
 		{
@@ -24,20 +27,25 @@ namespace Component {
 			UNDEFINED
 		};
 
-		explicit APhysicsComponent(Engine::Entity *entity, Engine::Hitbox hitbox);
+		explicit APhysicsComponent(Engine::Entity *entity, const Engine::Hitbox &hitbox);
 		~APhysicsComponent() override = default;
 
-		int getCollisionDamages() const;
-		void setCollisionDamages(int collisionDamages);
-		bool getCollision(Direction) const;
-		void setOBB();
+		int getCollisionDamages() const noexcept;
+		void setCollisionDamages(int collisionDamages) noexcept;
+		bool getCollision(Direction) const noexcept;
+		void setOBB() noexcept;
 
 		// handle methods
-		virtual void handleCheckCollision(Engine::Mediator::Message messageType, Engine::AComponent *sender);
+		virtual void handleCheckCollision(Engine::Mediator::Message messageType, Engine::AComponent *sender) noexcept;
+		void handleMove(Engine::Mediator::Message messageType, Engine::AComponent *sender) noexcept;
 
 		// default collision methods
-		void blockingCollision(APhysicsComponent &other);
-		void damagingCollision(APhysicsComponent &other);
+		void blockingCollision(APhysicsComponent &other) noexcept;
+		void damagingCollision(APhysicsComponent &other) noexcept;
+
+		// operator overloads
+		APhysicsComponent &operator=(const APhysicsComponent &other) noexcept;
+
 	protected:
 		struct OBB
 		{
@@ -49,20 +57,20 @@ namespace Component {
 
 			OBB() = default;
 			OBB(const Engine::TransformComponent &transformComponent, const Engine::Hitbox &hitbox);
-			bool checkIntersection(const OBB &other, APhysicsComponent &);
-			bool checkIntersection(const Vector2d &point);
+			bool checkIntersection(APhysicsComponent &) noexcept;
+			bool checkIntersection(const Vector2d &point) noexcept;
 		};
 
 	protected:
-		Engine::Hitbox _hitbox;
-		OBB _orientedBoundingBox;
+		const Engine::Hitbox _hitbox;
+		std::unique_ptr<OBB> _orientedBoundingBox;
 		int _collisionDamages;
 		std::unordered_map<Engine::Hitbox::Type, std::function<void(APhysicsComponent &)>> _collisionHandlers;
 		bool _collisions[UNDEFINED];
 
-		void triggerCollision(APhysicsComponent &other);
-		void setCollision(Direction, bool);
-		void resetCollisions();
+		void triggerCollision(APhysicsComponent &other) noexcept;
+		void setCollision(Direction, bool) noexcept;
+		void resetCollisions() noexcept;
 	};
 }
 

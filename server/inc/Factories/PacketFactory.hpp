@@ -14,10 +14,10 @@ class PacketFactory
 public:
 	static Packet::DataPacket *createObjectPacket(short x, short y, Packet::EntityState entityState, bool hit,
 												  unsigned int id,
-												  unsigned char animationId);
+												  unsigned char animationId) noexcept;
 	static Packet::DataPacket *createScorePacket(Packet::GameState gameState,
-												 const std::vector<Packet::PlayerScore> &playerScores);
-	static Packet::DataPacket *createSoundPacket(unsigned char soundId, bool music, bool repeat);
+												 const std::vector<Packet::PlayerScore> &playerScores) noexcept;
+	static Packet::DataPacket *createSoundPacket(unsigned char soundId, bool music, bool repeat) noexcept;
 };
 
 #endif //RTYPE_PACKETFACTORY_HPP

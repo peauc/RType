@@ -4,6 +4,7 @@
 
 #include <Components/Player/PlayerWeaponComponent.hpp>
 #include <Components/Projectiles/ShotAudioComponent.hpp>
+#include <iostream>
 
 Component::PlayerWeaponComponent::PlayerWeaponComponent(Engine::Entity *parentEntity, Engine::Game *parentGame)
 		: AWeaponComponent(parentEntity, parentGame), _event(false), _firing(false), _charging(0)
@@ -18,7 +19,7 @@ Component::PlayerWeaponComponent::PlayerWeaponComponent(Engine::Entity *parentEn
 																			   std::placeholders::_2);
 }
 
-void Component::PlayerWeaponComponent::update()
+void Component::PlayerWeaponComponent::update() noexcept
 {
 	if (this->_firing || (this->_charging > 0 && !this->_event)) {
 		std::unique_ptr<Engine::Entity> shot = std::make_unique<Engine::Entity>();
@@ -30,12 +31,12 @@ void Component::PlayerWeaponComponent::update()
 		if (this->_charging < 30) { // Regular shot
 			shotGraphicsComponent = new Component::ShotGraphicsComponent(this->_parentEntity,
 																		 this->_parentGame->getResourceLoader().get(),
-																		 0, 0);
+																		 19, 19);
 			shotSoundComponent = new Component::ShotAudioComponent(this->_parentEntity, this->_parentGame, 0);
 		} else { // Charged shot
 			shotGraphicsComponent = new Component::ShotGraphicsComponent(this->_parentEntity,
 																		 this->_parentGame->getResourceLoader().get(),
-																		 1, 1);
+																		 19, 19);
 			shotSoundComponent = new Component::ShotAudioComponent(this->_parentEntity, this->_parentGame, 1);
 		}
 
@@ -60,7 +61,7 @@ void Component::PlayerWeaponComponent::update()
 	this->_event = false;
 }
 
-void Component::PlayerWeaponComponent::handleEvent(Engine::Mediator::Message, Engine::AComponent *sender)
+void Component::PlayerWeaponComponent::handleEvent(Engine::Mediator::Message, Engine::AComponent *sender) noexcept
 {
 	if (AInputComponent *inputComponent = dynamic_cast<AInputComponent *>(sender)) {
 		if (inputComponent->hasEvent()) {
@@ -74,4 +75,13 @@ void Component::PlayerWeaponComponent::handleEvent(Engine::Mediator::Message, En
 			this->_charging = 0;
 		}
 	}
+}
+
+Engine::AComponent *Component::PlayerWeaponComponent::clone(Engine::Entity *parentEntity) const noexcept
+{
+	PlayerWeaponComponent *newComp = new PlayerWeaponComponent(parentEntity, this->_parentGame);
+
+	*newComp = *this;
+
+	return newComp;
 }

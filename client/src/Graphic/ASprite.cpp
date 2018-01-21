@@ -5,10 +5,10 @@
 ** 	No description
 */
 
-#include "ASprite.hpp"
+#include "Graphic/ASprite.hpp"
 
 ASprite::ASprite() noexcept
- : _posX(0), _posY(0)
+ : _posX(0), _posY(0), _animationId(0), _onClick(nullptr)
 {
 }
 
@@ -47,4 +47,32 @@ void ASprite::setPosX(int x) noexcept
 void ASprite::setPosY(int y) noexcept
 {
 	this->_posY = y;
+}
+
+void ASprite::onClick()
+{
+	if (this->_onClick) {
+		this->_onClick();
+	}
+}
+
+void ASprite::setOnClick(std::function<void()> f) noexcept
+{
+	this->_onClick = f;
+}
+
+void ASprite::setPos(int x, int y) noexcept
+{
+	this->_posX = x;
+	this->_posY = y;
+}
+
+uint32_t ASprite::getAnimationId() const noexcept
+{
+	return (this->_animationId);
+}
+
+void ASprite::setAnimationId(uint32_t id) noexcept
+{
+	this->_animationId = id;
 }

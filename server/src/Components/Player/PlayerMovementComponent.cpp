@@ -26,7 +26,7 @@ Component::PlayerMovementComponent::PlayerMovementComponent(Engine::Entity *pare
 			std::placeholders::_2);
 }
 
-void Component::PlayerMovementComponent::update()
+void Component::PlayerMovementComponent::update() noexcept
 {
 	this->_lastMove.x = this->_baseSpeed + this->_xInput * this->_baseSpeed;
 	this->_lastMove.y = this->_lateralBaseSpeed + this->_yInput * this->_lateralMaxSpeed;
@@ -39,13 +39,14 @@ void Component::PlayerMovementComponent::update()
 	Engine::Commands::ICommand *command = new Engine::Commands::TransformPositionCommand(
 			this->_parentEntity->getTransformComponent(), this->_lastMove.x, this->_lastMove.y);
 	command->execute();
-	this->_parentEntity->addCommand(command);
+
+	this->sendToAll(Engine::Mediator::Message::MOVE);
 
 	this->_xInput = 0;
 	this->_yInput = 0;
 }
 
-void Component::PlayerMovementComponent::handleEvent(Engine::Mediator::Message, Engine::AComponent *sender)
+void Component::PlayerMovementComponent::handleEvent(Engine::Mediator::Message, Engine::AComponent *sender) noexcept
 {
 	if (AInputComponent *inputComponent = dynamic_cast<AInputComponent *>(sender)) {
 		if (inputComponent->hasEvent()) {
@@ -58,8 +59,8 @@ void Component::PlayerMovementComponent::handleEvent(Engine::Mediator::Message, 
 	}
 }
 
-void Component::PlayerMovementComponent::handleCameraReposition(Engine::Mediator::Message message,
-																Engine::AComponent *sender)
+void Component::PlayerMovementComponent::handleCameraReposition(Engine::Mediator::Message,
+																Engine::AComponent *sender) noexcept
 {
 	if (APhysicsComponent *physicsComponent = dynamic_cast<APhysicsComponent *>(sender)) {
 
@@ -80,4 +81,13 @@ void Component::PlayerMovementComponent::handleCameraReposition(Engine::Mediator
 			this->_parentEntity->addCommand(command);
 		}
 	}
+}
+
+Engine::AComponent *Component::PlayerMovementComponent::clone(Engine::Entity *parentEntity) const noexcept
+{
+	PlayerMovementComponent *newComp = new PlayerMovementComponent(parentEntity);
+
+	*newComp = *this;
+
+	return newComp;
 }

@@ -9,7 +9,7 @@
  */
 
 #include <iostream>
-#include <Engine/Game.hpp>
+#include "Engine/Game.hpp"
 #include "Berzerker.hpp"
 
 
@@ -30,7 +30,8 @@ Berzerker::Berzerker(Engine::Game &game) {
 		physicsComponent->registerToMediator(game.getWorld()->getMediator().get());
 	}
 
-	Component::HealthComponent	*healthComponent = new Component::HealthComponent(this, 50, false, false);
+
+	Component::HealthComponent	*healthComponent = new Component::HealthComponent(this, game.getWorld().get(), 50, false, false);
 
 	this->addComponent(AIComponent);
 	this->addComponent(enemyMoveComponent);

@@ -23,13 +23,14 @@ public:
 	bool isReady() const noexcept;
 	bool isStarted() const noexcept;
 	bool isClientContained(const ClientObject &client) const noexcept;
-	void pullEventInList(std::unique_ptr<Engine::Event> &event) noexcept;
+	void pushEventInList(std::unique_ptr<Engine::Event> &event) noexcept;
 	bool startGame();
 	ClientObject &getClientContained(const ClientObject &copy);
 	bool isSeededLobby() const noexcept;
 	unsigned short getSeed() const noexcept;
 	const std::vector<ClientObject> &getClientList();
-	std::vector<std::unique_ptr<Packet::DataPacket>> getPackets();
+	std::unique_ptr<std::vector<std::unique_ptr<Packet::DataPacket>>>
+	getPackets();
 		private:
 	bool _isSeededLobby;
 	unsigned short _seed;

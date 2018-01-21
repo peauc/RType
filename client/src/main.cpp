@@ -1,28 +1,28 @@
-//
-// Created by Clément Péau on 14/01/2018.
-//
+/*
+** EPITECH  PROJECT , 2020
+** rtype
+** File  description:
+** 	No description
+*/
+
+#ifdef __unix__
+#include <cstdlib>
+#endif
 
 #include <iostream>
-#include "AsioClient.hpp"
+#include "ClientGame.hpp"
 
-int main(int ac, char **av)
+int     main(int argc, char **argv, char **env)
 {
+#ifdef __unix__
+	if (env == nullptr || getenv("DISPLAY") == nullptr)
+		return (1);
+#endif
+	//TODO Pass parameters for info connection
 	try {
-		client::AsioClient client;
-		client.connect("127.0.0.1");
-		client.resetChrono();
-		
-		Packet::DataPacket t;
-		t.cmd = Packet::READY;
-		client.sendMessage(t);
-		while (1) {
-			if (client.getChronoElapsed() > 1) {
-				client.sendMessage(Packet::DataPacket
-					                   (Packet::PONG));
-				client.resetChrono();
-			}
-			client.tick();
-		}
+		ClientGame game("10.10.253.149", "../AssetsId.txt");
+//		ClientGame game("127.0.0.1", "../AssetsId.txt");
+		game.run();
 	}
 	catch (std::exception &e) {
 		std::cout << e.what() << std::endl;

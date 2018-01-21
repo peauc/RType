@@ -15,7 +15,9 @@ namespace Component {
 		explicit ShotMovementComponent(Engine::Entity *parentEntity, double speed);
 		~ShotMovementComponent() override = default;
 
-		void update() override;
+		void update() noexcept override;
+
+		AComponent *clone(Engine::Entity *parentEntity) const noexcept override;
 	private:
 		double _speed;
 	};

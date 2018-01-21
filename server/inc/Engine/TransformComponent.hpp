@@ -16,14 +16,14 @@ namespace Engine {
 		explicit TransformComponent(Entity *parentEntity);
 		~TransformComponent() override = default;
 
-		void update() override;
+		void update() noexcept override;
 
-		Vector2d &getPosition();
-		const Vector2d &getPosition() const;
-		void setPosition(Vector2d &_position);
-		double getRotationRadians() const;
-		double getRotation() const;
-		void setRotation(double _rotation);
+		Vector2d &getPosition() noexcept;
+		const Vector2d &getPosition() const noexcept;
+		void setPosition(Vector2d &_position) noexcept;
+		double getRotationRadians() const noexcept;
+		double getRotation() const noexcept;
+		void setRotation(double _rotation) noexcept;
 
 	private:
 		Vector2d _position;

@@ -7,7 +7,7 @@
 
 #ifndef RTYPE_ASPRITE_HPP_
 # define RTYPE_ASPRITE_HPP_
-#include <cstdint>
+
 # include "ISprite.hpp"
 
 class ASprite : public ISprite
@@ -24,15 +24,22 @@ public:
 				 unsigned int sizeY) override = 0;
 	void	selectSprite(uint32_t tileNb, uint32_t lineNb) override = 0;
 	void	updateAnimation() override = 0;
-
 	int	getPosX() const noexcept override;
 	int	getPosY() const noexcept override;
 	void	setPosX(int x) noexcept override;
 	void	setPosY(int y) noexcept override;
+	void	setPos(int x, int y) noexcept override;
+	uint32_t getAnimationId() const noexcept override;
+	void setAnimationId(uint32_t id) noexcept override;
+	void	onClick() override;
+	void	setOnClick(std::function<void()>
+			       f) noexcept override;
 
 protected:
 	int		_posX;
 	int		_posY;
+	std::function<void()> _onClick;
+	unsigned int	_animationId;
 };
 
 #endif // !RTYPE_ASPRITE_HPP_

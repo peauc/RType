@@ -10,7 +10,6 @@
 #include <Factories/EntityFactory.hpp>
 #include "Game.hpp"
 
-
 namespace Engine {
 	class Game;
 
@@ -23,19 +22,20 @@ namespace Engine {
 		World(const World &) = delete;
 		const World &operator=(const World &) = delete;
 
-		unsigned int addObject(Engine::Entity *(*)(unsigned int, Engine::Game &));
-		unsigned int addObject(std::unique_ptr<Entity> entity);
-		void removeObject(unsigned int id);
-		Game *getParentGame() const;
-		void setParentGame(Game *_parentGame);
+		unsigned int addObject(Engine::Entity *(*)(unsigned int, Engine::Game &))  noexcept;
+		unsigned int addObject(std::unique_ptr<Entity> entity)  noexcept;
+		void removeObject(unsigned int id)  noexcept;
+		Game *getParentGame() const noexcept;
+		void setParentGame(Game *_parentGame)  noexcept;
 
-		std::unique_ptr<Entity> &getCamera();
-		void setCamera(std::unique_ptr<Entity> camera);
-		std::unique_ptr<Mediator> &getMediator();
-		const std::unique_ptr<Mediator> &getMediator() const;
-		void addMediator();
+		std::unique_ptr<Entity> &getCamera()  noexcept;
+		void setCamera(std::unique_ptr<Entity> camera)  noexcept;
+		std::unique_ptr<Mediator> &getMediator()  noexcept;
+		const std::unique_ptr<Mediator> &getMediator() const noexcept;
+		void addMediator()  noexcept;
+		const std::list<std::unique_ptr<Entity>> &getObjects() const noexcept ;
 
-		void update();
+		void update() noexcept;
 
 	private:
 		unsigned int _nextEntityId;

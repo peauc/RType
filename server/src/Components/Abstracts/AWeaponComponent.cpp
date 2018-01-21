@@ -8,3 +8,13 @@ Component::AWeaponComponent::AWeaponComponent(Engine::Entity *parentEntity, Engi
 		AComponent(parentEntity), _parentGame(parentGame)
 {
 }
+
+Component::AWeaponComponent &Component::AWeaponComponent::operator=(const Component::AWeaponComponent &other) noexcept
+{
+	this->_parentGame = other._parentGame;
+	this->_cooldown = other._cooldown;
+	this->_shotAngle = other._shotAngle;
+	this->_shotRelativeOrigin = other._shotRelativeOrigin;
+
+	return *this;
+}

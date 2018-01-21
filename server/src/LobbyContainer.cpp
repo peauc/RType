@@ -76,22 +76,14 @@ void LobbyContainer::checkTimeout()
 		, _lobbyList.end());
 }
 
-std::vector<std::pair<std::vector<std::unique_ptr<Packet::DataPacket>>,
-	Lobby *>> LobbyContainer::getPacketFromGames()
+std::unique_ptr<std::vector<std::pair<std::unique_ptr<std::vector<std
+::unique_ptr<Packet::DataPacket>>>, Lobby *>>> LobbyContainer::getPacketFromGames()
 {
-	//todo make smart;
-	std::vector<std::pair<std::vector<std::unique_ptr<Packet::DataPacket
-	>>, Lobby *>> v;
+	auto v = std::make_unique<std::vector<std::pair<std::unique_ptr<std
+	::vector<std::unique_ptr<Packet::DataPacket>>>, Lobby *>>>();
 	for (auto &t : _lobbyList) {
-		std::vector<std::pair<std::vector<std::unique_ptr<Packet
-		::DataPacket>>, Lobby *>> packets;
-		std::pair<std::vector<std::unique_ptr<Packet::DataPacket>>,
-			Lobby	*> pair;
-		pair.first = t->getPackets();
-		pair.second = t.get();
-		packets.push_back(std::move(pair));
-		v.insert(v.end(), std::make_move_iterator(packets.begin()),
-			 std::make_move_iterator(packets.end()));
+		auto pair = std::make_pair(t->getPackets(), t.get());
+		v->push_back(std::move(pair));
 	}
 	return (v);
 }

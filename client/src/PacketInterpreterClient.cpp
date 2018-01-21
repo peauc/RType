@@ -17,7 +17,6 @@ PacketInterpreterClient::PacketInterpreterClient()
 	fptr[Packet::STARTGAME] = &PacketInterpreterClient::startGame;
 	fptr[Packet::READY] = &PacketInterpreterClient::ready;
 	fptr[Packet::POSITION] = &PacketInterpreterClient::position;
-	fptr[Packet::HIT] = &PacketInterpreterClient::hit;
 	fptr[Packet::EVENT] = &PacketInterpreterClient::event;
 }
 
@@ -58,10 +57,6 @@ void PacketInterpreterClient::ready(const Packet::DataPacket &packet) noexcept
 }
 
 void PacketInterpreterClient::position(const Packet::DataPacket &packet) noexcept
-{
-}
-
-void PacketInterpreterClient::hit(const Packet::DataPacket &packet) noexcept
 {
 }
 

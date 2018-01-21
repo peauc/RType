@@ -22,7 +22,6 @@ public:
 	virtual void	startGame(const Packet::DataPacket &packet) = 0;
 	virtual void	ready(const Packet::DataPacket &packet) = 0;
 	virtual void	position(const Packet::DataPacket &packet) = 0;
-	virtual void	hit(const Packet::DataPacket &packet) = 0;
 	virtual void	event(const Packet::DataPacket &packet) = 0;
 };
 

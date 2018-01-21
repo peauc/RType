@@ -1,0 +1,13 @@
+{
+	 Animation : 
+		[
+			{ File : "../images_to_map/r-typesheet2.png", x : 192, y : 449, width : 16, height : 16 },
+			{ File : "../images_to_map/r-typesheet2.png", x : 210, y : 449, width : 16, height : 16 },
+			{ File : "../images_to_map/r-typesheet2.png", x : 228, y : 449, width : 16, height : 16 },
+			{ File : "../images_to_map/r-typesheet2.png", x : 246, y : 449, width : 16, height : 16 },
+			{ File : "../images_to_map/r-typesheet2.png", x : 264, y : 449, width : 16, height : 16 },
+			{ File : "../images_to_map/r-typesheet2.png", x : 282, y : 449, width : 16, height : 16 },
+			{ File : "../images_to_map/r-typesheet2.png", x : 300, y : 449, width : 16, height : 16 },
+			{ File : "../images_to_map/r-typesheet2.png", x : 318, y : 449, width : 16, height : 16 }
+		]
+}

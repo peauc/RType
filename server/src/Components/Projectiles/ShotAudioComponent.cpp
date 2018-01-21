@@ -15,11 +15,20 @@ Component::ShotAudioComponent::ShotAudioComponent(Engine::Entity *parentEntity, 
 																		   std::placeholders::_2);
 }
 
-void Component::ShotAudioComponent::update()
+void Component::ShotAudioComponent::update() noexcept
 {
 }
 
-void Component::ShotAudioComponent::handleImpact(Engine::Mediator::Message, Engine::AComponent *)
+void Component::ShotAudioComponent::handleImpact(Engine::Mediator::Message, Engine::AComponent *) noexcept
 {
 	this->addSoundPacket(this->_soundIds[0], false);
+}
+
+Engine::AComponent *Component::ShotAudioComponent::clone(Engine::Entity *parentEntity) const noexcept
+{
+	ShotAudioComponent *newComp = new ShotAudioComponent(parentEntity, this->_parentGame, 0);
+
+	*newComp = *this;
+
+	return newComp;
 }

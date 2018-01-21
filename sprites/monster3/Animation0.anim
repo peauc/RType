@@ -1,0 +1,9 @@
+{
+	 Animation : 
+		[
+			{ File : "../images_to_map/r-typesheet7.png", x : 0, y : 33, width : 32, height : 32 },
+			{ File : "../images_to_map/r-typesheet7.png", x : 33, y : 33, width : 32, height : 32 },
+			{ File : "../images_to_map/r-typesheet7.png", x : 66, y : 33, width : 32, height : 32 },
+			{ File : "../images_to_map/r-typesheet7.png", x : 0, y : 33, width : 32, height : 32 }
+		]
+}

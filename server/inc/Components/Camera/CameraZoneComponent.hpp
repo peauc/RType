@@ -14,8 +14,10 @@ namespace Component {
 		CameraZoneComponent(Engine::Entity *parentEntity, Engine::Hitbox hitbox);
 		~CameraZoneComponent() override = default;
 
-		void update() override;
-		void handleCheckCollision(Engine::Mediator::Message, AComponent *sender) override;
+		void update() noexcept override;
+
+		// handle methods
+		void handleCheckCollision(Engine::Mediator::Message, AComponent *sender) noexcept override;
 	};
 }
 

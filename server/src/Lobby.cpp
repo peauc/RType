@@ -61,6 +61,7 @@ ClientObject &Lobby::getClientContained(const ClientObject &copy)
 bool Lobby::startGame()
 {
 	_game.start();
+	_game.setup(_clientManager.size(), nullptr);
 	return (true);
 }
 const std::vector<ClientObject> &Lobby::getClientList()
@@ -76,12 +77,13 @@ bool Lobby::isStarted() const noexcept
 	return (_isStarted);
 }
 
-void Lobby::pullEventInList(std::unique_ptr<Engine::Event> &event) noexcept
+void Lobby::pushEventInList(std::unique_ptr<Engine::Event> &event) noexcept
 {
 	_game.getEventList().pushBack(event);
 }
 
-std::vector<std::unique_ptr<Packet::DataPacket>> Lobby::getPackets() {
+std::unique_ptr<std::vector<std::unique_ptr<Packet::DataPacket>>>
+Lobby::getPackets() {
 	return (_game.getPackets());
 }
 

@@ -21,7 +21,7 @@ public:
 	bool sendMessage(const Packet::DataPacket &packet) noexcept;
 	bool connect(const std::string &message) noexcept final;
 	void tick() noexcept;
-	
+	std::vector<Packet::DataPacket> getDataPacketList();
 private:
 	void handleSend(boost::shared_ptr<std::string> message,
 	                const boost::system::error_code& error,
@@ -34,6 +34,7 @@ private:
 	bool readMessage() noexcept;
 	
 	bool _isConnected;
+	std::vector<Packet::DataPacket> _packetList;
 	boost::asio::io_service _ioService;
 	boost::asio::ip::udp::socket _socket;
 	boost::asio::ip::udp::endpoint _receiverEndpoint;

@@ -17,10 +17,12 @@ namespace Component {
 		PlayerWeaponComponent(Engine::Entity *parentEntity, Engine::Game *parentGame);
 		~PlayerWeaponComponent() override = default;
 
-		void update() override;
+		void update() noexcept override;
 
 		// handle methods
-		void handleEvent(Engine::Mediator::Message messageType, AComponent *sender);
+		void handleEvent(Engine::Mediator::Message messageType, AComponent *sender) noexcept;
+
+		AComponent *clone(Engine::Entity *parentEntity) const noexcept override;
 	private:
 		bool _event;
 		bool _firing;

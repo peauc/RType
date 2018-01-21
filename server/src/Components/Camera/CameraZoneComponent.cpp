@@ -15,19 +15,19 @@ Component::CameraZoneComponent::CameraZoneComponent(Engine::Entity *parentEntity
 			std::placeholders::_2);
 }
 
-void Component::CameraZoneComponent::update()
+void Component::CameraZoneComponent::update() noexcept
 {
 }
 
 void Component::CameraZoneComponent::handleCheckCollision(Engine::Mediator::Message,
-														  Engine::AComponent *sender)
+														  Engine::AComponent *sender) noexcept
 {
 	if (APhysicsComponent *other = dynamic_cast<APhysicsComponent *>(sender)) {
 
-		this->_orientedBoundingBox = OBB(this->_parentEntity->getTransformComponent(), this->_hitbox);
+		this->setOBB();
 		other->setOBB();
 
-		this->_orientedBoundingBox.checkIntersection(other->_orientedBoundingBox, *other);
+		this->_orientedBoundingBox->checkIntersection(*other);
 		if (!other->getCollision(TOP) || !other->getCollision(RIGHT) || !other->getCollision(BOTTOM) ||
 			!other->getCollision(LEFT)) {
 			other->triggerCollision(*this);
