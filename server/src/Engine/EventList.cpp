@@ -3,11 +3,13 @@
 //
 
 #include <algorithm>
+#include <Logger.hpp>
 #include "Engine/EventList.hpp"
 
 void Engine::EventList::pushBack(std::unique_ptr<Engine::Event> &e)
 {
 	_mutex.lock();
+	Logger::Log(Logger::DEBUG, "Pushing event");
 	_list.push_back(std::move(e));
 	_mutex.unlock();
 }
@@ -26,6 +28,7 @@ std::unique_ptr<Engine::Event> Engine::EventList::getEventById(size_t id)
 noexcept
 {
 	std::lock_guard<std::mutex> l(_mutex);
+	Logger::Log(Logger::DEBUG, "Poping evnet");
 	auto t = std::find_if(_list.begin(), _list.end(), [id]
 		(std::unique_ptr<Engine::Event> &e){
 		return (e->_entityId == id);

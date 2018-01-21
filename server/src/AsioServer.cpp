@@ -133,7 +133,7 @@ bool AsioServer::tick()
 void	AsioServer::interpretPacket(const Packet::DataPacket &packet,
 					ClientObject &obj) noexcept
 {
-	Logger::Log(Logger::DEBUG, "Command n" + packet.cmd);
+	Logger::Log(Logger::DEBUG, "Command n" + std::to_string(packet.cmd));
 	if (packet.cmd < Packet::UNKNOWN) {
 		(this->*fptr[packet.cmd])(packet, obj);
 	}
@@ -171,9 +171,11 @@ void AsioServer::startGame(const Packet::DataPacket &packet, ClientObject
 void AsioServer::ready(const Packet::DataPacket &packet, ClientObject &obj)
 noexcept
 {
-	obj.toggleReady();
+	if (!_lobbyList.getClientLobby(obj)->isStarted())
+		obj.toggleReady();
 	sendMessage(obj, Packet::DataPacket(Packet::READY));
-	if (_lobbyList.getClientLobby(obj)->isReady()) {
+	if (_lobbyList.getClientLobby(obj)->isReady() && !_lobbyList
+								 .getClientLobby(obj)->isStarted()) {
 		Logger::Log(Logger::DEBUG, "Starting game :)");
 		_lobbyList.getClientLobby(obj)->startGame();
 		for (auto &t: _lobbyList.getClientLobby(obj)->getClientList

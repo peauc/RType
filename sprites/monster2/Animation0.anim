@@ -1,9 +1,9 @@
 {
 	 Animation : 
 		[
-			{ File : "Tools/Mapper/images_to_map/r-typesheet9.png", x : 4294967292, y : 0, width : 55, height : 56 },
-			{ File : "Tools/Mapper/images_to_map/r-typesheet9.png", x : 50, y : 0, width : 56, height : 56 },
-			{ File : "Tools/Mapper/images_to_map/r-typesheet9.png", x : 111, y : 0, width : 55, height : 56 },
-			{ File : "Tools/Mapper/images_to_map/r-typesheet9.png", x : 4294967292, y : 0, width : 55, height : 56 }
+			{ File : "../images_to_map/r-typesheet9.png", x : 4294967292, y : 0, width : 55, height : 56 },
+			{ File : "../images_to_map/r-typesheet9.png", x : 50, y : 0, width : 56, height : 56 },
+			{ File : "../images_to_map/r-typesheet9.png", x : 111, y : 0, width : 55, height : 56 },
+			{ File : "../images_to_map/r-typesheet9.png", x : 4294967292, y : 0, width : 55, height : 56 }
 		]
 }

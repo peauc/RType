@@ -61,7 +61,10 @@ ClientObject &Lobby::getClientContained(const ClientObject &copy)
 bool Lobby::startGame()
 {
 	_game.start();
-	_game.setup(_clientManager.size(), nullptr);
+	_isStarted = true;
+	auto e = std::make_shared<RessourcesLoader>();
+	e->loadAnimations("../AssetsId.txt");
+	_game.setup(_clientManager.size(), e);
 	return (true);
 }
 const std::vector<ClientObject> &Lobby::getClientList()
