@@ -50,7 +50,7 @@ private:
 	void	updateAnimations(int &nbTicks) noexcept;
 	void	processEvents(std::queue<IRender::EventAction>
 				  &eventsQueue) noexcept;
-	
+	void 	drawOperations(int &nbTicks);
 	void	processEventMenu(const IRender::EventAction &event) noexcept;
 	void	createMenu();
 	void	modifyInputPacket(const IRender::EventAction &event,
