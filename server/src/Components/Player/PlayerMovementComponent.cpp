@@ -2,6 +2,7 @@
 // Created by romain on 12/01/18.
 //
 
+#include <iostream>
 #include "PlayerMovementComponent.hpp"
 #include "AInputComponent.hpp"
 #include "TransformPositionCommand.hpp"
@@ -11,8 +12,8 @@ Component::PlayerMovementComponent::PlayerMovementComponent(Engine::Entity *pare
 		: AMovementComponent(parentEntity),
 		  _baseSpeed(50.0f),
 		  _lateralBaseSpeed(0.0f),
-		  _maxSpeed(100.0f),
-		  _lateralMaxSpeed(50.0f),
+		  _inputSpeed(50.0f),
+		  _lateralInputSpeed(50.0f),
 		  _xInput(0.0f),
 		  _yInput(0.0f)
 {
@@ -27,17 +28,16 @@ Component::PlayerMovementComponent::PlayerMovementComponent(Engine::Entity *pare
 
 void Component::PlayerMovementComponent::update() noexcept
 {
-	this->_lastMove.x = this->_baseSpeed + this->_xInput * this->_baseSpeed;
-	this->_lastMove.y = this->_lateralBaseSpeed + this->_yInput * this->_lateralMaxSpeed;
+	this->_lastMove.x = this->_baseSpeed + this->_xInput * this->_inputSpeed;
+	this->_lastMove.y = this->_lateralBaseSpeed + this->_yInput * this->_lateralInputSpeed;
 
-	if (this->_lastMove.x > this->_maxSpeed)
-		this->_lastMove.x = this->_maxSpeed;
-	if (this->_lastMove.y > this->_lateralMaxSpeed)
-		this->_lastMove.y = this->_lateralMaxSpeed;
+	std::cout << "Pos : (" << this->_parentEntity->getTransformComponent().getPosition().x << ", "
+			  << this->_parentEntity->getTransformComponent().getPosition().y << ")" << std::endl;
+	std::cout << "Movement : (" << this->_lastMove.x << ", " << this->_lastMove.y << ")" << std::endl;
 
-	Engine::Commands::ICommand *command = new Engine::Commands::TransformPositionCommand(
+	Engine::Commands::TransformPositionCommand command = Engine::Commands::TransformPositionCommand(
 			this->_parentEntity->getTransformComponent(), this->_lastMove.x, this->_lastMove.y);
-	command->execute();
+	command.execute();
 
 	this->sendToAll(Engine::Mediator::Message::MOVE);
 
@@ -49,11 +49,11 @@ void Component::PlayerMovementComponent::handleEvent(Engine::Mediator::Message, 
 {
 	if (AInputComponent *inputComponent = dynamic_cast<AInputComponent *>(sender)) {
 		if (inputComponent->hasEvent()) {
-			this->_xInput = inputComponent->getEvent()._xVelocity;
-			this->_yInput = inputComponent->getEvent()._yVelocity;
+			this->_xInput = static_cast<double>(inputComponent->getEvent()._xVelocity) / 10000.0;
+			this->_yInput = static_cast<double>(inputComponent->getEvent()._yVelocity) / 10000.0;
 		} else {
-			this->_xInput = 0;
-			this->_yInput = 0;
+			this->_xInput = 0.0;
+			this->_yInput = 0.0;
 		}
 	}
 }

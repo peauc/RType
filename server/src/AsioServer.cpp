@@ -203,8 +203,6 @@ noexcept
 	e->_shotReleased = input.shot;
 	e->_xVelocity = input.xVelocity;
 	e->_yVelocity = input.yVelocity;
-	std::cout << "Event Method : "<< e->_yVelocity << " " << e->_xVelocity
-		  << std::endl << e->_entityId << std::endl;
 	_lobbyList.getClientLobby(obj)->pushEventInList(e);
 }
 void AsioServer::pong(const Packet::DataPacket &packet, ClientObject &obj)

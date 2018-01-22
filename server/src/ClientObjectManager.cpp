@@ -84,6 +84,7 @@ const std::vector<ClientObject> &ClientObjectManager::getClientList()
 bool ClientObjectManager::isReady() const noexcept
 {
 	for (auto it = _clientList.begin(); it < _clientList.end(); it++) {
+		std::cout << "Client " << it.operator*().getEntityID() << " " << it.operator*().isReady() << std::endl;
 		if (!it->isReady())
 			return (false);
 	}

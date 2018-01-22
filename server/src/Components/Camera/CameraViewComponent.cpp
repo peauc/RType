@@ -11,8 +11,8 @@ Component::CameraViewComponent::CameraViewComponent(Engine::Entity *parentEntity
 {
 	this->_relativeTopLeft.x = 0;
 	this->_relativeTopLeft.y = 0;
-	this->_relativeBottomRight.x = 19000;
-	this->_relativeBottomRight.y = 10800;
+	this->_relativeBottomRight.x = 8000;
+	this->_relativeBottomRight.y = 6000;
 
 	this->_validMessageTypes[Engine::Mediator::Message::GRAPHICS_REGISTERING] = std::bind(
 			&CameraViewComponent::handleGraphicsRegistration,
@@ -27,6 +27,7 @@ void Component::CameraViewComponent::update() noexcept
 			if (component->isInArea(this->_parentEntity->getTransformComponent().getPosition().x,
 									this->_parentEntity->getTransformComponent().getPosition().y,
 									this->_relativeBottomRight.x, this->_relativeBottomRight.y)) {
+				std::cout << "OBJECT IN SIGHT" << std::endl;
 				this->_parentGame->pushDataPacket(PacketFactory::createObjectPacket(
 						static_cast<short>(
 								component->getRelativeXPos(this->_parentEntity->getTransformComponent().getPosition().x,

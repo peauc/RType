@@ -23,7 +23,7 @@ public:
 	void setEntityID(size_t id) noexcept;
 private:
 	ClientObject();
-	bool _isReady;
+	bool _isReady = false;
 	boost::asio::ip::udp::endpoint _endpoint;
 	std::chrono::steady_clock::time_point _timeoutStart;
 	unsigned int	_entityID;

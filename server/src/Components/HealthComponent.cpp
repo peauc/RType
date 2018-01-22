@@ -19,6 +19,10 @@ Component::HealthComponent::HealthComponent(Engine::Entity *parentEntity, Engine
 			&HealthComponent::handleHit,
 			this, std::placeholders::_1,
 			std::placeholders::_2);
+	this->_validMessageTypes[Engine::Mediator::Message::DEATH] = std::bind(
+			&HealthComponent::handleDeath,
+			this, std::placeholders::_1,
+			std::placeholders::_2);
 }
 
 void Component::HealthComponent::update() noexcept
@@ -49,6 +53,13 @@ void Component::HealthComponent::handleHit(Engine::Mediator::Message, Engine::AC
 	if (APhysicsComponent *physics = dynamic_cast<APhysicsComponent *>(sender)) {
 		this->takeDamage(physics->getCollisionDamages());
 	}
+}
+
+void Component::HealthComponent::handleDeath(Engine::Mediator::Message, Engine::AComponent *) noexcept
+{
+	this->_health = 0;
+	this->_parentEntity->addCommand(new Engine::Commands::RemoveEntityCommand(*this->_world,
+																			  this->_parentEntity->getId()));
 }
 
 Engine::AComponent *

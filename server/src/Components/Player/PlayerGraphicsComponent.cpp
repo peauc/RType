@@ -76,6 +76,7 @@ void Component::PlayerGraphicsComponent::handleHit(Engine::Mediator::Message, En
 
 void Component::PlayerGraphicsComponent::handleMove(Engine::Mediator::Message, Engine::AComponent *sender) noexcept
 {
+	return;
 	if (AMovementComponent *movementComponent = dynamic_cast<AMovementComponent *>(sender)) {
 		if (movementComponent->getLastMove().y > 0) {
 			this->_currentAnimationId = this->_animationIds[1];

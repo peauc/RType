@@ -2,6 +2,7 @@
 // Created by romain on 20/01/18.
 //
 
+#include <iostream>
 #include "Entity.hpp"
 #include "CameraZoneComponent.hpp"
 

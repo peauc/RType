@@ -22,6 +22,8 @@ namespace Engine {
 	{
 	public:
 		const long NS_PER_UPDATE = 16000000;
+		//const long NS_PER_UPDATE = 1000000000;
+
 
 		Game();
 		~Game();

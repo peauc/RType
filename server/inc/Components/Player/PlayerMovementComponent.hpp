@@ -25,8 +25,8 @@ namespace Component {
 	private:
 		double _baseSpeed;
 		double _lateralBaseSpeed;
-		double _maxSpeed;
-		double _lateralMaxSpeed;
+		double _inputSpeed;
+		double _lateralInputSpeed;
 		double _xInput;
 		double _yInput;
 	};

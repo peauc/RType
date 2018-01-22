@@ -28,8 +28,11 @@ unsigned int Engine::World::addObject(std::unique_ptr<Entity> entity) noexcept
 
 void Engine::World::removeObject(unsigned int id) noexcept
 {
-	this->_objects.erase(std::find_if(this->_objects.begin(), this->_objects.end(),
-									  [&](const std::unique_ptr<Entity> &entity) { return entity->getId() == id; }));
+	auto object = std::find_if(this->_objects.begin(), this->_objects.end(),
+							   [&](const std::unique_ptr<Entity> &entity) { return entity->getId() == id; });
+	if (object != this->_objects.end()) {
+		object->get()->setActive(false);
+	}
 }
 
 Engine::Game *Engine::World::getParentGame() const noexcept
@@ -60,6 +63,9 @@ void Engine::World::update() noexcept
 	}
 	if (this->_camera != nullptr) {
 		this->_camera->update();
+	}
+	for (auto &object : this->_objects) {
+		object->executeCommands();
 	}
 }
 

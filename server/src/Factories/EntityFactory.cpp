@@ -46,8 +46,8 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 		playerGraphicsComponent->addObserver(game.getWorld()->getCamera().get());
 	}
 
-	playerShip->getTransformComponent().getPosition().x = 1000;
-	playerShip->getTransformComponent().getPosition().y = 2000 + id * 2000;
+	playerShip->getTransformComponent().getPosition().x = 300;
+	playerShip->getTransformComponent().getPosition().y = 1000 + id * 1000;
 
 	playerShip->setActive(true);
 

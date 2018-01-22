@@ -2,6 +2,7 @@
 // Created by romain on 12/01/18.
 //
 
+#include <iostream>
 #include "Entity.hpp"
 
 Engine::Entity::Entity() : _id(0), _active(false), _transformComponent(this), _components(),
@@ -26,7 +27,9 @@ void Engine::Entity::update() noexcept
 void Engine::Entity::executeCommands() noexcept
 {
 	for (unsigned int i = 0; i < _commands.size(); ++i) {
+		std::cout << "before" << std::endl;
 		this->_commands[i]->execute();
+		std::cout << "after" << std::endl;
 	}
 	this->_commands.clear();
 }

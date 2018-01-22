@@ -12,7 +12,7 @@ namespace Component {
 	class AWeaponComponent : public Engine::AComponent
 	{
 	public:
-		AWeaponComponent(Engine::Entity *parentEntity, Engine::Game *parentGame);
+		AWeaponComponent(Engine::Entity *parentEntity, Engine::Game *parentGame, unsigned int cooldown);
 		~AWeaponComponent() override = default;
 
 		// operator overloads
@@ -22,6 +22,7 @@ namespace Component {
 		double _shotAngle;
 		Vector2d _shotRelativeOrigin;
 		unsigned int _cooldown;
+		unsigned int _frameSinceShot;
 	};
 }
 

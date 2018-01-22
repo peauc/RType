@@ -88,7 +88,7 @@ bool Lobby::isStarted() const noexcept
 
 void Lobby::pushEventInList(std::unique_ptr<Engine::Event> &event) noexcept
 {
-	_game.getEventList().pushBack(event);
+	_game.getEventList().pushBack(std::move(event));
 }
 
 std::unique_ptr<std::vector<std::unique_ptr<Packet::DataPacket>>>
