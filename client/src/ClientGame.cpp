@@ -161,7 +161,6 @@ void ClientGame::createMenu()
 	
 	playButton->setPos(-200, -300);
 	playButton->setOnClick([&]() {
-//		this->_waitingReady = true;
 		this->sendReadyPacket();
 	});
 	
@@ -222,8 +221,6 @@ void ClientGame::sendEventPacket(const Packet::Input &input) noexcept
 {
 	Packet::DataPacket packet((int)Packet::Commands::EVENT);
 	packet.data.input = input;
-	std::cout << input.xVelocity << " - " << input.yVelocity << " - "
-		  << input.charged << std::endl;
 	this->_client.sendMessage(packet);
 }
 
@@ -255,15 +252,12 @@ void ClientGame::interpretPacket(const std::vector<Packet::DataPacket>
 			case Packet::Commands::STARTGAME:
 				this->_waitingReady = false;
 				this->_gameState = GameState::INGAME;
-			std::cout << "GAME STARTING" << std::endl;
 				break;
 			case Packet::Commands::POSITION:
 				this->updateObject(packet);
 				break;
 			case Packet::Commands::READY:
 				this->_waitingReady = false;
-				std::cout << "READYYYYYYYYYYYYYYYYYYYY" <<
-								   std::endl;
 				break;
 			default:
 				break;
@@ -280,7 +274,6 @@ void ClientGame::updateObject(const Packet::DataPacket &packet) noexcept
 	Packet::Object object = packet.data.object;
 	bool repeatAnimation = object.animated;
 
-	//TODO if animation id doesnt exist
 	auto it = this->_objects.find(object.id);
 	if (it != this->_objects.end()) {
 		this->updateInfosObject(it->second.get(), repeatAnimation,
@@ -307,7 +300,7 @@ void ClientGame::updateInfosObject(ISprite *sprite, bool repeatAnimation,
 								  objInfos.y);
 	sprite->setPos(pos.first, pos.second);
 	if (objInfos.entityState == Packet::EntityState::DEAD) {
-		repeatAnimation = false; //TODO Find a way to delete them
+		repeatAnimation = false;
 	}
 	if (sprite->getAnimationId() != objInfos.animationId) {
 		this->_render->setAnimationToSprite(sprite,
@@ -328,6 +321,5 @@ std::pair<short, short> ClientGame::calculateRealPosition(short x,
 {
 	auto realX = -(short)(x * this->_render->getWidth() / 10'000);
 	auto realY = -(short)(y * this->_render->getHeight() / 10'000);
-	std::cout << realX << " - " << realY << std::endl;
 	return (std::make_pair(realX, realY));
 }

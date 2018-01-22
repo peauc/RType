@@ -31,7 +31,7 @@ bool LobbyContainer::addClientToLobby(ClientObject &client,
                                       unsigned short seed) noexcept
 {
 	for (auto &t : _lobbyList) {
-		if (t->isStarted() && !t->isFull() && t->getSeed() == seed) {
+		if (!t->isStarted() && !t->isFull() && t->getSeed() == seed) {
 			t->addClient(client);
 			return (true);
 		}

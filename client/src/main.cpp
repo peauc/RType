@@ -20,8 +20,8 @@ int     main(int argc, char **argv, char **env)
 #endif
 	//TODO Pass parameters for info connection
 	try {
-		ClientGame game("10.10.253.149", "../AssetsId.txt");
-//		ClientGame game("127.0.0.1", "../AssetsId.txt");
+//		ClientGame game("10.10.253.149", "../AssetsId.txt");
+		ClientGame game("127.0.0.1", "../AssetsId.txt");
 		game.run();
 	}
 	catch (std::exception &e) {

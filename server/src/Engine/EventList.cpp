@@ -3,6 +3,7 @@
 //
 
 #include <algorithm>
+#include <iostream>
 #include "EventList.hpp"
 #include "Logger.hpp"
 
@@ -34,17 +35,21 @@ std::unique_ptr<Engine::Event> Engine::EventList::getEventById(size_t id)
 	});
 	if (t == _list.end())
 		return (nullptr);
+	auto e = std::move(*t);
 	_list.erase(t);
 
 	auto d = std::find_if(_list.begin(), _list.end(),
 	[](std::unique_ptr<Engine::Event> &e) {
 		return (e.get() == nullptr);
 	});
-	Logger::Log(Logger::CRITICAL, std::to_string(_list.size()));
 	if (d != _list.end())
 		_list.erase(d);
 
 
-	Logger::Log(Logger::CRITICAL, std::to_string(_list.size()));
-	return (std::move(*t));
+	if (e.get()) {
+		std::cout << "Recup method" << e->_xVelocity << " " << 
+								     e->_yVelocity 
+			  << std::endl;
+	}
+	return (std::move(e));
 }
