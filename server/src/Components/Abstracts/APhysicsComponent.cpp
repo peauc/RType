@@ -12,6 +12,10 @@ Component::APhysicsComponent::APhysicsComponent(Engine::Entity *entity, const En
 			&APhysicsComponent::handleCheckCollision,
 			this, std::placeholders::_1,
 			std::placeholders::_2);
+	this->_validMessageTypes[Engine::Mediator::Message::MOVE] = std::bind(
+			&APhysicsComponent::handleMove,
+			this, std::placeholders::_1,
+			std::placeholders::_2);
 }
 
 int Component::APhysicsComponent::getCollisionDamages() const noexcept
@@ -77,7 +81,8 @@ void Component::APhysicsComponent::damagingCollision(Component::APhysicsComponen
 	}
 }
 
-void Component::APhysicsComponent::setCollision(Component::APhysicsComponent::Direction direction, bool hasHappened) noexcept
+void
+Component::APhysicsComponent::setCollision(Component::APhysicsComponent::Direction direction, bool hasHappened) noexcept
 {
 	this->_collisions[direction] = hasHappened;
 }
@@ -96,11 +101,11 @@ bool Component::APhysicsComponent::getCollision(Component::APhysicsComponent::Di
 
 void Component::APhysicsComponent::setOBB() noexcept
 {
-	if (this->_orientedBoundingBox == nullptr)
-		this->_orientedBoundingBox = std::make_unique<OBB>(this->_parentEntity->getTransformComponent(), this->_hitbox);
+	this->_orientedBoundingBox = std::make_unique<OBB>(this->_parentEntity->getTransformComponent(), this->_hitbox);
 }
 
-Component::APhysicsComponent &Component::APhysicsComponent::operator=(const Component::APhysicsComponent &other) noexcept
+Component::APhysicsComponent &
+Component::APhysicsComponent::operator=(const Component::APhysicsComponent &other) noexcept
 {
 	this->_collisionHandlers = other._collisionHandlers;
 
