@@ -19,6 +19,9 @@ int     main(int ac, char **av, char **env)
 	if (env == nullptr || getenv("DISPLAY") == nullptr)
 		return (1);
 #endif
+#ifdef __APPLE__
+	(void)env;
+#endif
 	//TODO Pass parameters for info connection
 	try {
 		if (ac < 3) {
