@@ -97,7 +97,8 @@ void MapModel::sendObject(const Object &object) {
 	ChildMap	*child;
 	boost::filesystem::path		p(object.getPropertyString("Path"));
 
-	child = new ChildMap(nullptr, object.getPropertyString("Path"));
+	child = new ChildMap(nullptr, this->enemiesDirectory
+								  + object.getPropertyString("Path"));
 	child->setPathItem(p.filename().string());
 	child->setWidth(object.getPropertyUint("Width"));
 	child->setHeight(object.getPropertyUint("Height"));
@@ -188,7 +189,7 @@ std::string MapModel::saveChildInZone(const ChildMap *child) const {
 
 	result = indent;
 	result += "{ ";
-	result += "\"Path\" : \"" + this->enemiesDirectory + child->getPathItem()
+	result += "\"Path\" : \"" + child->getPathItem()
 			  + "\", ";
 	result += "\"X\" : "
 			  + std::to_string(this->getRealXValue(child->getX())

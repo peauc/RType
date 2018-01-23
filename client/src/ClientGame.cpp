@@ -63,9 +63,9 @@ void	ClientGame::run() noexcept
 			this->drawOperations(nbTicks);
 			this->deleteDeadSprites();
 			this->processEvents(eventsQueue);
-//			if (this->_waitingReady) { //TODO
-//				this->sendReadyPacket();
-//			}
+			if (this->_waitingReady) {
+				this->sendReadyPacket();
+			}
 			begin = std::chrono::steady_clock::now();
 		}
 	}
@@ -166,6 +166,7 @@ void ClientGame::processEvents(std::queue<IRender::EventAction>
 	if (this->_gameState == GameState::INGAME) {
 		this->sendEventPacket(input);
 	}
+	this->sendPong();
 }
 
 /**
@@ -195,7 +196,7 @@ void ClientGame::createMenu()
 	auto quitButton = this->_render->createSprite(
 		"../Assets/Menu/quit.png");
 	auto rtypeText(std::make_unique<TextSFML>(
-		"../Assets/Menu/spaceAge.ttf", "R-TYPE ooga booga", 80));
+		"../Assets/Menu/spaceAge.ttf", "R-TYPE", 80));
 	
 	playButton->setPos(-(this->_render->getWidth() / 3),
 			   -(this->_render->getHeight() / 2));
@@ -266,6 +267,17 @@ void ClientGame::sendReadyPacket() noexcept
 {
 	this->_client.sendMessage(Packet::DataPacket(
 		(int)Packet::Commands::READY));
+}
+
+void ClientGame::sendPong() noexcept
+{
+	static int frames = 0;
+	
+	frames = frames % 256;
+	if (frames++ == 0) {
+		this->_client.sendMessage(Packet::DataPacket(
+			(int)Packet::Commands::PONG));
+	}
 }
 
 /**

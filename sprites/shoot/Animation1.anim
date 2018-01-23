@@ -1,0 +1,6 @@
+{
+	 Animation : 
+		[
+			{ "File" : "../Tools/Mapper/../../images_to_map/shoot2.png", "x" : 0, "y" : 0, "width" : 32, "height" : 10 }
+		]
+}

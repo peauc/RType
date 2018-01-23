@@ -1,0 +1,11 @@
+{
+	 Animation : 
+		[
+			{ "File" : "../Tools/Mapper/../../images_to_map/shoot3.png", "x" : 2, "y" : 4, "width" : 6, "height" : 6 },
+			{ "File" : "../Tools/Mapper/../../images_to_map/shoot3.png", "x" : 17, "y" : 3, "width" : 10, "height" : 8 },
+			{ "File" : "../Tools/Mapper/../../images_to_map/shoot3.png", "x" : 33, "y" : 2, "width" : 12, "height" : 10 },
+			{ "File" : "../Tools/Mapper/../../images_to_map/shoot3.png", "x" : 49, "y" : 1, "width" : 14, "height" : 12 },
+			{ "File" : "../Tools/Mapper/../../images_to_map/shoot3.png", "x" : 33, "y" : 2, "width" : 12, "height" : 10 },
+			{ "File" : "../Tools/Mapper/../../images_to_map/shoot3.png", "x" : 17, "y" : 3, "width" : 10, "height" : 8 },
+		]
+}

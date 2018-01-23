@@ -99,7 +99,7 @@ Lobby::getPackets() {
 }
 bool Lobby::removeClient(const ClientObject &obj) noexcept
 {
-	_clientManager.removeClient(obj);
+	return _clientManager.removeClient(obj);
 }
 
 
