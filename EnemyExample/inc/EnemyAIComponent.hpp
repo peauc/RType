@@ -7,9 +7,18 @@
 
 #	include <queue>
 #	include <utility>
+#	include "AInputComponent.hpp"
 #	include "AComponent.hpp"
 #	include "Event.hpp"
-#	include "Abstracts/AInputComponent.hpp"
+
+namespace Component {
+	class AInputComponent;
+}
+
+namespace Engine {
+	class AComponent;
+	class Entity;
+}
 
 namespace Component {
 	class EnemyAIComponent : public AInputComponent

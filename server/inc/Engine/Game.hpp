@@ -12,8 +12,9 @@
 #include "EventList.hpp"
 #include "EnemyLoader/EnemyLoader.hpp"
 #include "PacketList.hpp"
+#include "MapLoader.hpp"
 
-class RessourcesLoader;
+class ResourcesLoader;
 
 namespace Engine {
 	class World;
@@ -29,19 +30,20 @@ namespace Engine {
 		void start();
 		void run();
 		void setup(size_t nbOfPlayers,
-				   const std::shared_ptr<RessourcesLoader> &resourceLoader);
+				   const std::shared_ptr<ResourcesLoader> &resourceLoader);
 
 		EventList &getEventList();
 		void setWorld(std::unique_ptr<World> world);
 		std::unique_ptr<World> &getWorld();
 		const std::unique_ptr<World> &getWorld() const;
-		const std::shared_ptr<RessourcesLoader> &getResourceLoader() const;
-		void setResourceLoader(const std::shared_ptr<RessourcesLoader> &_resourceLoader);
+		const std::shared_ptr<ResourcesLoader> &getResourceLoader() const;
+		void setResourceLoader(const std::shared_ptr<ResourcesLoader> &_resourceLoader);
 		void pushDataPacket(Packet::DataPacket *packet);
 		void stop();
 		std::unique_ptr<std::vector<std::unique_ptr<Packet::DataPacket>>>
 		getPackets();
 		Entity *cloneEntity(const std::string &name) const;
+		void createZones(const Vector2d &mapSize, const MapLoader::Zones &);
 
 	private:
 		std::thread _thread;
@@ -50,7 +52,8 @@ namespace Engine {
 		PacketList _packetList;
 		EnemyLoader _enemyLoader;
 		std::unique_ptr<std::map<const std::string, Engine::Entity *>> _DLEntitiesMap;
-		std::shared_ptr<RessourcesLoader> _resourceLoader;
+		std::shared_ptr<ResourcesLoader> _resourceLoader;
+		MapLoader _mapLoader;
 		bool _stop;
 	};
 }

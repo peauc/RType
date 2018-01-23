@@ -5,11 +5,7 @@
 ** 	No description
 */
 
-#include <boost/exception/diagnostic_information.hpp>
 #include <AsioServer.hpp>
-#include <iostream>
-#include <Components/HealthComponent.hpp>
-#include "Logger.hpp"
 
 int main(int, char **)
 {
@@ -21,14 +17,15 @@ int main(int, char **)
 		}
 	} catch (boost::system::system_error &e) {
 		std::cout << "Error: " << e.what() << std::endl;
-		std::cout << "Info: " << boost::diagnostic_information(e)
-			  << std::endl;
 		return 1;
 	}
 //	Engine::Game *game = new Engine::Game();
-//	std::shared_ptr<RessourcesLoader> rl = std::make_shared<RessourcesLoader>();
+//	std::shared_ptr<RessourcesLoader> ressourcesLoader = std::shared_ptr<RessourcesLoader>(new RessourcesLoader());
 //
-//	game->setup(1, nullptr);
+//	game->setup(1, ressourcesLoader);
+//	game->getEventList().pushBack(std::make_unique<Engine::Event>(0, 5000, -10000, false, true));
+//	game->getWorld()->update();
+//	game->getEventList().pushBack(std::make_unique<Engine::Event>(0, 5000, -10000, false, true));
 //	game->getWorld()->update();
 }
 

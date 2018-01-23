@@ -27,18 +27,21 @@ RenderSFML::RenderSFML(unsigned int width, unsigned int height,
 
 void	RenderSFML::initEventMap()
 {
-	this->_eventMap.insert(std::make_pair(sf::Keyboard::Up,
-					      IRender::EventAction::UP));
-	this->_eventMap.insert(std::make_pair(sf::Keyboard::Down,
-					      EventAction::DOWN));
-	this->_eventMap.insert(std::make_pair(sf::Keyboard::Left,
-					      EventAction::LEFT));
-	this->_eventMap.insert(std::make_pair(sf::Keyboard::Right,
-					      EventAction::RIGHT));
-	this->_eventMap.insert(std::make_pair(sf::Keyboard::Space,
-					      EventAction::SPACE));
-	this->_eventMap.insert(std::make_pair(sf::Mouse::Left,
-					      EventAction::MOUSE1));
+	this->_eventMap.insert(std::make_pair(
+		sf::Keyboard::Up, std::make_pair(EventAction::UP, false)));
+	this->_eventMap.insert(std::make_pair(
+		sf::Keyboard::Down, std::make_pair(EventAction::DOWN, false)));
+	this->_eventMap.insert(std::make_pair(
+		sf::Keyboard::Left, std::make_pair(EventAction::LEFT, false)));
+	this->_eventMap.insert(std::make_pair(
+		sf::Keyboard::Right,
+		std::make_pair(EventAction::RIGHT, false)));
+	this->_eventMap.insert(std::make_pair(
+		sf::Keyboard::Space,
+		std::make_pair(EventAction::SPACE, false)));
+	this->_eventMap.insert(std::make_pair(
+		sf::Mouse::Left,
+		std::make_pair(EventAction::MOUSE1, false)));
 }
 
 void	RenderSFML::openWindow(unsigned int width, unsigned int height,
@@ -91,8 +94,8 @@ std::unique_ptr<ISprite> RenderSFML::createSprite(const std::string &fileName,
 
 void	RenderSFML::draw(const ISprite *sprite) noexcept
 {
-	if (this->_window && sprite) {
-		this->_window->draw(		//TODO Is there another way ?
+	if (this->_window && sprite && sprite->isDisplay()) {
+		this->_window->draw(
 			dynamic_cast<const SpriteSFML*>(sprite)->getSprite());
 	}
 }
@@ -100,7 +103,7 @@ void	RenderSFML::draw(const ISprite *sprite) noexcept
 void	RenderSFML::draw(const IText *text) noexcept
 {
 	if (this->_window && text) {
-		this->_window->draw(		//TODO Is there another way ?
+		this->_window->draw(
 			dynamic_cast<const TextSFML*>(text)->getSText());
 	}
 }
@@ -108,7 +111,6 @@ void	RenderSFML::draw(const IText *text) noexcept
 std::queue<IRender::EventAction> RenderSFML::pollEvents() noexcept
 {
 	sf::Event				event{};
-	std::queue<IRender::EventAction>	eventQueue;
 	
 	while (this->_window && this->_window->pollEvent(event)) {
 		if (event.type == sf::Event::Closed ||
@@ -117,20 +119,35 @@ std::queue<IRender::EventAction> RenderSFML::pollEvents() noexcept
 			this->_window->close();
 		} else if (event.type == sf::Event::KeyPressed ||
 			   event.type == sf::Event::MouseButtonPressed) {
-			this->addEventToQueue(eventQueue, event.key.code);
+			this->setKeyPressedOrReleased((int)event.key.code,
+						      true);
+		} else if (event.type == sf::Event::KeyReleased ||
+			event.type == sf::Event::MouseButtonReleased) {
+			this->setKeyPressedOrReleased((int)event.key.code,
+						      false);
 		}
 	}
-	return (eventQueue);
+	return (this->createEventQueue());
 }
 
-
-void	RenderSFML::addEventToQueue(std::queue<IRender::EventAction>
-				      &eventQueue, int key) noexcept
+void RenderSFML::setKeyPressedOrReleased(int key, bool pressed)
 {
 	auto it = this->_eventMap.find(key);
 	if (it != this->_eventMap.end()) {
-		eventQueue.push(it->second);
+		it->second.second = pressed;
 	}
+}
+
+std::queue<IRender::EventAction> RenderSFML::createEventQueue()
+{
+	std::queue<IRender::EventAction>	eventQueue;
+	
+	for (auto it : this->_eventMap) {
+		if (it.second.second) {
+			eventQueue.push(it.second.first);
+		}
+	}
+	return (eventQueue);
 }
 
 void	RenderSFML::loadAnimations(std::unordered_map<uint32_t,
@@ -144,7 +161,7 @@ void	RenderSFML::loadAnimations(std::unordered_map<uint32_t,
 				sfmlVectorTexture.push_back(
 					this->loadTexture(texture));
 			} catch (const std::runtime_error &e) {
-				std::cout << e.what() << std::endl;
+				std::cerr << e.what() << std::endl;
 			}
 		}
 		this->_textureMap.insert(std::make_pair(it.first,

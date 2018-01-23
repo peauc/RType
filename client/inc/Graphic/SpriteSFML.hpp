@@ -43,8 +43,6 @@ private:
 	unsigned int	_sizeTileX;
 	unsigned int	_sizeTileY;
 	std::vector<sf::Texture> _animationVector;
-	unsigned short	_animationIndex;
-	bool		_repeatAnimation;
 };
 
 #endif // !RTYPE_SPRITESFML_HPP_

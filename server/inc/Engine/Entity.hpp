@@ -18,7 +18,7 @@ namespace Engine {
 	public:
 		Entity();
 		explicit Entity(unsigned int id);
-		~Entity() = default;
+		~Entity() override = default;
 
 		void update() noexcept;
 		void executeCommands() noexcept;

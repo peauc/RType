@@ -4,6 +4,8 @@
 
 #include <iostream>
 #include "EnemyMoveComponent.hpp"
+#include "AInputComponent.hpp"
+#include "TransformPositionCommand.hpp"
 
 Component::EnemyMoveComponent::EnemyMoveComponent(Engine::Entity *parentEntity)
 		: AMovementComponent(parentEntity),

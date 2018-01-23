@@ -9,7 +9,6 @@ Component::ZoneComponent::ZoneComponent(Engine::Entity *parentEntity,
 										Engine::World *parentWorld) :
 		APhysicsComponent(parentEntity, hitbox), _parentWorld(parentWorld)
 {
-	this->setOBB();
 	this->_validMessageTypes[Engine::Mediator::Message::CHECK_COLLISION] = std::bind(
 			&ZoneComponent::handleCheckCollision,
 			this, std::placeholders::_1,
@@ -22,6 +21,9 @@ void Component::ZoneComponent::update() noexcept
 
 void Component::ZoneComponent::handleCheckCollision(Engine::Mediator::Message, Engine::AComponent *sender) noexcept
 {
+	if (this->_orientedBoundingBox == nullptr) {
+		this->setOBB();
+	}
 	if (APhysicsComponent *other = dynamic_cast<APhysicsComponent *>(sender)) {
 		other->setOBB();
 
@@ -34,7 +36,8 @@ void Component::ZoneComponent::handleCheckCollision(Engine::Mediator::Message, E
 
 void Component::ZoneComponent::addEntity(std::unique_ptr<Engine::Entity> entity) noexcept
 {
-	this->_entities.push_back(std::move(entity));
+	if (entity != nullptr)
+		this->_entities.push_back(std::move(entity));
 }
 
 void Component::ZoneComponent::trigger() noexcept

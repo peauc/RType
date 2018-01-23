@@ -23,6 +23,7 @@ namespace Component {
 		// handle methods
 		void handleGetImpactDamages(Engine::Mediator::Message messageType, Engine::AComponent *sender) noexcept;
 		void handleHit(Engine::Mediator::Message messageType, Engine::AComponent *sender) noexcept;
+		void handleDeath(Engine::Mediator::Message messageType, AComponent *sender) noexcept;
 
 		Engine::AComponent *clone(Engine::Entity *parentEntity) const noexcept override;
 	private:

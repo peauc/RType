@@ -15,7 +15,7 @@
 #include "JsonDataLoader.hpp"
 #include "Object.hpp"
 
-class RessourcesLoader {
+class ResourcesLoader {
 
 private:
 
@@ -29,10 +29,10 @@ public:
 	using Animations = std::unordered_map<unsigned int, Animation>;
 	using Sounds = std::unordered_map<unsigned int, std::string>;
 
-	RessourcesLoader() = default;
-	~RessourcesLoader() = default;
-	RessourcesLoader(const RessourcesLoader&) = delete;
-	RessourcesLoader	&operator=(const RessourcesLoader&) = delete;
+	ResourcesLoader() = default;
+	~ResourcesLoader() = default;
+	ResourcesLoader(const ResourcesLoader&) = delete;
+	ResourcesLoader	&operator=(const ResourcesLoader&) = delete;
 
 	void				loadAnimations(const std::string &filePath);
 	const Animations	&getAnimations() const;

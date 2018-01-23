@@ -7,7 +7,7 @@
 #include "EventList.hpp"
 #include "Logger.hpp"
 
-void Engine::EventList::pushBack(std::unique_ptr<Engine::Event> &e)
+void Engine::EventList::pushBack(std::unique_ptr<Engine::Event> e)
 {
 	_mutex.lock();
 	_list.push_back(std::move(e));
@@ -46,10 +46,10 @@ std::unique_ptr<Engine::Event> Engine::EventList::getEventById(size_t id)
 		_list.erase(d);
 
 
-	if (e.get()) {
-		std::cout << "Recup method" << e->_xVelocity << " " << 
-								     e->_yVelocity 
-			  << std::endl;
-	}
-	return (e);
+//	if (e.get()) {
+//		std::cout << "Recup method" << e->_xVelocity << " " <<
+//								     e->_yVelocity
+//			  << std::endl;
+//	}
+	return (std::move(e));
 }

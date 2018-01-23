@@ -39,14 +39,13 @@ ClientGame::ClientGame(const std::string &ip, const std::string &animationFile,
  */
 void	ClientGame::run() noexcept
 {
-	std::queue<IRender::EventAction> eventsQueue;
-	std::vector<Packet::DataPacket>	packetList;
-	
-	this->_client.resetChrono();
-	int nbTicks = 0;
-	std::chrono::steady_clock::time_point begin
+	std::queue<IRender::EventAction>	eventsQueue;
+	std::vector<Packet::DataPacket>		packetList;
+	std::chrono::steady_clock::time_point	begin
 		= std::chrono::steady_clock::now();
-	
+	int					nbTicks = 0;
+
+	this->_client.resetChrono();
 	while (this->_render->isWindowOpen()) {
 		this->_client.tick();
 		this->interpretPacket(this->_client.getDataPacketList());
@@ -54,18 +53,28 @@ void	ClientGame::run() noexcept
 			    (std::chrono::steady_clock::now() - begin)
 			    .count() > FRAMEDURATION) {
 			eventsQueue = this->_render->pollEvents();
-			this->_render->clear();
-			this->drawSprites();
-			this->_render->display();
-			this->updateAnimations(nbTicks);
+			this->drawOperations(nbTicks);
+			this->deleteDeadSprites();
 			this->processEvents(eventsQueue);
-			++nbTicks;
+//			if (this->_waitingReady) { //TODO
+//				this->sendReadyPacket();
+//			}
 			begin = std::chrono::steady_clock::now();
 		}
-		if (this->_waitingReady) {
-			this->sendReadyPacket();
-		}
 	}
+}
+
+/**
+ * Operations in order to draw on screen
+ * @param nbTicks
+ */
+void	ClientGame::drawOperations(int &nbTicks)
+{
+	this->_render->clear();
+	this->drawSprites();
+	this->_render->display();
+	this->updateAnimations(nbTicks);
+	++nbTicks;
 }
 
 /**
@@ -145,6 +154,7 @@ void ClientGame::processEventMenu(const IRender::EventAction &event) noexcept
 		}
 	}
 }
+
 /**
  * Add sprites and texts to start menu
  */
@@ -159,17 +169,19 @@ void ClientGame::createMenu()
 	auto rtypeText(std::make_unique<TextSFML>(
 		"../Assets/Menu/ELRIOTT2.TTF", "R-TYPE", 80));
 	
-	playButton->setPos(-200, -300);
+	playButton->setPos(-(this->_render->getWidth() / 3),
+			   -(this->_render->getHeight() / 2));
 	playButton->setOnClick([&]() {
 		this->sendReadyPacket();
 	});
 	
-	quitButton->setPos(-600, -300);
+	quitButton->setPos(-(this->_render->getWidth() / 3 * 2),
+			   -(this->_render->getHeight() / 2));
 	quitButton->setOnClick([this]() {
 		this->_render->closeWindow();
 	});
-
-	rtypeText->setPosX(300);
+	
+	rtypeText->setPosX(this->_render->getWidth() / 3);
 	
 	this->_startMenu->addSprite(std::move(background));
 	this->_startMenu->addSprite(std::move(playButton));
@@ -185,33 +197,28 @@ void ClientGame::createMenu()
 void	ClientGame::modifyInputPacket(const IRender::EventAction &event,
 					  Packet::Input &input) noexcept
 {
-	short	speed = 10000;
+	short	speed = 10'000;
 
 	switch (event) {
 		case IRender::EventAction::UP:
-			this->setVelocityInput(0, -speed, input);
+			input.yVelocity = -speed;
 			break;
 		case IRender::EventAction::DOWN:
-			this->setVelocityInput(0, speed, input);
+			input.yVelocity = speed;
 			break;
 		case IRender::EventAction::LEFT:
-			this->setVelocityInput(-speed, 0, input);
+			input.xVelocity = -speed;
 			break;
 		case IRender::EventAction::RIGHT:
-			this->setVelocityInput(speed, 0, input);
+			input.xVelocity = speed;
 			break;
 		case IRender::EventAction::SPACE:
-			input.charged = true;
-			break;
-		case IRender::EventAction::MOUSE1:
-			input.charged = true;
+			input.shot = true;
 			break;
 		default:
 			break;
 	}
 }
-
-# include <iostream>
 
 /**
  * Create and send a DataPacket with the command Event and with an input
@@ -233,13 +240,6 @@ void ClientGame::sendReadyPacket() noexcept
 		(int)Packet::Commands::READY));
 }
 
-void	ClientGame::setVelocityInput(short x, short y,
-					 Packet::Input &input) noexcept
-{
-	input.yVelocity = x;
-	input.xVelocity = y;
-}
-
 /**
  * Interpret all packets in the vector
  * @param packets vector of packets
@@ -254,7 +254,7 @@ void ClientGame::interpretPacket(const std::vector<Packet::DataPacket>
 				this->_gameState = GameState::INGAME;
 				break;
 			case Packet::Commands::POSITION:
-				this->updateObject(packet);
+				this->updateObject(packet.data.object);
 				break;
 			case Packet::Commands::READY:
 				this->_waitingReady = false;
@@ -269,19 +269,16 @@ void ClientGame::interpretPacket(const std::vector<Packet::DataPacket>
  * Update object (or add if it doesn't exist yet) in the object vector
  * @param packet with object info
  */
-void ClientGame::updateObject(const Packet::DataPacket &packet) noexcept
+void ClientGame::updateObject(const Packet::Object &object) noexcept
 {
-	Packet::Object object = packet.data.object;
-	bool repeatAnimation = object.animated;
-
 	auto it = this->_objects.find(object.id);
 	if (it != this->_objects.end()) {
-		this->updateInfosObject(it->second.get(), repeatAnimation,
+		this->updateInfosObject(it->second.get(), object.animated,
 					object);
 	} else {
 		std::unique_ptr<ISprite> sprite
 			= std::make_unique<SpriteSFML>();
-		this->updateInfosObject(sprite.get(), repeatAnimation, object);
+		this->updateInfosObject(sprite.get(), object.animated, object);
 		this->_objects.insert(std::make_pair(object.id,
 						     std::move(sprite)));
 	}
@@ -299,14 +296,16 @@ void ClientGame::updateInfosObject(ISprite *sprite, bool repeatAnimation,
 	std::pair<short, short> pos = this->calculateRealPosition(objInfos.x,
 								  objInfos.y);
 	sprite->setPos(pos.first, pos.second);
-	if (objInfos.entityState == Packet::EntityState::DEAD) {
-		repeatAnimation = false;
-	}
+	repeatAnimation = !(objInfos.entityState == Packet::EntityState::DEAD);
 	if (sprite->getAnimationId() != objInfos.animationId) {
 		this->_render->setAnimationToSprite(sprite,
 						    objInfos.animationId,
 						    repeatAnimation);
+	} else if (sprite->isAnimationRepeating() != repeatAnimation) {
+		sprite->setRepeatAnimation(repeatAnimation);
 	}
+	sprite->setDisplay(objInfos.entityState !=
+				   Packet::EntityState::NOTDISPLAYED);
 }
 
 /**
@@ -319,7 +318,26 @@ void ClientGame::updateInfosObject(ISprite *sprite, bool repeatAnimation,
 std::pair<short, short> ClientGame::calculateRealPosition(short x,
 							  short y) noexcept
 {
+	x = (short)((x < 0) ? 0 : x);
+	y = (short)((y < 0) ? 0 : y);
+	x = (short)((x > 10'000) ? 10'000 : x);
+	y = (short)((y > 10'000) ? 10'000 : y);
 	auto realX = -(short)(x * this->_render->getWidth() / 10'000);
 	auto realY = -(short)(y * this->_render->getHeight() / 10'000);
 	return (std::make_pair(realX, realY));
+}
+
+/**
+ * Delete all objects from _objects vector
+ * which have their bool waitingToBeDeleted set to true
+ */
+void ClientGame::deleteDeadSprites()
+{
+	for (auto it = this->_objects.begin(); it != this->_objects.end();) {
+		if (it->second->isWaitingToBeDeleted()) {
+			this->_objects.erase(it++);
+		} else {
+			++it;
+		}
+	}
 }

@@ -28,8 +28,9 @@ public:
 
 protected:
 
-	std::vector<std::shared_ptr<AItem>>	childs;
+	void	sendEventToChilds(const sf::Event &event);
 
+	std::vector<std::shared_ptr<AItem>>	childs;
 
 	unsigned int	childMarginTop;
 	unsigned int	childMarginBot;

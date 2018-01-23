@@ -12,16 +12,11 @@ Component::PlayerInputComponent::PlayerInputComponent(Engine::Entity *parentEnti
 
 void Component::PlayerInputComponent::update() noexcept
 {
-	std::cout << "---------------------------------------------" << 
-								     std::endl << this->_parentEntity->getId() << std::endl;
 	this->_event = this->_eventList->getEventById(this->_parentEntity->getId());
 	if (this->_event == nullptr) {
 		return;
 	}
-	std::cout << "Player :" << this->_event->_yVelocity << " " << 
-						      this->_event->_xVelocity << std::endl;
-	
-	
+
 	this->sendToAll(Engine::Mediator::Message::NEW_EVENT);
 	this->_event = nullptr;
 }

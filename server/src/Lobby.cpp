@@ -6,7 +6,7 @@
 #include <thread>
 #include "Logger.hpp"
 #include "Lobby.hpp"
-#include "RessourcesLoader.hpp"
+#include "ResourcesLoader.hpp"
 
 bool Lobby::isClientContained(const ClientObject &client) const noexcept
 {
@@ -63,7 +63,7 @@ bool Lobby::startGame()
 {
 	_game.start();
 	_isStarted = true;
-	auto e = std::make_shared<RessourcesLoader>();
+	auto e = std::make_shared<ResourcesLoader>();
 	e->loadAnimations("../AssetsId.txt");
 	_game.setup(_clientManager.size(), e);
 	Logger::Log(Logger::CRITICAL, std::to_string(this->_game.getWorld().get
@@ -88,7 +88,7 @@ bool Lobby::isStarted() const noexcept
 
 void Lobby::pushEventInList(std::unique_ptr<Engine::Event> &event) noexcept
 {
-	_game.getEventList().pushBack(event);
+	_game.getEventList().pushBack(std::move(event));
 }
 
 std::unique_ptr<std::vector<std::unique_ptr<Packet::DataPacket>>>

@@ -14,7 +14,7 @@
 # include "Graphic/IRender.hpp"
 # include "Graphic/IMenu.hpp"
 # include "AsioClient.hpp"
-# include "RessourcesLoader.hpp"
+# include "ResourcesLoader.hpp"
 
 class ClientGame
 {
@@ -36,7 +36,7 @@ private:
 	};
 
 	client::AsioClient 		_client;
-	RessourcesLoader 		_resourcesLoader;
+	ResourcesLoader 		_resourcesLoader;
 	std::unique_ptr<IRender>	_render;
 	std::unique_ptr<IMenu>		_startMenu;
 	std::unordered_map<uint32_t, std::unique_ptr<ISprite>>	_objects;
@@ -50,22 +50,21 @@ private:
 	void	updateAnimations(int &nbTicks) noexcept;
 	void	processEvents(std::queue<IRender::EventAction>
 				  &eventsQueue) noexcept;
-	
+	void 	drawOperations(int &nbTicks);
 	void	processEventMenu(const IRender::EventAction &event) noexcept;
 	void	createMenu();
 	void	modifyInputPacket(const IRender::EventAction &event,
 				      Packet::Input &input) noexcept;
 	void	sendEventPacket(const Packet::Input &input) noexcept;
 	void	sendReadyPacket() noexcept;
-	void	setVelocityInput(short x, short y,
-				     Packet::Input &input) noexcept;
 	void	interpretPacket(const std::vector<Packet::DataPacket>
 				     &packets) noexcept;
-	void	updateObject(const Packet::DataPacket &packet) noexcept;
+	void	updateObject(const Packet::Object &object) noexcept;
 	void	updateInfosObject(ISprite *sprite, bool repeatAnimation,
 				      const Packet::Object &objInfos) noexcept;
 	std::pair<short, short>	calculateRealPosition(short x,
 							     short y) noexcept;
+	void	deleteDeadSprites();
 };
 
 #endif // !RTYPE_CLIENTGAME_HPP_

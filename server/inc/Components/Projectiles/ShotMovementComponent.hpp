@@ -12,7 +12,7 @@ namespace Component {
 	class ShotMovementComponent : public AMovementComponent
 	{
 	public:
-		explicit ShotMovementComponent(Engine::Entity *parentEntity, double speed);
+		explicit ShotMovementComponent(Engine::Entity *parentEntity, double speed, unsigned int lifetime);
 		~ShotMovementComponent() override = default;
 
 		void update() noexcept override;
@@ -20,6 +20,7 @@ namespace Component {
 		AComponent *clone(Engine::Entity *parentEntity) const noexcept override;
 	private:
 		double _speed;
+		unsigned int _lifetime;
 	};
 }
 

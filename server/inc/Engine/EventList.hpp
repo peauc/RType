@@ -19,7 +19,7 @@ public:
 	std::unique_ptr<Engine::Event> getEventById(size_t id);
 	std::vector<std::unique_ptr<Engine::Event>> &getEvents();
 	const std::vector<std::unique_ptr<Engine::Event>> &getEvents() const;
-	void pushBack(std::unique_ptr<Engine::Event> &e);
+	void pushBack(std::unique_ptr<Engine::Event> e);
 private:
 	std::vector<std::unique_ptr<Engine::Event>> _list;
 	std::mutex _mutex;

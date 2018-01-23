@@ -4,8 +4,8 @@
 
 #include "AWeaponComponent.hpp"
 
-Component::AWeaponComponent::AWeaponComponent(Engine::Entity *parentEntity, Engine::Game *parentGame) :
-		AComponent(parentEntity), _parentGame(parentGame)
+Component::AWeaponComponent::AWeaponComponent(Engine::Entity *parentEntity, Engine::Game *parentGame, unsigned int cooldown) :
+		AComponent(parentEntity), _parentGame(parentGame), _cooldown(cooldown), _frameSinceShot(cooldown)
 {
 }
 
@@ -13,6 +13,7 @@ Component::AWeaponComponent &Component::AWeaponComponent::operator=(const Compon
 {
 	this->_parentGame = other._parentGame;
 	this->_cooldown = other._cooldown;
+	this->_frameSinceShot = other._cooldown;
 	this->_shotAngle = other._shotAngle;
 	this->_shotRelativeOrigin = other._shotRelativeOrigin;
 

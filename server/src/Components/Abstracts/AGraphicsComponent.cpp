@@ -3,9 +3,9 @@
 //
 
 #include "AGraphicsComponent.hpp"
-#include "RessourcesLoader.hpp"
+#include "ResourcesLoader.hpp"
 
-Component::AGraphicsComponent::AGraphicsComponent(Engine::Entity *parentEntity, RessourcesLoader *resourceLoader)
+Component::AGraphicsComponent::AGraphicsComponent(Engine::Entity *parentEntity, ResourcesLoader *resourceLoader)
 		: AComponent(parentEntity), _resourceLoader(resourceLoader), _isHit(false), _isAlive(true)
 {
 }
@@ -16,12 +16,12 @@ int Component::AGraphicsComponent::setHitbox()
 		this->_resourceLoader->getAnimations().count(this->_currentAnimationId) == 0) {
 		return 1;
 	}
-	const RessourcesLoader::Animation animation = this->_resourceLoader->getAnimations().at(this->_currentAnimationId);
+	const ResourcesLoader::Animation animation = this->_resourceLoader->getAnimations().at(this->_currentAnimationId);
 
-	this->_relativeStartPos.x = -animation.at(0).width * 50;
-	this->_relativeStartPos.y = -animation.at(0).height * 50;
-	this->_relativeRange.x = animation.at(0).width * 100;
-	this->_relativeRange.y = animation.at(0).height * 100;
+	this->_relativeStartPos.x = -animation.at(0).width * 5;
+	this->_relativeStartPos.y = -animation.at(0).height * 5;
+	this->_relativeRange.x = animation.at(0).width * 10;
+	this->_relativeRange.y = animation.at(0).height * 10;
 	return 0;
 }
 
@@ -35,20 +35,20 @@ bool Component::AGraphicsComponent::isInArea(double xPos, double yPos, double xR
 
 double Component::AGraphicsComponent::getRelativeXPos(double xPos, double xRange) noexcept
 {
-	return (this->_parentEntity->getTransformComponent().getPosition().x - xPos) / xRange * 100;
+	return (this->_parentEntity->getTransformComponent().getPosition().x + this->_relativeStartPos.x - xPos) / xRange * 100;
 }
 
 double Component::AGraphicsComponent::getRelativeYPos(double yPos, double yRange) noexcept
 {
-	return (this->_parentEntity->getTransformComponent().getPosition().y - yPos) / yRange * 100;
+	return (this->_parentEntity->getTransformComponent().getPosition().y + this->_relativeStartPos.y - yPos) / yRange * 100;
 }
 
-RessourcesLoader *Component::AGraphicsComponent::getResourceLoader() const noexcept
+ResourcesLoader *Component::AGraphicsComponent::getResourceLoader() const noexcept
 {
 	return _resourceLoader;
 }
 
-void Component::AGraphicsComponent::setResourceLoader(RessourcesLoader *_resourceLoader) noexcept
+void Component::AGraphicsComponent::setResourceLoader(ResourcesLoader *_resourceLoader) noexcept
 {
 	AGraphicsComponent::_resourceLoader = _resourceLoader;
 }

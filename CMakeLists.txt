@@ -5,13 +5,17 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -pthread -W -Wall -Wextra")
 
 ##COMMON
 file(GLOB_RECURSE COMMON_FILES common/*.cpp common/*.hpp
-        common/RessourcesLoader/inc/*.hpp
-        common/RessourcesLoader/sources/*.cpp)
+        common/ResourcesLoader/inc/*.hpp
+        common/ResourcesLoader/sources/*.cpp
+        common/JsonLoader/includes/*.hpp
+        common/JsonLoader/sources/*.cpp)
 include_directories(common/inc
-        common/RessourcesLoader/inc
+        common/ResourcesLoader/inc
+        common/JsonLoader/includes
         server/inc
         server/inc/Engine/
         server/inc/Common
+        server/inc/MapLoader
         server/inc/Components
         server/inc/Components/Abstracts/
         server/inc/Components/Camera

@@ -3,7 +3,6 @@
 //
 
 #include <thread>
-#include <chrono>
 #include <iostream>
 #include "Logger.hpp"
 #include "Game.hpp"
@@ -35,7 +34,7 @@ void Engine::Game::run()
 }
 
 void Engine::Game::setup(size_t nbOfPlayers,
-						 const std::shared_ptr<RessourcesLoader> &resourceLoader)
+						 const std::shared_ptr<ResourcesLoader> &resourceLoader)
 {
 	std::unique_ptr<Engine::World> world = std::make_unique<Engine::World>();
 
@@ -51,8 +50,18 @@ void Engine::Game::setup(size_t nbOfPlayers,
 		this->_world->addObject(Factory::EntityFactory::createPlayerShip);
 	}
 
-	//this->_enemyLoader.setup("../DLEnemies/", *this);
-	//this->_DLEntitiesMap = this->_enemyLoader.getEnemies();
+//	this->_enemyLoader.setup("../DLEnemies/", *this);
+//	this->_DLEntitiesMap = this->_enemyLoader.getEnemies();
+//
+//	const MapLoader::Zones &zones = this->_mapLoader.loadZones("../Maps/Game.map");
+//	this->createZones(Vector2d(this->_mapLoader.getMapWidth(), this->_mapLoader.getMapHeight()), zones);
+}
+
+void Engine::Game::createZones(const Vector2d &mapSize, const MapLoader::Zones &zones)
+{
+	for (const auto &zone : zones) {
+		zone.createZone(mapSize, *this);
+	}
 }
 
 std::unique_ptr<Engine::World> &Engine::Game::getWorld()
@@ -74,12 +83,12 @@ void Engine::Game::setWorld(std::unique_ptr<World> world)
 	this->_world->setParentGame(this);
 }
 
-const std::shared_ptr<RessourcesLoader> &Engine::Game::getResourceLoader() const
+const std::shared_ptr<ResourcesLoader> &Engine::Game::getResourceLoader() const
 {
 	return _resourceLoader;
 }
 
-void Engine::Game::setResourceLoader(const std::shared_ptr<RessourcesLoader> &_resourceLoader)
+void Engine::Game::setResourceLoader(const std::shared_ptr<ResourcesLoader> &_resourceLoader)
 {
 	this->_resourceLoader = _resourceLoader;
 }
@@ -114,7 +123,8 @@ void Engine::Game::stop()
 }
 
 std::unique_ptr<std::vector<std::unique_ptr<Packet::DataPacket>>>
-Engine::Game::getPackets() {
+Engine::Game::getPackets()
+{
 	auto l = std::make_unique<std::vector<std::unique_ptr<Packet
 	::DataPacket>>>();
 	std::unique_ptr<Packet::DataPacket> packet;
@@ -126,9 +136,11 @@ Engine::Game::getPackets() {
 
 Engine::Entity *Engine::Game::cloneEntity(const std::string &name) const
 {
-	std::map<const std::string, Entity *>::const_iterator ent = this->_DLEntitiesMap->find(name);
-	if (ent != this->_DLEntitiesMap->end()) {
-		return ent->second->clone();
+	if (this->_DLEntitiesMap != nullptr) {
+		std::map<const std::string, Entity *>::const_iterator ent = this->_DLEntitiesMap->find(name);
+		if (ent != this->_DLEntitiesMap->end()) {
+			return ent->second->clone();
+		}
 	}
 	return nullptr;
 }

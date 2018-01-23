@@ -2,6 +2,7 @@
 // Created by romain on 12/01/18.
 //
 
+#include <iostream>
 #include "Entity.hpp"
 
 Engine::Entity::Entity() : _id(0), _active(false), _transformComponent(this), _components(),

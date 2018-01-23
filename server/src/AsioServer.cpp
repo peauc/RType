@@ -142,25 +142,21 @@ void	AsioServer::interpretPacket(const Packet::DataPacket &packet,
 void AsioServer::connect(const Packet::DataPacket &, ClientObject
 &) noexcept
 {
-	std::cout << "CONNECT" << std::endl;
 }
 
 void AsioServer::disconnect(const Packet::DataPacket &, ClientObject
 &) noexcept
 {
-	std::cout << "DISCONNECT" << std::endl;
 }
 
 void AsioServer::connected(const Packet::DataPacket &, ClientObject
 &) noexcept
 {
-	std::cout << "CONNECTED" << std::endl;
 }
 
 void AsioServer::disconnected(const Packet::DataPacket &, ClientObject
 &) noexcept
 {
-	std::cout << "DISCONNECTED" << std::endl;
 }
 
 void AsioServer::startGame(const Packet::DataPacket &, ClientObject
@@ -205,8 +201,6 @@ noexcept
 	e->_shotReleased = input.shot;
 	e->_xVelocity = input.xVelocity;
 	e->_yVelocity = input.yVelocity;
-	std::cout << "Event Method : "<< e->_yVelocity << " " << e->_xVelocity
-		  << std::endl << e->_entityId << std::endl;
 	_lobbyList.getClientLobby(obj)->pushEventInList(e);
 }
 void AsioServer::pong(const Packet::DataPacket &, ClientObject &)

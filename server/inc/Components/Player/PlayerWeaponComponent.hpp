@@ -26,7 +26,8 @@ namespace Component {
 	private:
 		bool _event;
 		bool _firing;
-		unsigned int _charging;
+		unsigned int _charge;
+		bool _isCharging;
 	};
 }
 

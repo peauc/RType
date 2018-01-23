@@ -5,18 +5,18 @@
 ** No description
 */
 
-#include "RessourcesLoader.hpp"
+#include "ResourcesLoader.hpp"
 
-void RessourcesLoader::loadAnimations(const std::string &filePath) {
+void ResourcesLoader::loadAnimations(const std::string &filePath) {
 	this->load(filePath, ANIMATION);
 }
 
-void RessourcesLoader::loadSounds(const std::string &filePath) {
+void ResourcesLoader::loadSounds(const std::string &filePath) {
 	this->load(filePath, SOUND);
 }
 
-void RessourcesLoader::load(const std::string &filePath,
-							RessourcesLoader::AssetType type) {
+void ResourcesLoader::load(const std::string &filePath,
+							ResourcesLoader::AssetType type) {
 	std::vector<std::string>	objects;
 	JsonDataLoader::ArrayValues	assets;
 
@@ -33,8 +33,8 @@ void RessourcesLoader::load(const std::string &filePath,
 	}
 }
 
-void RessourcesLoader::browseAssets(JsonDataLoader::ArrayValues &assets,
-									RessourcesLoader::AssetType type) {
+void ResourcesLoader::browseAssets(JsonDataLoader::ArrayValues &assets,
+									ResourcesLoader::AssetType type) {
 	unsigned int	id;
 	std::string		filePath;
 
@@ -51,7 +51,7 @@ void RessourcesLoader::browseAssets(JsonDataLoader::ArrayValues &assets,
 	}
 }
 
-void RessourcesLoader::loadAnimation(unsigned int id,
+void ResourcesLoader::loadAnimation(unsigned int id,
 									  const std::string &filePath) {
 	std::vector<std::string>	objects;
 	std::string					objectString;
@@ -71,8 +71,8 @@ void RessourcesLoader::loadAnimation(unsigned int id,
 }
 
 void
-RessourcesLoader::fillAnimation(const std::string &property,
-								 RessourcesLoader::Animation &animation) {
+ResourcesLoader::fillAnimation(const std::string &property,
+								 ResourcesLoader::Animation &animation) {
 	auto 			spritesString = this->loader.extractArrayValues(property);
 	Texture			texture;
 
@@ -89,10 +89,10 @@ RessourcesLoader::fillAnimation(const std::string &property,
 	}
 }
 
-const RessourcesLoader::Animations &RessourcesLoader::getAnimations() const {
+const ResourcesLoader::Animations &ResourcesLoader::getAnimations() const {
 	return (this->animations);
 }
 
-const RessourcesLoader::Sounds &RessourcesLoader::getSounds() {
+const ResourcesLoader::Sounds &ResourcesLoader::getSounds() {
 	return (this->sounds);
 }
