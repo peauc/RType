@@ -4,7 +4,7 @@
 
 #include "TransformComponent.hpp"
 
-Engine::TransformComponent::TransformComponent(Entity *parentEntity) : AComponent(parentEntity), _position(0, 0)
+Engine::TransformComponent::TransformComponent(Entity *parentEntity) : AComponent(parentEntity), _position(0, 0), _rotation(0), _rotationRadians(0)
 {
 }
 
