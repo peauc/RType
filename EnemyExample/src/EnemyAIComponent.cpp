@@ -10,7 +10,6 @@ Component::EnemyAIComponent::EnemyAIComponent(Engine::Entity *parentEntity)
 }
 
 void Component::EnemyAIComponent::update() noexcept {
-	std::cout << "Updating AI" << std::endl;
 
 	std::unique_ptr<Engine::Event>	event(new Engine::Event(0));
 

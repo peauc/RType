@@ -10,8 +10,8 @@
 				"Y2" : 683,
 				"Childs" : 
 					[
-						{ "Path" : "Tools/MapCreator/../../DLEnemies/lberzerker.so", "X" : 1694, "Y" : 488, "Width" : 210, "Height" : 136 },
-						{ "Path" : "Tools/MapCreator/../../DLEnemies/lberzerker.so", "X" : 1680, "Y" : 197, "Width" : 210, "Height" : 136 }
+						{ "Path" : "lberzerker.so", "X" : 1694, "Y" : 488, "Width" : 210, "Height" : 136 },
+						{ "Path" : "lberzerker.so", "X" : 1680, "Y" : 197, "Width" : 210, "Height" : 136 }
 					]
 
 			},
@@ -22,9 +22,9 @@
 				"Y2" : 677,
 				"Childs" : 
 					[
-						{ "Path" : "Tools/MapCreator/../../DLEnemies/lberzerker.so", "X" : 598, "Y" : 137, "Width" : 141, "Height" : 94 },
-						{ "Path" : "Tools/MapCreator/../../DLEnemies/lberzerker.so", "X" : 903, "Y" : 332, "Width" : 156, "Height" : 103 },
-						{ "Path" : "Tools/MapCreator/../../DLEnemies/lberzerker.so", "X" : 651, "Y" : 473, "Width" : 166, "Height" : 109 }
+						{ "Path" : "lberzerker.so", "X" : 598, "Y" : 137, "Width" : 141, "Height" : 94 },
+						{ "Path" : "lberzerker.so", "X" : 903, "Y" : 332, "Width" : 156, "Height" : 103 },
+						{ "Path" : "lberzerker.so", "X" : 651, "Y" : 473, "Width" : 166, "Height" : 109 }
 					]
 
 			}

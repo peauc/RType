@@ -29,14 +29,8 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 			Engine::Hitbox::Type::PLAYER, playerGraphicsComponent->getRelativeStartPos(),
 			playerGraphicsComponent->getRange()));
 
-	Engine::AComponent *playerHealthComponent = new Component::HealthComponent(playerShip, game.getWorld().get(), 100, false, true);
-
-	playerShip->addComponent(playerInputComponent);
-	playerShip->addComponent(playerMoveComponent);
-	playerShip->addComponent(playerWeaponComponent);
-	playerShip->addComponent(playerPhysicsComponent);
-	playerShip->addComponent(playerGraphicsComponent);
-	playerShip->addComponent(playerHealthComponent);
+	Engine::AComponent *playerHealthComponent = new Component::HealthComponent(playerShip, game.getWorld().get(), 100,
+																			   false, true);
 
 	if (game.getWorld()->getMediator() != nullptr) {
 		playerPhysicsComponent->registerToMediator(game.getWorld()->getMediator().get());
@@ -45,6 +39,13 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 	if (game.getWorld()->getCamera() != nullptr) {
 		playerGraphicsComponent->addObserver(game.getWorld()->getCamera().get());
 	}
+
+	playerShip->addComponent(playerInputComponent);
+	playerShip->addComponent(playerMoveComponent);
+	playerShip->addComponent(playerWeaponComponent);
+	playerShip->addComponent(playerPhysicsComponent);
+	playerShip->addComponent(playerGraphicsComponent);
+	playerShip->addComponent(playerHealthComponent);
 
 	playerShip->getTransformComponent().getPosition().x = 300;
 	playerShip->getTransformComponent().getPosition().y = 1000 + id * 1000;

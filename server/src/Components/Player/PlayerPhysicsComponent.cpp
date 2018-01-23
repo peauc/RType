@@ -2,6 +2,7 @@
 // Created by romain on 19/01/18.
 //
 
+#include <iostream>
 #include "Entity.hpp"
 #include "Hitbox.hpp"
 #include "APhysicsComponent.hpp"

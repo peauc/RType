@@ -31,8 +31,11 @@ void Engine::Zone::createZone(const Vector2d &mapSize, Engine::Game &game) const
 
 	for (const auto &entity : this->_zoneObjects) {
 		Engine::Entity *clone = entity.createEntity(game);
-		if (clone != nullptr)
+		if (clone != nullptr) {
+			clone->getTransformComponent().getPosition().x = entity._pos.x / mapSize.x * 8000;
+			clone->getTransformComponent().getPosition().y = entity._pos.y / mapSize.y * 6000;
 			zoneComponent->addEntity(std::unique_ptr<Entity>(clone));
+		}
 	}
 
 	zone->addComponent(zoneComponent);
@@ -40,6 +43,12 @@ void Engine::Zone::createZone(const Vector2d &mapSize, Engine::Game &game) const
 		zoneComponent->registerToMediator(game.getWorld()->getMediator().get());
 	}
 	zone->setActive(true);
+
+	zone->getTransformComponent().getPosition().x = this->_topLeftCoords.x / mapSize.x * 8000;
+	zone->getTransformComponent().getPosition().y = this->_topLeftCoords.y / mapSize.y * 6000;
+
+	std::cout << "Zone pos : (" << zone->getTransformComponent().getPosition().x << ", "
+			  << zone->getTransformComponent().getPosition().y << ")" << std::endl;
 
 	game.getWorld()->addObject(std::unique_ptr<Entity>(zone));
 }

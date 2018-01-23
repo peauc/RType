@@ -25,6 +25,7 @@ namespace Component {
 		void handleHit(Engine::Mediator::Message messageType, Engine::AComponent *sender) noexcept;
 		void handleDeath(Engine::Mediator::Message messageType, AComponent *sender) noexcept;
 
+		HealthComponent &operator=(const HealthComponent &other);
 		Engine::AComponent *clone(Engine::Entity *parentEntity) const noexcept override;
 	private:
 		Engine::World *_world;

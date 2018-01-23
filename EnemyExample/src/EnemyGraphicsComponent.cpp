@@ -30,15 +30,14 @@ Component::EnemyGraphicsComponent::EnemyGraphicsComponent(Engine::Entity *parent
 }
 
 void Component::EnemyGraphicsComponent::update() {
-	std::cout << "Updating graphics" << std::endl;
 	this->sendToAll(Engine::Mediator::Message::GRAPHICS_REGISTERING);
 }
 
-void Component::EnemyGraphicsComponent::handleDeath(Engine::Mediator::Message, Engine::AComponent *) noexcept {
+void Component::EnemyGraphicsComponent::handleHit(Engine::Mediator::Message, Engine::AComponent *) noexcept {
 	this->_isHit = true;
 }
 
-void Component::EnemyGraphicsComponent::handleHit(Engine::Mediator::Message, Engine::AComponent *) noexcept {
+void Component::EnemyGraphicsComponent::handleDeath(Engine::Mediator::Message, Engine::AComponent *) noexcept {
 	this->_isAlive = false;
 }
 

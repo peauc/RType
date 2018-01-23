@@ -4,7 +4,8 @@
 
 #include "AWeaponComponent.hpp"
 
-Component::AWeaponComponent::AWeaponComponent(Engine::Entity *parentEntity, Engine::Game *parentGame, unsigned int cooldown) :
+Component::AWeaponComponent::AWeaponComponent(Engine::Entity *parentEntity, Engine::Game *parentGame,
+											  unsigned int cooldown) :
 		AComponent(parentEntity), _parentGame(parentGame), _cooldown(cooldown), _frameSinceShot(cooldown)
 {
 }
@@ -16,6 +17,9 @@ Component::AWeaponComponent &Component::AWeaponComponent::operator=(const Compon
 	this->_frameSinceShot = other._cooldown;
 	this->_shotAngle = other._shotAngle;
 	this->_shotRelativeOrigin = other._shotRelativeOrigin;
+	for (unsigned int i = 0; i < other._mediators.size() - 1; ++i) {
+		this->registerToMediator(other._mediators[i]);
+	}
 
 	return *this;
 }
