@@ -55,10 +55,11 @@ bool AsioServer::sendMessage(const ClientObject &client, const Packet::DataPacke
 	return (true);
 }
 
-void AsioServer::handleSend(const Message &message,
+void AsioServer::handleSend(const Message &,
                             const boost::system::error_code &error,
-                            std::size_t bytesTransfered)
+                            std::size_t)
 {
+	
 	if (error) {
 		Logger::Log(Logger::MAJOR, error.message());
 	}
@@ -72,7 +73,7 @@ void AsioServer::startReceive()
 		            boost::asio::placeholders::bytes_transferred));
 }
 
-void AsioServer::handleReceive(const boost::system::error_code &error,
+void AsioServer::handleReceive(const boost::system::error_code &,
                                std::size_t received)
 {
 	startReceive();
@@ -138,39 +139,40 @@ void	AsioServer::interpretPacket(const Packet::DataPacket &packet,
 	}
 }
 
-void AsioServer::connect(const Packet::DataPacket &packet, ClientObject
-&obj) noexcept
+void AsioServer::connect(const Packet::DataPacket &, ClientObject
+&) noexcept
 {
 	std::cout << "CONNECT" << std::endl;
 }
 
-void AsioServer::disconnect(const Packet::DataPacket &packet, ClientObject
-&obj) noexcept
+void AsioServer::disconnect(const Packet::DataPacket &, ClientObject
+&) noexcept
 {
 	std::cout << "DISCONNECT" << std::endl;
 }
 
-void AsioServer::connected(const Packet::DataPacket &packet, ClientObject
-&obj) noexcept
+void AsioServer::connected(const Packet::DataPacket &, ClientObject
+&) noexcept
 {
 	std::cout << "CONNECTED" << std::endl;
 }
 
-void AsioServer::disconnected(const Packet::DataPacket &packet, ClientObject
-&obj) noexcept
+void AsioServer::disconnected(const Packet::DataPacket &, ClientObject
+&) noexcept
 {
 	std::cout << "DISCONNECTED" << std::endl;
 }
 
-void AsioServer::startGame(const Packet::DataPacket &packet, ClientObject
-&obj) noexcept
+void AsioServer::startGame(const Packet::DataPacket &, ClientObject
+&) noexcept
 {
+	std::cout << "LOGGER" << std::endl;
 }
 
-void AsioServer::ready(const Packet::DataPacket &packet, ClientObject &obj)
+void AsioServer::ready(const Packet::DataPacket &, ClientObject &obj)
 noexcept
 {
-	if (!_lobbyList.getClientLobby(obj)->isStarted())
+	if (!_lobbyList.getClientLobby(obj)->isStarted() && !obj.isReady())
 		obj.toggleReady();
 	sendMessage(obj, Packet::DataPacket(Packet::READY));
 	if (_lobbyList.getClientLobby(obj)->isReady() && !_lobbyList
@@ -186,8 +188,8 @@ noexcept
 	}
 }
 
-void AsioServer::position(const Packet::DataPacket &packet, ClientObject
-&obj) noexcept
+void AsioServer::position(const Packet::DataPacket &, ClientObject
+&) noexcept
 {
 }
 
@@ -207,7 +209,7 @@ noexcept
 		  << std::endl << e->_entityId << std::endl;
 	_lobbyList.getClientLobby(obj)->pushEventInList(e);
 }
-void AsioServer::pong(const Packet::DataPacket &packet, ClientObject &obj)
+void AsioServer::pong(const Packet::DataPacket &, ClientObject &)
 noexcept
 {
 	Logger::Log(Logger::DEBUG, "Client Ponged the server");

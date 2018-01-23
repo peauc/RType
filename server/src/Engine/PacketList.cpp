@@ -23,5 +23,5 @@ std::unique_ptr<Packet::DataPacket> Engine::PacketList::popBack()
 	}
 	auto t = std::move(_list.back());
 	_list.pop_back();
-	return (std::move(t));
+	return (t);
 }

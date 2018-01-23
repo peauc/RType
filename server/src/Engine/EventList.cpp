@@ -51,5 +51,5 @@ std::unique_ptr<Engine::Event> Engine::EventList::getEventById(size_t id)
 								     e->_yVelocity 
 			  << std::endl;
 	}
-	return (std::move(e));
+	return (e);
 }
