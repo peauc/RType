@@ -94,8 +94,8 @@ std::unique_ptr<ISprite> RenderSFML::createSprite(const std::string &fileName,
 
 void	RenderSFML::draw(const ISprite *sprite) noexcept
 {
-	if (this->_window && sprite) {
-		this->_window->draw(		//TODO Is there another way ?
+	if (this->_window && sprite && sprite->isDisplay()) {
+		this->_window->draw(
 			dynamic_cast<const SpriteSFML*>(sprite)->getSprite());
 	}
 }
@@ -103,7 +103,7 @@ void	RenderSFML::draw(const ISprite *sprite) noexcept
 void	RenderSFML::draw(const IText *text) noexcept
 {
 	if (this->_window && text) {
-		this->_window->draw(		//TODO Is there another way ?
+		this->_window->draw(
 			dynamic_cast<const TextSFML*>(text)->getSText());
 	}
 }

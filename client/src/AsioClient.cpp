@@ -13,8 +13,8 @@
 #include "AsioClient.hpp"
 
 client::AsioClient::AsioClient(const std::string &host) : _ioService(),
-                                                          _socket(_ioService),
-							  _isConnected(false)
+							  _isConnected(false),
+							  _socket(_ioService)
 {
 	std::cout << "Host constructor" << std::endl;
 	_socket.open(boost::asio::ip::udp::v4());
@@ -105,17 +105,13 @@ void client::AsioClient::handleReceive(const boost::system::error_code &error,
 		_packetList.push_back(message.getPacket());
 		Logger::Log(Logger::DEBUG, std::to_string(_packetList.size()));
 	}
-	std::cout << "Received command " << message.getPacket().cmd << " " <<
-								    Packet::CONNECTED <<
-	                                                           std::endl;
 	readMessage();
 }
 void client::AsioClient::handleSendPacket(const Packet::DataPacket &packet,
                                     const boost::system::error_code &error,
                                     std::size_t bytesTransfered)
 {
-	std::cout << "Sent a packet of command " << packet.cmd << " and "
-		"size " << std::to_string(bytesTransfered) << std::endl;
+
 }
 
 void client::AsioClient::tick() noexcept

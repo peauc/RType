@@ -112,7 +112,7 @@ void ClientGame::updateAnimations(int &nbTicks) noexcept
 		nbTicks = 0;
 	}
 }
-#include <iostream> //TODO
+
 /**
  * Process each events in the queue
  * If in menu, call processEventMenu
@@ -304,6 +304,8 @@ void ClientGame::updateInfosObject(ISprite *sprite, bool repeatAnimation,
 	} else if (sprite->isAnimationRepeating() != repeatAnimation) {
 		sprite->setRepeatAnimation(repeatAnimation);
 	}
+	sprite->setDisplay(objInfos.entityState !=
+				   Packet::EntityState::NOTDISPLAYED);
 }
 
 /**

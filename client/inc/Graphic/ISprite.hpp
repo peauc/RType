@@ -34,7 +34,9 @@ public:
 	virtual void	setOnClick(std::function<void()> f) = 0;
 	virtual bool	isWaitingToBeDeleted() const = 0;
 	virtual bool	isAnimationRepeating() const = 0;
+	virtual bool	isDisplay() const = 0;
 	virtual void	setRepeatAnimation(bool repeat) = 0;
+	virtual void	setDisplay(bool display) = 0;
 };
 
 #endif //RTYPE_ISPRITE_HPP

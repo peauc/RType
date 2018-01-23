@@ -36,6 +36,8 @@ public:
 			       f) noexcept override;
 	bool isWaitingToBeDeleted() const noexcept override;
 	bool isAnimationRepeating() const noexcept override;
+	bool isDisplay() const override;
+	void setDisplay(bool display) override;
 	void setRepeatAnimation(bool repeat) noexcept override;
 
 protected:
@@ -45,6 +47,7 @@ protected:
 	unsigned short	_animationIndex;
 	bool		_repeatAnimation;
 	bool		_waitingToBeDeleted;
+	bool		_display;
 	std::function<void()> _onClick;
 };
 

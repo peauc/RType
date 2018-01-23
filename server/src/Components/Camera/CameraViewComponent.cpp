@@ -47,7 +47,7 @@ void Component::CameraViewComponent::update() noexcept
 						static_cast<short>(
 								component->getRelativeYPos(this->_parentEntity->getTransformComponent().getPosition().y,
 														   this->_relativeBottomRight.y) * 100.0f),
-						Packet::EntityState::NOT_DISPLAYED,
+						Packet::EntityState::NOTDISPLAYED,
 						component->isHit(),
 						component->getParentEntityId(),
 						component->getCurrentAnimationId()

@@ -34,8 +34,6 @@ SpriteSFML::SpriteSFML(const SpriteSFML &other) noexcept
 		this->_sizeTileX = other._sizeTileX;
 		this->_sizeTileY = other._sizeTileY;
 		this->_animationVector = other._animationVector;
-		this->_animationIndex = other._animationIndex;
-		this->_repeatAnimation = other._repeatAnimation;
 	}
 }
 
@@ -48,8 +46,6 @@ SpriteSFML &SpriteSFML::operator=(const SpriteSFML &other) noexcept
 		this->_sizeTileX = other._sizeTileX;
 		this->_sizeTileY = other._sizeTileY;
 		this->_animationVector = other._animationVector;
-		this->_animationIndex = other._animationIndex;
-		this->_repeatAnimation = other._repeatAnimation;
 	}
 	return (*this);
 }
