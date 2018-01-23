@@ -12,11 +12,14 @@
 #include "Graphic/TextSFML.hpp"
 #include "Graphic/BackgroundSFML.hpp"
 
-ClientGame::ClientGame(const std::string &ip, const std::string &animationFile,
+ClientGame::ClientGame(const std::string &ip,
+		       const std::string &port,
+		       unsigned short seed,
+		       const std::string &animationFile,
 		       uint16_t width, uint16_t height)
 	: _gameState(GameState::INMENU), _waitingReady(false)
 {
-	this->_client.connect(ip);
+	this->_client.connect(ip, port, seed);
 	this->_render = std::make_unique<RenderSFML>(width, height, "R-TYPE");
 	if (!this->_render) {
 		throw std::runtime_error("Can't open window");

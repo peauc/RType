@@ -10,9 +10,10 @@
 #endif
 
 #include <iostream>
+#include <Logger.hpp>
 #include "ClientGame.hpp"
 
-int     main(int, char **, char **env)
+int     main(int ac, char **av, char **env)
 {
 #ifdef __unix__
 	if (env == nullptr || getenv("DISPLAY") == nullptr)
@@ -20,8 +21,14 @@ int     main(int, char **, char **env)
 #endif
 	//TODO Pass parameters for info connection
 	try {
-//		ClientGame game("10.10.253.149", "../AssetsId.txt");
-		ClientGame game("127.0.0.1", "../AssetsId.txt");
+		if (ac < 3) {
+			Logger::Log(Logger::FATAL, "./client host port "
+				"[seed]");
+		}
+		int s;
+		if (av[3])
+			s = std::stoi(av[3]);
+		ClientGame game(av[1], av[2], static_cast<unsigned short>(s), "../AssetsId.txt");
 		game.run();
 	}
 	catch (std::exception &e) {

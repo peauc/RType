@@ -17,16 +17,16 @@ void Logger::Log(Logger::LogLevel level, const std::string &message) noexcept
 			std::cout << "[INFO] : " << message << std::endl;
 			break;
 		case (Logger::LogLevel::MINOR) :
-			std::cout << "[MINOR] : " << message << std::endl;
+			std::cerr << "[MINOR] : " << message << std::endl;
 			break;
 		case (Logger::LogLevel::MAJOR) :
-			std::cout << "[MAJOR] : " << message << std::endl;
+			std::cerr << "[MAJOR] : " << message << std::endl;
 			break;
 		case (Logger::LogLevel::CRITICAL) :
-			std::cout << "[CRITICAL] : " << message << std::endl;
+			std::cerr << "[CRITICAL] : " << message << std::endl;
 			break;
 		case (Logger::LogLevel::FATAL) :
-			std::cout << "[FATAL] : " << message << std::endl;
+			std::cerr << "[FATAL] : " << message << std::endl;
 			std::abort();
 	}
 }

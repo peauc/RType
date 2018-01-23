@@ -20,6 +20,8 @@ class ClientGame
 {
 public:
 	ClientGame(const std::string &ip,
+		   const std::string &port,
+		   unsigned short seed,
 		   const std::string &animationFile,
 		   uint16_t width = 800, uint16_t height = 600);
 	ClientGame(const ClientGame &) = delete;

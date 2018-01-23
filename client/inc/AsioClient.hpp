@@ -18,7 +18,8 @@ public:
 	explicit AsioClient(const std::string &host);
 	bool sendMessage(const std::string &message) noexcept final;
 	bool sendMessage(const Packet::DataPacket &packet) noexcept;
-	bool connect(const std::string &message) noexcept final;
+	bool connect(const std::string &message, const std::string &port,
+		     unsigned short seed = 0) noexcept final;
 	void tick() noexcept;
 	std::vector<Packet::DataPacket> getDataPacketList();
 private:
