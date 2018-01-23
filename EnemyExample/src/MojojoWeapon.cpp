@@ -8,11 +8,12 @@
 #include "ShotAudioComponent.hpp"
 #include "ShotMovementComponent.hpp"
 #include "ShotGraphicsComponent.hpp"
+#include "EnemyShotPhysicsComponent.hpp"
 
 Component::MojojoWeapon::MojojoWeapon(Engine::Entity *parentEntity, Engine::Game *parentGame)
 		: AWeaponComponent(parentEntity, parentGame, 60), _event(false), _firing(false), _charge(0), _isCharging(false)
 {
-	this->_shotAngle = 180;
+	this->_shotAngle = -180;
 	this->_shotRelativeOrigin.x = 0;
 	this->_shotRelativeOrigin.y = 0;
 
@@ -30,13 +31,22 @@ void Component::MojojoWeapon::update() noexcept
 		Engine::AComponent *shotHealthComponent = new Component::HealthComponent(shot.get(),
 																				 this->_parentGame->getWorld().get(),
 																				 50, false, true);
-		Engine::AComponent *shotGraphicsComponent;
+		Component::ShotGraphicsComponent *shotGraphicsComponent;
 		Engine::AComponent *shotSoundComponent;
 
 		shotGraphicsComponent = new Component::ShotGraphicsComponent(shot.get(),
 																		 this->_parentGame->getResourceLoader().get(),
 																		 31, 31);
 		shotSoundComponent = new Component::ShotAudioComponent(shot.get(), this->_parentGame, 0);
+
+		Engine::AComponent *shotPhysicsComponent = new Component::EnemyShotPhysicsComponent(shot.get(), Engine::Hitbox(
+				Engine::Hitbox::Type::ENEMY_SHOT, shotGraphicsComponent->getRelativeStartPos(),
+				shotGraphicsComponent->getRange()));
+
+		if (this->_parentGame->getWorld()->getMediator() != nullptr) {
+			shotPhysicsComponent->registerToMediator(this->_parentGame->getWorld()->getMediator().get());
+		}
+
 		if (this->_parentGame->getWorld()->getCamera() != nullptr) {
 			shotGraphicsComponent->addObserver(this->_parentGame->getWorld()->getCamera().get());
 		}
@@ -50,6 +60,7 @@ void Component::MojojoWeapon::update() noexcept
 				this->_parentEntity->getTransformComponent().getPosition().x + this->_shotRelativeOrigin.x;
 		shot->getTransformComponent().getPosition().y =
 				this->_parentEntity->getTransformComponent().getPosition().y + this->_shotRelativeOrigin.y;
+		shot->getTransformComponent().setRotation(this->_shotAngle);
 
 		shot->setActive(true);
 

@@ -21,8 +21,8 @@ bool Component::AInputComponent::hasEvent() const noexcept
 Component::AInputComponent &Component::AInputComponent::operator=(const Component::AInputComponent &other) noexcept
 {
 	this->_event = nullptr;
-	for (unsigned int i = 0; i < other._mediators.size() - 1; ++i) {
-		this->registerToMediator(other._mediators[i]);
+	for (unsigned int i = 0; i < other.get_mediators().size() - 1; ++i) {
+		this->registerToMediator(other.get_mediators()[i]);
 	}
 
 	return *this;

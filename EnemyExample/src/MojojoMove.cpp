@@ -42,7 +42,6 @@ void Component::MojojoMove::update() noexcept {
 
 void Component::MojojoMove::handleEvent(Engine::Mediator::Message messageType, Engine::AComponent *sender)
 {
-	std::cout << "Handling event" << std::endl;
 	if (AInputComponent *inputComponent = dynamic_cast<AInputComponent *>(sender)) {
 		if (inputComponent->hasEvent()) {
 			this->_xInput = inputComponent->getEvent()._xVelocity;

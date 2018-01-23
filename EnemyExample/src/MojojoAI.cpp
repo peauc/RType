@@ -14,15 +14,15 @@ void Component::MojojoAI::update() noexcept {
 	std::unique_ptr<Engine::Event>	event(new Engine::Event(0));
 
 	event->_xVelocity = 1;
-	if (this->i >= 60)
+	if (this->i >= 0)
 		event->_yVelocity = 10;
-	else if (this->i >= 120)
+	else if (this->i >= 60)
 		event->_yVelocity = -10;
 	else
 		event->_yVelocity = 0;
 	event->_chargingShot = false;
-	if (this->i >= 200) {
-		event->_shotReleased = false;
+	if (this->i >= 100) {
+		event->_shotReleased = true;
 		this->i = 0;
 	}
 	this->_event = move(event);

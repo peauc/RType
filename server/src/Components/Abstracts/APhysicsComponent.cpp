@@ -85,7 +85,6 @@ void Component::APhysicsComponent::blockingCollision(Component::APhysicsComponen
 
 void Component::APhysicsComponent::damagingCollision(Component::APhysicsComponent &component) noexcept
 {
-	std::cout << component.getParentEntityId() << " damaged" << std::endl;
 	if (!this->_mediators.empty()) {
 		component.sendToParentEntity(Engine::Mediator::Message::HIT);
 	}

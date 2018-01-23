@@ -5,7 +5,6 @@
 #ifndef RTYPE_PLAYERSHOTGRAPHICSCOMPONENT_HPP
 #define RTYPE_PLAYERSHOTGRAPHICSCOMPONENT_HPP
 
-#include "ResourcesLoader.hpp"
 #include "AGraphicsComponent.hpp"
 
 namespace Component {
