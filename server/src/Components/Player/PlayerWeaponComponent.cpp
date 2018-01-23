@@ -21,6 +21,7 @@ Component::PlayerWeaponComponent::PlayerWeaponComponent(Engine::Entity *parentEn
 void Component::PlayerWeaponComponent::update() noexcept
 {
 	if (this->_frameSinceShot == this->_cooldown && (this->_firing || (!this->_isCharging && this->_charge > 0))) {
+		std::cout << "FIRING" << std::endl;
 		std::unique_ptr<Engine::Entity> shot = std::make_unique<Engine::Entity>();
 
 		Engine::AComponent *shotMovementComponent = new Component::ShotMovementComponent(shot.get(), 120, 120);
@@ -76,6 +77,9 @@ void Component::PlayerWeaponComponent::handleEvent(Engine::Mediator::Message, En
 		if (inputComponent->hasEvent()) {
 			this->_event = true;
 			this->_firing = inputComponent->getEvent()._shotReleased;
+			if (this->_firing) {
+				std::cout << "EVENT FIRE" << std::endl;
+			}
 			this->_isCharging = inputComponent->getEvent()._chargingShot;
 			if (this->_isCharging) {
 				this->_charge++;
