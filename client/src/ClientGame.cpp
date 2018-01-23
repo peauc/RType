@@ -213,11 +213,7 @@ void	ClientGame::modifyInputPacket(const IRender::EventAction &event,
 			input.xVelocity = speed;
 			break;
 		case IRender::EventAction::SPACE:
-			input.charged = true;
 			input.shot = true;
-			break;
-		case IRender::EventAction::MOUSE1:
-			input.charged = true;
 			break;
 		default:
 			break;
