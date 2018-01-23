@@ -23,10 +23,6 @@ bool AsioServer::stop()
 	return (false);
 }
 
-AsioServer::~AsioServer()
-{
-}
-
 AsioServer::AsioServer() : _endpoint(boost::asio::ip::udp::v4(), 4242) ,
                            _socket
 	(_ioService, _endpoint)

@@ -68,10 +68,9 @@ bool Lobby::startGame()
 	auto e = std::make_shared<ResourcesLoader>();
 	e->loadAnimations("../AssetsId.txt");
 	_game.setup(_clientManager.size(), e);
-	Logger::Log(Logger::CRITICAL, std::to_string(this->_game.getWorld().get
-		()->getObjects().size()));
-	for (auto &t : this->_game.getWorld().get()->getObjects()) {
-		Logger::Log(Logger::DEBUG , std::to_string(t.get()->getId()));
+	Logger::Log(Logger::CRITICAL, std::to_string(this->_game.getWorld()->getObjects().size()));
+	for (auto &t : this->_game.getWorld()->getObjects()) {
+		Logger::Log(Logger::DEBUG , std::to_string(t->getId()));
 	}
 	return (true);
 }
