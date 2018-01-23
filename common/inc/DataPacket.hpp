@@ -23,6 +23,7 @@ namespace Packet
 	{
 		ALIVE = 0,
 		DEAD = 1,
+		NOT_DISPLAYED = 2
 	};
 	
 	struct	PlayerScore
