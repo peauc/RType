@@ -13,6 +13,8 @@
 #include "GridLayout.hpp"
 #include "ListView.hpp"
 
+class MapView;
+
 class WindowManager : public AItem, public IWindow {
 
 public:
@@ -27,7 +29,6 @@ public:
 	void	setEnemiesDirectory(const std::string &enemiesDirectory);
 	void	setBackgroundsDirectory(const std::string &backgroundsDirectory);
 	void	setOutputDirectory(const std::string &outputDirectory);
-	void	setExecDirectory(const std::string &execDirectory);
 	void	setExistingMap(const std::string &existingMap);
 
 
@@ -47,10 +48,15 @@ protected:
 	virtual void	receiveEvent(const sf::Event &event);
 	virtual void	refresh();
 
+	virtual void	init();
+
 private:
 
-	bool	needRefresh();
-	void	fillGridView();
+	bool		needRefresh();
+	void		fillGridView();
+	MapView 	*addMapView();
+	void		addEnemiesList(MapView *mapView);
+	void 		addBackgroundsList(MapView *mapView);
 
 	sf::RenderWindow	window;
 	GridLayout			gridLayout;
@@ -58,7 +64,6 @@ private:
 	std::string			enemiesDirectory;
 	std::string			backgroundsDirectory;
 	std::string			outputDirectory;
-	std::string			execDirectory;
 	std::string			existingMap;
 
 	std::chrono::time_point<std::chrono::system_clock> timePoint;

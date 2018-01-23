@@ -24,8 +24,8 @@ public:
 	MapModel(const MapModel&) = delete;
 	MapModel	&operator=(const MapModel&) = delete;
 
+	void	setEnemiesDirectory(const std::string &enemiesDirectory);
 	void	setOutputDirectory(const std::string &outputDirectory);
-	void	setExecDirectory(const std::string &execDirectory);
 	void	setExistingMap(const std::string &existingMap);
 
 	virtual void	loadDataModel();
@@ -36,8 +36,8 @@ protected:
 	MapView				*parent;
 	JsonDataLoader		loader;
 
+	std::string			enemiesDirectory;
 	std::string			outputDirectory;
-	std::string			execDirectory;
 	std::string			existingMap;
 
 

@@ -91,7 +91,6 @@ void MapView::loadChild(AItem *child) {
 
 void MapView::setModel(MapModel *model) {
 	this->model.reset(model);
-	this->model->loadDataModel();
 }
 
 void MapView::lendBackgroundTexture(sf::Texture &texture) {
@@ -251,4 +250,9 @@ bool MapView::onExistingZone(const sf::Event &event) {
 
 int MapView::getScrollValue() const {
 	return (this->scrollValue);
+}
+
+void MapView::init() {
+	if (model)
+		this->model->loadDataModel();
 }

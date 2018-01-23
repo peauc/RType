@@ -5,7 +5,6 @@
 ** No description
 */
 
-#include <iostream>
 #include "MapLoader.hpp"
 
 const MapLoader::Zones &

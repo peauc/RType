@@ -17,7 +17,7 @@ DuplicableItem::DuplicableItem(const std::string &iconPath,
 	this->texture.loadFromFile(iconPath);
 	this->icon.setTexture(this->texture, true);
 	this->employer = employer;
-	this->pathItem = p.replace_extension(".so").string();
+	this->pathItem = p.replace_extension(".so").filename().string();
 	this->associateEvents();
 }
 
@@ -69,6 +69,10 @@ void DuplicableItem::onMouseMoved(const sf::Event &event) {
 
 const std::string &DuplicableItem::getPathItem() const {
 	return (this->pathItem);
+}
+
+void DuplicableItem::init() {
+
 }
 
 

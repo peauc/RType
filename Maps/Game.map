@@ -4,30 +4,15 @@
 	"Zones" : 
 		[
 			{
-				"X1" : 1480,
-				"Y1" : 2,
-				"X2" : 1953,
-				"Y2" : 683,
+				"X1" : 299,
+				"Y1" : 43,
+				"X2" : 670,
+				"Y2" : 391,
 				"Childs" : 
 					[
-						{ "Path" : "Tools/MapCreator/../../DLEnemies/lberzerker.so", "X" : 1694, "Y" : 488, "Width" : 210, "Height" : 136 },
-						{ "Path" : "Tools/MapCreator/../../DLEnemies/lberzerker.so", "X" : 1680, "Y" : 197, "Width" : 210, "Height" : 136 }
-					]
-
-			},
-			{
-				"X1" : 403,
-				"Y1" : 3,
-				"X2" : 1118,
-				"Y2" : 677,
-				"Childs" : 
-					[
-						{ "Path" : "Tools/MapCreator/../../DLEnemies/lberzerker.so", "X" : 598, "Y" : 137, "Width" : 141, "Height" : 94 },
-						{ "Path" : "Tools/MapCreator/../../DLEnemies/lberzerker.so", "X" : 903, "Y" : 332, "Width" : 156, "Height" : 103 },
-						{ "Path" : "Tools/MapCreator/../../DLEnemies/lberzerker.so", "X" : 651, "Y" : 473, "Width" : 166, "Height" : 109 }
+						{ "Path" : "Tools/MapCreator/lberzerker.so", "X" : 518, "Y" : 263, "Width" : 210, "Height" : 136 }
 					]
 
 			}
 		]
-
 }

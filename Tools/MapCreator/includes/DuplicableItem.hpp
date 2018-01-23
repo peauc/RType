@@ -27,6 +27,8 @@ public:
 	virtual void	receiveEvent(const sf::Event &event);
 	virtual void	refresh();
 
+	virtual void	init();
+
 	virtual void	onMouseButtonPressed(const sf::Event &event);
 	virtual void	onMouseButtonReleased(const sf::Event &event);
 	virtual void	onMouseMoved(const sf::Event &event);

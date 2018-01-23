@@ -152,3 +152,7 @@ void ChildMap::setResizing(bool state) {
 void ChildMap::setPathItem(const std::string &pathItem) {
 	this->pathItem = pathItem;
 }
+
+void ChildMap::init() {
+
+}

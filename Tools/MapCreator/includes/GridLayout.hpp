@@ -41,6 +41,8 @@ public:
 	virtual void	receiveEvent(const sf::Event &event);
 	virtual void	refresh();
 
+	virtual void	init();
+
 	virtual void	addChild(AItem *child, const Range &range);
 
 private:

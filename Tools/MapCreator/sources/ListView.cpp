@@ -53,7 +53,6 @@ void ListView::addChild(AItem *child) {
 
 void ListView::setModel(AModel *model) {
 	this->model.reset(model);
-	this->model->loadDataModel();
 }
 
 void ListView::onMouseWheelScrolled(const sf::Event &event) {
@@ -108,4 +107,9 @@ void ListView::setChildsSize() {
 											  + this->childHeight))
 						  - this->getHeight();
 	}
+}
+
+void ListView::init() {
+	if (model)
+		this->model->loadDataModel();
 }

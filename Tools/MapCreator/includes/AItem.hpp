@@ -41,6 +41,8 @@ public:
 	virtual void	receiveEvent(const sf::Event &event) = 0;
 	virtual void	refresh() = 0;
 
+	virtual void	init() = 0;
+
 	bool	inBounds(int x, int y) const;
 
 protected:

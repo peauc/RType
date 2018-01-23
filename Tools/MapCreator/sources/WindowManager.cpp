@@ -11,7 +11,6 @@
 #include "MapView.hpp"
 #include "WindowManager.hpp"
 
-//TODO Rajouter paramètres des dossiers pour les models
 WindowManager::WindowManager() : gridLayout(this) {
 	this->window.create(sf::VideoMode(1400,800,32),"MapCreator");
 	this->setWidth(this->window.getSize().x);
@@ -21,21 +20,38 @@ WindowManager::WindowManager() : gridLayout(this) {
 }
 
 void WindowManager::fillGridView() {
-	auto	*listView = new ListView;
+	MapView		*mapView;
+
+	mapView = this->addMapView();
+	this->addEnemiesList(mapView);
+	this->addBackgroundsList(mapView);
+}
+
+MapView *WindowManager::addMapView() {
 	auto	*mapView = new MapView(MapView::HORIZONTAL);
 	auto	*mapModel = new MapModel(mapView);
 
+	mapModel->setEnemiesDirectory(this->enemiesDirectory);
 	mapModel->setOutputDirectory(this->outputDirectory);
-	mapModel->setExecDirectory(this->execDirectory);
 	mapModel->setExistingMap(this->existingMap);
 	mapView->setModel(mapModel);
 	this->gridLayout.addChild(mapView,
 							  GridLayout::Range {15, 100, 15, 100,} );
+	return (mapView);
+}
+
+void WindowManager::addEnemiesList(MapView *mapView) {
+	auto	*listView = new ListView();
+
 	listView->setModel(new EnemiesListModel(this->enemiesDirectory,
 											listView, mapView));
 	this->gridLayout.addChild(listView,
 							  GridLayout::Range {0, 15, 15, 100,} );
-	listView = new ListView(ListView::HORIZONTAL);
+}
+
+void WindowManager::addBackgroundsList(MapView *mapView) {
+	auto	*listView = new ListView(ListView::HORIZONTAL);
+
 	listView->setModel(new BackgroundsListModel(this->backgroundsDirectory,
 												listView, mapView));
 	this->gridLayout.addChild(listView,
@@ -136,11 +152,11 @@ void WindowManager::setOutputDirectory(const std::string &outputDirectory) {
 	this->outputDirectory = outputDirectory;
 }
 
-void WindowManager::setExecDirectory(const std::string &execDirectory) {
-	this->execDirectory = execDirectory;
-}
-
 void WindowManager::setExistingMap(const std::string &existingMap) {
 	this->existingMap = existingMap;
+}
+
+void WindowManager::init() {
+
 }
 
