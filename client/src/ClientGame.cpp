@@ -54,8 +54,9 @@ void	ClientGame::run() noexcept
 			    .count() > FRAMEDURATION) {
 			eventsQueue = this->_render->pollEvents();
 			this->drawOperations(nbTicks);
+			this->deleteDeadSprites();
 			this->processEvents(eventsQueue);
-//			if (this->_waitingReady) {
+//			if (this->_waitingReady) { //TODO
 //				this->sendReadyPacket();
 //			}
 			begin = std::chrono::steady_clock::now();
@@ -75,7 +76,6 @@ void	ClientGame::drawOperations(int &nbTicks)
 	this->updateAnimations(nbTicks);
 	++nbTicks;
 }
-
 
 /**
  * Check game state
@@ -112,7 +112,7 @@ void ClientGame::updateAnimations(int &nbTicks) noexcept
 		nbTicks = 0;
 	}
 }
-
+#include <iostream> //TODO
 /**
  * Process each events in the queue
  * If in menu, call processEventMenu
@@ -154,6 +154,7 @@ void ClientGame::processEventMenu(const IRender::EventAction &event) noexcept
 		}
 	}
 }
+
 /**
  * Add sprites and texts to start menu
  */
@@ -196,20 +197,20 @@ void ClientGame::createMenu()
 void	ClientGame::modifyInputPacket(const IRender::EventAction &event,
 					  Packet::Input &input) noexcept
 {
-	short	speed = 10000;
+	short	speed = 10'000;
 
 	switch (event) {
 		case IRender::EventAction::UP:
-			this->setVelocityInput(-speed, input.yVelocity, input);
+			input.yVelocity = -speed;
 			break;
 		case IRender::EventAction::DOWN:
-			this->setVelocityInput(speed, input.yVelocity, input);
+			input.yVelocity = speed;
 			break;
 		case IRender::EventAction::LEFT:
-			this->setVelocityInput(input.xVelocity, -speed, input);
+			input.xVelocity = -speed;
 			break;
 		case IRender::EventAction::RIGHT:
-			this->setVelocityInput(input.xVelocity, speed, input);
+			input.xVelocity = speed;
 			break;
 		case IRender::EventAction::SPACE:
 			input.charged = true;
@@ -243,13 +244,6 @@ void ClientGame::sendReadyPacket() noexcept
 		(int)Packet::Commands::READY));
 }
 
-void	ClientGame::setVelocityInput(short x, short y,
-					 Packet::Input &input) noexcept
-{
-	input.yVelocity = x;
-	input.xVelocity = y;
-}
-
 /**
  * Interpret all packets in the vector
  * @param packets vector of packets
@@ -264,7 +258,7 @@ void ClientGame::interpretPacket(const std::vector<Packet::DataPacket>
 				this->_gameState = GameState::INGAME;
 				break;
 			case Packet::Commands::POSITION:
-				this->updateObject(packet);
+				this->updateObject(packet.data.object);
 				break;
 			case Packet::Commands::READY:
 				this->_waitingReady = false;
@@ -279,19 +273,16 @@ void ClientGame::interpretPacket(const std::vector<Packet::DataPacket>
  * Update object (or add if it doesn't exist yet) in the object vector
  * @param packet with object info
  */
-void ClientGame::updateObject(const Packet::DataPacket &packet) noexcept
+void ClientGame::updateObject(const Packet::Object &object) noexcept
 {
-	Packet::Object object = packet.data.object;
-	bool repeatAnimation = object.animated;
-
 	auto it = this->_objects.find(object.id);
 	if (it != this->_objects.end()) {
-		this->updateInfosObject(it->second.get(), repeatAnimation,
+		this->updateInfosObject(it->second.get(), object.animated,
 					object);
 	} else {
 		std::unique_ptr<ISprite> sprite
 			= std::make_unique<SpriteSFML>();
-		this->updateInfosObject(sprite.get(), repeatAnimation, object);
+		this->updateInfosObject(sprite.get(), object.animated, object);
 		this->_objects.insert(std::make_pair(object.id,
 						     std::move(sprite)));
 	}
@@ -314,6 +305,8 @@ void ClientGame::updateInfosObject(ISprite *sprite, bool repeatAnimation,
 		this->_render->setAnimationToSprite(sprite,
 						    objInfos.animationId,
 						    repeatAnimation);
+	} else if (sprite->isAnimationRepeating() != repeatAnimation) {
+		sprite->setRepeatAnimation(repeatAnimation);
 	}
 }
 
@@ -334,4 +327,19 @@ std::pair<short, short> ClientGame::calculateRealPosition(short x,
 	auto realX = -(short)(x * this->_render->getWidth() / 10'000);
 	auto realY = -(short)(y * this->_render->getHeight() / 10'000);
 	return (std::make_pair(realX, realY));
+}
+
+/**
+ * Delete all objects from _objects vector
+ * which have their bool waitingToBeDeleted set to true
+ */
+void ClientGame::deleteDeadSprites()
+{
+	for (auto it = this->_objects.begin(); it != this->_objects.end();) {
+		if (it->second->isWaitingToBeDeleted()) {
+			this->_objects.erase(it++);
+		} else {
+			++it;
+		}
+	}
 }

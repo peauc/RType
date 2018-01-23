@@ -57,15 +57,14 @@ private:
 				      Packet::Input &input) noexcept;
 	void	sendEventPacket(const Packet::Input &input) noexcept;
 	void	sendReadyPacket() noexcept;
-	void	setVelocityInput(short x, short y,
-				     Packet::Input &input) noexcept;
 	void	interpretPacket(const std::vector<Packet::DataPacket>
 				     &packets) noexcept;
-	void	updateObject(const Packet::DataPacket &packet) noexcept;
+	void	updateObject(const Packet::Object &object) noexcept;
 	void	updateInfosObject(ISprite *sprite, bool repeatAnimation,
 				      const Packet::Object &objInfos) noexcept;
 	std::pair<short, short>	calculateRealPosition(short x,
 							     short y) noexcept;
+	void	deleteDeadSprites();
 };
 
 #endif // !RTYPE_CLIENTGAME_HPP_
