@@ -35,7 +35,7 @@ void Engine::Game::run()
 }
 
 void Engine::Game::setup(size_t nbOfPlayers,
-						 const std::shared_ptr<RessourcesLoader> &resourceLoader)
+						 const std::shared_ptr<ResourcesLoader> &resourceLoader)
 {
 	std::unique_ptr<Engine::World> world = std::make_unique<Engine::World>();
 
@@ -74,12 +74,12 @@ void Engine::Game::setWorld(std::unique_ptr<World> world)
 	this->_world->setParentGame(this);
 }
 
-const std::shared_ptr<RessourcesLoader> &Engine::Game::getResourceLoader() const
+const std::shared_ptr<ResourcesLoader> &Engine::Game::getResourceLoader() const
 {
 	return _resourceLoader;
 }
 
-void Engine::Game::setResourceLoader(const std::shared_ptr<RessourcesLoader> &_resourceLoader)
+void Engine::Game::setResourceLoader(const std::shared_ptr<ResourcesLoader> &_resourceLoader)
 {
 	this->_resourceLoader = _resourceLoader;
 }

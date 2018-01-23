@@ -32,6 +32,10 @@ namespace Engine {
 
 			void addZoneObject(const ZoneObject &zoneObject);
 
+			const Vector2d	&getTopLeftCoords() const;
+			const Vector2d	&getBotRightCoords() const;
+			const std::vector<ZoneObject>	&getZoneObjects() const;
+
 		private:
 			Vector2d _topLeftCoords;
 			Vector2d _bottomRightCoords;

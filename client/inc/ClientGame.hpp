@@ -14,7 +14,7 @@
 # include "Graphic/IRender.hpp"
 # include "Graphic/IMenu.hpp"
 # include "AsioClient.hpp"
-# include "RessourcesLoader.hpp"
+# include "ResourcesLoader.hpp"
 
 class ClientGame
 {
@@ -36,7 +36,7 @@ private:
 	};
 
 	client::AsioClient 		_client;
-	RessourcesLoader 		_resourcesLoader;
+	ResourcesLoader 		_resourcesLoader;
 	std::unique_ptr<IRender>	_render;
 	std::unique_ptr<IMenu>		_startMenu;
 	std::unordered_map<uint32_t, std::unique_ptr<ISprite>>	_objects;

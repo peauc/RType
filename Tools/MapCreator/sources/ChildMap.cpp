@@ -5,16 +5,23 @@
 ** No description
 */
 
+#include <boost/filesystem.hpp>
 #include "DuplicableItem.hpp"
 #include "ChildMap.hpp"
 
-ChildMap::ChildMap(AItem *parent)
+ChildMap::ChildMap(AItem *parent, const std::string &pathItem)
 		: ASpriteBackground(parent) {
-	this->pathItem = "";
+	this->pathItem = pathItem;
 	this->resizing = false;
 	this->scrollValue = 0;
 	this->selected = false;
-	this->background.setFillColor(sf::Color(224, 224, 224, 100));
+	if (!pathItem.empty()) {
+		auto	p = boost::filesystem::path(pathItem);
+
+		this->texture.loadFromFile(p.replace_extension(".png").string());
+		this->icon.setTexture(this->texture, true);
+	} else
+		this->background.setFillColor(sf::Color(224, 224, 224, 100));
 	this->associateEvents();
 }
 
@@ -86,19 +93,33 @@ void ChildMap::onMouseButtonReleased(const sf::Event &event) {
 }
 
 void ChildMap::onMouseMoved(const sf::Event &event) {
-	if (this->selected) {
-		this->setX((event.mouseMove.x - this->getWidth() / 2));
-		this->setY(event.mouseMove.y - this->getHeight() / 2);
-		this->refresh();
-	}
-	if (this->resizing) {
-		int		width = (event.mouseMove.x - this->getX());
-		int		height = (event.mouseMove.y - this->getY());
+	if (this->selected)
+		this->onMoved(event);
+	if (this->resizing)
+		this->onResize(event);
+}
 
-		if (width > 0 && height > 0) {
-			this->setWidth(width);
-			this->setHeight(height);
-		}
+void ChildMap::onMoved(const sf::Event &event) {
+	this->setX((event.mouseMove.x - this->getWidth() / 2));
+	this->setY(event.mouseMove.y - this->getHeight() / 2);
+	this->refresh();
+}
+
+void ChildMap::onResize(const sf::Event &event) {
+	int		stepX = event.mouseMove.x - this->getX();
+	int 	stepY = event.mouseMove.y - this->getY();
+
+	if (std::abs(stepX) >= std::abs(stepX - this->getWidth()))
+		this->setWidth(std::abs(stepX));
+	else {
+		this->setWidth(std::abs(stepX - this->getWidth()));
+		this->setX(event.mouseMove.x);
+	}
+	if (std::abs(stepY) >= std::abs(stepY - this->getHeight()))
+		this->setHeight(std::abs(stepY));
+	else {
+		this->setHeight(std::abs(stepY - this->getHeight()));
+		this->setY(event.mouseMove.y);
 	}
 }
 
@@ -126,4 +147,8 @@ bool ChildMap::isResizing() {
 
 void ChildMap::setResizing(bool state) {
 	this->resizing = state;
+}
+
+void ChildMap::setPathItem(const std::string &pathItem) {
+	this->pathItem = pathItem;
 }

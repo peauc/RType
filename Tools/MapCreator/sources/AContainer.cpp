@@ -36,3 +36,8 @@ void AContainer::lendBackgroundTexture(sf::Texture &texture) {
 const std::vector<std::shared_ptr<AItem>> &AContainer::getChilds() const {
 	return (this->childs);
 }
+
+void AContainer::sendEventToChilds(const sf::Event &event) {
+	for (auto &child : this->childs)
+		child->receiveEvent(event);
+}

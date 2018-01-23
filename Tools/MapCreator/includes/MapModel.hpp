@@ -8,15 +8,18 @@
 #ifndef MAPCREATOR_MAPMODEL_HPP
 #define MAPCREATOR_MAPMODEL_HPP
 
+#include "JsonDataLoader.hpp"
 #include "ChildMap.hpp"
-#include "AContainer.hpp"
 #include "AModel.hpp"
+
+class MapView;
+class Object;
 
 class MapModel : public AModel {
 
 public:
 
-	MapModel(AContainer *parent);
+	MapModel(MapView *parent);
 	~MapModel() = default;
 	MapModel(const MapModel&) = delete;
 	MapModel	&operator=(const MapModel&) = delete;
@@ -30,7 +33,8 @@ public:
 
 protected:
 
-	AContainer			*parent;
+	MapView				*parent;
+	JsonDataLoader		loader;
 
 	std::string			outputDirectory;
 	std::string			execDirectory;
@@ -41,10 +45,18 @@ private:
 
 	bool	inZone(const ChildMap *zone, const ChildMap *child) const;
 
+	void			loadZones();
+	void			browseZones(JsonDataLoader::ArrayValues &zones);
+	void			fillZone(JsonDataLoader::ArrayValues &childs);
+
+	void			sendZone(const Object &object);
+	void			sendObject(const Object &object);
+
 	std::string		saveChilds() const;
 	std::string		saveZone(const ChildMap *zone) const;
 	std::string		zoneParams(const ChildMap *zone) const;
 	std::string		saveChildInZone(const ChildMap *child) const;
+	int				getRealXValue(int x) const;
 };
 
 

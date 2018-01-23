@@ -18,7 +18,7 @@ class ChildMap : public ASpriteBackground, public IDragAndDrop {
 
 public:
 
-	ChildMap(AItem *parent = nullptr);
+	ChildMap(AItem *parent = nullptr, const std::string &pathItem = "");
 	virtual ~ChildMap() = default;
 	ChildMap(const ChildMap &obj);
 	ChildMap	&operator=(const ChildMap&) = delete;
@@ -39,6 +39,7 @@ public:
 	int				getScrollValue() const;
 
 	const std::string	&getPathItem() const;
+	void				setPathItem(const std::string &pathItem);
 
 	bool			isResizing();
 	void 			setResizing(bool state);
@@ -50,6 +51,10 @@ protected:
 	bool			selected;
 	bool			resizing;
 
+private:
+
+	void	onMoved(const sf::Event &event);
+	void	onResize(const sf::Event &event);
 };
 
 #endif //MAPCREATOR_CHILDMAP_HPP

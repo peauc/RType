@@ -141,6 +141,6 @@ void WindowManager::setExecDirectory(const std::string &execDirectory) {
 }
 
 void WindowManager::setExistingMap(const std::string &existingMap) {
-	this->existingMap;
+	this->existingMap = existingMap;
 }
 
