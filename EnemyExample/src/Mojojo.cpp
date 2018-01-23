@@ -29,12 +29,14 @@ Mojojo::Mojojo(Engine::Game &game) {
 	Engine::AComponent	*physicsComponent = new Component::MojojoPhysics(this, Engine::Hitbox(
 			Engine::Hitbox::Type::ENEMY, graphicComponent->getRelativeStartPos(),
 			graphicComponent->getRange()));
+	Engine::AComponent	*healthComponent = new Component::HealthComponent(this, game.getWorld().get(), 50, false, false);
 
 	if (game.getWorld()->getMediator() != nullptr) {
 		physicsComponent->registerToMediator(game.getWorld()->getMediator().get());
 	}
-
-	Engine::AComponent	*healthComponent = new Component::HealthComponent(this, game.getWorld().get(), 50, false, false);
+	if (game.getWorld()->getCamera() != nullptr) {
+		graphicComponent->addObserver(game.getWorld()->getCamera().get());
+	}
 
 	this->addComponent(AIComponent);
 	this->addComponent(moveComponent);
