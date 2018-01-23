@@ -47,7 +47,7 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 	playerShip->addComponent(playerGraphicsComponent);
 	playerShip->addComponent(playerHealthComponent);
 
-	playerShip->getTransformComponent().getPosition().x = 3000;
+	playerShip->getTransformComponent().getPosition().x = 1000;
 	playerShip->getTransformComponent().getPosition().y = 1000 + id * 1000;
 
 	playerShip->setActive(true);

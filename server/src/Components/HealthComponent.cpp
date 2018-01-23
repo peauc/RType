@@ -31,11 +31,9 @@ void Component::HealthComponent::update() noexcept
 
 void Component::HealthComponent::takeDamage(int damages) noexcept
 {
-	std::cout << this->getParentEntityId() << " Taking " << damages << " damages" << std::endl;
 	if (!this->_godMode) {
 		this->_health -= (this->_instantDeath) ? this->_health : damages;
 		if (this->_health <= 0) {
-			std::cout << "I'm ded." << std::endl;
 			this->sendToAll(Engine::Mediator::Message::DEATH);
 			this->_parentEntity->addCommand(new Engine::Commands::RemoveEntityCommand(*this->_world,
 																					  this->_parentEntity->getId()));

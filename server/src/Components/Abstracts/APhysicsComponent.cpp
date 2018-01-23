@@ -41,12 +41,15 @@ void Component::APhysicsComponent::handleCheckCollision(Engine::Mediator::Messag
 		if (this->_orientedBoundingBox->checkIntersection(*other) ||
 			other->_orientedBoundingBox->checkIntersection(*this)) {
 			this->_collisionDamages = 0;
-			std::cout << "COLLISION" << std::endl;
 			if (!this->_mediators.empty()) {
 				this->sendToParentEntity(Engine::Mediator::Message::GET_IMPACT_DAMAGES);
 			}
-			std::cout << "this : " << this->getParentEntityId() << " " << this->_collisionDamages << " collision damages" << std::endl;
-			std::cout << "other : " << other->getParentEntityId() << " " << other->_collisionDamages << " collision damages" << std::endl;
+			if (!other->_mediators.empty()) {
+				other->sendToParentEntity(Engine::Mediator::Message::GET_IMPACT_DAMAGES);
+			}
+			int temp = this->getCollisionDamages();
+			this->_collisionDamages = other->getCollisionDamages();
+			other->_collisionDamages = temp;
 			other->triggerCollision(*this);
 			this->triggerCollision(*other);
 			this->_collisionDamages = 0;
@@ -80,11 +83,11 @@ void Component::APhysicsComponent::blockingCollision(Component::APhysicsComponen
 	}
 }
 
-void Component::APhysicsComponent::damagingCollision(Component::APhysicsComponent &) noexcept
+void Component::APhysicsComponent::damagingCollision(Component::APhysicsComponent &component) noexcept
 {
-	std::cout << this->getParentEntityId() << " damaged" << std::endl;
+	std::cout << component.getParentEntityId() << " damaged" << std::endl;
 	if (!this->_mediators.empty()) {
-		this->sendToParentEntity(Engine::Mediator::Message::HIT);
+		component.sendToParentEntity(Engine::Mediator::Message::HIT);
 	}
 }
 

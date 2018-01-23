@@ -10,7 +10,7 @@ Component::PlayerWeaponComponent::PlayerWeaponComponent(Engine::Entity *parentEn
 		: AWeaponComponent(parentEntity, parentGame, 60), _event(false), _firing(false), _charge(0), _isCharging(false)
 {
 	this->_shotAngle = 0;
-	this->_shotRelativeOrigin.x = 0;
+	this->_shotRelativeOrigin.x = -50;
 	this->_shotRelativeOrigin.y = 0;
 
 	this->_validMessageTypes[Engine::Mediator::Message::NEW_EVENT] = std::bind(&PlayerWeaponComponent::handleEvent,
@@ -33,12 +33,12 @@ void Component::PlayerWeaponComponent::update() noexcept
 		if (this->_charge < 30) { // Standard shot
 			shotGraphicsComponent = new Component::ShotGraphicsComponent(shot.get(),
 																		 this->_parentGame->getResourceLoader().get(),
-																		 19, 19);
+																		 30, 30);
 			shotSoundComponent = new Component::ShotAudioComponent(shot.get(), this->_parentGame, 0);
 		} else { // Charged shot
 			shotGraphicsComponent = new Component::ShotGraphicsComponent(shot.get(),
 																		 this->_parentGame->getResourceLoader().get(),
-																		 19, 19);
+																		 29, 29);
 			shotSoundComponent = new Component::ShotAudioComponent(this->_parentEntity, this->_parentGame, 1);
 		}
 
