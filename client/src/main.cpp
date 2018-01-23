@@ -13,7 +13,7 @@
 #include <Logger.hpp>
 #include "ClientGame.hpp"
 
-int     main(int ac, char **av, char **env)
+int     main(int ac, char **av, char **)
 {
 #ifdef __unix__
 	if (env == nullptr || getenv("DISPLAY") == nullptr)
@@ -25,7 +25,7 @@ int     main(int ac, char **av, char **env)
 			Logger::Log(Logger::FATAL, "./client host port "
 				"[seed]");
 		}
-		int s;
+		int s = 0;
 		if (av[3])
 			s = std::stoi(av[3]);
 		ClientGame game(av[1], av[2], static_cast<unsigned short>(s), "../AssetsId.txt");

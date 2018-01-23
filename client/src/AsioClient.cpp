@@ -13,8 +13,9 @@
 #include "AsioClient.hpp"
 
 client::AsioClient::AsioClient()
-	: _isConnected(false), _ioService(), _socket(_ioService)
+	: _ioService(), _socket(_ioService)
 {
+	_connected = false;
 	_socket.open(boost::asio::ip::udp::v4());
 }
 
