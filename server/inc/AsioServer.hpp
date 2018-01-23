@@ -19,10 +19,12 @@ public:
 	sendMessage(const ClientObject &client, const Packet::DataPacket &message)
 	final;
 	AsioServer();
-	~AsioServer() final;
-	virtual bool tick();
-	virtual bool stop() final;
-	virtual bool start() final;
+	AsioServer(const AsioServer&) = delete;
+	AsioServer &operator=(const AsioServer&) = delete;
+	~AsioServer() final = default;
+	bool tick() override;
+	bool stop() final;
+	bool start() final;
 
 private:
 	void	interpretPacket(const Packet::DataPacket &packet,

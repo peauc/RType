@@ -14,6 +14,8 @@ class Lobby {
 public:
 	Lobby() = delete;
 	explicit Lobby(unsigned short seed);
+	Lobby(const Lobby &) = delete;
+	Lobby &operator=(const Lobby&) = delete;
 	~Lobby();
 	
 	void checkTimeout() noexcept;
