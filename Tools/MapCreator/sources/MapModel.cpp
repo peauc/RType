@@ -117,9 +117,9 @@ std::string MapModel::saveChilds() const {
 
 	result = "{\n";
 	result += "\t\"Screen Width\" : "
-			  + std::to_string(this->parent->getWidth()) +"\n";
+			  + std::to_string(this->parent->getWidth()) + ",\n";
 	result += "\t\"Screen Height\" : "
-			  + std::to_string(this->parent->getHeight()) + "\n";
+			  + std::to_string(this->parent->getHeight()) + ",\n";
 	result += "\t\"Zones\" : \n";
 	result += "\t\t[";
 	for (auto &child : childs) {
