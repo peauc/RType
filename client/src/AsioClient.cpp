@@ -12,16 +12,8 @@
 #include <Message.hpp>
 #include "AsioClient.hpp"
 
-client::AsioClient::AsioClient(const std::string &host) : _ioService(),
-							  _isConnected(false),
-							  _socket(_ioService)
-{
-	std::cout << "Host constructor" << std::endl;
-	_socket.open(boost::asio::ip::udp::v4());
-}
-
-client::AsioClient::AsioClient() : _ioService(), _socket(_ioService),
-				   _isConnected(false)
+client::AsioClient::AsioClient()
+	: _isConnected(false), _ioService(), _socket(_ioService)
 {
 	_socket.open(boost::asio::ip::udp::v4());
 }
@@ -33,7 +25,6 @@ client::AsioClient::~AsioClient()
 
 bool client::AsioClient::sendMessage(const std::string &message) noexcept
 {
-	std::cout << "Preparing to send" << '\n';
 	boost::shared_ptr<std::string> ptr(new std::string(message));
 	
 	_socket.async_send_to(boost::asio::buffer(*ptr),
@@ -57,7 +48,6 @@ bool client::AsioClient::sendMessage(const Packet::DataPacket &packet) noexcept
 	return (true);
 }
 
-//TODO: changer la seed et le port
 bool client::AsioClient::connect(const std::string &host, const std::string
 &port, unsigned short seed) noexcept
 {
@@ -87,16 +77,14 @@ bool client::AsioClient::readMessage() noexcept
 	return (true);
 }
 
-void client::AsioClient::handleSend(boost::shared_ptr<std::string> message,
-                                    const boost::system::error_code &error,
-                                    std::size_t bytesTransfered)
+void client::AsioClient::handleSend(boost::shared_ptr<std::string>,
+                                    const boost::system::error_code &,
+                                    std::size_t)
 {
-	std::cout << "Sent " << message << " of "
-		"size " << std::to_string(bytesTransfered) << std::endl;
 }
 
-void client::AsioClient::handleReceive(const boost::system::error_code &error,
-                                       std::size_t bytesTransfered)
+void client::AsioClient::handleReceive(const boost::system::error_code &,
+                                       std::size_t)
 {
 	Message message(std::string(_data_array.begin(), _data_array.end()));
 	if (message.getPacket().cmd == Packet::CONNECTED) {
@@ -108,11 +96,10 @@ void client::AsioClient::handleReceive(const boost::system::error_code &error,
 	}
 	readMessage();
 }
-void client::AsioClient::handleSendPacket(const Packet::DataPacket &packet,
-                                    const boost::system::error_code &error,
-                                    std::size_t bytesTransfered)
+void client::AsioClient::handleSendPacket(const Packet::DataPacket &,
+                                    const boost::system::error_code &,
+                                    std::size_t)
 {
-
 }
 
 void client::AsioClient::tick() noexcept

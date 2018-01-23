@@ -273,8 +273,8 @@ void ClientGame::sendPong() noexcept
 {
 	static int frames = 0;
 	
-	frames = frames++ % 256;
-	if (frames == 0) {
+	frames = frames % 256;
+	if (frames++ == 0) {
 		this->_client.sendMessage(Packet::DataPacket(
 			(int)Packet::Commands::PONG));
 	}

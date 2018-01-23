@@ -144,7 +144,7 @@ void AsioServer::connect(const Packet::DataPacket &, ClientObject
 {
 }
 
-void AsioServer::disconnect(const Packet::DataPacket &p, ClientObject
+void AsioServer::disconnect(const Packet::DataPacket &, ClientObject
 &c) noexcept
 {
 	_lobbyList.removeClient(c);
