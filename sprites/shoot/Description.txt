@@ -1,0 +1,2 @@
+sprite0 -> tir ennemie
+Sprite1 et 2 -> tir player
