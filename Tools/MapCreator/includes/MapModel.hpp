@@ -57,6 +57,7 @@ private:
 	std::string		zoneParams(const ChildMap *zone) const;
 	std::string		saveChildInZone(const ChildMap *child) const;
 	int				getRealXValue(int x) const;
+	int				getRealYValue(int y) const;
 };
 
 

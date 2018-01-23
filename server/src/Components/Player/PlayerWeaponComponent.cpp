@@ -23,7 +23,7 @@ void Component::PlayerWeaponComponent::update() noexcept
 	if (this->_frameSinceShot == this->_cooldown && (this->_firing || (!this->_isCharging && this->_charge > 0))) {
 		std::unique_ptr<Engine::Entity> shot = std::make_unique<Engine::Entity>();
 
-		Engine::AComponent *shotMovementComponent = new Component::ShotMovementComponent(shot.get(), 100, 30);
+		Engine::AComponent *shotMovementComponent = new Component::ShotMovementComponent(shot.get(), 120, 120);
 		Engine::AComponent *shotHealthComponent = new Component::HealthComponent(shot.get(),
 																				 this->_parentGame->getWorld().get(),
 																				 50, false, true);

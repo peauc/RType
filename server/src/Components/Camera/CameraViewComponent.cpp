@@ -24,6 +24,7 @@ void Component::CameraViewComponent::update() noexcept
 {
 	for (AGraphicsComponent *component : this->_graphicComponents) {
 		if (component != nullptr) {
+			std::cout << "CAMERA" << std::endl;
 			if (component->isInArea(this->_parentEntity->getTransformComponent().getPosition().x,
 									this->_parentEntity->getTransformComponent().getPosition().y,
 									this->_relativeBottomRight.x, this->_relativeBottomRight.y)) {

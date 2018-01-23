@@ -17,7 +17,7 @@ Component::EnemyPhysicsComponent::EnemyPhysicsComponent(Engine::Entity *parentEn
 	this->_collisionHandlers[Engine::Hitbox::Type::ENEMY] = std::bind(&APhysicsComponent::blockingCollision,
 																	  this, std::placeholders::_1);
 	this->_collisionHandlers[Engine::Hitbox::Type::PLAYER_SHOT] = std::bind(&APhysicsComponent::damagingCollision,
-																		   this, std::placeholders::_1);
+																			this, std::placeholders::_1);
 	this->_collisionHandlers[Engine::Hitbox::Type::NEUTRAL] = std::bind(&APhysicsComponent::damagingCollision,
 																		this, std::placeholders::_1);
 }

@@ -14,29 +14,34 @@
 #include "JsonDataLoader.hpp"
 #include "Object.hpp"
 
-class MapLoader {
+class MapLoader
+{
 
 public:
 
-	using Zones = std::vector<Engine::MapLoader::Zone>;
+	using Zones = std::vector<Engine::Zone>;
 
 	MapLoader() = default;
 	~MapLoader() = default;
-	MapLoader(const MapLoader&) = delete;
-	MapLoader	&operator=(const MapLoader&) = delete;
+	MapLoader(const MapLoader &) = delete;
+	MapLoader &operator=(const MapLoader &) = delete;
 
-	const Zones			&loadZones(const std::string &filePath);
-	const Zones			&getZones() const;
+	const Zones &loadZones(const std::string &filePath);
+	const Zones &getZones() const;
+
+	unsigned int getMapWidth() const;
+	unsigned int getMapHeight() const;
 
 private:
 
-	JsonDataLoader		loader;
-	Zones				zones;
+	JsonDataLoader loader;
+	Zones zones;
 
-	void	browseZones(JsonDataLoader::ArrayValues &zones);
-	void	fillLastZone(JsonDataLoader::ArrayValues &childs);
+	unsigned int mapWidth;
+	unsigned int mapHeight;
 
+	void browseZones(JsonDataLoader::ArrayValues &zones);
+	void fillLastZone(JsonDataLoader::ArrayValues &childs);
 };
-
 
 #endif //ASSETSIDGENERATOR_MAPLOADER_HPP

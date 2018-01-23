@@ -12,7 +12,7 @@
 #include <iostream>
 #include "ClientGame.hpp"
 
-int     main(int argc, char **argv, char **env)
+int     main(int, char **, char **env)
 {
 #ifdef __unix__
 	if (env == nullptr || getenv("DISPLAY") == nullptr)

@@ -141,25 +141,21 @@ void	AsioServer::interpretPacket(const Packet::DataPacket &packet,
 void AsioServer::connect(const Packet::DataPacket &packet, ClientObject
 &obj) noexcept
 {
-	std::cout << "CONNECT" << std::endl;
 }
 
 void AsioServer::disconnect(const Packet::DataPacket &packet, ClientObject
 &obj) noexcept
 {
-	std::cout << "DISCONNECT" << std::endl;
 }
 
 void AsioServer::connected(const Packet::DataPacket &packet, ClientObject
 &obj) noexcept
 {
-	std::cout << "CONNECTED" << std::endl;
 }
 
 void AsioServer::disconnected(const Packet::DataPacket &packet, ClientObject
 &obj) noexcept
 {
-	std::cout << "DISCONNECTED" << std::endl;
 }
 
 void AsioServer::startGame(const Packet::DataPacket &packet, ClientObject

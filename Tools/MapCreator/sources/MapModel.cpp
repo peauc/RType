@@ -116,6 +116,10 @@ std::string MapModel::saveChilds() const {
 	std::string		result;
 
 	result = "{\n";
+	result += "\t\"Screen Width\" : "
+			  + std::to_string(this->parent->getWidth()) + ",\n";
+	result += "\t\"Screen Height\" : "
+			  + std::to_string(this->parent->getHeight()) + ",\n";
 	result += "\t\"Zones\" : \n";
 	result += "\t\t[";
 	for (auto &child : childs) {
@@ -158,12 +162,14 @@ std::string MapModel::zoneParams(const ChildMap *zone) const {
 
 	result += indent + "\"X1\" : "
 			  + std::to_string(this->getRealXValue(zone->getX())) + ",";
-	result += indent + "\"Y1\" : " + std::to_string(zone->getY()) + ",";
+	result += indent + "\"Y1\" : "
+			  + std::to_string(this->getRealYValue(zone->getY())) + ",";
 	result += indent + "\"X2\" : "
 			  + std::to_string(this->getRealXValue(zone->getX())
 							   + zone->getWidth() - 1) + ",";
-	result += indent + "\"Y2\" : " + std::to_string(zone->getY()
-													+ zone->getHeight() - 1)
+	result += indent + "\"Y2\" : "
+			  + std::to_string(this->getRealYValue(zone->getY())
+							   + zone->getHeight() - 1)
 			  + ",";
 	return (result);
 }
@@ -180,7 +186,8 @@ std::string MapModel::saveChildInZone(const ChildMap *child) const {
 			  + std::to_string(this->getRealXValue(child->getX())
 							   + child->getWidth() / 2) + ", ";
 	result += "\"Y\" : "
-			  + std::to_string(child->getY() + child->getHeight() / 2) + ", ";
+			  + std::to_string(this->getRealYValue(child->getY())
+							   + child->getHeight() / 2) + ", ";
 	result += "\"Width\" : " + std::to_string(child->getWidth()) + ", ";
 	result += "\"Height\" : " + std::to_string(child->getHeight());
 	result += " }";
@@ -198,4 +205,8 @@ bool MapModel::inZone(const ChildMap *zone, const ChildMap *child) const {
 
 int MapModel::getRealXValue(int x) const {
 	return (x - this->parent->getScrollValue() - this->parent->getX());
+}
+
+int MapModel::getRealYValue(int y) const {
+	return (y - this->parent->getY());
 }

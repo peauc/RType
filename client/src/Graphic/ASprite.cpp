@@ -8,7 +8,8 @@
 #include "Graphic/ASprite.hpp"
 
 ASprite::ASprite() noexcept
- : _posX(0), _posY(0), _animationId(0), _onClick(nullptr)
+ : _posX(0), _posY(0), _animationId(0), _animationIndex(0),
+   _repeatAnimation(true), _waitingToBeDeleted(false), _onClick(nullptr)
 {
 }
 
@@ -75,4 +76,19 @@ uint32_t ASprite::getAnimationId() const noexcept
 void ASprite::setAnimationId(uint32_t id) noexcept
 {
 	this->_animationId = id;
+}
+
+bool ASprite::isWaitingToBeDeleted() const noexcept
+{
+	return (this->_waitingToBeDeleted);
+}
+
+bool ASprite::isAnimationRepeating() const noexcept
+{
+	return (this->_repeatAnimation);
+}
+
+void ASprite::setRepeatAnimation(bool repeat) noexcept
+{
+	this->_repeatAnimation =repeat;
 }

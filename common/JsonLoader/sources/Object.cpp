@@ -6,6 +6,7 @@
 */
 
 #include <algorithm>
+#include <stdexcept>
 #include "Object.hpp"
 
 Object::Object(const std::string &data)
@@ -61,12 +62,32 @@ std::string Object::getPropertyString(const std::string &propertyName) const
 
 int Object::getPropertyInt(const std::string &propertyName) const
 {
-	return (std::stoi(getPropertyString(propertyName)));
+	unsigned int	propertyValue;
+
+	try {
+		propertyValue = static_cast<unsigned int>
+		(std::stoi(getPropertyString(propertyName)));
+	} catch (const std::invalid_argument&) {
+		return (0);
+	} catch (const std::out_of_range&) {
+		return (0);
+	}
+	return (propertyValue);
 }
 
 unsigned int Object::getPropertyUint(const std::string &propertyName) const
 {
-	return (static_cast<unsigned int>(std::stoi(getPropertyString(propertyName))));
+	unsigned int	propertyValue;
+
+	try {
+		propertyValue = static_cast<unsigned int>
+		(std::stoi(getPropertyString(propertyName)));
+	} catch (const std::invalid_argument&) {
+		return (0);
+	} catch (const std::out_of_range&) {
+		return (0);
+	}
+	return (propertyValue);
 }
 
 bool Object::getPropertyBool(const std::string &propertyName) const

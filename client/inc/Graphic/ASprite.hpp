@@ -34,12 +34,18 @@ public:
 	void	onClick() override;
 	void	setOnClick(std::function<void()>
 			       f) noexcept override;
+	bool isWaitingToBeDeleted() const noexcept override;
+	bool isAnimationRepeating() const noexcept override;
+	void setRepeatAnimation(bool repeat) noexcept override;
 
 protected:
 	int		_posX;
 	int		_posY;
-	std::function<void()> _onClick;
 	unsigned int	_animationId;
+	unsigned short	_animationIndex;
+	bool		_repeatAnimation;
+	bool		_waitingToBeDeleted;
+	std::function<void()> _onClick;
 };
 
 #endif // !RTYPE_ASPRITE_HPP_

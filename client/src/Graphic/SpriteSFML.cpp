@@ -9,14 +9,13 @@
 #include "Graphic/SpriteSFML.hpp"
 
 SpriteSFML::SpriteSFML() noexcept
-	: _sizeTileX(0), _sizeTileY(0),
-	  _animationIndex(0), _repeatAnimation(false)
+	: _sizeTileX(0), _sizeTileY(0)
 {
 }
 
 SpriteSFML::SpriteSFML(const std::string &fileName,
 		       unsigned int sizeTileX, unsigned int sizeTileY)
- : _sizeTileX(sizeTileX), _sizeTileY(sizeTileY), _animationIndex(0)
+ : _sizeTileX(sizeTileX), _sizeTileY(sizeTileY)
 {
 	if (!this->_texture.loadFromFile(fileName)) {
 		throw std::runtime_error("Cannot open sprite file : " +
@@ -83,25 +82,8 @@ void SpriteSFML::selectSprite(unsigned int tileNumber,
 void	SpriteSFML::setAnimationVector(const std::vector<sf::Texture>
 					   &vector, bool repeat) noexcept
 {
-	bool	equal = true;
-
-	if (vector.size() == this->_animationVector.size() &&
-		vector.size() > 1) {
-		for (unsigned int i = 0;
-		     i < vector.size() && i < this->_animationVector.size();
-		     ++i) {
-			if (&vector[i] != &this->_animationVector[i]) {
-				equal = false;
-				break;
-			}
-		}
-	} else {
-		equal = false;
-	}
-	if (!equal) {
-		this->_animationVector = vector;
-		this->_repeatAnimation = repeat;
-	}
+	this->_animationVector = vector;
+	this->_repeatAnimation = repeat;
 }
 
 /**
@@ -112,7 +94,7 @@ void	SpriteSFML::setAnimationVector(const std::vector<sf::Texture>
  */
 void	SpriteSFML::updateAnimation() noexcept
 {
-	if (this->_animationVector.size() >= 1 &&
+	if (!this->_animationVector.empty() &&
 	    this->_animationIndex < this->_animationVector.size()) {
 		this->_sprite.setTexture(_animationVector[_animationIndex],
 					 true);
@@ -122,8 +104,7 @@ void	SpriteSFML::updateAnimation() noexcept
 			this->_animationIndex = 0;
 		}
 	} else {
-		this->_sprite.setTextureRect(sf::IntRect());
-		// TODO To delete
+		this->_waitingToBeDeleted = true;
 	}
 }
 
