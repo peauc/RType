@@ -12,6 +12,7 @@ Component::MojojoGraphics::MojojoGraphics(Engine::Entity *parentEntity,
 		AGraphicsComponent(parentEntity, resourceLoader) {
 	this->_animationIds.push_back(22);
 	this->_animationIds.push_back(21);
+	this->_animationIds.push_back(0);
 
 	this->_currentAnimationId = this->_animationIds[1];
 
@@ -41,6 +42,7 @@ void Component::MojojoGraphics::handleDeath(Engine::Mediator::Message, Engine::A
 }
 
 void Component::MojojoGraphics::handleHit(Engine::Mediator::Message, Engine::AComponent *) noexcept {
+	this->_currentAnimationId = this->_animationIds[2];
 	this->_isAlive = false;
 }
 
