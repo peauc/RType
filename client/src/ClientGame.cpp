@@ -50,6 +50,8 @@ void	ClientGame::run() noexcept
 	std::vector<Packet::DataPacket>		packetList;
 	std::chrono::steady_clock::time_point	begin
 		= std::chrono::steady_clock::now();
+	std::chrono::steady_clock::time_point	pongTimer
+		= std::chrono::steady_clock::now();
 	int					nbTicks = 0;
 
 	this->_client.resetChrono();
@@ -66,6 +68,7 @@ void	ClientGame::run() noexcept
 			if (this->_waitingReady) {
 				this->sendReadyPacket();
 			}
+			this->sendPong(pongTimer);
 			begin = std::chrono::steady_clock::now();
 		}
 	}
@@ -166,7 +169,6 @@ void ClientGame::processEvents(std::queue<IRender::EventAction>
 	if (this->_gameState == GameState::INGAME) {
 		this->sendEventPacket(input);
 	}
-	this->sendPong();
 }
 
 /**
@@ -269,14 +271,14 @@ void ClientGame::sendReadyPacket() noexcept
 		(int)Packet::Commands::READY));
 }
 
-void ClientGame::sendPong() noexcept
+void ClientGame::sendPong(std::chrono::steady_clock::time_point &time) noexcept
 {
-	static int frames = 0;
-	
-	frames = frames % 256;
-	if (frames++ == 0) {
+	if (std::chrono::duration_cast<std::chrono::seconds>
+		    (std::chrono::steady_clock::now() - time)
+		    .count() > 2) {
 		this->_client.sendMessage(Packet::DataPacket(
-			(int)Packet::Commands::PONG));
+			(int) Packet::Commands::PONG));
+		time = std::chrono::steady_clock::now();
 	}
 }
 
