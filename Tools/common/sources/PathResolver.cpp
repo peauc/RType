@@ -34,6 +34,8 @@ void PathResolver::changeCurrentDir(const std::string &newDir) {
 	_chdir(newDir.c_str());
 #elif __unix__
 	chdir(newDir.c_str());
+#elif __APPLE__
+	chdir(newDir.c_str());
 #endif
 }
 

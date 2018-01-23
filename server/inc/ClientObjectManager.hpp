@@ -17,7 +17,6 @@ public:
 	compl ClientObjectManager() = default;
 	void setMaxSize(size_t) noexcept;
 	size_t size() const;
-	std::vector<IMessage> getClientsMessages();
 	bool removeClient(const ClientObject &client) noexcept;
 	bool addClient(ClientObject &client) noexcept;
 	bool isClientContained(const ClientObject &client) const noexcept;
