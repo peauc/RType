@@ -35,7 +35,6 @@ private:
 	                std::size_t bytesTransfered);
 	bool readMessage() noexcept;
 	
-	bool _isConnected;
 	std::vector<Packet::DataPacket> _packetList;
 	boost::asio::io_service _ioService;
 	boost::asio::ip::udp::socket _socket;
