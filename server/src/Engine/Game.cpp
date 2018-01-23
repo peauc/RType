@@ -5,7 +5,6 @@
 #include <thread>
 #include <iostream>
 #include "Logger.hpp"
-#include "MapLoader.hpp"
 #include "Game.hpp"
 
 Engine::Game::Game()
@@ -51,10 +50,16 @@ void Engine::Game::setup(size_t nbOfPlayers,
 		this->_world->addObject(Factory::EntityFactory::createPlayerShip);
 	}
 
-	const MapLoader::Zones &zones = this->_mapLoader.loadZones("../");
-
 	//this->_enemyLoader.setup("../DLEnemies/", *this);
 	//this->_DLEntitiesMap = this->_enemyLoader.getEnemies();
+
+	const MapLoader::Zones &zones = this->_mapLoader.loadZones("../Maps/Game.map");
+	std::cout << "AFTER LOAD" << std::endl;
+	exit(0);
+}
+
+void Engine::Game::createZones(const Vector2d &mapSize, const MapLoader::Zones &)
+{
 }
 
 std::unique_ptr<Engine::World> &Engine::Game::getWorld()

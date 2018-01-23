@@ -5,10 +5,11 @@
 ** No description
 */
 
+#include <iostream>
 #include "MapLoader.hpp"
 
-const Engine::MapLoader::Zones &
-Engine::MapLoader::loadZones(const std::string &filePath)
+const MapLoader::Zones &
+MapLoader::loadZones(const std::string &filePath)
 {
 	std::vector<std::string> objects;
 	JsonDataLoader::ArrayValues zones;
@@ -29,7 +30,7 @@ Engine::MapLoader::loadZones(const std::string &filePath)
 	return (this->zones);
 }
 
-void Engine::MapLoader::browseZones(JsonDataLoader::ArrayValues &zones)
+void MapLoader::browseZones(JsonDataLoader::ArrayValues &zones)
 {
 	Vector2d topLeftCoords;
 	Vector2d bottomRightCoords;
@@ -51,7 +52,7 @@ void Engine::MapLoader::browseZones(JsonDataLoader::ArrayValues &zones)
 	}
 }
 
-void Engine::MapLoader::fillLastZone(JsonDataLoader::ArrayValues &childs)
+void MapLoader::fillLastZone(JsonDataLoader::ArrayValues &childs)
 {
 	std::string libName;
 	Vector2d pos;
@@ -68,15 +69,17 @@ void Engine::MapLoader::fillLastZone(JsonDataLoader::ArrayValues &childs)
 	}
 }
 
-const Engine::MapLoader::Zones &Engine::MapLoader::getZones() const
+const MapLoader::Zones &MapLoader::getZones() const
 {
 	return (this->zones);
 }
 
-unsigned int MapLoader::getMapWidth() const {
+unsigned int MapLoader::getMapWidth() const
+{
 	return (this->mapWidth);
 }
 
-unsigned int MapLoader::getMapHeight() const {
+unsigned int MapLoader::getMapHeight() const
+{
 	return (this->mapHeight);
 }

@@ -43,6 +43,7 @@ namespace Engine {
 		std::unique_ptr<std::vector<std::unique_ptr<Packet::DataPacket>>>
 		getPackets();
 		Entity *cloneEntity(const std::string &name) const;
+		void createZones(const Vector2d &mapSize, const MapLoader::Zones &);
 
 	private:
 		std::thread _thread;
