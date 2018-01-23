@@ -22,7 +22,6 @@ Component::MojojoMove::MojojoMove(Engine::Entity *parentEntity)
 }
 
 void Component::MojojoMove::update() noexcept {
-	std::cout << "Updating movement" << std::endl;
 	this->_lastMove.x = this->_baseSpeed + this->_xInput * this->_baseSpeed;
 	this->_lastMove.y = this->_lateralBaseSpeed + this->_yInput * this->_lateralMaxSpeed;
 
