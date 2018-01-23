@@ -16,7 +16,8 @@ bool LobbyContainer::isClientContained(ClientObject &client)
 	}
 	return (false);
 }
-std::unique_ptr<Lobby>::pointer LobbyContainer::getClientLobby(ClientObject
+std::unique_ptr<Lobby>::pointer LobbyContainer::getClientLobby
+	(const ClientObject
                                                            &client)
 {
 	for (auto &t : _lobbyList) {
@@ -69,11 +70,7 @@ void LobbyContainer::checkTimeout()
 	for (auto &t : _lobbyList) {
 		t->checkTimeout();
 	}
-	_lobbyList.erase(std::find_if(_lobbyList.begin(), _lobbyList.end(),
-				      [](const std::unique_ptr<Lobby> &lob) {
-					      return (lob->size() == 0);
-				      })
-		, _lobbyList.end());
+	removeEmptyLobbies();
 }
 
 std::unique_ptr<std::vector<std::pair<std::unique_ptr<std::vector<std
@@ -86,4 +83,18 @@ std::unique_ptr<std::vector<std::pair<std::unique_ptr<std::vector<std
 		v->push_back(std::move(pair));
 	}
 	return (v);
+}
+void LobbyContainer::removeClient(const ClientObject &client)
+{
+	getClientLobby(client)->removeClient(client);
+	removeEmptyLobbies();
+}
+
+void LobbyContainer::removeEmptyLobbies()
+{
+	_lobbyList.erase(std::find_if(_lobbyList.begin(), _lobbyList.end(),
+				      [](const std::unique_ptr<Lobby> &lob) {
+					      return (lob->size() == 0);
+				      })
+		, _lobbyList.end());
 }

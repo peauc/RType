@@ -58,17 +58,18 @@ bool client::AsioClient::sendMessage(const Packet::DataPacket &packet) noexcept
 }
 
 //TODO: changer la seed et le port
-bool client::AsioClient::connect(const std::string &host) noexcept
+bool client::AsioClient::connect(const std::string &host, const std::string
+&port, unsigned short seed) noexcept
 {
 	boost::asio::ip::udp::resolver resolver(_ioService);
-	boost::asio::ip::udp::resolver::query query(host, "4242");
+	boost::asio::ip::udp::resolver::query query(host, port);
 	_receiverEndpoint = *resolver.resolve(query);
 	readMessage();
 	while (!isConnected()) {
 		using namespace std::chrono_literals;
 		Packet::DataPacket packet;
 		packet.cmd = Packet::CONNECT;
-		packet.data.connection.seed = 0;
+		packet.data.connection.seed = seed;
 		sendMessage(packet);
 		_ioService.poll();
 		std::this_thread::sleep_for(0.2s);

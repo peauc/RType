@@ -18,10 +18,9 @@ std::unique_ptr<Packet::DataPacket> Engine::PacketList::popBack()
 {
 	std::lock_guard<std::mutex> l(_mutex);
 	if (_list.empty()) {
-		//Logger::Log(Logger::DEBUG, "PacketList is empty");
 		return (nullptr);
 	}
 	auto t = std::move(_list.back());
 	_list.pop_back();
-	return (std::move(t));
+	return (t);
 }

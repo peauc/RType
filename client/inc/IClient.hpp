@@ -10,7 +10,9 @@ namespace client {
 class IClient {
 public:
 	virtual bool sendMessage(const std::string &message) noexcept = 0;
-	virtual bool connect(const std::string &message) noexcept = 0;
+	virtual bool connect(const std::string &message, const std::string
+	&port, unsigned short seed)
+	noexcept = 0;
 	private:
 };
 }
