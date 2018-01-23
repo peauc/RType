@@ -33,7 +33,7 @@ void ClientObjectManager::checkClientsTimeout() noexcept
 	_clientList.erase(std::remove_if(_clientList.begin(), _clientList
 		                                 .end(),
 	                       [](ClientObject &obj) {
-		                       return (obj.isTimedOut(15));
+		                       return (obj.isTimedOut(5));
 	                       }
 	), _clientList.end());
 }
