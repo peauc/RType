@@ -61,6 +61,7 @@ private:
 	void	modifyInputPacket(const IRender::EventAction &event,
 				      Packet::Input &input) noexcept;
 	void	sendEventPacket(const Packet::Input &input) noexcept;
+	void	sendPong() noexcept;
 	void	sendReadyPacket() noexcept;
 	void	interpretPacket(const std::vector<Packet::DataPacket>
 				     &packets) noexcept;
