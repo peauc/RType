@@ -192,7 +192,7 @@ void ClientGame::createMenu()
 	auto quitButton = this->_render->createSprite(
 		"../Assets/Menu/quit.png");
 	auto rtypeText(std::make_unique<TextSFML>(
-		"../Assets/Menu/ELRIOTT2.TTF", "R-TYPE", 80));
+		"../Assets/Menu/spaceAge.ttf", "R-TYPE ooga booga", 80));
 	
 	playButton->setPos(-(this->_render->getWidth() / 3),
 			   -(this->_render->getHeight() / 2));
