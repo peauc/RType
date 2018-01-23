@@ -90,3 +90,15 @@ bool ClientObjectManager::isReady() const noexcept
 	}
 	return (true);
 }
+bool ClientObjectManager::removeClient(const ClientObject &client) noexcept
+{
+	auto e = std::find_if(_clientList.begin(), _clientList.end(),
+		     [client](const ClientObject &client_) {
+			     return (client == client_);
+		     });
+	if (e == _clientList.end()) {
+		return (false);
+	}
+	_clientList.erase(e, _clientList.end());
+	return (true);
+}

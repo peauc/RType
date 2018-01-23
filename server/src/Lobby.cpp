@@ -24,6 +24,8 @@ bool Lobby::addClient(ClientObject &client) noexcept
 	return (true);
 }
 
+
+
 Lobby::Lobby(unsigned short seed)
 {
 	_seed = seed;
@@ -94,6 +96,10 @@ void Lobby::pushEventInList(std::unique_ptr<Engine::Event> &event) noexcept
 std::unique_ptr<std::vector<std::unique_ptr<Packet::DataPacket>>>
 Lobby::getPackets() {
 	return (_game.getPackets());
+}
+bool Lobby::removeClient(const ClientObject &obj) noexcept
+{
+	_clientManager.removeClient(obj);
 }
 
 

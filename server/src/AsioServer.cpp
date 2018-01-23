@@ -136,7 +136,7 @@ void	AsioServer::interpretPacket(const Packet::DataPacket &packet,
 {
 	if (packet.cmd < Packet::UNKNOWN) {
 		(this->*fptr[packet.cmd])(packet, obj);
-	}
+		}
 }
 
 void AsioServer::connect(const Packet::DataPacket &, ClientObject
@@ -144,9 +144,11 @@ void AsioServer::connect(const Packet::DataPacket &, ClientObject
 {
 }
 
-void AsioServer::disconnect(const Packet::DataPacket &, ClientObject
-&) noexcept
+void AsioServer::disconnect(const Packet::DataPacket &p, ClientObject
+&c) noexcept
 {
+	_lobbyList.removeClient(c);
+	sendMessage(c, Packet::DataPacket(Packet::DISCONNECTED));
 }
 
 void AsioServer::connected(const Packet::DataPacket &, ClientObject

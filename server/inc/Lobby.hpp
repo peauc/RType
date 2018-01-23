@@ -21,6 +21,7 @@ public:
 	size_t size() const noexcept;
 	bool isFull() const noexcept;
 	bool isReady() const noexcept;
+	bool removeClient(const ClientObject &obj) noexcept;
 	bool isStarted() const noexcept;
 	bool isClientContained(const ClientObject &client) const noexcept;
 	void pushEventInList(std::unique_ptr<Engine::Event> &event) noexcept;

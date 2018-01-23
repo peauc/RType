@@ -45,11 +45,5 @@ std::unique_ptr<Engine::Event> Engine::EventList::getEventById(size_t id)
 	if (d != _list.end())
 		_list.erase(d);
 
-
-//	if (e.get()) {
-//		std::cout << "Recup method" << e->_xVelocity << " " <<
-//								     e->_yVelocity
-//			  << std::endl;
-//	}
 	return (std::move(e));
 }
