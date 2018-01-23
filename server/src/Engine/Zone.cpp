@@ -46,6 +46,19 @@ void Engine::MapLoader::Zone::addZoneObject(
 	this->_zoneObjects.push_back(zoneObject);
 }
 
+const Vector2d &Engine::MapLoader::Zone::getTopLeftCoords() const {
+	return (this->_topLeftCoords);
+}
+
+const Vector2d &Engine::MapLoader::Zone::getBotRightCoords() const {
+	return (this->_bottomRightCoords);
+}
+
+const std::vector<Engine::MapLoader::Zone::ZoneObject> &
+Engine::MapLoader::Zone::getZoneObjects() const {
+	return (this->_zoneObjects);
+}
+
 Engine::MapLoader::Zone::ZoneObject::ZoneObject(const std::string &libname, const Vector2d &pos) : _libname(libname),
 																								   _pos(pos)
 {

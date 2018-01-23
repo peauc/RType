@@ -12,14 +12,14 @@ namespace Component {
 	class AGraphicsComponent : public Engine::AComponent
 	{
 	public:
-		explicit AGraphicsComponent(Engine::Entity *parentEntity, RessourcesLoader *resourceLoader);
+		explicit AGraphicsComponent(Engine::Entity *parentEntity, ResourcesLoader *resourceLoader);
 		~AGraphicsComponent() override = default;
 
 		bool isInArea(double xPos, double yPos, double xRange, double yRange) noexcept;
 		double getRelativeXPos(double xPos, double xRange) noexcept;
 		double getRelativeYPos(double yPos, double yRange) noexcept;
-		RessourcesLoader *getResourceLoader() const noexcept;
-		void setResourceLoader(RessourcesLoader *_resourceLoader) noexcept;
+		ResourcesLoader *getResourceLoader() const noexcept;
+		void setResourceLoader(ResourcesLoader *_resourceLoader) noexcept;
 		unsigned char getCurrentAnimationId() const noexcept;
 		bool isHit() const noexcept;
 		void setIsHit(bool isHit) noexcept;
@@ -32,7 +32,7 @@ namespace Component {
 		// operator overloads
 		AGraphicsComponent &operator=(const AGraphicsComponent &other) noexcept;
 	protected:
-		RessourcesLoader *_resourceLoader;
+		ResourcesLoader *_resourceLoader;
 		std::vector<unsigned char> _animationIds;
 		unsigned char _currentAnimationId;
 		Vector2d _relativeStartPos;

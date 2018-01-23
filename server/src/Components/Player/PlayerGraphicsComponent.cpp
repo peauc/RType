@@ -6,7 +6,7 @@
 #include "AMovementComponent.hpp"
 
 Component::PlayerGraphicsComponent::PlayerGraphicsComponent(Engine::Entity *parentEntity,
-															RessourcesLoader *resourceLoader) :
+															ResourcesLoader *resourceLoader) :
 		AGraphicsComponent(parentEntity, resourceLoader)
 {
 	switch (parentEntity->getId()) {

@@ -13,6 +13,8 @@
 #include "AContainer.hpp"
 #include "AScroller.hpp"
 
+class MapModel;
+
 class MapView : public AContainer, public AScroller, public IDragAndDrop {
 
 public:
@@ -34,14 +36,17 @@ public:
 	virtual void	onKeyPressed(const sf::Event &event);
 
 	virtual void	addChild(AItem *child);
+	void			loadChild(AItem *child);
 
-	void	setModel(MapModel *model);
+	void			setModel(MapModel *model);
 
 	virtual void	lendBackgroundTexture(sf::Texture &texture);
 
+	int				getScrollValue() const;
+
 protected:
 
-	unsigned int	getClosestChild(int x, int y);
+	unsigned int	getPotentialTriggeredChild(int x, int y);
 
 	std::unique_ptr<MapModel>		model;
 	SpriteBackground				spriteBackground;

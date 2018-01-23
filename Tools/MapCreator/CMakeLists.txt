@@ -4,13 +4,12 @@ project(MapCreator)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/..)
 
-include_directories(includes)
-include_directories(../common/includes)
-include_directories(../../RessourcesLoader/includes)
+include_directories(includes ../common/includes
+        ../../common/JsonLoader/includes)
 
 file(GLOB SOURCE_FILES
-        "../../RessourcesLoader/sources/JsonDataLoader.cpp"
-        "../../RessourcesLoader/includes/JsonDataLoader.hpp"
+        "../../common/JsonLoader/sources/*.cpp"
+        "../../common/JsonLoader/includes/*.hpp"
         "../common/sources/*.cpp"
         "../common/includes/*.hpp"
         "sources/*.cpp"

@@ -82,6 +82,13 @@ void MapView::addChild(AItem *child) {
 	this->refresh();
 }
 
+void MapView::loadChild(AItem *child) {
+	child->setParent(this);
+	AContainer::addChild(child);
+	this->sortChilds();
+	this->refresh();
+}
+
 void MapView::setModel(MapModel *model) {
 	this->model.reset(model);
 	this->model->loadDataModel();
@@ -114,16 +121,14 @@ void MapView::onMouseButtonPressed(const sf::Event &event) {
 
 	this->scrollable = false;
 	if (!this->childs.empty() && event.mouseButton.button == sf::Mouse::Left) {
-		childIndex = this->getClosestChild(event.mouseButton.x,
-										   event.mouseButton.y);
+		childIndex = this->getPotentialTriggeredChild(event.mouseButton.x,
+													  event.mouseButton.y);
 
 		this->childs.at(childIndex)->receiveEvent(event);
 	} else if (event.mouseButton.button == sf::Mouse::Right) {
-		for (auto &child : this->childs)
-			child->receiveEvent(event);
+		this->sendEventToChilds(event);
 		if (!this->onExistingZone(event))
 			this->createZone(event);
-
 	}
 }
 
@@ -145,45 +150,34 @@ void MapView::onMouseButtonReleased(const sf::Event &event) {
 void MapView::onMouseMoved(const sf::Event &event) {
 	this->lastMouseX = event.mouseMove.x;
 	this->lastMouseY = event.mouseMove.y;
-	for (auto &child : this->childs)
-		child->receiveEvent(event);
+	this->sendEventToChilds(event);
 }
 
 void MapView::onKeyPressed(const sf::Event &event) {
 	unsigned int	childIndex;
 
 	if (event.key.code == sf::Keyboard::Delete && !this->childs.empty()) {
-		childIndex = this->getClosestChild(this->lastMouseX, this->lastMouseY);
+		childIndex = this->getPotentialTriggeredChild(this->lastMouseX,
+													  this->lastMouseY);
 
-		if (this->childs.at(childIndex)
-				->inBounds(this->lastMouseX,
-						   this->lastMouseY))
+		if (this->childs.at(childIndex)->inBounds(this->lastMouseX,
+												  this->lastMouseY))
 			this->childs.erase(std::next(this->childs.begin(), childIndex));
 	} else if (event.key.code == sf::Keyboard::Return && this->model)
 		this->model->saveMap();
 }
 
-unsigned int MapView::getClosestChild(int x, int y) {
-	unsigned int	childIndex = 0;
-	unsigned int	index = 0;
-	int				distanceX;
-	int 			distanceY;
-	int				closestX = 0;
-	int 			closestY = 0;
-	bool			init = false;
+unsigned int MapView::getPotentialTriggeredChild(int x, int y) {
+	unsigned int	index;
 
-	for (auto &child : this->childs) {
-		distanceX = std::abs((child->getX() + child->getWidth() / 2) - x);
-		distanceY = std::abs((child->getY() + child->getHeight() / 2) - y);
-		if (!init || (distanceX + distanceY < closestX + closestY)) {
-			closestX = distanceX;
-			closestY = distanceY;
-			childIndex = index;
-			init = true;
-		}
-		++index;
+	index = (this->childs.empty()
+			 ? 0 : static_cast<unsigned int>(this->childs.size()) - 1);
+	while (index > 0) {
+		if (this->childs.at(index)->inBounds(x, y))
+			return (index);
+		--index;
 	}
-	return (childIndex);
+	return (index);
 }
 
 void MapView::resizeChild(const sf::Event &event) {
@@ -193,7 +187,8 @@ void MapView::resizeChild(const sf::Event &event) {
 
 	if (this->childs.empty())
 		return;
-	childIndex = this->getClosestChild(this->lastMouseX, this->lastMouseY);
+	childIndex = this->getPotentialTriggeredChild(this->lastMouseX,
+												  this->lastMouseY);
 	if (this->childs.at(childIndex)->inBounds(this->lastMouseX,
 											  this->lastMouseY)) {
 		newWidth += (this->childs.at(childIndex)->getWidth() / 20)
@@ -252,4 +247,8 @@ bool MapView::onExistingZone(const sf::Event &event) {
 			return (true);
 	}
 	return (false);
+}
+
+int MapView::getScrollValue() const {
+	return (this->scrollValue);
 }

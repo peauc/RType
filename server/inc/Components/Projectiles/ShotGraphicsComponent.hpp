@@ -5,14 +5,14 @@
 #ifndef RTYPE_PLAYERSHOTGRAPHICSCOMPONENT_HPP
 #define RTYPE_PLAYERSHOTGRAPHICSCOMPONENT_HPP
 
-#include "RessourcesLoader.hpp"
+#include "ResourcesLoader.hpp"
 #include "AGraphicsComponent.hpp"
 
 namespace Component {
 	class ShotGraphicsComponent : public AGraphicsComponent
 	{
 	public:
-		explicit ShotGraphicsComponent(Engine::Entity *parentEntity, RessourcesLoader *resourceLoader,
+		explicit ShotGraphicsComponent(Engine::Entity *parentEntity, ResourcesLoader *resourceLoader,
 									   unsigned char _travelAnimationId, unsigned char _impactAnimationId);
 		~ShotGraphicsComponent() override = default;
 

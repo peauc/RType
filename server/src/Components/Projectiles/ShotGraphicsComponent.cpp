@@ -5,7 +5,7 @@
 #include "ShotGraphicsComponent.hpp"
 
 Component::ShotGraphicsComponent::ShotGraphicsComponent(Engine::Entity *parentEntity,
-														RessourcesLoader *resourceLoader,
+														ResourcesLoader *resourceLoader,
 														unsigned char travelAnimationId,
 														unsigned char impactAnimationId)
 		: AGraphicsComponent(parentEntity, resourceLoader)
