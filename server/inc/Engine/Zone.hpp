@@ -12,12 +12,13 @@
 
 namespace Engine {
 	class Game;
+
 	class Zone
 	{
 	public:
 		Zone(const Vector2d &topLeftCoords, const Vector2d &bottomRightCoords);
 		~Zone() = default;
-		void createZone(Game &game) const;
+		void createZone(const Vector2d &mapSize, Game &game) const;
 
 		struct ZoneObject
 		{

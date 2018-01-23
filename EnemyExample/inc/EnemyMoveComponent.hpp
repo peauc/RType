@@ -5,17 +5,14 @@
 #ifndef RTYPE_ENEMYMOVECOMPONENT_HPP
 #	define RTYPE_ENEMYMOVECOMPONENT_HPP
 
-#	include "Engine/AComponent.hpp"
 #	include "Event.hpp"
-#	include "Abstracts/AMovementComponent.hpp"
-#	include "Engine/Commands/TransformPositionCommand.hpp"
-#	include "Components/Abstracts/AInputComponent.hpp"
+#	include "AMovementComponent.hpp"
 
 namespace Component {
 	class EnemyMoveComponent : public AMovementComponent
 	{
 	public:
-		explicit EnemyMoveComponent(Engine::Entity *parentEntity);
+		explicit EnemyMoveComponent(Engine::Entity *parentEntity, unsigned int lifetime);
 		~EnemyMoveComponent() override = default;
 
 		void update() noexcept;
@@ -31,6 +28,7 @@ namespace Component {
 		float _lateralMaxSpeed;
 		float _xInput;
 		float _yInput;
+		unsigned int _lifetime;
 	};
 }
 

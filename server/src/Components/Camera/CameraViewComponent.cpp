@@ -24,7 +24,6 @@ void Component::CameraViewComponent::update() noexcept
 {
 	for (AGraphicsComponent *component : this->_graphicComponents) {
 		if (component != nullptr) {
-			std::cout << "CAMERA" << std::endl;
 			if (component->isInArea(this->_parentEntity->getTransformComponent().getPosition().x,
 									this->_parentEntity->getTransformComponent().getPosition().y,
 									this->_relativeBottomRight.x, this->_relativeBottomRight.y)) {
@@ -40,8 +39,21 @@ void Component::CameraViewComponent::update() noexcept
 						component->getParentEntityId(),
 						component->getCurrentAnimationId()
 				));
-				component->setIsHit(false);
+			} else {
+				this->_parentGame->pushDataPacket(PacketFactory::createObjectPacket(
+						static_cast<short>(
+								component->getRelativeXPos(this->_parentEntity->getTransformComponent().getPosition().x,
+														   this->_relativeBottomRight.x) * 100.0f),
+						static_cast<short>(
+								component->getRelativeYPos(this->_parentEntity->getTransformComponent().getPosition().y,
+														   this->_relativeBottomRight.y) * 100.0f),
+						Packet::EntityState::NOTDISPLAYED,
+						component->isHit(),
+						component->getParentEntityId(),
+						component->getCurrentAnimationId()
+				));
 			}
+			component->setIsHit(false);
 		}
 	}
 	this->_graphicComponents.clear();

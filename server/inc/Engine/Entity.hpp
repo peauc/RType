@@ -38,7 +38,8 @@ namespace Engine {
 		bool operator==(const Entity &other) noexcept;
 		Entity *clone() noexcept;
 
-	private:
+		// TODO
+	public:
 		unsigned int _id;
 		bool _active;
 		TransformComponent _transformComponent;

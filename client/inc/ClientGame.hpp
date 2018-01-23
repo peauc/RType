@@ -34,14 +34,17 @@ private:
 		INMENU	= 0,
 		INGAME
 	};
+	
+	using sprite = std::unique_ptr<ISprite>;
 
 	client::AsioClient 		_client;
 	ResourcesLoader 		_resourcesLoader;
 	std::unique_ptr<IRender>	_render;
 	std::unique_ptr<IMenu>		_startMenu;
-	std::unordered_map<uint32_t, std::unique_ptr<ISprite>>	_objects;
+	std::unordered_map<uint32_t, sprite>	_objects;
 	GameState 			_gameState;
 	bool 				_waitingReady;
+	std::vector<sprite>		_backgrounds;
 	
 	const short FRAMEDURATION = 16;
 	const short ANIMATIONDURATION = 16;
@@ -57,15 +60,15 @@ private:
 				      Packet::Input &input) noexcept;
 	void	sendEventPacket(const Packet::Input &input) noexcept;
 	void	sendReadyPacket() noexcept;
-	void	setVelocityInput(short x, short y,
-				     Packet::Input &input) noexcept;
 	void	interpretPacket(const std::vector<Packet::DataPacket>
 				     &packets) noexcept;
-	void	updateObject(const Packet::DataPacket &packet) noexcept;
+	void	updateObject(const Packet::Object &object) noexcept;
 	void	updateInfosObject(ISprite *sprite, bool repeatAnimation,
 				      const Packet::Object &objInfos) noexcept;
 	std::pair<short, short>	calculateRealPosition(short x,
 							     short y) noexcept;
+	void	deleteDeadSprites();
+	void	setBackgrounds() noexcept;
 };
 
 #endif // !RTYPE_CLIENTGAME_HPP_

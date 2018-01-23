@@ -1,0 +1,9 @@
+{
+	 Animation : 
+		[
+			{ "File" : "Tools/Mapper/images_to_map/r-typesheet44.png", "x" : 130, "y" : 38, "width" : 64, "height" : 56 },
+			{ "File" : "Tools/Mapper/images_to_map/r-typesheet44.png", "x" : 197, "y" : 38, "width" : 63, "height" : 56 },
+			{ "File" : "Tools/Mapper/images_to_map/r-typesheet44.png", "x" : 261, "y" : 38, "width" : 63, "height" : 56 },
+			{ "File" : "Tools/Mapper/images_to_map/r-typesheet44.png", "x" : 328, "y" : 38, "width" : 63, "height" : 56 }
+		]
+}

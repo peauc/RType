@@ -12,7 +12,7 @@ Engine::Zone::Zone(const Vector2d &topLeftCoords, const Vector2d &bottomRightCoo
 	this->_bottomRightCoords = bottomRightCoords;
 }
 
-void Engine::Zone::createZone(Engine::Game &game) const
+void Engine::Zone::createZone(const Vector2d &mapSize, Engine::Game &game) const
 {
 	Engine::Entity *zone = new Engine::Entity(0);
 
@@ -20,14 +20,22 @@ void Engine::Zone::createZone(Engine::Game &game) const
 																		   Engine::Hitbox(Engine::Hitbox::ZONE,
 																						  Vector2d(0, 0),
 																						  Vector2d(
-																								  this->_bottomRightCoords.x -
-																								  this->_topLeftCoords.x,
-																								  this->_bottomRightCoords.y -
-																								  this->_topLeftCoords.y)),
+																								  (this->_bottomRightCoords.x -
+																								   this->_topLeftCoords.x) /
+																								  mapSize.x * 8000,
+																								  (this->_bottomRightCoords.y -
+																								   this->_topLeftCoords.y) /
+																								  mapSize.y * 6000)
+																		   ),
 																		   game.getWorld().get());
 
 	for (const auto &entity : this->_zoneObjects) {
-		zoneComponent->addEntity(std::unique_ptr<Entity>(entity.createEntity(game)));
+		Engine::Entity *clone = entity.createEntity(game);
+		if (clone != nullptr) {
+			clone->getTransformComponent().getPosition().x = entity._pos.x / mapSize.x * 8000;
+			clone->getTransformComponent().getPosition().y = entity._pos.y / mapSize.y * 6000;
+			zoneComponent->addEntity(std::unique_ptr<Entity>(clone));
+		}
 	}
 
 	zone->addComponent(zoneComponent);
@@ -35,6 +43,12 @@ void Engine::Zone::createZone(Engine::Game &game) const
 		zoneComponent->registerToMediator(game.getWorld()->getMediator().get());
 	}
 	zone->setActive(true);
+
+	zone->getTransformComponent().getPosition().x = this->_topLeftCoords.x / mapSize.x * 8000;
+	zone->getTransformComponent().getPosition().y = this->_topLeftCoords.y / mapSize.y * 6000;
+
+	std::cout << "Zone pos : (" << zone->getTransformComponent().getPosition().x << ", "
+			  << zone->getTransformComponent().getPosition().y << ")" << std::endl;
 
 	game.getWorld()->addObject(std::unique_ptr<Entity>(zone));
 }

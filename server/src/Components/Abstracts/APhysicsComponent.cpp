@@ -2,6 +2,7 @@
 // Created by romain on 17/01/18.
 //
 
+#include <iostream>
 #include "APhysicsComponent.hpp"
 #include "Entity.hpp"
 
@@ -9,6 +10,7 @@ Component::APhysicsComponent::APhysicsComponent(Engine::Entity *entity, const En
 		AComponent(entity), _hitbox(hitbox)
 {
 	this->_orientedBoundingBox = nullptr;
+	this->_collisionDamages = 0;
 	this->_validMessageTypes[Engine::Mediator::Message::CHECK_COLLISION] = std::bind(
 			&APhysicsComponent::handleCheckCollision,
 			this, std::placeholders::_1,
@@ -34,14 +36,17 @@ void Component::APhysicsComponent::handleCheckCollision(Engine::Mediator::Messag
 {
 	if (APhysicsComponent *other = dynamic_cast<APhysicsComponent *>(sender)) {
 		this->setOBB();
-		this->setOBB();
+		other->setOBB();
 
 		if (this->_orientedBoundingBox->checkIntersection(*other) ||
 			other->_orientedBoundingBox->checkIntersection(*this)) {
 			this->_collisionDamages = 0;
+			std::cout << "COLLISION" << std::endl;
 			if (!this->_mediators.empty()) {
-				this->_mediators[0]->send(Engine::Mediator::Message::GET_IMPACT_DAMAGES, this);
+				this->sendToParentEntity(Engine::Mediator::Message::GET_IMPACT_DAMAGES);
 			}
+			std::cout << "this : " << this->getParentEntityId() << " " << this->_collisionDamages << " collision damages" << std::endl;
+			std::cout << "other : " << other->getParentEntityId() << " " << other->_collisionDamages << " collision damages" << std::endl;
 			other->triggerCollision(*this);
 			this->triggerCollision(*other);
 			this->_collisionDamages = 0;
@@ -60,7 +65,7 @@ void Component::APhysicsComponent::triggerCollision(Component::APhysicsComponent
 {
 	if (this->_collisionDamages == 0) {
 		if (!this->_mediators.empty()) {
-			this->_mediators[0]->send(Engine::Mediator::Message::GET_IMPACT_DAMAGES, this);
+			this->sendToParentEntity(Engine::Mediator::Message::GET_IMPACT_DAMAGES);
 		}
 	}
 	if (this->_collisionHandlers.count(other._hitbox._type) != 0) {
@@ -71,14 +76,15 @@ void Component::APhysicsComponent::triggerCollision(Component::APhysicsComponent
 void Component::APhysicsComponent::blockingCollision(Component::APhysicsComponent &) noexcept
 {
 	if (!this->_mediators.empty()) {
-		this->_mediators[0]->send(Engine::Mediator::Message::CANCEL_MOVE, this);
+		this->sendToParentEntity(Engine::Mediator::Message::CANCEL_MOVE);
 	}
 }
 
 void Component::APhysicsComponent::damagingCollision(Component::APhysicsComponent &) noexcept
 {
+	std::cout << this->getParentEntityId() << " damaged" << std::endl;
 	if (!this->_mediators.empty()) {
-		this->_mediators[0]->send(Engine::Mediator::Message::HIT, this);
+		this->sendToParentEntity(Engine::Mediator::Message::HIT);
 	}
 }
 
@@ -109,6 +115,9 @@ Component::APhysicsComponent &
 Component::APhysicsComponent::operator=(const Component::APhysicsComponent &other) noexcept
 {
 	this->_collisionHandlers = other._collisionHandlers;
+	for (unsigned int i = 0; i < other._mediators.size() - 1; ++i) {
+		this->registerToMediator(other._mediators[i]);
+	}
 
 	return *this;
 }

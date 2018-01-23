@@ -30,10 +30,6 @@ void Component::CameraZoneComponent::handleCheckCollision(Engine::Mediator::Mess
 		this->_orientedBoundingBox->checkIntersection(*other);
 		if (!other->getCollision(TOP) || !other->getCollision(RIGHT) || !other->getCollision(BOTTOM) ||
 			!other->getCollision(LEFT)) {
-			std::cout << "TOP : " << other->getCollision(TOP) << std::endl;
-			std::cout << "RIGHT : " << other->getCollision(RIGHT) << std::endl;
-			std::cout << "BOTTOM : " << other->getCollision(BOTTOM) << std::endl;
-			std::cout << "LEFT : " << other->getCollision(LEFT) << std::endl;
 			other->triggerCollision(*this);
 		}
 	}

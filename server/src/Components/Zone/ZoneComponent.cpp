@@ -36,7 +36,8 @@ void Component::ZoneComponent::handleCheckCollision(Engine::Mediator::Message, E
 
 void Component::ZoneComponent::addEntity(std::unique_ptr<Engine::Entity> entity) noexcept
 {
-	this->_entities.push_back(std::move(entity));
+	if (entity != nullptr)
+		this->_entities.push_back(std::move(entity));
 }
 
 void Component::ZoneComponent::trigger() noexcept
@@ -44,6 +45,8 @@ void Component::ZoneComponent::trigger() noexcept
 	for (auto &entity : this->_entities) {
 		entity->setActive(true);
 		this->_parentWorld->addObject(std::move(entity));
+		// TODO
+		break;
 	}
 	this->_parentEntity->setActive(false);
 }

@@ -6,7 +6,6 @@
 */
 
 #include <AsioServer.hpp>
-#include "ResourcesLoader.hpp"
 
 int main(int, char **)
 {

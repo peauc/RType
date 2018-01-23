@@ -5,12 +5,11 @@
 #ifndef RTYPE_BERZERKER_HPP
 #	define RTYPE_BERZERKER_HPP
 
-#	include "Entity.hpp"
-#	include "EnemyMoveComponent.hpp"
-#	include "EnemyAIComponent.hpp"
-#	include "EnemyPhysicsComponent.hpp"
-#	include "EnemyGraphicsComponent.hpp"
-#	include "Components/HealthComponent.hpp"
+#include "Entity.hpp"
+
+namespace Engine {
+	class Game;
+}
 
 class Berzerker : public Engine::Entity {
 public:

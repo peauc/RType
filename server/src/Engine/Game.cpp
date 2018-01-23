@@ -42,7 +42,7 @@ void Engine::Game::setup(size_t nbOfPlayers,
 	this->_world->addMediator();
 	this->setResourceLoader(resourceLoader);
 	std::unique_ptr<Engine::Entity> camera = std::unique_ptr<Engine::Entity>
-			(Factory::EntityFactory::createCamera(0, *this));
+			(Factory::EntityFactory::createCamera(666, *this));
 
 	this->_world->setCamera(std::move(camera));
 
@@ -50,16 +50,19 @@ void Engine::Game::setup(size_t nbOfPlayers,
 		this->_world->addObject(Factory::EntityFactory::createPlayerShip);
 	}
 
-	//this->_enemyLoader.setup("../DLEnemies/", *this);
-	//this->_DLEntitiesMap = this->_enemyLoader.getEnemies();
+	this->_enemyLoader.setup("../DLEnemies/", *this);
+	this->_DLEntitiesMap = this->_enemyLoader.getEnemies();
 
 	const MapLoader::Zones &zones = this->_mapLoader.loadZones("../Maps/Game.map");
-	std::cout << "AFTER LOAD" << std::endl;
-	exit(0);
+	this->createZones(Vector2d(this->_mapLoader.getMapWidth(), this->_mapLoader.getMapHeight()), zones);
 }
 
-void Engine::Game::createZones(const Vector2d &mapSize, const MapLoader::Zones &)
+void Engine::Game::createZones(const Vector2d &mapSize, const MapLoader::Zones &zones)
 {
+	for (const auto &zone : zones) {
+		zone.createZone(mapSize, *this);
+		break;
+	}
 }
 
 std::unique_ptr<Engine::World> &Engine::Game::getWorld()
@@ -134,9 +137,11 @@ Engine::Game::getPackets()
 
 Engine::Entity *Engine::Game::cloneEntity(const std::string &name) const
 {
-	std::map<const std::string, Entity *>::const_iterator ent = this->_DLEntitiesMap->find(name);
-	if (ent != this->_DLEntitiesMap->end()) {
-		return ent->second->clone();
+	if (this->_DLEntitiesMap != nullptr) {
+		std::map<const std::string, Entity *>::const_iterator ent = this->_DLEntitiesMap->find(name);
+		if (ent != this->_DLEntitiesMap->end()) {
+			return ent->second->clone();
+		}
 	}
 	return nullptr;
 }

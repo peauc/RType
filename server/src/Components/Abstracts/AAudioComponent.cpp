@@ -19,6 +19,9 @@ Component::AAudioComponent &Component::AAudioComponent::operator=(const Componen
 {
 	this->_parentGame = other._parentGame;
 	this->_soundIds = other._soundIds;
+	for (unsigned int i = 0; i < other._mediators.size() - 1; ++i) {
+		this->registerToMediator(other._mediators[i]);
+	}
 
 	return *this;
 }

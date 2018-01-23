@@ -29,7 +29,7 @@ void Component::PlayerWeaponComponent::update() noexcept
 																				 50, false, true);
 		Engine::AComponent *shotGraphicsComponent;
 		Engine::AComponent *shotSoundComponent;
-		// TODO Change animation values
+
 		if (this->_charge < 30) { // Standard shot
 			shotGraphicsComponent = new Component::ShotGraphicsComponent(shot.get(),
 																		 this->_parentGame->getResourceLoader().get(),

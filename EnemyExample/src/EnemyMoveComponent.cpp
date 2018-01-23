@@ -4,15 +4,18 @@
 
 #include <iostream>
 #include "EnemyMoveComponent.hpp"
+#include "AInputComponent.hpp"
+#include "TransformPositionCommand.hpp"
 
-Component::EnemyMoveComponent::EnemyMoveComponent(Engine::Entity *parentEntity)
+Component::EnemyMoveComponent::EnemyMoveComponent(Engine::Entity *parentEntity, unsigned int lifetime)
 		: AMovementComponent(parentEntity),
 		  _baseSpeed(1.0f),
 		  _lateralBaseSpeed(0.0f),
 		  _maxSpeed(2.0f),
 		  _lateralMaxSpeed(1.0f),
 		  _xInput(0.0f),
-		  _yInput(0.0f)
+		  _yInput(0.0f),
+		  _lifetime(lifetime)
 {
 	this->_validMessageTypes[Engine::Mediator::Message::NEW_EVENT] = std::bind(&EnemyMoveComponent::handleEvent,
 																			   this, std::placeholders::_1,
@@ -20,7 +23,6 @@ Component::EnemyMoveComponent::EnemyMoveComponent(Engine::Entity *parentEntity)
 }
 
 void Component::EnemyMoveComponent::update() noexcept {
-	std::cout << "Updating movement" << std::endl;
 	this->_lastMove.x = this->_baseSpeed + this->_xInput * this->_baseSpeed;
 	this->_lastMove.y = this->_lateralBaseSpeed + this->_yInput * this->_lateralMaxSpeed;
 
@@ -37,11 +39,14 @@ void Component::EnemyMoveComponent::update() noexcept {
 
 	this->_xInput = 0;
 	this->_yInput = 0;
+	this->_lifetime--;
+	if (this->_lifetime == 0) {
+		this->_mediators.front()->send(Engine::Mediator::Message::DEATH, this);
+	}
 }
 
 void Component::EnemyMoveComponent::handleEvent(Engine::Mediator::Message messageType, Engine::AComponent *sender)
 {
-	std::cout << "Handling event" << std::endl;
 	if (AInputComponent *inputComponent = dynamic_cast<AInputComponent *>(sender)) {
 		if (inputComponent->hasEvent()) {
 			this->_xInput = inputComponent->getEvent()._xVelocity;
@@ -55,7 +60,7 @@ void Component::EnemyMoveComponent::handleEvent(Engine::Mediator::Message messag
 
 Engine::AComponent *Component::EnemyMoveComponent::clone(Engine::Entity *parentEntity) const noexcept
 {
-	EnemyMoveComponent *newComp = new EnemyMoveComponent(parentEntity);
+	EnemyMoveComponent *newComp = new EnemyMoveComponent(parentEntity, this->_lifetime);
 
 	*newComp = *this;
 

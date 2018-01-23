@@ -49,16 +49,18 @@ public:
 private:
 	const unsigned int					BPP = 32;
 
+	using keyPressed = std::pair<IRender::EventAction, bool>;
+
 	std::unique_ptr<sf::RenderWindow>			_window;
-	std::unordered_map<int, IRender::EventAction>		_eventMap;
+	std::unordered_map<int, keyPressed>			_eventMap;
 	std::unordered_map<uint32_t, std::vector<sf::Texture>>	_textureMap;
 	uint32_t 						_width;
 	uint32_t 						_height;
 
-	void	addEventToQueue(std::queue<IRender::EventAction> &eventQueue,
-				    int key) noexcept;
-	sf::Texture	loadTexture(const Texture &structTexture);
 	void		initEventMap();
+	void		setKeyPressedOrReleased(int key, bool pressed);
+	sf::Texture	loadTexture(const Texture &structTexture);
+	void createEventQueue(std::queue<IRender::EventAction> &eventQueue);
 };
 
 #endif // !RTYPE_RENDERSFML_HPP_

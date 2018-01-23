@@ -37,14 +37,14 @@ public:
 	void	setPosY(int y) noexcept override;
 	void	setPos(int x, int y) noexcept override;
 
-private:
+protected:
 	sf::Sprite	_sprite;
 	sf::Texture	_texture;
 	unsigned int	_sizeTileX;
 	unsigned int	_sizeTileY;
+
+private:
 	std::vector<sf::Texture> _animationVector;
-	unsigned short	_animationIndex;
-	bool		_repeatAnimation;
 };
 
 #endif // !RTYPE_SPRITESFML_HPP_

@@ -5,10 +5,10 @@
 
 #include <iostream>
 #include "EnemyGraphicsComponent.hpp"
-#include "Components/Abstracts/AMovementComponent.hpp"
+#include "AMovementComponent.hpp"
 
 Component::EnemyGraphicsComponent::EnemyGraphicsComponent(Engine::Entity *parentEntity,
-															RessourcesLoader *resourceLoader) :
+															ResourcesLoader *resourceLoader) :
 		AGraphicsComponent(parentEntity, resourceLoader) {
 	this->_animationIds.push_back(8);
 	this->_currentAnimationId = this->_animationIds[0];
@@ -30,15 +30,14 @@ Component::EnemyGraphicsComponent::EnemyGraphicsComponent(Engine::Entity *parent
 }
 
 void Component::EnemyGraphicsComponent::update() {
-	std::cout << "Updating graphics" << std::endl;
 	this->sendToAll(Engine::Mediator::Message::GRAPHICS_REGISTERING);
 }
 
-void Component::EnemyGraphicsComponent::handleDeath(Engine::Mediator::Message, Engine::AComponent *) noexcept {
+void Component::EnemyGraphicsComponent::handleHit(Engine::Mediator::Message, Engine::AComponent *) noexcept {
 	this->_isHit = true;
 }
 
-void Component::EnemyGraphicsComponent::handleHit(Engine::Mediator::Message, Engine::AComponent *) noexcept {
+void Component::EnemyGraphicsComponent::handleDeath(Engine::Mediator::Message, Engine::AComponent *) noexcept {
 	this->_isAlive = false;
 }
 

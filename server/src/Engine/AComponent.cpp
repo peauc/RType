@@ -18,11 +18,8 @@ void Engine::AComponent::registerToMediator(Engine::Mediator *mediator) noexcept
 
 void Engine::AComponent::unregisterToMediator(Engine::Mediator *mediator) noexcept
 {
-	std::cout << "1" << std::endl;
 	this->_mediators.erase(std::find(this->_mediators.begin(), this->_mediators.end(), mediator));
-	std::cout << "2" << std::endl;
 	mediator->unregisterComponent(this);
-	std::cout << "3" << std::endl;
 }
 
 void Engine::AComponent::receive(Engine::Mediator::Message messageType, Engine::AComponent *sender) noexcept
@@ -48,8 +45,8 @@ void Engine::AComponent::sendToAll(Engine::Mediator::Message messageType) noexce
 
 void Engine::AComponent::sendToParentEntity(Engine::Mediator::Message messageType) noexcept
 {
-	if (this->_mediators[0] != nullptr) {
-		this->_mediators[0]->send(messageType, this);
+	if (!this->_mediators.empty()) {
+		this->_mediators.back()->send(messageType, this);
 	}
 }
 

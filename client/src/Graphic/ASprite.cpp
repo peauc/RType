@@ -8,7 +8,9 @@
 #include "Graphic/ASprite.hpp"
 
 ASprite::ASprite() noexcept
- : _posX(0), _posY(0), _animationId(0), _onClick(nullptr)
+ : _posX(0), _posY(0), _animationId(0), _animationIndex(0),
+   _repeatAnimation(true), _waitingToBeDeleted(false),
+   _display(true), _onClick(nullptr)
 {
 }
 
@@ -17,6 +19,12 @@ ASprite::ASprite(const ASprite &other) noexcept
 	if (this != &other) {
 		this->_posX = other._posX;
 		this->_posY = other._posY;
+		this->_animationId = other._animationId;
+		this->_animationIndex = other._animationIndex;
+		this->_repeatAnimation = other._repeatAnimation;
+		this->_waitingToBeDeleted = other._waitingToBeDeleted;
+		this->_display = other._display;
+		this->_onClick = other._onClick;
 	}
 }
 
@@ -25,6 +33,12 @@ ASprite &ASprite::operator=(const ASprite &other) noexcept
 	if (this != &other) {
 		this->_posX = other._posX;
 		this->_posY = other._posY;
+		this->_animationId = other._animationId;
+		this->_animationIndex = other._animationIndex;
+		this->_repeatAnimation = other._repeatAnimation;
+		this->_waitingToBeDeleted = other._waitingToBeDeleted;
+		this->_display = other._display;
+		this->_onClick = other._onClick;
 	}
 	return (*this);
 }
@@ -75,4 +89,29 @@ uint32_t ASprite::getAnimationId() const noexcept
 void ASprite::setAnimationId(uint32_t id) noexcept
 {
 	this->_animationId = id;
+}
+
+bool ASprite::isWaitingToBeDeleted() const noexcept
+{
+	return (this->_waitingToBeDeleted);
+}
+
+bool ASprite::isAnimationRepeating() const noexcept
+{
+	return (this->_repeatAnimation);
+}
+
+void ASprite::setRepeatAnimation(bool repeat) noexcept
+{
+	this->_repeatAnimation =repeat;
+}
+
+bool ASprite::isDisplay() const
+{
+	return (this->_display);
+}
+
+void ASprite::setDisplay(bool display)
+{
+	this->_display = display;
 }

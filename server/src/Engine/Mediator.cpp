@@ -12,11 +12,8 @@ void Engine::Mediator::registerComponent(AComponent *component) noexcept
 
 void Engine::Mediator::unregisterComponent(Engine::AComponent *component) noexcept
 {
-	std::cout << "m1" << std::endl;
 	auto subject = std::find(this->_subjects.begin(), this->_subjects.end(), component);
-	std::cout << "m2" << std::endl;
 	this->_subjects.erase(subject);
-	std::cout << "m3" << std::endl;
 }
 
 void Engine::Mediator::send(Engine::Mediator::Message message, Engine::AComponent *sender) noexcept
