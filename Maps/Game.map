@@ -6,41 +6,51 @@
 			{
 				"X1" : 1978,
 				"Y1" : 2,
-				"X2" : 5196,
-				"Y2" : 676,
+				"X2" : 6907,
+				"Y2" : 670,
 				"Childs" : 
 					[
-						{ "Path" : "lberzerker.so", "X" : 3630, "Y" : 129, "Width" : 140, "Height" : 94 },
-						{ "Path" : "lberzerker.so", "X" : 3323, "Y" : 241, "Width" : 149, "Height" : 98 },
-						{ "Path" : "lberzerker.so", "X" : 3380, "Y" : 470, "Width" : 141, "Height" : 94 },
-						{ "Path" : "lberzerker.so", "X" : 3631, "Y" : 306, "Width" : 129, "Height" : 85 },
-						{ "Path" : "lberzerker.so", "X" : 3409, "Y" : 75, "Width" : 133, "Height" : 88 },
-						{ "Path" : "lberzerker.so", "X" : 3616, "Y" : 528, "Width" : 129, "Height" : 86 },
-						{ "Path" : "lberzerker.so", "X" : 3963, "Y" : 504, "Width" : 135, "Height" : 90 },
-						{ "Path" : "lberzerker.so", "X" : 4163, "Y" : 343, "Width" : 163, "Height" : 108 },
-						{ "Path" : "lberzerker.so", "X" : 3990, "Y" : 160, "Width" : 155, "Height" : 103 },
-						{ "Path" : "lberzerker.so", "X" : 3912, "Y" : 322, "Width" : 156, "Height" : 103 },
-						{ "Path" : "lberzerker.so", "X" : 4310, "Y" : 91, "Width" : 149, "Height" : 98 },
-						{ "Path" : "lberzerker.so", "X" : 4264, "Y" : 544, "Width" : 142, "Height" : 94 },
+						{ "Path" : "lmojojo.so", "X" : 6357, "Y" : 345, "Width" : 135, "Height" : 89 },
 						{ "Path" : "lberzerker.so", "X" : 4458, "Y" : 274, "Width" : 142, "Height" : 94 },
-						{ "Path" : "lberzerker.so", "X" : 4711, "Y" : 125, "Width" : 149, "Height" : 96 },
+						{ "Path" : "lmojojo.so", "X" : 6353, "Y" : 74, "Width" : 128, "Height" : 86 },
+						{ "Path" : "lmojojo.so", "X" : 6471, "Y" : 551, "Width" : 156, "Height" : 103 },
+						{ "Path" : "lmojojo.so", "X" : 5934, "Y" : 127, "Width" : 162, "Height" : 107 },
+						{ "Path" : "lberzerker.so", "X" : 4264, "Y" : 544, "Width" : 142, "Height" : 94 },
+						{ "Path" : "lmojojo.so", "X" : 6689, "Y" : 86, "Width" : 156, "Height" : 103 },
+						{ "Path" : "lmojojo.so", "X" : 5674, "Y" : 331, "Width" : 171, "Height" : 113 },
+						{ "Path" : "lmojojo.so", "X" : 6074, "Y" : 580, "Width" : 149, "Height" : 98 },
+						{ "Path" : "lberzerker.so", "X" : 4310, "Y" : 91, "Width" : 149, "Height" : 98 },
+						{ "Path" : "lberzerker.so", "X" : 4860, "Y" : 332, "Width" : 141, "Height" : 91 },
+						{ "Path" : "lmojojo.so", "X" : 6692, "Y" : 345, "Width" : 161, "Height" : 107 },
+						{ "Path" : "lberzerker.so", "X" : 3380, "Y" : 470, "Width" : 141, "Height" : 94 },
+						{ "Path" : "lberzerker.so", "X" : 3323, "Y" : 241, "Width" : 149, "Height" : 98 },
+						{ "Path" : "lberzerker.so", "X" : 3630, "Y" : 129, "Width" : 140, "Height" : 94 },
+						{ "Path" : "lberzerker.so", "X" : 4163, "Y" : 343, "Width" : 163, "Height" : 108 },
 						{ "Path" : "lberzerker.so", "X" : 4637, "Y" : 489, "Width" : 128, "Height" : 86 },
-						{ "Path" : "lberzerker.so", "X" : 4860, "Y" : 332, "Width" : 141, "Height" : 91 }
+						{ "Path" : "lberzerker.so", "X" : 3963, "Y" : 504, "Width" : 135, "Height" : 90 },
+						{ "Path" : "lmojojo.so", "X" : 5780, "Y" : 573, "Width" : 147, "Height" : 97 },
+						{ "Path" : "lberzerker.so", "X" : 3616, "Y" : 528, "Width" : 129, "Height" : 86 },
+						{ "Path" : "lberzerker.so", "X" : 4711, "Y" : 125, "Width" : 149, "Height" : 96 },
+						{ "Path" : "lberzerker.so", "X" : 3409, "Y" : 75, "Width" : 133, "Height" : 88 },
+						{ "Path" : "lmojojo.so", "X" : 5963, "Y" : 343, "Width" : 164, "Height" : 107 },
+						{ "Path" : "lberzerker.so", "X" : 3631, "Y" : 306, "Width" : 129, "Height" : 85 },
+						{ "Path" : "lberzerker.so", "X" : 3990, "Y" : 160, "Width" : 155, "Height" : 103 },
+						{ "Path" : "lberzerker.so", "X" : 3912, "Y" : 322, "Width" : 156, "Height" : 103 }
 					]
 
 			},
 			{
-				"X1" : 398,
-				"Y1" : 2,
-				"X2" : 1969,
+				"X1" : 366,
+				"Y1" : 5,
+				"X2" : 1934,
 				"Y2" : 675,
 				"Childs" : 
 					[
-						{ "Path" : "lberzerker.so", "X" : 1760, "Y" : 308, "Width" : 122, "Height" : 81 },
 						{ "Path" : "lberzerker.so", "X" : 1467, "Y" : 310, "Width" : 129, "Height" : 86 },
-						{ "Path" : "lberzerker.so", "X" : 1600, "Y" : 116, "Width" : 112, "Height" : 75 },
 						{ "Path" : "lberzerker.so", "X" : 1510, "Y" : 505, "Width" : 147, "Height" : 97 },
-						{ "Path" : "lberzerker.so", "X" : 1834, "Y" : 502, "Width" : 116, "Height" : 78 }
+						{ "Path" : "lberzerker.so", "X" : 1760, "Y" : 308, "Width" : 122, "Height" : 81 },
+						{ "Path" : "lberzerker.so", "X" : 1834, "Y" : 502, "Width" : 116, "Height" : 78 },
+						{ "Path" : "lberzerker.so", "X" : 1600, "Y" : 116, "Width" : 112, "Height" : 75 }
 					]
 
 			}

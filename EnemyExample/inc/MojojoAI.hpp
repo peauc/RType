@@ -26,6 +26,7 @@ namespace Component {
 	public:
 		explicit MojojoAI(Engine::Entity *parentEntity);
 		~MojojoAI() override = default;
+		int i;
 
 		void update() noexcept override;
 		AComponent *clone(Engine::Entity *parentEntity) const noexcept override;
