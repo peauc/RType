@@ -75,7 +75,7 @@ public:
 	 * @return queue of user events
 	 */
 	virtual std::queue<EventAction>		pollEvents() = 0;
-
+	virtual void		playMusic(const std::string &filePath) = 0;
 	/**
 	 * Check if sprite has been clicked
 	 * @param sprite to check

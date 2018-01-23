@@ -9,6 +9,7 @@
 # define RTYPE_RENDERSFML_HPP_
 
 # include <SFML/Graphics.hpp>
+# include <SFML/Audio.hpp>
 # include <unordered_map>
 # include "Graphic/IRender.hpp"
 
@@ -40,6 +41,7 @@ public:
 
 	void	loadAnimations(std::unordered_map<uint32_t,
 		std::vector<Texture>> textureMap) override;
+	void	playMusic(const std::string &filePath) override;
 	void	setAnimationToSprite(ISprite *sprite,
 					 uint32_t idAnimation,
 					 bool repeat) noexcept override;
@@ -54,6 +56,8 @@ private:
 	std::unique_ptr<sf::RenderWindow>			_window;
 	std::unordered_map<int, keyPressed>			_eventMap;
 	std::unordered_map<uint32_t, std::vector<sf::Texture>>	_textureMap;
+	sf::Music						_music;
+	bool						_musicLoaded = false;
 	uint32_t 						_width;
 	uint32_t 						_height;
 
