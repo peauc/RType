@@ -15,9 +15,9 @@ void Component::MojojoAI::update() noexcept {
 
 	event->_xVelocity = 1;
 	if (this->i >= 60)
-		event->_yVelocity = 1;
+		event->_yVelocity = 10;
 	else if (this->i >= 120)
-		event->_yVelocity = -1;
+		event->_yVelocity = -10;
 	else
 		event->_yVelocity = 0;
 	event->_chargingShot = false;
