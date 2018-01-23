@@ -12,5 +12,4 @@ Engine::Commands::RemoveEntityCommand::RemoveEntityCommand(Engine::World &world,
 void Engine::Commands::RemoveEntityCommand::execute() noexcept
 {
 	this->_world.removeObject(this->_entityId);
-	std::cout << "after1" << std::endl;
 }
