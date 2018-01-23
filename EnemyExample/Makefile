@@ -1,14 +1,22 @@
-NAME            =       lberzerker.so
+BERZERKER       =       lberzerker.so
+MOJOJO		=	lmojojo.so
 
 CXX             =       g++
 
-SRCS            =       Berzerker.cpp			\
+SRCS_BERZERKER  =       Berzerker.cpp			\
 			EnemyMoveComponent.cpp		\
 			EnemyAIComponent.cpp		\
 			EnemyGraphicsComponent.cpp	\
 			EnemyPhysicsComponent.cpp	\
 
-FILES           =       $(addprefix ./src/, $(SRCS))
+SRCS_MOJOJO	=	Mojojo.cpp			\
+			MojojoMove.cpp			\
+			MojojoAI.cpp			\
+			MojojoGraphics.cpp		\
+			MojojoPhysics.cpp		\
+
+FILES_BERZERKER =       $(addprefix ./src/, $(SRCS_BERZERKER))
+FILES_MOJOJO 	=       $(addprefix ./src/, $(SRCS_MOJOJO))
 
 INCLUDES        =       -I ./inc				\
 			-I ../server/inc			\
@@ -27,20 +35,28 @@ CPPFLAGS        =       -std=c++14 -fPIC ${INCLUDES}
 
 LDFLAGS         =       -shared
 
-OBJS            =       $(FILES:.cpp=.o)
+OBJS_BERZERKER  =       $(FILES_BERZERKER:.cpp=.o)
+OBJS_MOJOJO	=       $(FILES_MOJOJO:.cpp=.o)
 
-$(NAME):                $(OBJS)
-			$(CXX) $(OBJS) -o $(NAME) $(LDFLAGS)
-			cp ${NAME} ../DLEnemies
+all:                    $(BERZERKER) $(MOJOJO)
 
-all:                    $(NAME)
+$(BERZERKER):           $(OBJS_BERZERKER)
+			$(CXX) $(OBJS_BERZERKER) -o $(BERZERKER) $(LDFLAGS)
+			cp ${BERZERKER} ../DLEnemies
+
+$(MOJOJO):      	$(OBJS_MOJOJO)
+			$(CXX) $(OBJS_MOJOJO) -o $(MOJOJO) $(LDFLAGS)
+			cp ${MOJOJO} ../DLEnemies
 
 clean:
-			rm -f $(OBJS)
+			rm -f $(OBJS_BERZERKER)
+			rm -f $(OBJS_MOJOJO)
 
 fclean:                 clean
-			rm -f $(NAME)
-			rm -f ../DLEnemies/${NAME}
+			rm -f $(BERZERKER)
+			rm -f $(MOJOJO)
+			rm -f ../DLEnemies/${BERZERKER}
+			rm -f ../DLEnemies/${MOJOJO}
 
 re:                     fclean all
 
