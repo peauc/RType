@@ -60,7 +60,7 @@ private:
 	void		initEventMap();
 	void		setKeyPressedOrReleased(int key, bool pressed);
 	sf::Texture	loadTexture(const Texture &structTexture);
-	std::queue<IRender::EventAction> createEventQueue();
+	void createEventQueue(std::queue<IRender::EventAction> &eventQueue);
 };
 
 #endif // !RTYPE_RENDERSFML_HPP_

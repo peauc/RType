@@ -34,3 +34,7 @@ void SpriteBackground::setTexture(sf::Texture &texture) {
 	this->icon.setPosition(this->getX(), this->getY());
 	ASpriteBackground::refresh();
 }
+
+void SpriteBackground::init() {
+
+}

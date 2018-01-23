@@ -5,6 +5,7 @@
 ** No description
 */
 
+#include <boost/filesystem.hpp>
 #include <iostream>
 #include <fstream>
 #include "Object.hpp"
@@ -16,14 +17,17 @@ MapModel::MapModel(MapView *parent) : AModel(parent) {
 	this->parent = parent;
 }
 
+void MapModel::setEnemiesDirectory(const std::string &enemiesDirectory) {
+	this->enemiesDirectory = enemiesDirectory;
+	if (!this->enemiesDirectory.empty()
+		&& this->enemiesDirectory.back() != '/')
+		this->enemiesDirectory += "/";
+}
+
 void MapModel::setOutputDirectory(const std::string &outputDirectory) {
 	this->outputDirectory = outputDirectory;
 	if (!this->outputDirectory.empty() && this->outputDirectory.back() != '/')
 		this->outputDirectory += "/";
-}
-
-void MapModel::setExecDirectory(const std::string &execDirectory) {
-	this->execDirectory = PathResolver::changeOriginPath(execDirectory);
 }
 
 void MapModel::setExistingMap(const std::string &existingMap) {
@@ -79,22 +83,28 @@ void MapModel::fillZone(JsonDataLoader::ArrayValues &childs) {
 void MapModel::sendZone(const Object &object) {
 	ChildMap	*zone = new ChildMap;
 
-	zone->setX(object.getPropertyUint("X1"));
-	zone->setY(object.getPropertyUint("Y1"));
-	zone->setWidth(object.getPropertyUint("X2") - zone->getX());
-	zone->setHeight(object.getPropertyUint("Y2") - zone->getY());
+	zone->setX(object.getPropertyUint("X1") + this->parent->getX());
+	zone->setY(object.getPropertyUint("Y1") + this->parent->getY());
+	zone->setWidth(object.getPropertyUint("X2") + this->parent->getX()
+				   - zone->getX());
+	zone->setHeight(object.getPropertyUint("Y2") + this->parent->getY()
+					- zone->getY());
 	zone->setResizing(false);
 	this->parent->loadChild(zone);
 }
 
 void MapModel::sendObject(const Object &object) {
-	ChildMap	*child = new ChildMap(nullptr, object.getPropertyString("Path"));
+	ChildMap	*child;
+	boost::filesystem::path		p(object.getPropertyString("Path"));
 
-	child->setPathItem(object.getPropertyString("Path"));
+	child = new ChildMap(nullptr, object.getPropertyString("Path"));
+	child->setPathItem(p.filename().string());
 	child->setWidth(object.getPropertyUint("Width"));
 	child->setHeight(object.getPropertyUint("Height"));
-	child->setX(object.getPropertyUint("X") - child->getWidth() / 2);
-	child->setY(object.getPropertyUint("Y") - child->getHeight() / 2);
+	child->setX(object.getPropertyUint("X") + this->parent->getX()
+				- child->getWidth() / 2);
+	child->setY(object.getPropertyUint("Y") + this->parent->getY()
+				- child->getHeight() / 2);
 	this->parent->loadChild(child);
 }
 
@@ -115,8 +125,7 @@ std::string MapModel::saveChilds() const {
 	auto			&childs = this->parent->getChilds();
 	std::string		result;
 
-	result = "{\n";
-	result += "\t\"Screen Width\" : "
+	result = "{\n\t\"Screen Width\" : "
 			  + std::to_string(this->parent->getWidth()) + ",\n";
 	result += "\t\"Screen Height\" : "
 			  + std::to_string(this->parent->getHeight()) + ",\n";
@@ -130,8 +139,7 @@ std::string MapModel::saveChilds() const {
 	}
 	if (result.back() == ',')
 		result.erase(--result.end());
-	result += "\n\t\t]\n";
-	result += "\n}";
+	result += "\n\t\t]\n}";
 	return (result);
 }
 
@@ -180,7 +188,7 @@ std::string MapModel::saveChildInZone(const ChildMap *child) const {
 
 	result = indent;
 	result += "{ ";
-	result += "\"Path\" : \"" + this->execDirectory + child->getPathItem()
+	result += "\"Path\" : \"" + this->enemiesDirectory + child->getPathItem()
 			  + "\", ";
 	result += "\"X\" : "
 			  + std::to_string(this->getRealXValue(child->getX())

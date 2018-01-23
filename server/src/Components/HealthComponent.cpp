@@ -31,9 +31,11 @@ void Component::HealthComponent::update() noexcept
 
 void Component::HealthComponent::takeDamage(int damages) noexcept
 {
+	std::cout << this->getParentEntityId() << " Taking " << damages << " damages" << std::endl;
 	if (!this->_godMode) {
 		this->_health -= (this->_instantDeath) ? this->_health : damages;
 		if (this->_health <= 0) {
+			std::cout << "I'm ded." << std::endl;
 			this->sendToAll(Engine::Mediator::Message::DEATH);
 			this->_parentEntity->addCommand(new Engine::Commands::RemoveEntityCommand(*this->_world,
 																					  this->_parentEntity->getId()));
@@ -72,4 +74,12 @@ Component::HealthComponent::clone(Engine::Entity *parentEntity) const noexcept
 	*healthComponent = *this;
 
 	return healthComponent;
+}
+
+Component::HealthComponent &Component::HealthComponent::operator=(const Component::HealthComponent &other)
+{
+	for (unsigned int i = 0; i < other._mediators.size() - 1; ++i) {
+		this->registerToMediator(other._mediators[i]);
+	}
+	return *this;
 }

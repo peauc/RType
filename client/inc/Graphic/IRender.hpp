@@ -27,6 +27,7 @@ public:
 		RIGHT	= 3,
 		SPACE	= 4,
 		MOUSE1	= 5,
+		QUIT	= 6,
 		UNKNOWN
 	};
 

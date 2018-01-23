@@ -25,6 +25,8 @@ public:
 	virtual void	receiveEvent(const sf::Event &event);
 	virtual void	refresh();
 
+	virtual void	init();
+
 	void		setTexture(sf::Texture &texture);
 
 };

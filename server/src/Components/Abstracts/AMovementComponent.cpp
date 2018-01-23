@@ -29,9 +29,13 @@ void Component::AMovementComponent::handleCancelMove(Engine::Mediator::Message, 
 	}
 }
 
-Component::AMovementComponent &Component::AMovementComponent::operator=(const Component::AMovementComponent &) noexcept
+Component::AMovementComponent &
+Component::AMovementComponent::operator=(const Component::AMovementComponent &other) noexcept
 {
 	this->_event = nullptr;
+	for (unsigned int i = 0; i < other._mediators.size() - 1; ++i) {
+		this->registerToMediator(other._mediators[i]);
+	}
 
 	return *this;
 }

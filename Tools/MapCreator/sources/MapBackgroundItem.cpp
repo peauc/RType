@@ -52,3 +52,7 @@ void MapBackgroundItem::onMouseButtonReleased(const sf::Event &event) {
 void MapBackgroundItem::onMouseMoved(const sf::Event &event) {
 
 }
+
+void MapBackgroundItem::init() {
+
+}

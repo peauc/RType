@@ -12,7 +12,7 @@ namespace Component {
 	class EnemyMoveComponent : public AMovementComponent
 	{
 	public:
-		explicit EnemyMoveComponent(Engine::Entity *parentEntity);
+		explicit EnemyMoveComponent(Engine::Entity *parentEntity, unsigned int lifetime);
 		~EnemyMoveComponent() override = default;
 
 		void update() noexcept;
@@ -28,6 +28,7 @@ namespace Component {
 		float _lateralMaxSpeed;
 		float _xInput;
 		float _yInput;
+		unsigned int _lifetime;
 	};
 }
 

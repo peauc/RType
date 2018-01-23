@@ -42,6 +42,7 @@ void GridLayout::addChild(AItem *child, const Range &range) {
 	child->setHeight(this->getPValue(range.pEHeight - range.pSHeight,
 									 this->getHeight()));
 	child->setParent(this);
+	child->init();
 	AContainer::addChild(child);
 	this->refresh();
 }
@@ -51,4 +52,8 @@ int GridLayout::getPValue(int p, int value) const {
 
 	pValue = static_cast<int>(value / 100.0 * p);
 	return (pValue);
+}
+
+void GridLayout::init() {
+
 }

@@ -35,12 +35,14 @@ bool Component::AGraphicsComponent::isInArea(double xPos, double yPos, double xR
 
 double Component::AGraphicsComponent::getRelativeXPos(double xPos, double xRange) noexcept
 {
-	return (this->_parentEntity->getTransformComponent().getPosition().x + this->_relativeStartPos.x - xPos) / xRange * 100;
+	return (this->_parentEntity->getTransformComponent().getPosition().x + this->_relativeStartPos.x - xPos) / xRange *
+		   100;
 }
 
 double Component::AGraphicsComponent::getRelativeYPos(double yPos, double yRange) noexcept
 {
-	return (this->_parentEntity->getTransformComponent().getPosition().y + this->_relativeStartPos.y - yPos) / yRange * 100;
+	return (this->_parentEntity->getTransformComponent().getPosition().y + this->_relativeStartPos.y - yPos) / yRange *
+		   100;
 }
 
 ResourcesLoader *Component::AGraphicsComponent::getResourceLoader() const noexcept
@@ -97,6 +99,10 @@ Component::AGraphicsComponent::operator=(const Component::AGraphicsComponent &ot
 	this->_resourceLoader = other._resourceLoader;
 	this->_isHit = other._isHit;
 	this->_animationIds = other._animationIds;
+	this->_observers = other._observers;
+	for (unsigned int i = 0; i < other._mediators.size() - 1; ++i) {
+		this->registerToMediator(other._mediators[i]);
+	}
 
 	return *this;
 }
