@@ -8,6 +8,7 @@
 Component::APhysicsComponent::APhysicsComponent(Engine::Entity *entity, const Engine::Hitbox &hitbox) :
 		AComponent(entity), _hitbox(hitbox)
 {
+	this->_orientedBoundingBox = nullptr;
 	this->_validMessageTypes[Engine::Mediator::Message::CHECK_COLLISION] = std::bind(
 			&APhysicsComponent::handleCheckCollision,
 			this, std::placeholders::_1,

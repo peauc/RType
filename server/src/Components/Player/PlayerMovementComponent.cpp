@@ -31,9 +31,9 @@ void Component::PlayerMovementComponent::update() noexcept
 	this->_lastMove.x = this->_baseSpeed + this->_xInput * this->_inputSpeed;
 	this->_lastMove.y = this->_lateralBaseSpeed + this->_yInput * this->_lateralInputSpeed;
 
-	std::cout << "Pos : (" << this->_parentEntity->getTransformComponent().getPosition().x << ", "
-			  << this->_parentEntity->getTransformComponent().getPosition().y << ")" << std::endl;
-	std::cout << "Movement : (" << this->_lastMove.x << ", " << this->_lastMove.y << ")" << std::endl;
+//	std::cout << "Pos : (" << this->_parentEntity->getTransformComponent().getPosition().x << ", "
+//			  << this->_parentEntity->getTransformComponent().getPosition().y << ")" << std::endl;
+//	std::cout << "Movement : (" << this->_lastMove.x << ", " << this->_lastMove.y << ")" << std::endl;
 
 	Engine::Commands::TransformPositionCommand command = Engine::Commands::TransformPositionCommand(
 			this->_parentEntity->getTransformComponent(), this->_lastMove.x, this->_lastMove.y);
@@ -62,7 +62,6 @@ void Component::PlayerMovementComponent::handleCameraReposition(Engine::Mediator
 																Engine::AComponent *sender) noexcept
 {
 	if (APhysicsComponent *physicsComponent = dynamic_cast<APhysicsComponent *>(sender)) {
-
 		if ((this->_lastMove.y < 0 && !physicsComponent->getCollision(APhysicsComponent::Direction::TOP)) ||
 			(this->_lastMove.y > 0 && !physicsComponent->getCollision(APhysicsComponent::Direction::BOTTOM))) {
 			this->_parentEntity->getTransformComponent().getPosition().y -= this->_lastMove.y;
@@ -72,12 +71,11 @@ void Component::PlayerMovementComponent::handleCameraReposition(Engine::Mediator
 			this->_parentEntity->getTransformComponent().getPosition().x -= this->_lastMove.x;
 			this->_lastMove.x = 0;
 		}
-		if (!physicsComponent->getCollision(APhysicsComponent::Direction::LEFT)) {
+		if (this->_lastMove.x < 50.0 && !physicsComponent->getCollision(APhysicsComponent::Direction::LEFT)) {
 			this->_lastMove.x += this->_baseSpeed;
 			Engine::Commands::ICommand *command = new Engine::Commands::TransformPositionCommand(
 					this->_parentEntity->getTransformComponent(), this->_baseSpeed, 0);
 			command->execute();
-			this->_parentEntity->addCommand(command);
 		}
 	}
 }

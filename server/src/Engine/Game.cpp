@@ -114,7 +114,8 @@ void Engine::Game::stop()
 }
 
 std::unique_ptr<std::vector<std::unique_ptr<Packet::DataPacket>>>
-Engine::Game::getPackets() {
+Engine::Game::getPackets()
+{
 	auto l = std::make_unique<std::vector<std::unique_ptr<Packet
 	::DataPacket>>>();
 	std::unique_ptr<Packet::DataPacket> packet;
