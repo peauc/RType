@@ -118,6 +118,8 @@ void MapView::onMouseWheelScrolled(const sf::Event &event) {
 void MapView::onMouseButtonPressed(const sf::Event &event) {
 	unsigned int	childIndex;
 
+	if (!this->inBounds(event.mouseButton.x, event.mouseButton.y))
+		return ;
 	this->scrollable = false;
 	if (!this->childs.empty() && event.mouseButton.button == sf::Mouse::Left) {
 		childIndex = this->getPotentialTriggeredChild(event.mouseButton.x,
@@ -132,6 +134,8 @@ void MapView::onMouseButtonPressed(const sf::Event &event) {
 }
 
 void MapView::onMouseButtonReleased(const sf::Event &event) {
+	if (!this->inBounds(event.mouseButton.x, event.mouseButton.y))
+		return ;
 	this->scrollable = true;
 	for (auto child = this->childs.begin(); child != this->childs.end();) {
 		auto	*upChild = dynamic_cast<ChildMap*>((*child).get());
@@ -147,6 +151,8 @@ void MapView::onMouseButtonReleased(const sf::Event &event) {
 }
 
 void MapView::onMouseMoved(const sf::Event &event) {
+	if (!this->inBounds(event.mouseMove.x, event.mouseMove.y))
+		return ;
 	this->lastMouseX = event.mouseMove.x;
 	this->lastMouseY = event.mouseMove.y;
 	this->sendEventToChilds(event);
