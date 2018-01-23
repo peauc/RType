@@ -12,7 +12,7 @@
 Component::MojojoWeapon::MojojoWeapon(Engine::Entity *parentEntity, Engine::Game *parentGame)
 		: AWeaponComponent(parentEntity, parentGame, 60), _event(false), _firing(false), _charge(0), _isCharging(false)
 {
-	this->_shotAngle = 0;
+	this->_shotAngle = 180;
 	this->_shotRelativeOrigin.x = 0;
 	this->_shotRelativeOrigin.y = 0;
 
@@ -33,18 +33,10 @@ void Component::MojojoWeapon::update() noexcept
 		Engine::AComponent *shotGraphicsComponent;
 		Engine::AComponent *shotSoundComponent;
 
-		if (this->_charge < 30) { // Standard shot
-			shotGraphicsComponent = new Component::ShotGraphicsComponent(shot.get(),
+		shotGraphicsComponent = new Component::ShotGraphicsComponent(shot.get(),
 																		 this->_parentGame->getResourceLoader().get(),
-																		 19, 19);
-			shotSoundComponent = new Component::ShotAudioComponent(shot.get(), this->_parentGame, 0);
-		} else { // Charged shot
-			shotGraphicsComponent = new Component::ShotGraphicsComponent(shot.get(),
-																		 this->_parentGame->getResourceLoader().get(),
-																		 19, 19);
-			shotSoundComponent = new Component::ShotAudioComponent(this->_parentEntity, this->_parentGame, 1);
-		}
-
+																		 31, 31);
+		shotSoundComponent = new Component::ShotAudioComponent(shot.get(), this->_parentGame, 0);
 		if (this->_parentGame->getWorld()->getCamera() != nullptr) {
 			shotGraphicsComponent->addObserver(this->_parentGame->getWorld()->getCamera().get());
 		}
