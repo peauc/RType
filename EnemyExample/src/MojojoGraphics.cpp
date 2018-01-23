@@ -33,7 +33,6 @@ Component::MojojoGraphics::MojojoGraphics(Engine::Entity *parentEntity,
 }
 
 void Component::MojojoGraphics::update() {
-	std::cout << "Updating graphics" << std::endl;
 	this->sendToAll(Engine::Mediator::Message::GRAPHICS_REGISTERING);
 }
 

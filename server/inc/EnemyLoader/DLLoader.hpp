@@ -45,6 +45,5 @@ T		*DLLoader<T>::getInstance(const std::string &libPath, Engine::Game &game) {
 		this->diagnoseError();
 		return (NULL);
 	}
-	std::cout << "End of getInstance" << std::endl;
 	return ((*entr)(game));
 }
