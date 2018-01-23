@@ -36,8 +36,7 @@ namespace Engine {
 		void registerComponent(AComponent *component)  noexcept;
 		void unregisterComponent(AComponent *component)  noexcept;
 
-		// TODO
-	public:
+	private:
 		std::vector<AComponent *> _subjects;
 	};
 }

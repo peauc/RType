@@ -32,12 +32,13 @@ namespace Engine {
 		void removeObserver(Observer *) noexcept;
 		unsigned int getParentEntityId() const noexcept;
 		bool isParentActive() const noexcept;
+		const std::vector<Mediator *> &get_mediators() const;
 
 		virtual void update() = 0;
 
 		virtual AComponent *clone(Entity *parentEntity) const noexcept;
 
-	public:
+	protected:
 		Entity *_parentEntity;
 		std::vector<Mediator *> _mediators;
 		std::vector<Observer *> _observers;

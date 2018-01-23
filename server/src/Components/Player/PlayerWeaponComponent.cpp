@@ -3,6 +3,8 @@
 //
 
 #include <Components/HealthComponent.hpp>
+#include <Engine/Hitbox.hpp>
+#include <Components/Projectiles/PlayerShotPhysicsComponent.hpp>
 #include "PlayerWeaponComponent.hpp"
 #include "ShotAudioComponent.hpp"
 
@@ -10,7 +12,7 @@ Component::PlayerWeaponComponent::PlayerWeaponComponent(Engine::Entity *parentEn
 		: AWeaponComponent(parentEntity, parentGame, 60), _event(false), _firing(false), _charge(0), _isCharging(false)
 {
 	this->_shotAngle = 0;
-	this->_shotRelativeOrigin.x = 0;
+	this->_shotRelativeOrigin.x = -50;
 	this->_shotRelativeOrigin.y = 0;
 
 	this->_validMessageTypes[Engine::Mediator::Message::NEW_EVENT] = std::bind(&PlayerWeaponComponent::handleEvent,
@@ -20,26 +22,35 @@ Component::PlayerWeaponComponent::PlayerWeaponComponent(Engine::Entity *parentEn
 
 void Component::PlayerWeaponComponent::update() noexcept
 {
-	if (this->_frameSinceShot == this->_cooldown && (this->_firing || (!this->_isCharging && this->_charge > 0))) {
+	if (this->_frameSinceShot == this->_cooldown && ((!this->_isCharging && this->_charge > 0))) {
 		std::unique_ptr<Engine::Entity> shot = std::make_unique<Engine::Entity>();
 
 		Engine::AComponent *shotMovementComponent = new Component::ShotMovementComponent(shot.get(), 120, 120);
 		Engine::AComponent *shotHealthComponent = new Component::HealthComponent(shot.get(),
 																				 this->_parentGame->getWorld().get(),
 																				 50, false, true);
-		Engine::AComponent *shotGraphicsComponent;
+
+		Component::ShotGraphicsComponent *shotGraphicsComponent;
 		Engine::AComponent *shotSoundComponent;
 
 		if (this->_charge < 30) { // Standard shot
 			shotGraphicsComponent = new Component::ShotGraphicsComponent(shot.get(),
 																		 this->_parentGame->getResourceLoader().get(),
-																		 19, 19);
+																		 30, 30);
 			shotSoundComponent = new Component::ShotAudioComponent(shot.get(), this->_parentGame, 0);
 		} else { // Charged shot
 			shotGraphicsComponent = new Component::ShotGraphicsComponent(shot.get(),
 																		 this->_parentGame->getResourceLoader().get(),
-																		 19, 19);
-			shotSoundComponent = new Component::ShotAudioComponent(this->_parentEntity, this->_parentGame, 1);
+																		 29, 29);
+			shotSoundComponent = new Component::ShotAudioComponent(shot.get(), this->_parentGame, 1);
+		}
+
+		Engine::AComponent *shotPhysicsComponent = new Component::PlayerShotPhysicsComponent(shot.get(), Engine::Hitbox(
+				Engine::Hitbox::Type::PLAYER_SHOT, shotGraphicsComponent->getRelativeStartPos(),
+				shotGraphicsComponent->getRange()));
+
+		if (this->_parentGame->getWorld()->getMediator() != nullptr) {
+			shotPhysicsComponent->registerToMediator(this->_parentGame->getWorld()->getMediator().get());
 		}
 
 		if (this->_parentGame->getWorld()->getCamera() != nullptr) {
@@ -76,14 +87,14 @@ void Component::PlayerWeaponComponent::handleEvent(Engine::Mediator::Message, En
 		if (inputComponent->hasEvent()) {
 			this->_event = true;
 			this->_firing = inputComponent->getEvent()._shotReleased;
-			this->_isCharging = inputComponent->getEvent()._chargingShot;
-			if (this->_isCharging) {
+			this->_isCharging = inputComponent->getEvent()._shotReleased;
+			if (this->_isCharging && this->_frameSinceShot == this->_cooldown) {
 				this->_charge++;
 			}
 		} else {
 			this->_event = false;
 			this->_firing = false;
-			this->_isCharging = false;
+			this->_isCharging = true;
 		}
 	}
 }

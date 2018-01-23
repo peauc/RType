@@ -13,8 +13,6 @@ Component::PlayerPhysicsComponent::PlayerPhysicsComponent(Engine::Entity *parent
 {
 	this->_collisionHandlers[Engine::Hitbox::Type::CAMERA] = std::bind(&PlayerPhysicsComponent::cameraCollision,
 																	   this, std::placeholders::_1);
-	this->_collisionHandlers[Engine::Hitbox::Type::PLAYER] = std::bind(&APhysicsComponent::blockingCollision,
-																	   this, std::placeholders::_1);
 	this->_collisionHandlers[Engine::Hitbox::Type::ENEMY] = std::bind(&APhysicsComponent::damagingCollision,
 																	  this, std::placeholders::_1);
 	this->_collisionHandlers[Engine::Hitbox::Type::ENEMY_SHOT] = std::bind(&APhysicsComponent::damagingCollision,

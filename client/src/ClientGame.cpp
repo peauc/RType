@@ -26,6 +26,7 @@ ClientGame::ClientGame(const std::string &ip,
 	}
 	this->_resourcesLoader.loadAnimations(animationFile);
 	this->_render->loadAnimations(this->_resourcesLoader.getAnimations());
+	this->_render->playMusic("../Assets/r-type-theme.wav");
 	this->_startMenu = std::make_unique<MenuSFML>();
 	try {
 		this->createMenu();

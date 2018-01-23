@@ -13,7 +13,7 @@
 #include <Logger.hpp>
 #include "ClientGame.hpp"
 
-int     main(int ac, char **av, char **)
+int     main(int ac, char **av, char **env)
 {
 #ifdef __unix__
 	if (env == nullptr || getenv("DISPLAY") == nullptr)

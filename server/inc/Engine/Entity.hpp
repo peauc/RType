@@ -33,13 +33,13 @@ namespace Engine {
 		unsigned int getId() const noexcept;
 		bool isActive() const noexcept;
 		void setActive(bool active) noexcept;
+		const std::unique_ptr<Mediator> &get_mediator() const;
 
 		bool operator==(unsigned int id) noexcept;
 		bool operator==(const Entity &other) noexcept;
 		Entity *clone() noexcept;
 
-		// TODO
-	public:
+	private:
 		unsigned int _id;
 		bool _active;
 		TransformComponent _transformComponent;

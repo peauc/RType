@@ -110,3 +110,8 @@ void Engine::Entity::setActive(bool _active) noexcept
 {
 	Entity::_active = _active;
 }
+
+const std::unique_ptr<Engine::Mediator> &Engine::Entity::get_mediator() const
+{
+	return _mediator;
+}

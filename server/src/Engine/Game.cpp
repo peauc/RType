@@ -61,7 +61,6 @@ void Engine::Game::createZones(const Vector2d &mapSize, const MapLoader::Zones &
 {
 	for (const auto &zone : zones) {
 		zone.createZone(mapSize, *this);
-		break;
 	}
 }
 

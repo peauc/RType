@@ -104,3 +104,8 @@ void Engine::AComponent::unregisterFromMediators() noexcept
 		this->unregisterToMediator(mediator);
 	}
 }
+
+const std::vector<Engine::Mediator *> &Engine::AComponent::get_mediators() const
+{
+	return _mediators;
+}

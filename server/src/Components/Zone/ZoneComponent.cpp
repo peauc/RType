@@ -45,8 +45,6 @@ void Component::ZoneComponent::trigger() noexcept
 	for (auto &entity : this->_entities) {
 		entity->setActive(true);
 		this->_parentWorld->addObject(std::move(entity));
-		// TODO
-		break;
 	}
 	this->_parentEntity->setActive(false);
 }
