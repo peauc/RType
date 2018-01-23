@@ -20,6 +20,8 @@ Engine::MapLoader::loadZones(const std::string &filePath)
 		Object object(objectString);
 
 		object.loadProperties(this->loader);
+		this->mapWidth = object.getPropertyUint("Screen Width");
+		this->mapHeight = object.getPropertyUint("Screen Height");
 		zones = this->loader
 				.extractArrayValues(object.getPropertyString("Zones"));
 		this->browseZones(zones);
@@ -69,4 +71,12 @@ void Engine::MapLoader::fillLastZone(JsonDataLoader::ArrayValues &childs)
 const Engine::MapLoader::Zones &Engine::MapLoader::getZones() const
 {
 	return (this->zones);
+}
+
+unsigned int MapLoader::getMapWidth() const {
+	return (this->mapWidth);
+}
+
+unsigned int MapLoader::getMapHeight() const {
+	return (this->mapHeight);
 }
