@@ -10,7 +10,7 @@
 Component::EnemyGraphicsComponent::EnemyGraphicsComponent(Engine::Entity *parentEntity,
 															ResourcesLoader *resourceLoader) :
 		AGraphicsComponent(parentEntity, resourceLoader) {
-	this->_animationIds.push_back(8);
+	this->_animationIds.push_back(1);
 	this->_currentAnimationId = this->_animationIds[0];
 
 	this->_relativeStartPos.x = -500;

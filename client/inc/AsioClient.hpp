@@ -15,7 +15,9 @@ class AsioClient : public AClient {
 public:
 	virtual ~AsioClient() final;
 	AsioClient();
-	explicit AsioClient(const std::string &host);
+	AsioClient(const AsioClient&) = delete;
+	AsioClient &operator=(const AsioClient&) = delete;
+
 	bool sendMessage(const std::string &message) noexcept final;
 	bool sendMessage(const Packet::DataPacket &packet) noexcept;
 	bool connect(const std::string &message, const std::string &port,

@@ -26,6 +26,20 @@ include_directories(common/inc
         server/inc/Engine/Commands
         client/inc)
 
+##TOOL
+
+include_directories(Tools/AssetsIdGenerator/includes)
+include_directories(Tools/common/includes)
+
+file(GLOB_RECURSE TOOL_FILES
+        "Tools/AssetsIdGenerator/sources/*.cpp"
+        "Tools/AssetsIdGenerator/includes/*.hpp"
+        "Tools/common/includes/*.hpp"
+        "Tools/common/sources/*.cpp")
+
+add_executable(AssetsIdGenerator ${TOOL_FILES} ${COMMON_FILES})
+
+
 ##SERVER
 
 file(GLOB_RECURSE SERVER_SRC server/src/*.cpp)
@@ -49,6 +63,14 @@ set(Boost_USE_STATIC_LIBS ON)
 find_package(Boost REQUIRED COMPONENTS system thread filesystem regex serialization)
 include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(client
+        ${Boost_LOG_SETUP_LIBRARY}
+        ${Boost_LOG_LIBRARY}
+        ${Boost_FILESYSTEM_LIBRARY}
+        ${Boost_THREAD_LIBRARY}
+        ${Boost_SYSTEM_LIBRARY}
+        ${Boost_SERIALIZATION_LIBRARY}
+        )
+target_link_libraries(AssetsIdGenerator
         ${Boost_LOG_SETUP_LIBRARY}
         ${Boost_LOG_LIBRARY}
         ${Boost_FILESYSTEM_LIBRARY}

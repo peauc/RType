@@ -12,15 +12,6 @@ size_t ClientObjectManager::size() const
 	return (_clientList.size());
 }
 
-std::vector<IMessage> ClientObjectManager::getClientsMessages()
-{
-	std::vector<IMessage> messageList;
-	//Todo:: Finish client
-	for (size_t i = 0; i < _clientList.size(); i++)
-	{}
-	return (messageList);
-}
-
 bool ClientObjectManager::addClient(ClientObject &obj) noexcept
 {
 	if (size() >= 4)
