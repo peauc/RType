@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include "EnemyAIComponent.hpp"
-#include "Components/Player/PlayerInputComponent.hpp"
 
 Component::EnemyAIComponent::EnemyAIComponent(Engine::Entity *parentEntity)
 		: AInputComponent(parentEntity) {

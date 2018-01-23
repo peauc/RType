@@ -5,13 +5,15 @@
 #ifndef RTYPE_ENEMYGRAPHICSCOMPONENT_HPP
 #define RTYPE_ENEMYGRAPHICSCOMPONENT_HPP
 
-#include "Components/Abstracts/AGraphicsComponent.hpp"
+#include "AGraphicsComponent.hpp"
+
+class ResourcesLoader;
 
 namespace Component {
 	class EnemyGraphicsComponent : public AGraphicsComponent
 	{
 	public:
-		explicit EnemyGraphicsComponent(Engine::Entity *parentEntity, RessourcesLoader *resourceLoader);
+		explicit EnemyGraphicsComponent(Engine::Entity *parentEntity, ResourcesLoader *resourceLoader);
 		~EnemyGraphicsComponent() override = default;
 
 		void update() override;

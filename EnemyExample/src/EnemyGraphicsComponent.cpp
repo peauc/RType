@@ -5,10 +5,10 @@
 
 #include <iostream>
 #include "EnemyGraphicsComponent.hpp"
-#include "Components/Abstracts/AMovementComponent.hpp"
+#include "AMovementComponent.hpp"
 
 Component::EnemyGraphicsComponent::EnemyGraphicsComponent(Engine::Entity *parentEntity,
-															RessourcesLoader *resourceLoader) :
+															ResourcesLoader *resourceLoader) :
 		AGraphicsComponent(parentEntity, resourceLoader) {
 	this->_animationIds.push_back(8);
 	this->_currentAnimationId = this->_animationIds[0];
