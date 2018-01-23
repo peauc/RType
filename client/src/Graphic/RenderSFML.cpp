@@ -111,12 +111,14 @@ void	RenderSFML::draw(const IText *text) noexcept
 std::queue<IRender::EventAction> RenderSFML::pollEvents() noexcept
 {
 	sf::Event				event{};
+	std::queue<IRender::EventAction>	eventQueue;
 	
 	while (this->_window && this->_window->pollEvent(event)) {
 		if (event.type == sf::Event::Closed ||
 		    (event.type == sf::Event::KeyPressed &&
 		     event.key.code == sf::Keyboard::Escape)) {
 			this->_window->close();
+			eventQueue.push(IRender::EventAction::QUIT);
 		} else if (event.type == sf::Event::KeyPressed ||
 			   event.type == sf::Event::MouseButtonPressed) {
 			this->setKeyPressedOrReleased((int)event.key.code,
@@ -127,7 +129,8 @@ std::queue<IRender::EventAction> RenderSFML::pollEvents() noexcept
 						      false);
 		}
 	}
-	return (this->createEventQueue());
+	this->createEventQueue(eventQueue);
+	return (eventQueue);
 }
 
 void RenderSFML::setKeyPressedOrReleased(int key, bool pressed)
@@ -138,16 +141,13 @@ void RenderSFML::setKeyPressedOrReleased(int key, bool pressed)
 	}
 }
 
-std::queue<IRender::EventAction> RenderSFML::createEventQueue()
+void RenderSFML::createEventQueue(std::queue<IRender::EventAction> &eventQueue)
 {
-	std::queue<IRender::EventAction>	eventQueue;
-	
 	for (auto it : this->_eventMap) {
 		if (it.second.second) {
 			eventQueue.push(it.second.first);
 		}
 	}
-	return (eventQueue);
 }
 
 void	RenderSFML::loadAnimations(std::unordered_map<uint32_t,

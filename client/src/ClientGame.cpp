@@ -10,6 +10,7 @@
 #include "Graphic/MenuSFML.hpp"
 #include "Graphic/SpriteSFML.hpp"
 #include "Graphic/TextSFML.hpp"
+#include "Graphic/BackgroundSFML.hpp"
 
 ClientGame::ClientGame(const std::string &ip, const std::string &animationFile,
 		       uint16_t width, uint16_t height)
@@ -17,6 +18,9 @@ ClientGame::ClientGame(const std::string &ip, const std::string &animationFile,
 {
 	this->_client.connect(ip);
 	this->_render = std::make_unique<RenderSFML>(width, height, "R-TYPE");
+	if (!this->_render) {
+		throw std::runtime_error("Can't open window");
+	}
 	this->_resourcesLoader.loadAnimations(animationFile);
 	this->_render->loadAnimations(this->_resourcesLoader.getAnimations());
 	this->_startMenu = std::make_unique<MenuSFML>();
@@ -26,6 +30,7 @@ ClientGame::ClientGame(const std::string &ip, const std::string &animationFile,
 		e.what();
 		throw std::runtime_error("Can't load start menu");
 	}
+	this->setBackgrounds();
 }
 
 /**
@@ -33,8 +38,7 @@ ClientGame::ClientGame(const std::string &ip, const std::string &animationFile,
  *
  * Get packets and interpret them
  * Get user events
- * Display sprites
- * Update animations
+ * Display sprites and update animations
  * Process user events
  */
 void	ClientGame::run() noexcept
@@ -79,21 +83,32 @@ void	ClientGame::drawOperations(int &nbTicks)
 
 /**
  * Check game state
- *  -INGAME --> Draw all sprites
+ *  -INGAME --> Draw all sprites and backgrounds
  *  -INMENU --> Draw all sprites and texts of menu
  */
 void ClientGame::drawSprites() noexcept
 {
 	if (this->_gameState == GameState::INGAME) {
+		for (const auto &bg : this->_backgrounds) {
+			if (bg) {
+				this->_render->draw(bg.get());
+			}
+		}
 		for (const auto &obj : this->_objects) {
-			this->_render->draw(obj.second.get());
+			if (obj.second) {
+				this->_render->draw(obj.second.get());
+			}
 		}
 	} else if (this->_gameState == GameState::INMENU) {
 		for (const auto &sprite : _startMenu->getSpritesToDraw()) {
-			this->_render->draw(sprite.get());
+			if (sprite) {
+				this->_render->draw(sprite.get());
+			}
 		}
 		for (const auto &text : _startMenu->getTextsToDraw()) {
-			this->_render->draw(text.get());
+			if (text) {
+				this->_render->draw(text.get());
+			}
 		}
 	}
 }
@@ -111,12 +126,18 @@ void ClientGame::updateAnimations(int &nbTicks) noexcept
 		}
 		nbTicks = 0;
 	}
+	for (const auto &bg : this->_backgrounds) {
+		if (bg) {
+			bg->updateAnimation();
+		}
+	}
 }
 
 /**
  * Process each events in the queue
  * If in menu, call processEventMenu
  * If in game, modify Input struct and send an event DataPacket afterwards
+ * If event is quit send quit to server
  * @param eventsQueue
  */
 void ClientGame::processEvents(std::queue<IRender::EventAction>
@@ -128,6 +149,10 @@ void ClientGame::processEvents(std::queue<IRender::EventAction>
 		const IRender::EventAction &event = eventsQueue.front();
 		eventsQueue.pop();
 
+		if (event == IRender::EventAction::QUIT) {
+			this->_client.sendMessage(Packet::DataPacket(
+				(int)Packet::Commands::DISCONNECT));
+		}
 		if (this->_gameState == GameState::INMENU &&
 		    event == IRender::EventAction::MOUSE1) {
 			this->processEventMenu(event);
@@ -318,12 +343,14 @@ void ClientGame::updateInfosObject(ISprite *sprite, bool repeatAnimation,
 std::pair<short, short> ClientGame::calculateRealPosition(short x,
 							  short y) noexcept
 {
+	int screensize = 10'000;
+
 	x = (short)((x < 0) ? 0 : x);
 	y = (short)((y < 0) ? 0 : y);
-	x = (short)((x > 10'000) ? 10'000 : x);
-	y = (short)((y > 10'000) ? 10'000 : y);
-	auto realX = -(short)(x * this->_render->getWidth() / 10'000);
-	auto realY = -(short)(y * this->_render->getHeight() / 10'000);
+	x = (short)((x > screensize) ? screensize : x);
+	y = (short)((y > screensize) ? screensize : y);
+	auto realX = -(short)(x * this->_render->getWidth() / screensize);
+	auto realY = -(short)(y * this->_render->getHeight() / screensize);
 	return (std::make_pair(realX, realY));
 }
 
@@ -339,5 +366,27 @@ void ClientGame::deleteDeadSprites()
 		} else {
 			++it;
 		}
+	}
+}
+
+/**
+ * Setting multiple backgrounds in order to create a parallax effect
+ */
+void ClientGame::setBackgrounds() noexcept
+{
+	try {
+		this->_backgrounds.emplace_back(
+			std::make_unique<BackgroundSFML>(
+				"../Assets/backbackground.png", 1280, 720));
+		this->_backgrounds.emplace_back(
+			std::make_unique<BackgroundSFML>(
+				"../Assets/background.png", 1704, 960,
+				2, 1));
+		this->_backgrounds.emplace_back(
+			std::make_unique<BackgroundSFML>(
+				"../Assets/background.png",
+				1704, 960, 1, 0.2));
+	} catch(const std::runtime_error &e) {
+		e.what();
 	}
 }

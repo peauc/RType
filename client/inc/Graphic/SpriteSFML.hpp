@@ -37,11 +37,13 @@ public:
 	void	setPosY(int y) noexcept override;
 	void	setPos(int x, int y) noexcept override;
 
-private:
+protected:
 	sf::Sprite	_sprite;
 	sf::Texture	_texture;
 	unsigned int	_sizeTileX;
 	unsigned int	_sizeTileY;
+
+private:
 	std::vector<sf::Texture> _animationVector;
 };
 
