@@ -15,6 +15,7 @@
 client::AsioClient::AsioClient()
 	: _ioService(), _socket(_ioService)
 {
+	_timepoint = std::chrono::steady_clock::now();
 	_connected = false;
 	_socket.open(boost::asio::ip::udp::v4());
 }
@@ -93,7 +94,6 @@ void client::AsioClient::handleReceive(const boost::system::error_code &,
 		Logger::Log(Logger::DEBUG, "Client is now connected");
 	} else {
 		_packetList.push_back(message.getPacket());
-		Logger::Log(Logger::DEBUG, std::to_string(_packetList.size()));
 	}
 	readMessage();
 }
@@ -105,6 +105,13 @@ void client::AsioClient::handleSendPacket(const Packet::DataPacket &,
 
 void client::AsioClient::tick() noexcept
 {
+	
+	if ((std::chrono::duration_cast<std::chrono::seconds>
+		(std::chrono::steady_clock::now() -
+		 _timepoint).count()) > 1) {
+		_timepoint = std::chrono::steady_clock::now();
+		sendMessage(Packet::DataPacket(Packet::PONG));
+	}
 	_ioService.poll();
 	_ioService.reset();
 }

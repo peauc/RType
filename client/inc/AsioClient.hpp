@@ -36,6 +36,7 @@ private:
 	bool readMessage() noexcept;
 	
 	std::vector<Packet::DataPacket> _packetList;
+	std::chrono::steady_clock::time_point _timepoint;
 	boost::asio::io_service _ioService;
 	boost::asio::ip::udp::socket _socket;
 	boost::asio::ip::udp::endpoint _receiverEndpoint;

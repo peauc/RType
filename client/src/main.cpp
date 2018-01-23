@@ -22,8 +22,9 @@ int     main(int ac, char **av, char **)
 	//TODO Pass parameters for info connection
 	try {
 		if (ac < 3) {
-			Logger::Log(Logger::FATAL, "./client host port "
+			Logger::Log(Logger::MAJOR, "./client host port "
 				"[seed]");
+			return (1);
 		}
 		int s = 0;
 		if (av[3])
