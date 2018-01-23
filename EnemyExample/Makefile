@@ -19,8 +19,9 @@ INCLUDES        =       -I ./inc				\
 			-I ../server/inc/Components/Abstracts	\
 			-I ../server/inc/Factories		\
 			-I ../common/inc			\
+			-I ../common/JsonLoader/includes	\
 			-I ../common/RessourcesLoader/inc	\
-
+			-I ../server/inc/MapLoader		\
 
 CPPFLAGS        =       -std=c++14 -fPIC ${INCLUDES}
 
