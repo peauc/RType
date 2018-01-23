@@ -9,7 +9,7 @@
 #include "ShotAudioComponent.hpp"
 
 Component::PlayerWeaponComponent::PlayerWeaponComponent(Engine::Entity *parentEntity, Engine::Game *parentGame)
-		: AWeaponComponent(parentEntity, parentGame, 60), _event(false), _firing(false), _charge(0), _isCharging(false)
+		: AWeaponComponent(parentEntity, parentGame, 30), _event(false), _firing(false), _charge(0), _isCharging(false)
 {
 	this->_shotAngle = 0;
 	this->_shotRelativeOrigin.x = -50;
