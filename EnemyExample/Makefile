@@ -14,6 +14,7 @@ SRCS_MOJOJO	=	Mojojo.cpp			\
 			MojojoAI.cpp			\
 			MojojoGraphics.cpp		\
 			MojojoPhysics.cpp		\
+			MojojoWeapon.cpp		\
 
 FILES_BERZERKER =       $(addprefix ./src/, $(SRCS_BERZERKER))
 FILES_MOJOJO 	=       $(addprefix ./src/, $(SRCS_MOJOJO))
@@ -25,6 +26,7 @@ INCLUDES        =       -I ./inc				\
 			-I ../server/inc/Engine			\
 			-I ../server/inc/Engine/Commands	\
 			-I ../server/inc/Components/Abstracts	\
+			-I ../server/inc/Components/Projectiles	\
 			-I ../server/inc/Factories		\
 			-I ../common/inc			\
 			-I ../common/JsonLoader/includes	\
