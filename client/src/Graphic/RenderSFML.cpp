@@ -83,6 +83,9 @@ void	RenderSFML::closeWindow() noexcept
 	if (this->_window) {
 		this->_window->close();
 	}
+	if (this->_musicLoaded) {
+		this->_music.stop();
+	}
 }
 
 std::unique_ptr<ISprite> RenderSFML::createSprite(const std::string &fileName,
@@ -166,6 +169,16 @@ void	RenderSFML::loadAnimations(std::unordered_map<uint32_t,
 		}
 		this->_textureMap.insert(std::make_pair(it.first,
 							sfmlVectorTexture));
+	}
+}
+
+void RenderSFML::playMusic(const std::string &filePath)
+{
+	if (!this->_music.openFromFile(filePath)) {
+		std::cerr << "Cannot open file : " << filePath << std::endl;
+	} else {
+		this->_musicLoaded = true;
+		this->_music.play();
 	}
 }
 
