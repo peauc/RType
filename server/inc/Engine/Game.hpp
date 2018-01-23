@@ -12,6 +12,7 @@
 #include "EventList.hpp"
 #include "EnemyLoader/EnemyLoader.hpp"
 #include "PacketList.hpp"
+#include "MapLoader.hpp"
 
 class ResourcesLoader;
 
@@ -22,8 +23,6 @@ namespace Engine {
 	{
 	public:
 		const long NS_PER_UPDATE = 16000000;
-		//const long NS_PER_UPDATE = 1000000000;
-
 
 		Game();
 		~Game();
@@ -53,6 +52,7 @@ namespace Engine {
 		EnemyLoader _enemyLoader;
 		std::unique_ptr<std::map<const std::string, Engine::Entity *>> _DLEntitiesMap;
 		std::shared_ptr<ResourcesLoader> _resourceLoader;
+		MapLoader _mapLoader;
 		bool _stop;
 	};
 }

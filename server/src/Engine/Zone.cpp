@@ -2,19 +2,17 @@
 // Created by romain on 21/01/18.
 //
 
-#include "Entity.hpp"
-#include "Game.hpp"
+#include <Components/Zone/ZoneComponent.hpp>
 #include "Zone.hpp"
-#include "Hitbox.hpp"
-#include "ZoneComponent.hpp"
+#include "Game.hpp"
 
-Engine::MapLoader::Zone::Zone(const Vector2d &topLeftCoords, const Vector2d &bottomRightCoords)
+Engine::Zone::Zone(const Vector2d &topLeftCoords, const Vector2d &bottomRightCoords)
 {
 	this->_topLeftCoords = topLeftCoords;
 	this->_bottomRightCoords = bottomRightCoords;
 }
 
-void Engine::MapLoader::Zone::createZone(Game &game) const
+void Engine::Zone::createZone(Engine::Game &game) const
 {
 	Engine::Entity *zone = new Engine::Entity(0);
 
@@ -41,30 +39,34 @@ void Engine::MapLoader::Zone::createZone(Game &game) const
 	game.getWorld()->addObject(std::unique_ptr<Entity>(zone));
 }
 
-void Engine::MapLoader::Zone::addZoneObject(
-		const Engine::MapLoader::Zone::ZoneObject &zoneObject) {
+void Engine::Zone::addZoneObject(
+		const Engine::Zone::ZoneObject &zoneObject)
+{
 	this->_zoneObjects.push_back(zoneObject);
 }
 
-const Vector2d &Engine::MapLoader::Zone::getTopLeftCoords() const {
+const Vector2d &Engine::Zone::getTopLeftCoords() const
+{
 	return (this->_topLeftCoords);
 }
 
-const Vector2d &Engine::MapLoader::Zone::getBotRightCoords() const {
+const Vector2d &Engine::Zone::getBotRightCoords() const
+{
 	return (this->_bottomRightCoords);
 }
 
-const std::vector<Engine::MapLoader::Zone::ZoneObject> &
-Engine::MapLoader::Zone::getZoneObjects() const {
+const std::vector<Engine::Zone::ZoneObject> &
+Engine::Zone::getZoneObjects() const
+{
 	return (this->_zoneObjects);
 }
 
-Engine::MapLoader::Zone::ZoneObject::ZoneObject(const std::string &libname, const Vector2d &pos) : _libname(libname),
-																								   _pos(pos)
+Engine::Zone::ZoneObject::ZoneObject(const std::string &libname, const Vector2d &pos) : _libname(libname),
+																						_pos(pos)
 {
 }
 
-Engine::Entity *Engine::MapLoader::Zone::ZoneObject::createEntity(Engine::Game &game) const
+Engine::Entity *Engine::Zone::ZoneObject::createEntity(Engine::Game &game) const
 {
 	return game.cloneEntity(this->_libname);
 }

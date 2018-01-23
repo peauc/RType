@@ -3,9 +3,9 @@
 //
 
 #include <thread>
-#include <chrono>
 #include <iostream>
 #include "Logger.hpp"
+#include "MapLoader.hpp"
 #include "Game.hpp"
 
 Engine::Game::Game()
@@ -50,6 +50,8 @@ void Engine::Game::setup(size_t nbOfPlayers,
 	for (unsigned int i = 0; i < nbOfPlayers; ++i) {
 		this->_world->addObject(Factory::EntityFactory::createPlayerShip);
 	}
+
+	const MapLoader::Zones &zones = this->_mapLoader.loadZones("../");
 
 	//this->_enemyLoader.setup("../DLEnemies/", *this);
 	//this->_DLEntitiesMap = this->_enemyLoader.getEnemies();
