@@ -10,8 +10,8 @@
 Component::MojojoGraphics::MojojoGraphics(Engine::Entity *parentEntity,
 															ResourcesLoader *resourceLoader) :
 		AGraphicsComponent(parentEntity, resourceLoader) {
-	this->_animationIds.push_back(41);
-	this->_animationIds.push_back(40);
+	this->_animationIds.push_back(22);
+	this->_animationIds.push_back(21);
 
 	this->_currentAnimationId = this->_animationIds[1];
 
