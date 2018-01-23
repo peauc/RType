@@ -47,7 +47,7 @@ Engine::Entity *Factory::EntityFactory::createPlayerShip(unsigned int id, Engine
 	playerShip->addComponent(playerGraphicsComponent);
 	playerShip->addComponent(playerHealthComponent);
 
-	playerShip->getTransformComponent().getPosition().x = 300;
+	playerShip->getTransformComponent().getPosition().x = 3000;
 	playerShip->getTransformComponent().getPosition().y = 1000 + id * 1000;
 
 	playerShip->setActive(true);
@@ -66,13 +66,14 @@ Engine::Entity *Factory::EntityFactory::createCamera(unsigned int id, Engine::Ga
 																						  Vector2d(0, 0),
 																						  Vector2d(
 																								  viewComponent->getRelativeBottomRight())));
-	camera->addComponent(movementComponent);
-	camera->addComponent(viewComponent);
-	camera->addComponent(zoneComponent);
 
 	if (game.getWorld()->getMediator() != nullptr) {
 		zoneComponent->registerToMediator(game.getWorld()->getMediator().get());
 	}
+
+	camera->addComponent(movementComponent);
+	camera->addComponent(viewComponent);
+	camera->addComponent(zoneComponent);
 
 	camera->setActive(true);
 

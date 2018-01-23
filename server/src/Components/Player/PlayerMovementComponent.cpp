@@ -31,10 +31,6 @@ void Component::PlayerMovementComponent::update() noexcept
 	this->_lastMove.x = this->_baseSpeed + this->_xInput * this->_inputSpeed;
 	this->_lastMove.y = this->_lateralBaseSpeed + this->_yInput * this->_lateralInputSpeed;
 
-//	std::cout << "Pos : (" << this->_parentEntity->getTransformComponent().getPosition().x << ", "
-//			  << this->_parentEntity->getTransformComponent().getPosition().y << ")" << std::endl;
-//	std::cout << "Movement : (" << this->_lastMove.x << ", " << this->_lastMove.y << ")" << std::endl;
-
 	Engine::Commands::TransformPositionCommand command = Engine::Commands::TransformPositionCommand(
 			this->_parentEntity->getTransformComponent(), this->_lastMove.x, this->_lastMove.y);
 	command.execute();
