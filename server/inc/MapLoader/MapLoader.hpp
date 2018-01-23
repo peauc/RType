@@ -28,10 +28,16 @@ public:
 	const Zones			&loadZones(const std::string &filePath);
 	const Zones			&getZones() const;
 
+	unsigned int		getMapWidth() const;
+	unsigned int		getMapHeight() const;
+
 private:
 
 	JsonDataLoader		loader;
 	Zones				zones;
+
+	unsigned int		mapWidth;
+	unsigned int		mapHeight;
 
 	void	browseZones(JsonDataLoader::ArrayValues &zones);
 	void	fillLastZone(JsonDataLoader::ArrayValues &childs);
