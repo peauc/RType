@@ -27,9 +27,7 @@ void Engine::Entity::update() noexcept
 void Engine::Entity::executeCommands() noexcept
 {
 	for (unsigned int i = 0; i < _commands.size(); ++i) {
-		std::cout << "before" << std::endl;
 		this->_commands[i]->execute();
-		std::cout << "after" << std::endl;
 	}
 	this->_commands.clear();
 }
